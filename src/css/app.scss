@@ -1,0 +1,57 @@
+@import './_general_styling.scss';
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+.mainSection {
+  .backAndUser {
+    button {
+      color: $white;
+    }
+  }
+}
+
+/*
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-color:$dark-grey lightgrey;
+  scrollbar-width: thin;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: #222222;
+  color:white;
+}
+
+.ContainerApp{
+  width: 90%;
+  margin:0 auto;
+  padding: 2em 5em;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 1200px) {
+  .ContainerApp {
+    padding: 2em 3em!important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .ContainerApp {
+    width:100%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .ContainerApp {
+    padding: 2em!important;
+  }
+}*/
