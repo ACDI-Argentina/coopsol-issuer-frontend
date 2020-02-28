@@ -1,0 +1,9 @@
+{
+  "UNEXPECTED_ERROR": "Unexpected error occurred",
+  "API_ERROR_401": "Invalid credentials",
+  "API_ERROR_403": "Unable to login. Please contact the system administrator",
+  "API_ERROR_500": "Unexpected error occurred",
+  "STATUS_401": 401,
+  "STATUS_403": 403,
+  "STATUS_500": 500
+}
