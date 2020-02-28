@@ -46,7 +46,7 @@ const NavBar = () => {
               <button onClick={() => signOut()}>
                 Logout
               </button>
-            </Menu.Item
+            </Menu.Item>
       </Menu>
     </div>
   );
