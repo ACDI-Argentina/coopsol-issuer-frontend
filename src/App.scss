@@ -1,0 +1,45 @@
+@import "./css/general_styling";
+
+body {
+    background-color: $background;
+}
+
+.App {
+    background-image: url(img/map.svg);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 60%;
+
+    width: 90%;
+    margin:0 auto;
+    padding: 2em 5em;
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .App {
+       width: 100%;
+    }
+  }
+@media only screen and (max-width: 600px) {
+    .App {
+      padding: 2em;
+        background-size: 90%;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .App {
+      
+        padding:2em;
+    }
+  }
+
+  @media only screen and (max-width: 360px) {
+    .App {
+      
+        background-size: 130%;
+    }
+  }
