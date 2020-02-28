@@ -6,6 +6,7 @@ import Error404 from '../pages/Error404/error404';
 
 
 const routesConfig = [
+  { path: '/login', component: Login, requireAuthentication: false },
   { component: Error404, requireAuthentication: false }
 ];
 
