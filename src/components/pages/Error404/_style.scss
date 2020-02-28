@@ -1,0 +1,70 @@
+@import '../../../css/general_styling';
+
+.descriptionContainer {
+  @include primary-text(18px, white, bold);
+  line-height: 8px;
+}
+.Error404 {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .textSection {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    h1 {
+      @include primary-text(10em, $medium-grey, bold);
+      opacity: 0.5;
+      position: absolute;
+      z-index: -1;
+    }
+    .text {
+      align-self: center;
+      margin-top:110px;
+      h2 {
+        @include primary-text(3em, $light-grey, 100);
+        margin-bottom: 0.2em;
+      }
+      p {
+        font-size: 1em;
+        color:$white;
+        margin-bottom: 1em;
+      }
+      a {
+        @include primary-text(1em, $white, 700);
+      }
+    }
+  }
+  .errorImage {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .Error404 {
+    flex-direction: column-reverse;
+    .textSection {
+      width: 100%;
+      text-align: center;
+      h1 {
+        position: relative;
+        margin-bottom:-50px;
+      }
+      .text {
+        margin-top:-65px;
+      }
+    }
+    .errorImage {
+      width: 100%;
+      img {
+        width: 200px;
+      }
+    }
+  }
+}
