@@ -1,10 +1,6 @@
-import helpers from './helpers';
-
-const uploadFile = makePostRequest => data => makePostRequest('upload', data);
+import helpers from "./helpers";
 
 export default client => {
   const { makePostRequest, makeGetRequest, makePatchRequest } = helpers(client);
-  return {
-    uploadFile: uploadFile(makePostRequest),
-  };
+  return {};
 };

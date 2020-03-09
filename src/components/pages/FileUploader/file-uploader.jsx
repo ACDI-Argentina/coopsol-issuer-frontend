@@ -22,6 +22,7 @@ const FileUploader = () => {
       message.success("El archivo se ha subido correctamente");
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
+      console.log(error);
       message.error(errorMessage);
     }
   };
