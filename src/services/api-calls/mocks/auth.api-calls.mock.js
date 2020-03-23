@@ -2,60 +2,60 @@
 
 const loginRequest = () => ({
   data: {
-    username: 'admin',
-    password: 'password',
+    username: "admin",
+    password: "password",
     accessToken:
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4Mzk5NTE5LCJleHAiOjE1NzkwMDQzMTl9.TJMpwthclAlOttcye2lQuI8fBe17rjbnAccsaVeJGNoMD19jFlXY6r-Xrn9kaYHbOS_YcKvLTgOy_xWWu66QYQ',
-    tokenType: 'Bearer',
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4Mzk5NTE5LCJleHAiOjE1NzkwMDQzMTl9.TJMpwthclAlOttcye2lQuI8fBe17rjbnAccsaVeJGNoMD19jFlXY6r-Xrn9kaYHbOS_YcKvLTgOy_xWWu66QYQ",
+    tokenType: "Bearer",
     navbar: {
-      logo: 'logo',
+      logo: "logo",
       menus: [
         {
-          key: 'REPORTS',
-          description: 'Reports',
-          icon: 'area-chart',
+          key: "REPORTS",
+          description: "Reports",
+          icon: "area-chart",
           items: [],
           url: null,
           order: 0
         },
         {
-          key: 'MANAGE_USERS',
-          description: 'Manage Users',
-          icon: 'setting',
+          key: "MANAGE_USERS",
+          description: "Manage Users",
+          icon: "setting",
           items: [],
-          url: '/administration',
+          url: "/administration",
           order: 2
         },
         {
-          key: 'KNOWLEDGE',
-          description: 'Knowledge',
-          icon: 'bulb',
+          key: "KNOWLEDGE",
+          description: "Knowledge",
+          icon: "bulb",
           items: [],
           url: null,
           order: 1
         },
         {
-          key: 'USERS',
-          description: 'Profile',
-          icon: 'user',
+          key: "USERS",
+          description: "Profile",
+          icon: "user",
           items: [
             {
-              key: 'VIEW_PROFILE',
-              description: 'View Profile',
+              key: "VIEW_PROFILE",
+              description: "View Profile",
               icon: null,
               items: [],
-              url: '/user-information',
+              url: "/user-information",
               order: 0,
-              type: 'GET'
+              type: "GET"
             },
             {
-              key: 'LOGOUT',
-              description: 'Logout',
-              icon: 'logout',
+              key: "LOGOUT",
+              description: "Logout",
+              icon: "logout",
               items: [],
-              url: '/login',
+              url: "/login",
               order: 1,
-              type: 'GET'
+              type: "GET"
             }
           ],
           url: null,
@@ -63,8 +63,14 @@ const loginRequest = () => ({
         }
       ]
     },
-    role: 'ROLE_ADMIN',
-    permissions: ['VIEW_USERS', 'CREATE_USER', 'VIEW_OWN_USER', 'DISABLE_USER', 'MODIFY_USER']
+    role: "ROLE_ADMIN",
+    permissions: [
+      "VIEW_USERS",
+      "CREATE_USER",
+      "VIEW_OWN_USER",
+      "DISABLE_USER",
+      "MODIFY_USER"
+    ]
   }
 });
 
