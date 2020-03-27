@@ -1,0 +1,3 @@
+{
+  "extends": ["react-app", "@atixlabs/eslint-config/configurations/react"]
+}

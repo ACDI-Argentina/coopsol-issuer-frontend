@@ -1,0 +1,72 @@
+// Colors
+$background: #222222;
+$primary-color: #C43300;
+$yellow:#F49C00;
+$green: #819613;
+
+$hover: #F13F00;
+
+$medium-grey:#363636;
+$dark-grey: #3d3737;
+$light-grey:rgba(255,255,255, 0.3);
+
+$white: #d4d4d4;
+$black: black;
+
+$border_bottom: 1px solid $light-grey;
+
+// Typographic Scale
+$title-main: 36px;
+$title-secondary:24px;
+$subtitle: 18px;
+$button: 12px;
+$body: 15px;
+$label: 12px;
+
+//Text
+
+@mixin primary-text($font-size, $font-color, $font-weight) {
+  margin: 0;
+  font-family: 'avenir-heavy';
+  font-size: $font-size;
+  font-weight: $font-weight;
+  @if $font-color {
+    color: $font-color;
+  }
+}
+
+@mixin primary-title($font-size, $font-color, $font-weight) {
+  margin: 0;
+  font-family: 'avenir-heavy';
+  font-size: $font-size;
+  font-weight: $font-weight;
+  @if $font-color {
+    color: $font-color;
+  }
+}
+
+// Container
+
+@mixin container($color, $border, $radius) {
+  background: #3d3737;
+  border: 1px solid black;
+  border-radius: $radius;
+}
+
+// Font Family
+
+@font-face {
+  font-family: 'avenir-light';
+  src: url(/fonts/AVENIRLTSTD-LIGHT.OTF);
+}
+
+@font-face {
+  font-family: 'avenir-medium';
+  src: url(/fonts/AVENIRLTSTD-MEDIUM.OTF);
+}
+
+@font-face {
+  font-family: 'avenir-heavy';
+  src: url(/fonts/AVENIRLTSTD-HEAVY.OTF);
+}
+
