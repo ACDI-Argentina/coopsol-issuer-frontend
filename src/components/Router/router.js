@@ -12,9 +12,12 @@ import {
   LOGIN_URL,
   UPLOAD_FILE_URL,
   CREDENTIALS_URL,
-  ACTIVITIES_URL
+  ACTIVITIES_URL,
+  REQUESTS_URL
 } from '../../utils/constants';
 import history from './history';
+import Activities from '../pages/Activities/activities';
+import Requests from '../pages/Requests/requests';
 
 const routesConfig = [
   {
@@ -25,7 +28,8 @@ const routesConfig = [
   },
   { path: HOME_URL, component: Credentials, requireAuthentication: true, exact: true },
   { path: CREDENTIALS_URL, component: Credentials, requireAuthentication: true, exact: true },
-  { path: ACTIVITIES_URL, component: FileUploader, requireAuthentication: true, exact: true },
+  { path: ACTIVITIES_URL, component: Activities, requireAuthentication: true, exact: true },
+  { path: REQUESTS_URL, component: Requests, requireAuthentication: true, exact: true },
   {
     path: UPLOAD_FILE_URL,
     component: FileUploader,
