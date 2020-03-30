@@ -1,6 +1,5 @@
 import React from 'react';
-import { Form, Input, Icon, Slider, InputNumber } from 'antd';
-import { iconColor } from './inputs-formats';
+import { Form, Input, Slider, InputNumber } from 'antd';
 
 const AntComponentTranslator = {
   [undefined]: Input,
@@ -10,7 +9,6 @@ const AntComponentTranslator = {
 };
 
 export const inputRenderer = (inputs, form, submittedCount) => {
-  const { getFieldDecorator } = form;
   return inputs.map(({ formItem, ...input }) => {
     const {
       prefixOptions,
@@ -32,13 +30,6 @@ export const inputRenderer = (inputs, form, submittedCount) => {
 
     const AntComponent = AntComponentTranslator[component];
 
-    const touched = form.touched && form.touched[name];
-    const hasError = form.errors && form.errors[name];
-    const touchedError = hasError && touched;
-
-    const prefix = () =>
-      iconType ? <Icon type={iconType} style={{ color: iconColor }} /> : undefined;
-
     if (component === 'customDiv')
       return (
         <div className={classNameDiv} key={key}>
@@ -47,26 +38,8 @@ export const inputRenderer = (inputs, form, submittedCount) => {
       );
     return (
       <div className={classNameDiv} key={key}>
-        <Form.Item
-          key={key}
-          {...formItem}
-          label={
-            toolTip ? (
-              <span>
-                {label} &nbsp;
-                {toolTip}
-              </span>
-            ) : (
-              label
-            )
-          }
-          hasFeedback={(hasFeedback && submittedCount) || (hasFeedback && touched)}
-          help={submittedCount || touchedError ? hasError : false}
-          extra={extra}
-        >
-          {getFieldDecorator(name, { rules, initialValue })(
-            <AntComponent {...inputProperties} />
-          )}
+        <Form.Item rules={rules} label={label} name={name} extra={extra}>
+          {<AntComponent {...inputProperties} />}
         </Form.Item>
       </div>
     );

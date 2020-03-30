@@ -1,7 +1,5 @@
-module.exports = {
-  REQUIRED_FIELD: 'Required field',
-  PASSWORD: 'Invalid password.',
-  PASSWORD_NOT_MATCH: 'The passwords do not match.',
-  EMAIL: 'Invalid E-mail',
-  PHONE: 'Invalid phone'
-};
+export const REQUIRED_FIELD = 'Required field';
+export const PASSWORD = 'Invalid password.';
+export const PASSWORD_NOT_MATCH = 'The passwords do not match.';
+export const EMAIL = 'Invalid E-mail';
+export const PHONE = 'Invalid phone';

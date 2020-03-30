@@ -1,18 +1,18 @@
-const { requiredField } = require('../validation-rules');
-const { username, password } = require('./inputs-texts');
-const { defaultInputProperties } = require('../inputs-formats');
+import { REQUIRED_FIELD_RULE } from '../validation-rules';
+import { username, password } from './inputs-texts';
+import { defaultInputProperties } from '../inputs-formats';
 
 export const loginInputs = [
   {
     ...defaultInputProperties(username),
     type: 'username',
-    rules: [requiredField],
+    rules: [REQUIRED_FIELD_RULE],
     iconType: 'mail'
   },
   {
     ...defaultInputProperties(password),
     type: 'password',
-    rules: [requiredField],
+    rules: [REQUIRED_FIELD_RULE],
     iconType: 'lock'
   }
 ];
