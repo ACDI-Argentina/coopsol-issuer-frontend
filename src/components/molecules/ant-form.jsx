@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 import ButtonPrimary from '../atoms/ButtonPrimary/button-primary';
 import { inputRenderer } from '../../utils/form-helper';
 
-const AntFormInputs = React.forwardRef((p, r) => {
+const AntForm = React.forwardRef((p, r) => {
   const {
     handleSubmit,
     handleErrorSubmit,
     inputs,
-    form,
     submitText,
     submitTheme,
     disabled,
@@ -24,6 +23,7 @@ const AntFormInputs = React.forwardRef((p, r) => {
   const [submittedCount, setSubmittedCount] = useState(0);
   const [captchaResult, setCaptchaResult] = useState();
   const [captchaWarning, setCaptchaWarning] = useState(false);
+  const [form] = Form.useForm();
 
   const formItems = inputRenderer(inputs, form, submittedCount);
 
@@ -32,14 +32,11 @@ const AntFormInputs = React.forwardRef((p, r) => {
     handleSubmit(toSubmitData);
   };
 
-  const processEventValues = event => {
+  const processEventValues = values => {
     setSubmittedCount(submittedCount + 1);
-    if (event) event.preventDefault();
     if (RECAPTCHA_SITE_KEY && !captchaResult) return setCaptchaWarning(true);
     setCaptchaWarning(false);
-    form.validateFieldsAndScroll((error, values) =>
-      error ? handleErrorSubmit(values) : onSubmit({ ...values, captchaResult })
-    );
+    onSubmit({ ...values, captchaResult });
   };
 
   const preSubmit = () => {
@@ -74,7 +71,12 @@ const AntFormInputs = React.forwardRef((p, r) => {
   };
 
   return (
-    <Form onSubmit={processEventValues} colon={false} from={form}>
+    <Form
+      onFinish={processEventValues}
+      onFinishFailed={handleErrorSubmit}
+      colon={false}
+      form={form}
+    >
       {topSubmitButton && submitButton()}
       {formItems}
       {RECAPTCHA_SITE_KEY && (
@@ -90,10 +92,8 @@ const AntFormInputs = React.forwardRef((p, r) => {
   );
 });
 
-AntFormInputs.propTypes = {
+AntForm.propTypes = {
   disabled: PropTypes.bool,
-  form: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({ current: PropTypes.object })])
-    .isRequired,
   handleErrorSubmit: PropTypes.func,
   handleSubmit: PropTypes.func,
   inputs: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -106,7 +106,7 @@ AntFormInputs.propTypes = {
   topSubmitButton: PropTypes.bool
 };
 
-AntFormInputs.defaultProps = {
+AntForm.defaultProps = {
   submitButtonClass: 'buttonSection',
   noSubmitButton: false,
   disabled: false,
@@ -119,5 +119,4 @@ AntFormInputs.defaultProps = {
   topSubmitButton: false
 };
 
-const AntForm = Form.create()(AntFormInputs);
 export default AntForm;
