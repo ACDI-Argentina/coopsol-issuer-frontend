@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Router } from './components/Router/router';
 import 'antd/dist/antd.css';
 import { UserProvider } from './services/providers/user-context';
 import './App.scss';
-//import './css/app.scss';
 
 const App = () => (
   <UserProvider>
@@ -14,4 +13,3 @@ const App = () => (
 );
 
 export default App;
-
