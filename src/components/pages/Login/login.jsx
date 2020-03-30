@@ -5,13 +5,13 @@ import apiCalls from '../../../services/api-calls/all';
 import AntForm from '../../molecules/ant-form';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { useRedirect } from '../../Router/redirect';
-import { HOME_URL } from '../../../utils/constants';
+import { HOME_URL, CREDENTIALS_URL } from '../../../utils/constants';
 import './_style.scss';
 import '../../../css/app.scss';
 
 const { loginRequest } = apiCalls();
 
-const Login = () => {
+const Login = ({ history }) => {
   // TODO REMEMBER ME const [rememberMe, setRememberMe] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState();
@@ -19,12 +19,14 @@ const Login = () => {
   const { redirect, setUrlToRedirect } = useRedirect();
 
   useEffect(() => {
-    if (user.accessToken) setUrlToRedirect(HOME_URL);
-  }, [user, setUrlToRedirect]);
+    if (user.accessToken) {
+      history.push(CREDENTIALS_URL);
+    }
+  }, [user.accessToken]);
 
-  const login = async values => {
+  const login = values => {
     try {
-      const response = await loginRequest(values);
+      const response = loginRequest(values);
       setUser(response.data);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
@@ -34,7 +36,6 @@ const Login = () => {
 
   return (
     <div className="ContainerAppLogin">
-      {redirect()}
       <div className="loginLogo">
         <div>
           <img src="img/loginImg.png" alt="loginLogo" />
