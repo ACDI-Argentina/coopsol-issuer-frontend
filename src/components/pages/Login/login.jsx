@@ -8,6 +8,7 @@ import { useRedirect } from '../../Router/redirect';
 import { HOME_URL } from '../../../utils/constants';
 import './_style.scss';
 import '../../../css/app.scss';
+import Loader from '../../atoms/Loader/loader';
 
 const { loginRequest } = apiCalls();
 
@@ -15,6 +16,7 @@ const Login = () => {
   // TODO REMEMBER ME const [rememberMe, setRememberMe] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState();
+  const [loading, setLoading] = useState();
 
   const { redirect, setUrlToRedirect } = useRedirect();
 
@@ -23,12 +25,15 @@ const Login = () => {
   }, [user, setUrlToRedirect]);
 
   const login = async values => {
+    setLoading(true);
+    setErrorMessage(null);
     try {
       const response = await loginRequest(values);
       setUser(response.data);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       setErrorMessage(errorMessage);
+      setLoading(false);
     }
   };
 
@@ -39,9 +44,17 @@ const Login = () => {
         <img src="img/login-img.svg" alt="loginLogo" />
       </div>
       <div className="LoginFormContainer">
-        <h1>Bienvenida/o a <strong>Semillas!</strong></h1>
+        <h1>
+          Bienvenida/o a <strong>Semillas!</strong>
+        </h1>
         <p>Para ingresar completá los siguientes campos</p>
-        <AntForm inputs={loginInputs} handleSubmit={login} submitText={'Login'} />
+        <AntForm
+          inputs={loginInputs}
+          handleSubmit={login}
+          submitText={'Login'}
+          disabled={loading}
+        />
+        <Loader loading={loading} />
         {errorMessage && <div className="error">{errorMessage}</div>}
       </div>
     </div>

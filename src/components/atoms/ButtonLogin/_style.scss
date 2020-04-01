@@ -17,10 +17,15 @@
     cursor: pointer;
     margin-left: 1em;
 
-    &:hover{
+    &:hover {
       box-shadow: 2px 10px 11px rgba(0, 72, 66, 0.342);
       position: relative;
       transition: all 0.8s;
     }
+  }
+
+  button:disabled {
+    background-color: $primary-color-disabled;
+    pointer-events: none;
   }
 }

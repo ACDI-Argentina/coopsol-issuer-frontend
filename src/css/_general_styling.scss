@@ -5,6 +5,7 @@ $background-pending: #fffaf0;
 $background-approved: #f3fbfa;
 
 $primary-color: #0ea89b;
+$primary-color-disabled: #689e99;
 $secondary-color: #203342;
 
 $warning: #f1af34;
@@ -92,9 +93,10 @@ $label: 10px;
     outline: none;
     box-shadow: 0 0 0 2px transparent;
   }
-  .ant-form-item-has-error .ant-form-item-explain, .ant-form-item-has-error .ant-form-item-split{
+  .ant-form-item-has-error .ant-form-item-explain,
+  .ant-form-item-has-error .ant-form-item-split {
     color: $error;
     @include label($body, $error);
-    margin-top: .5em;
+    margin-top: 0.5em;
   }
 }

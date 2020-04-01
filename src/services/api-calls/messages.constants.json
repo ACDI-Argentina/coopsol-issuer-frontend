@@ -1,8 +1,8 @@
 {
-  "UNEXPECTED_ERROR": "Unexpected error occurred",
-  "API_ERROR_401": "Invalid credentials",
+  "UNEXPECTED_ERROR": "Hubo un error al realizar la operacion",
+  "API_ERROR_401": "Los datos ingresados no son correctos",
   "API_ERROR_403": "Unable to login. Please contact the system administrator",
-  "API_ERROR_500": "Unexpected error occurred",
+  "API_ERROR_500": "Hubo un error al realizar la operacion",
   "STATUS_401": 401,
   "STATUS_403": 403,
   "STATUS_500": 500
