@@ -16,5 +16,11 @@
     box-shadow: 2px 4px 11px rgba(14, 168, 155, 0.15);
     cursor: pointer;
     margin-left: 1em;
+
+    &:hover{
+      box-shadow: 2px 10px 11px rgba(0, 72, 66, 0.342);
+      position: relative;
+      transition: all 0.8s;
+    }
   }
 }

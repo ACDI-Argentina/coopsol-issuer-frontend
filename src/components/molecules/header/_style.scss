@@ -4,7 +4,10 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding-bottom: 2em;
+  align-items: center;
+  padding: 0 80px;
+  height: 10vh;
+  border-bottom: 1px solid #ECEFF3;
   .logo {
     width: 60%;
     button {

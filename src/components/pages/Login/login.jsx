@@ -3,7 +3,6 @@ import { UserContext } from '../../../services/providers/user-context';
 import { loginInputs } from '../../../utils/form_inputs/inputs-login';
 import apiCalls from '../../../services/api-calls/all';
 import AntForm from '../../molecules/ant-form';
-import ButtonLogin from '../../atoms/ButtonLogin/button-login';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { useRedirect } from '../../Router/redirect';
 import { HOME_URL } from '../../../utils/constants';

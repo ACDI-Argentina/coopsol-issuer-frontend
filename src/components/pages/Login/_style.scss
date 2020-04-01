@@ -11,37 +11,37 @@
 
 .ContainerAppLogin {
   width: 100%;
-  background: linear-gradient(to left, $white, rgba(251, 251, 255, 1));
+  background: transparent;
   padding: 0 80px;
   display: flex;
   align-items: center;
-  height: 100vh;
-  justify-content: space-around;
+  height: 90vh;
+  justify-content: space-between;
 
   .ant-form-item {
     .ant-form-item-label {
       text-align: left;
       > label {
         color: $secondary-color;
-        @include label($body, $secondary-color) 
+        @include label($body, $secondary-color);
       }
       > label.ant-form-item-required::before {
         display: none;
       }
     }
-    .ant-form-item-control{
-      .ant-input{
+    .ant-form-item-control {
+      .ant-input {
         background-color: transparent;
         border: 1px solid $secondary-color;
         border-radius: 5px;
-        &:hover{
+        &:hover {
           background-color: #e8f0fe7e;
           transition: all 0.3s;
         }
       }
       input {
         padding: 10px 11px;
-        @include label(14px, $secondary-color) 
+        @include label(14px, $secondary-color);
       }
     }
   }
@@ -64,13 +64,14 @@
   }
   .LoginFormContainer {
     width: 30%;
+    margin-right: 5em;
 
-    h1{
+    h1 {
       font-size: 30px;
       color: $primary-color;
       font-family: 'poppins-light';
     }
-    p{
+    p {
       font-family: 'poppins-regular';
     }
 
@@ -88,9 +89,9 @@
       .password {
         width: 100%;
       }
-      .RecoverPassword{
+      .RecoverPassword {
         @include label($body, $secondary-color);
-        span{
+        span {
           color: $primary-color;
         }
       }
