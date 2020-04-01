@@ -8,7 +8,6 @@ import Header from './components/molecules/header/header';
 const App = () => (
   <UserProvider>
     <div className="App">
-      <Header/>
       <Router />
     </div>
   </UserProvider>
