@@ -3,6 +3,7 @@ import { UserContext } from '../../../services/providers/user-context';
 import { loginInputs } from '../../../utils/form_inputs/inputs-login';
 import apiCalls from '../../../services/api-calls/all';
 import AntForm from '../../molecules/ant-form';
+import ButtonLogin from '../../atoms/ButtonLogin/button-login';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { useRedirect } from '../../Router/redirect';
 import { HOME_URL } from '../../../utils/constants';
@@ -36,14 +37,11 @@ const Login = () => {
     <div className="ContainerAppLogin">
       {redirect()}
       <div className="loginLogo">
-        <div>
-          <img src="img/loginImg.png" alt="loginLogo" />
-        </div>
+        <img src="img/login-img.svg" alt="loginLogo" />
       </div>
       <div className="LoginFormContainer">
-        <div className="formImg">
-          <img src="img/logo.png" alt="formImg" />
-        </div>
+        <h1>Bienvenida/o a <strong>Semillas!</strong></h1>
+        <p>Para ingresar completá los siguientes campos</p>
         <AntForm inputs={loginInputs} handleSubmit={login} submitText={'Login'} />
         {errorMessage && <div className="error">{errorMessage}</div>}
       </div>

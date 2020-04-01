@@ -1,0 +1,20 @@
+@import '../../../css/general_styling';
+
+.ButtonLogin {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 2em;
+  p {
+    margin-bottom: 0;
+    @include primary-title(14px, $secondary-color);
+  }
+  button {
+    background-color: $primary-color;
+    padding: 1em;
+    border-radius: 35px;
+    box-shadow: 2px 4px 11px rgba(14, 168, 155, 0.15);
+    cursor: pointer;
+    margin-left: 1em;
+  }
+}
