@@ -1,13 +1,23 @@
 import React from 'react';
-import { Switch, BrowserRouter } from 'react-router-dom';
+import { Switch, Router as AppRouter } from 'react-router-dom';
 import PrivateRoute from './private-route';
 
 import Login from '../pages/Login/login';
-import Home from '../pages/Home/home';
+import Credentials from '../pages/Credentials/credentials';
 import FileUploader from '../pages/FileUploader/file-uploader';
 import Error404 from '../pages/Error404/error404';
 
-import { HOME_URL, LOGIN_URL, UPLOAD_FILE_URL } from '../../utils/constants';
+import {
+  HOME_URL,
+  LOGIN_URL,
+  UPLOAD_FILE_URL,
+  CREDENTIALS_URL,
+  ACTIVITIES_URL,
+  REQUESTS_URL
+} from '../../utils/constants';
+import history from './history';
+import Activities from '../pages/Activities/activities';
+import Requests from '../pages/Requests/requests';
 
 const routesConfig = [
   {
@@ -16,7 +26,10 @@ const routesConfig = [
     requireAuthentication: false,
     exact: true
   },
-  { path: HOME_URL, component: Home, requireAuthentication: true, exact: true },
+  { path: HOME_URL, component: Credentials, requireAuthentication: true, exact: true },
+  { path: CREDENTIALS_URL, component: Credentials, requireAuthentication: true, exact: true },
+  { path: ACTIVITIES_URL, component: Activities, requireAuthentication: true, exact: true },
+  { path: REQUESTS_URL, component: Requests, requireAuthentication: true, exact: true },
   {
     path: UPLOAD_FILE_URL,
     component: FileUploader,
@@ -32,9 +45,9 @@ export const Router = () => {
     <div className="AppContainer">
       <div className="MainContent">
         <div>
-          <BrowserRouter>
+          <AppRouter history={history}>
             <Switch>{routes}</Switch>
-          </BrowserRouter>
+          </AppRouter>
         </div>
       </div>
     </div>
