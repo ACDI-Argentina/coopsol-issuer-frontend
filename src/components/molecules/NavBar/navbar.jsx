@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { Menu, message } from 'antd';
 import './_style.scss';
 import { UserContext } from '../../../services/providers/user-context';
@@ -29,9 +29,10 @@ const NavBar = () => {
     history.push(LOGIN_URL);
   };
 
-  const renderNavItem = (path, name) => {
+  const renderNavItem = (path, name, className) => {
     return (
-      <Menu.Item key={path}>
+      <Menu.Item key={path} className={className}>
+        <img src="img/cred.svg" alt=""/>
         <button
           onClick={() => {
             history.push(path);
@@ -46,13 +47,14 @@ const NavBar = () => {
   return (
     <div className="Sidebar">
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
-        {renderNavItem(CREDENTIALS_URL, 'Credenciales')}
-        {renderNavItem(REQUESTS_URL, 'Solicitudes')}
-        {renderNavItem(ACTIVITIES_URL, 'Actividades')}
-        {renderNavItem(PROFILE_URL, 'Avatar')}
-        <Menu.Item onClick={() => signOut()}>
-          <button>Cerrar sesión</button>
-        </Menu.Item>
+        <Fragment></Fragment>
+          {renderNavItem(CREDENTIALS_URL, 'Credenciales')}
+          {renderNavItem(REQUESTS_URL, 'Solicitudes')}
+          {renderNavItem(ACTIVITIES_URL, 'Actividades')}
+          <Menu.Item className="logoutBottom" onClick={() => signOut()}>
+            <img src="img/salir.svg" alt=""/>
+            <button>Cerrar sesión</button>
+          </Menu.Item>
       </Menu>
     </div>
   );

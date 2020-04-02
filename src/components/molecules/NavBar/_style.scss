@@ -1,7 +1,5 @@
 @import '../../../css/general_styling';
 
-
-
 //Acá piso estilos de Antd del menú
 
 body .ant-menu-submenu-popup {
@@ -26,19 +24,18 @@ body .ant-menu-submenu > .ant-menu {
   button:hover {
     color: $white;
   }
-
 }
 
 button:focus-within {
-  outline-color:transparent;
+  outline-color: transparent;
 }
 
 button {
-  cursor: pointer!important;
+  cursor: pointer !important;
 }
 
 .ant-menu-vertical .ant-menu-item {
-  margin:0!important;
+  margin: 0 !important;
 }
 
 .Sidebar {
@@ -59,33 +56,40 @@ button {
     border-bottom: transparent;
     height: 100%;
     padding: 20px 0;
+    &::before,
+    &::after {
+      display: none;
+    }
     .ant-menu-item:hover {
       border-bottom: 2px solid transparent;
-      transition: background-color 0.1s ease!important;
+      transition: background-color 0.1s ease !important;
       transition: all 0.5s;
     }
-    .space{
-      display: flex;
-      justify-content: space-between;
-      flex-direction: column;
-      height: 20%;
+    .logoutBottom {
+      position: absolute;
+      top: 43em;
+      width: 18%;
+      @include primary-title($body, $secondary-color);
     }
     li {
+      @include primary-title($body, #E5E5E5);
       button {
         background-color: transparent;
         padding: 0;
         border: transparent;
-        @include primary-title($body, $secondary-color)
+        margin-left: 1em;
+        width: 80%;
+        text-align: left;
       }
     }
-    &:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    &:not(.ant-menu-horizontal) .ant-menu-item-selected {
       background-color: transparent;
       border-left: 5px solid $primary-color;
+      @include primary-title($body, $secondary-color);
     }
   }
   .ant-menu-horizontal > .ant-menu-submenu:hover {
     border-bottom: 2px solid transparent !important;
-    
   }
 }
 

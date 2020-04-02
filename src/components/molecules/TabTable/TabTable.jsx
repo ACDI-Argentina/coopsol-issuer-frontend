@@ -1,7 +1,7 @@
 import React from 'react';
 import './_style.scss';
 import { Tabs } from 'antd';
-import { AppleOutlined, AndroidOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
@@ -12,7 +12,7 @@ const TabTable = () => {
         <TabPane
           tab={
             <span>
-              <AppleOutlined />
+              <UnorderedListOutlined />
               Credenciales vigentes
             </span>
           }
@@ -23,7 +23,7 @@ const TabTable = () => {
         <TabPane
           tab={
             <span>
-              <AndroidOutlined />
+              <UnorderedListOutlined />
               Credenciales provisorias
             </span>
           }
@@ -34,7 +34,7 @@ const TabTable = () => {
         <TabPane
           tab={
             <span>
-              <AndroidOutlined />
+              <UnorderedListOutlined />
               Pendientes de aprobación crediticia
             </span>
           }
