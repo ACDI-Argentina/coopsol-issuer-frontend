@@ -2,7 +2,7 @@ import React, { useState, useImperativeHandle } from 'react';
 import { Form } from 'antd';
 import ReCAPTCHA from 'react-google-recaptcha';
 import PropTypes from 'prop-types';
-import ButtonPrimary from '../atoms/ButtonPrimary/button-primary';
+import ButtonLogin from '../atoms/ButtonLogin/button-login';
 import { inputRenderer } from '../../utils/form-helper';
 
 const AntForm = React.forwardRef((p, r) => {
@@ -54,9 +54,9 @@ const AntForm = React.forwardRef((p, r) => {
 
   const submitButton = () => {
     return !noSubmitButton ? (
-      <div className={submitButtonClass}>
+      <div>
         <Form.Item>
-          <ButtonPrimary
+          <ButtonLogin
             type="primary"
             htmlType="submit"
             text={submitText}
@@ -87,6 +87,7 @@ const AntForm = React.forwardRef((p, r) => {
           </Form.Item>
         </div>
       )}
+      <label className="RecoverPassword" htmlFor="">¿Olvidaste tu contraseña? <span>¡Click aquí!</span></label> 
       {!topSubmitButton && submitButton()}
     </Form>
   );

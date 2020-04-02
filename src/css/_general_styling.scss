@@ -1,33 +1,36 @@
 // Colors
-$background: #222222;
-$primary-color: #C43300;
-$yellow:#F49C00;
-$green: #819613;
 
-$hover: #F13F00;
+$background-grey: #fdfdfe;
+$background-pending: #fffaf0;
+$background-approved: #f3fbfa;
 
-$medium-grey:#363636;
+$primary-color: #0ea89b;
+$primary-color-disabled: #689e99;
+$secondary-color: #203342;
+
+$warning: #f1af34;
+$error: #db2e27;
+
+$light-grey: #f3f3f3;
+$medium-grey: #363636;
 $dark-grey: #3d3737;
-$light-grey:rgba(255,255,255, 0.3);
 
-$white: #d4d4d4;
+$white: #ffff;
 $black: black;
 
 $border_bottom: 1px solid $light-grey;
 
 // Typographic Scale
 $title-main: 36px;
-$title-secondary:24px;
-$subtitle: 18px;
-$button: 12px;
-$body: 15px;
-$label: 12px;
+$title-secondary: 18px;
+$body: 12px;
+$label: 10px;
 
 //Text
 
 @mixin primary-text($font-size, $font-color, $font-weight) {
   margin: 0;
-  font-family: 'avenir-heavy';
+  font-family: 'raleway-regular';
   font-size: $font-size;
   font-weight: $font-weight;
   @if $font-color {
@@ -35,11 +38,19 @@ $label: 12px;
   }
 }
 
-@mixin primary-title($font-size, $font-color, $font-weight) {
+@mixin primary-title($font-size, $font-color) {
   margin: 0;
-  font-family: 'avenir-heavy';
+  font-family: 'poppins-bold';
   font-size: $font-size;
-  font-weight: $font-weight;
+  @if $font-color {
+    color: $font-color;
+  }
+}
+
+@mixin label($font-size, $font-color) {
+  margin: 0;
+  font-family: 'poppins-medium';
+  font-size: $font-size;
   @if $font-color {
     color: $font-color;
   }
@@ -56,17 +67,36 @@ $label: 12px;
 // Font Family
 
 @font-face {
-  font-family: 'avenir-light';
-  src: url(/fonts/AVENIRLTSTD-LIGHT.OTF);
+  font-family: 'poppins-regular';
+  src: url(./fonts/Poppins-Regular.ttf);
 }
 
 @font-face {
-  font-family: 'avenir-medium';
-  src: url(/fonts/AVENIRLTSTD-MEDIUM.OTF);
+  font-family: 'poppins-medium';
+  src: url(./fonts/Poppins-Medium.ttf);
 }
 
 @font-face {
-  font-family: 'avenir-heavy';
-  src: url(/fonts/AVENIRLTSTD-HEAVY.OTF);
+  font-family: 'poppins-bold';
+  src: url(./fonts/Poppins-SemiBold.ttf);
 }
 
+@font-face {
+  font-family: 'raleway-regular';
+  src: url(./fonts/Raleway-Regular.ttf);
+}
+
+//Antd
+
+.ant-form {
+  .ant-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px transparent;
+  }
+  .ant-form-item-has-error .ant-form-item-explain,
+  .ant-form-item-has-error .ant-form-item-split {
+    color: $error;
+    @include label($body, $error);
+    margin-top: 0.5em;
+  }
+}

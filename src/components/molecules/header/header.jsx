@@ -7,6 +7,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="RightSide">
+        <img src="img/sem-logo.svg" alt="" />
         <NavBar />
       </div>
     </div>

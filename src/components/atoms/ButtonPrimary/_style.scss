@@ -17,10 +17,10 @@
     text-transform: uppercase;
   }
 
-  &:hover {
-    background: $hover;
+  // &:hover {
+  //   background: $hover;
 
-  }
+  // }
 }
 
 .ThemeDisable {
@@ -58,7 +58,7 @@
   }
 
   &:hover {
-    background:$hover;
+    // background:$hover;
     p {
       color: $white;
     }

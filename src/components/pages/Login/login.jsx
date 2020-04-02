@@ -7,12 +7,14 @@ import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { CREDENTIALS_URL } from '../../../utils/constants';
 import './_style.scss';
 import '../../../css/app.scss';
+import Loader from '../../atoms/Loader/loader';
 
 const { loginRequest } = apiCalls();
 
 const Login = ({ history }) => {
   const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState();
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
     if (user.accessToken) {
@@ -20,28 +22,36 @@ const Login = ({ history }) => {
     }
   }, [user.accessToken, history]);
 
-  const login = values => {
+  const login = async values => {
+    setLoading(true);
+    setErrorMessage(null);
     try {
       const response = loginRequest(values);
       setUser(response.data);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       setErrorMessage(errorMessage);
+      setLoading(false);
     }
   };
 
   return (
     <div className="ContainerAppLogin">
       <div className="loginLogo">
-        <div>
-          <img src="img/loginImg.png" alt="loginLogo" />
-        </div>
+        <img src="img/login-img.svg" alt="loginLogo" />
       </div>
       <div className="LoginFormContainer">
-        <div className="formImg">
-          <img src="img/logo.png" alt="formImg" />
-        </div>
-        <AntForm inputs={loginInputs} handleSubmit={login} submitText={'Login'} />
+        <h1>
+          Bienvenida/o a <strong>Semillas!</strong>
+        </h1>
+        <p>Para ingresar completá los siguientes campos</p>
+        <AntForm
+          inputs={loginInputs}
+          handleSubmit={login}
+          submitText={'Login'}
+          disabled={loading}
+        />
+        <Loader loading={loading} />
         {errorMessage && <div className="error">{errorMessage}</div>}
       </div>
     </div>
