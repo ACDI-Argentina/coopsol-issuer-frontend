@@ -58,8 +58,8 @@ const FileUploader = () => {
 
             <div className="title">
               <div className="message">
-                {error && <div className="success">{error}</div>}
-                {success && <div className="error">{success}</div>}
+                {error && <div className="error">{error}</div>}
+                {success && <div className="success">{success}</div>}
               </div>
               <div className="buttonSection">
                 <ButtonPrimary
