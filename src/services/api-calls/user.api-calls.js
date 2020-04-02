@@ -1,6 +1,6 @@
 import helpers from './helpers';
 
-const getCredentials = makeGetRequest => () => makeGetRequest('getCredentials');
+const getCredentials = makeGetRequest => () => makeGetRequest('credential');
 
 export default client => {
   const { makePostRequest, makeGetRequest, makePatchRequest } = helpers(client);

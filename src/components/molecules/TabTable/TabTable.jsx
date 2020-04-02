@@ -1,11 +1,28 @@
 import React from 'react';
 import './_style.scss';
-import { Tabs } from 'antd';
+import { Tabs, Table } from 'antd';
 import { AppleOutlined, AndroidOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
-const TabTable = () => {
+const TabTable = ({ credentialsData }) => {
+  const credentialsColumns = [
+    { title: 'Tipo de credencial', dataIndex: 'credentialType', key: 'credentialType' },
+    { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
+    { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
+    { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
+    { title: 'Generada', dataIndex: 'dateOfIssue', key: 'dateOfIssue' },
+    { title: 'Caduca', dataIndex: 'dateOfExpiry', key: 'dateOfExpiry' },
+    { title: 'Estado', dataIndex: 'creditState', key: 'creditState' },
+    { title: 'Ult. actualización', dataIndex: 'lastUpdate', key: 'lastUpdate' },
+    {
+      title: 'Acciones',
+      dataIndex: '',
+      key: 'x',
+      render: () => <a>Revocar credencial</a>
+    }
+  ];
+
   return (
     <div className="TabTableContent">
       <Tabs defaultActiveKey="2">
@@ -18,7 +35,7 @@ const TabTable = () => {
           }
           key="1"
         >
-          Tab 1
+          <Table columns={credentialsColumns} dataSource={credentialsData} />
         </TabPane>
         <TabPane
           tab={
