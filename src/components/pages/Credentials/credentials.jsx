@@ -13,11 +13,7 @@ const { getCredentials } = api();
 const Credentials = () => {
   const getCredentialData = useApi();
 
-  console.log(api);
-
   const [credentials, setCredentials] = useState([]);
-  console.log(getCredentials);
-
   useEffect(() => {
     getCredentialData(getCredentials, setCredentials, () => {});
   }, []);

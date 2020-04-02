@@ -2,12 +2,19 @@ import React from 'react';
 import './_style.scss';
 import { Tabs, Table } from 'antd';
 import { AppleOutlined, AndroidOutlined } from '@ant-design/icons';
+import TableFilters from '../TableFilters/table-filters';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const { TabPane } = Tabs;
 
 const TabTable = ({ credentialsData }) => {
-  const credentialsColumns = [
-    { title: 'Tipo de credencial', dataIndex: 'credentialType', key: 'credentialType' },
+  const [credentialsColumns, setCredentialColumns] = useState([
+    {
+      title: 'Tipo de credencial',
+      dataIndex: 'credentialType',
+      key: 'credentialType'
+    },
     { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
     { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
     { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
@@ -18,14 +25,18 @@ const TabTable = ({ credentialsData }) => {
     {
       title: 'Acciones',
       dataIndex: '',
-      key: 'x',
+      key: 'action',
       render: () => <a>Revocar credencial</a>
     }
-  ];
+  ]);
+
+  console.log('data', credentialsData);
+
+  const onApplyFilter = () => {};
 
   return (
     <div className="TabTableContent">
-      <Tabs defaultActiveKey="2">
+      <Tabs defaultActiveKey="1">
         <TabPane
           tab={
             <span>
@@ -35,7 +46,8 @@ const TabTable = ({ credentialsData }) => {
           }
           key="1"
         >
-          <Table columns={credentialsColumns} dataSource={credentialsData} />
+          <TableFilters onApplyFilter={onApplyFilter} />
+          <Table columns={credentialsColumns} dataSource={credentialsData} pagination={false} />
         </TabPane>
         <TabPane
           tab={
