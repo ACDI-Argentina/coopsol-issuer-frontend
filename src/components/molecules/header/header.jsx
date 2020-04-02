@@ -6,9 +6,10 @@ import '../../../css/app.scss';
 const Header = () => {
   return (
     <div className="header">
-      <div className="RightSide">
-        <img src="img/sem-logo.svg" alt=""/>
+      <div className="TopNav">
+        <img src="img/sem-logo.svg" alt="" />
       </div>
+      <NavBar />
     </div>
   );
 };

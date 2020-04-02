@@ -34,23 +34,32 @@ const NavBar = () => {
   };
 
   return (
-    <div>
+    <div className="Sidebar">
       {redirect()}
       <Menu
         onClick={({ key }) => setCurrent(key)}
         selectedKeys={[current]}
-        mode="horizontal"
+        mode="vertical"
         className={'ulMain'}
       >
-            <Menu.Item key="logout">
-              <button onClick={() => signOut()}>
-                Logout
-              </button>
-            </Menu.Item>
+        <Menu.Item key="credentials">
+          <button>Credenciales</button>
+        </Menu.Item>
+        <Menu.Item key="request">
+          <button>Solicitudes</button>
+        </Menu.Item>
+        <Menu.Item key="activity">
+          <button>Actividades</button>
+        </Menu.Item>
+        <Menu.Item key="user">
+          <button>Avatar</button>
+        </Menu.Item>
+        <Menu.Item key="logout">
+          <button onClick={() => signOut()}>Cerrar Sesión</button>
+        </Menu.Item>
       </Menu>
     </div>
   );
-
 };
 
 export default NavBar;

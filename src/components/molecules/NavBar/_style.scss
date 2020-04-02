@@ -1,5 +1,7 @@
 @import '../../../css/general_styling';
 
+
+
 //Acá piso estilos de Antd del menú
 
 body .ant-menu-submenu-popup {
@@ -39,8 +41,8 @@ button {
   margin:0!important;
 }
 
-.NavBar {
-  position: relative;
+.Sidebar {
+  height: 90vh;
   .ant-menu-horizontal > .ant-menu-item:hover,
   .ant-menu-horizontal > .ant-menu-submenu:hover,
   .ant-menu-horizontal > .ant-menu-item-active,
@@ -53,23 +55,37 @@ button {
     border-bottom: 2px solid transparent;
   }
   .ant-menu {
-    background-color: transparent;
+    background-color: $white;
     border-bottom: transparent;
+    height: 100%;
+    padding: 20px 0;
     .ant-menu-item:hover {
       border-bottom: 2px solid transparent;
       transition: background-color 0.1s ease!important;
+      transition: all 0.5s;
+    }
+    .space{
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      height: 20%;
     }
     li {
       button {
         background-color: transparent;
         padding: 0;
         border: transparent;
-        color: $white;
+        @include primary-title($body, $secondary-color)
       }
+    }
+    &:not(.ant-menu-horizontal) .ant-menu-item-selected{
+      background-color: transparent;
+      border-left: 5px solid $primary-color;
     }
   }
   .ant-menu-horizontal > .ant-menu-submenu:hover {
     border-bottom: 2px solid transparent !important;
+    
   }
 }
 
@@ -86,14 +102,6 @@ button {
     color: #d1c4c3;
     border-bottom: none;
     z-index: 1;
-  }
-
-  .NavBar {
-    ul {
-      width: 50px;
-      background-repeat: no-repeat !important;
-      background-position: center center !important;
-    }
   }
 }
 

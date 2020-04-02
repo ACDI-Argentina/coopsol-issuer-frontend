@@ -23,16 +23,15 @@ $border_bottom: 1px solid $light-grey;
 // Typographic Scale
 $title-main: 36px;
 $title-secondary: 18px;
-$body: 12px;
+$body: 14px;
 $label: 10px;
 
 //Text
 
-@mixin primary-text($font-size, $font-color, $font-weight) {
+@mixin primary-text($font-size, $font-color) {
   margin: 0;
   font-family: 'raleway-regular';
   font-size: $font-size;
-  font-weight: $font-weight;
   @if $font-color {
     color: $font-color;
   }

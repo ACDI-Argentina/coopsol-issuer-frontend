@@ -11,8 +11,18 @@ body {
     background: linear-gradient(to left, $white, rgba(251, 251, 255, 1));
 
     width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+
+    .Container{
+      width: 100%;
+      display: flex;
+      .Content{
+        background-color: $white;
+        width: 82%;
+      }
+    }
 }
 
 

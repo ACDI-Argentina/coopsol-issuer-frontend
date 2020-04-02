@@ -1,9 +1,13 @@
 import React from 'react';
+import './_style.scss';
+import TitlePage from '../../atoms/TitlePage/TitlePage';
+import TabTable from '../../molecules/TabTable/TabTable';
 
 const Home = () => {
   return (
-    <div className="Home">
-      HOME
+    <div className="CredentialsContent">
+      <TitlePage/>
+      <TabTable/>
     </div>
   );
 };

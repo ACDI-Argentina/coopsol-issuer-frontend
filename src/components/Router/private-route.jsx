@@ -12,9 +12,11 @@ const PrivateRoute = ({ component: Component, requireAuthentication, ...rest }) 
     return <Route {...rest} render={properties => <Component {...properties} />} />;
   }
   return user.accessToken ? (
-    <div>
+    <div className="Container">
       <Header />
-      <Route {...rest} render={properties => <Component {...properties} />} />
+      <div className="Content">
+        <Route {...rest} render={properties => <Component {...properties} />} />
+      </div>
     </div>
   ) : (
     <Redirect to={LOGIN_URL} />

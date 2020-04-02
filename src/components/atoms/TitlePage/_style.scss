@@ -1,0 +1,19 @@
+@import '../../../css/general_styling';
+
+.TitlePage {
+  padding: 85px 60px 0 60px;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eceff3;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    h1 {
+      @include primary-title($title-main, $secondary-color);
+    }
+  }
+  .subtitle {
+    @include primary-text($body, $secondary-color);
+  }
+}
