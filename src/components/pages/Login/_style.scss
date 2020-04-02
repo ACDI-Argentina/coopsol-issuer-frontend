@@ -1,30 +1,47 @@
 @import '../../../css/general_styling';
 
 .error {
-  background-color: rgba(196, 51, 0, 0.5);
-  border-radius: 5px;
+  text-align: right;
+  color: #e20000;
+  font-family: 'poppins-medium';
   padding: 5px;
-  color: white !important;
-  border: 1px solid $primary-color;
-  width: 250px;
 }
 
 .ContainerAppLogin {
   width: 100%;
-  margin: 0 auto;
-  padding: 3em;
+  background: transparent;
+  padding: 0 80px;
   display: flex;
-  flex-direction: row-reverse;
-  height: 600px;
   align-items: center;
+  height: 90vh;
+  justify-content: space-between;
 
   .ant-form-item {
-    width: 70%;
-  }
-
-  .ant-form-item-label > label {
-    color: $white;
-    font-weight: 700;
+    .ant-form-item-label {
+      text-align: left;
+      > label {
+        color: $secondary-color;
+        @include label($body, $secondary-color);
+      }
+      > label.ant-form-item-required::before {
+        display: none;
+      }
+    }
+    .ant-form-item-control {
+      .ant-input {
+        background-color: transparent;
+        border: 1px solid $secondary-color;
+        border-radius: 5px;
+        &:hover {
+          background-color: #e8f0fe7e;
+          transition: all 0.3s;
+        }
+      }
+      input {
+        padding: 10px 11px;
+        @include label(14px, $secondary-color);
+      }
+    }
   }
 
   .ButtonPrimary {
@@ -37,45 +54,45 @@
     }
 
     &:hover {
-      background: $hover;
+      // background: $hover;
       p {
         color: $white;
       }
     }
   }
-
-  .loginLogo {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    align-items: center;
-  }
   .LoginFormContainer {
-    width: 50%;
-    margin: 0 auto;
-    padding: 0 2em 0 5em;
-    border-right: 1px solid lightgray;
+    width: 30%;
+    margin-right: 5em;
+
+    h1 {
+      font-size: 30px;
+      color: $primary-color;
+      font-family: 'poppins-light';
+    }
+    p {
+      font-family: 'poppins-regular';
+    }
 
     .ant-form {
       display: flex;
       flex-direction: column;
+      margin-top: 3em;
+      .ant-form-item {
+        display: flex;
+        flex-direction: column;
+      }
       .username {
         width: 100%;
-        .ant-form-item-required {
-          color: $white !important;
-          font-weight: 700 !important;
-        }
       }
       .password {
         width: 100%;
-        .ant-form-item-required {
-          color: $white !important;
-          font-weight: 700 !important;
+      }
+      .RecoverPassword {
+        @include label($body, $secondary-color);
+        span {
+          color: $primary-color;
         }
       }
-    }
-    .formImg {
-      display: none;
     }
   }
 }

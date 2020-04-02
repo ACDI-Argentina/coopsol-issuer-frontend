@@ -1,8 +1,8 @@
 export const firstName = { name: 'name', placeholder: 'First Name', label: 'First Name' };
 export const lastName = { name: 'lastName', placeholder: 'Last Name', label: 'Last Name' };
-export const username = { name: 'username', placeholder: 'Username', label: 'Username' };
+export const username = { name: 'username', placeholder: 'Usuario', label: 'Usuario' };
 export const phone = { name: 'phone', placeholder: 'Phone', label: 'Phone' };
-export const password = { name: 'password', placeholder: 'Password', label: 'Password' };
+export const password = { name: 'password', placeholder: 'Contraseña', label: 'Contraseña' };
 export const confirmPassword = {
   name: 'confirmPassword',
   placeholder: 'Confirm password',
