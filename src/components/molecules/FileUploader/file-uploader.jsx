@@ -4,27 +4,32 @@ import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { Upload, message } from 'antd';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import './_style.scss';
+import MessageLoader from '../MessageLoader/message-loader';
 
 const { uploadFile } = apiCalls();
 const { Dragger } = Upload;
 
-const FileUploader = () => {
+const FileUploader = ({ onUploaded, history }) => {
   const [file, setFile] = useState(null);
   const [responseStatus, setResponseStatus] = useState({});
   const [showContainer, setShowContainer] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleUpload = async () => {
+    setUploading(true);
     try {
       const formData = new FormData();
       formData.set('file', file);
       const response = await uploadFile(formData);
       setResponseStatus(response.status);
       setSuccess('Archivo subido correctamente!');
+      setUploading(false);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       setError(errorMessage);
+      setUploading(false);
     }
   };
 
@@ -44,6 +49,31 @@ const FileUploader = () => {
     setShowContainer(data.fileList.length > 0);
   };
 
+  const handleProcessFile = () => {
+    onUploaded('id');
+  };
+
+  const renderButtons = () => {
+    if (success) {
+      return (
+        <ButtonPrimary
+          text="Crear credencial"
+          theme="ThemePrimary"
+          onClick={handleProcessFile}
+          disabled={!showContainer}
+        />
+      );
+    }
+    return (
+      <ButtonPrimary
+        text="Upload"
+        theme="ThemePrimary"
+        onClick={handleUpload}
+        disabled={!showContainer}
+      />
+    );
+  };
+
   return (
     <div className="FileUploader">
       <div className="mainSectionReport">
@@ -61,14 +91,8 @@ const FileUploader = () => {
                 {error && <div className="error">{error}</div>}
                 {success && <div className="success">{success}</div>}
               </div>
-              <div className="buttonSection">
-                <ButtonPrimary
-                  text="Upload"
-                  theme="ThemePrimary"
-                  onClick={handleSubmit}
-                  disabled={!showContainer}
-                />
-              </div>
+              <MessageLoader loading={uploading} message={'Subiendo archivo...'} />
+              <div className="buttonSection">{renderButtons()}</div>
             </div>
           </div>
         </div>
