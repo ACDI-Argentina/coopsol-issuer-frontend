@@ -1,18 +1,22 @@
-import React, { useState, useContext } from 'react';
-import { Menu, Icon, message } from 'antd';
+import React, { useContext } from 'react';
+import { Menu, message } from 'antd';
 import './_style.scss';
 import { UserContext } from '../../../services/providers/user-context';
-import { LOGIN_URL } from '../../../utils/constants';
-import { useRedirect } from '../../Router/redirect';
+import {
+  LOGIN_URL,
+  CREDENTIALS_URL,
+  REQUESTS_URL,
+  ACTIVITIES_URL,
+  PROFILE_URL
+} from '../../../utils/constants';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
+import history from '../../Router/history';
 
 const { logoutRequest } = apiCalls();
 
 const NavBar = () => {
-  const [current, setCurrent] = useState('');
   const { setUser } = useContext(UserContext);
-  const { redirect, setUrlToRedirect } = useRedirect();
 
   const signOut = async () => {
     try {
@@ -22,40 +26,32 @@ const NavBar = () => {
       message.error(errorMessage);
     }
     setUser(null);
-    setUrlToRedirect(LOGIN_URL);
+    history.push(LOGIN_URL);
   };
 
-  const itemClick = path => {
-    if (path === LOGIN_URL) {
-      signOut();
-    } else if (path !== null) {
-      setUrlToRedirect(path);
-    }
+  const renderNavItem = (path, name) => {
+    return (
+      <Menu.Item key={path}>
+        <button
+          onClick={() => {
+            history.push(path);
+          }}
+        >
+          {name}
+        </button>
+      </Menu.Item>
+    );
   };
 
   return (
     <div className="Sidebar">
-      {redirect()}
-      <Menu
-        onClick={({ key }) => setCurrent(key)}
-        selectedKeys={[current]}
-        mode="vertical"
-        className={'ulMain'}
-      >
-        <Menu.Item key="credentials">
-          <button>Credenciales</button>
-        </Menu.Item>
-        <Menu.Item key="request">
-          <button>Solicitudes</button>
-        </Menu.Item>
-        <Menu.Item key="activity">
-          <button>Actividades</button>
-        </Menu.Item>
-        <Menu.Item key="user">
-          <button>Avatar</button>
-        </Menu.Item>
-        <Menu.Item key="logout">
-          <button onClick={() => signOut()}>Cerrar Sesión</button>
+      <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
+        {renderNavItem(CREDENTIALS_URL, 'Credenciales')}
+        {renderNavItem(REQUESTS_URL, 'Solicitudes')}
+        {renderNavItem(ACTIVITIES_URL, 'Actividades')}
+        {renderNavItem(PROFILE_URL, 'Avatar')}
+        <Menu.Item onClick={() => signOut()}>
+          <button>Cerrar sesión</button>
         </Menu.Item>
       </Menu>
     </div>
