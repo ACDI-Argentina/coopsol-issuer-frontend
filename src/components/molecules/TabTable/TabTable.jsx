@@ -1,6 +1,7 @@
 import React from 'react';
 import './_style.scss';
 import { UnorderedListOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import { Tabs, Table } from 'antd';
 import TableFilters from '../TableFilters/table-filters';
 import { useState } from 'react';
@@ -39,10 +40,12 @@ const TabTable = ({ credentialsData }) => {
       <Tabs defaultActiveKey="1">
         <TabPane
           tab={
-            <span>
-              <UnorderedListOutlined />
-              Credenciales vigentes
-            </span>
+            <Tooltip title="Credenciales en uso">
+              <span>
+                <UnorderedListOutlined />
+                Credenciales vigentes
+              </span>
+            </Tooltip>
           }
           key="1"
         >
@@ -51,10 +54,12 @@ const TabTable = ({ credentialsData }) => {
         </TabPane>
         <TabPane
           tab={
-            <span>
-              <UnorderedListOutlined />
-              Credenciales provisorias
-            </span>
+            <Tooltip title="Credenciales caducadas">
+              <span>
+                <UnorderedListOutlined />
+                Credenciales revocadas
+              </span>
+            </Tooltip>
           }
           key="2"
         >
@@ -62,12 +67,27 @@ const TabTable = ({ credentialsData }) => {
         </TabPane>
         <TabPane
           tab={
+            <Tooltip title="A espera de generación del DID">
             <span>
               <UnorderedListOutlined />
-              Pendientes de aprobación crediticia
+              Credenciales pendientes
             </span>
+            </Tooltip>
           }
           key="3"
+        >
+          Tab 2
+        </TabPane>
+        <TabPane
+          tab={
+            <Tooltip title="A espera de aprobación crediticia desde sitema BONDAREA BOCS">
+            <span>
+              <UnorderedListOutlined />
+              Pendientes BOCS
+            </span>
+            </Tooltip>
+          }
+          key="4"
         >
           Tab 2
         </TabPane>
