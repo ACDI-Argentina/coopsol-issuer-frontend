@@ -49,7 +49,6 @@ const NavBar = () => {
   return (
     <div className="Sidebar">
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
-        <Fragment></Fragment>
         {renderNavItem(CREDENTIALS_URL, 'Credenciales', <CredIcon className="credentials" />)}
         {renderNavItem(REQUESTS_URL, 'Solicitudes', <RequestIcon className="request" />)}
         {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
