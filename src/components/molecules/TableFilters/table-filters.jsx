@@ -8,7 +8,7 @@ const { Column, ColumnGroup } = Table;
 
 const TableFilters = ({ onApplyFilter }) => {
   const filters = {
-    credentialType: 'Tipo de credencial',
+    credentialType: 'Tipo',
     name: 'Nombre y Apellido',
     dniBeneficiary: 'DNI',
     idDidiCredential: 'DID',

@@ -99,3 +99,7 @@ $label: 10px;
     margin-top: 0.5em;
   }
 }
+
+button:focus{
+  outline: transparent;
+}

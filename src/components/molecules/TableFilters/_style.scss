@@ -1,3 +1,18 @@
+@import '../../../css/general_styling';
+
 .TableFilters {
   display: flex;
+  padding: 20px 60px;
+  justify-content: space-between;
+  .ant-btn, .ant-input-affix-wrapper, .ant-picker {
+    @include primary-title(12px, $secondary-color);
+    border-color: $secondary-color;
+    border-radius: 6px;
+    height: 40px;
+    &:hover{
+      color: $secondary-color;
+      border-color: $secondary-color;
+    }
+    width: 13%;
+  }
 }
