@@ -6,7 +6,8 @@ import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
-
+import moment from 'moment';
+import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
 const { TabPane } = Tabs;
 
 const { getCredentials } = api();
@@ -28,8 +29,18 @@ const TabTable = () => {
     { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
     { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
     { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
-    { title: 'Generada', dataIndex: 'dateOfIssue', key: 'dateOfIssue' },
-    { title: 'Caduca', dataIndex: 'dateOfExpiry', key: 'dateOfExpiry' },
+    {
+      title: 'Generada',
+      dataIndex: 'dateOfIssue',
+      key: 'dateOfIssue',
+      render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
+    },
+    {
+      title: 'Caduca',
+      dataIndex: 'dateOfExpiry',
+      key: 'dateOfExpiry',
+      render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
+    },
     { title: 'Estado', dataIndex: 'creditState', key: 'creditState' },
     { title: 'Ult. actualización', dataIndex: 'lastUpdate', key: 'lastUpdate' },
     {

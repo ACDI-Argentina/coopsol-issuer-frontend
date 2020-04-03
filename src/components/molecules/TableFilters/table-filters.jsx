@@ -68,7 +68,13 @@ const TableFilters = ({ onApplyFilter }) => {
   };
 
   const renderDate = key => {
-    return <DatePicker onChange={date => onDateChange(date, key)} placeholder={filters[key]} />;
+    return (
+      <DatePicker
+        format={DEFAULT_DATE_FORMAT}
+        onChange={date => onDateChange(date, key)}
+        placeholder={filters[key]}
+      />
+    );
   };
 
   const renderDropdown = key => {
