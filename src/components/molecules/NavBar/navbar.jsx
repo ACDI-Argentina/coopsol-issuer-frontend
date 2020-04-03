@@ -12,7 +12,9 @@ import {
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
 import history from '../../Router/history';
-
+import { ReactComponent as CredIcon } from '../../../img/cred.svg';
+import { ReactComponent as RequestIcon } from '../../../img/request.svg';
+import { ReactComponent as ListIcon } from '../../../img/list.svg';
 const { logoutRequest } = apiCalls();
 
 const NavBar = () => {
@@ -32,7 +34,7 @@ const NavBar = () => {
   const renderNavItem = (path, name, img) => {
     return (
       <Menu.Item key={path}>
-        <img src={img} alt=""/>
+        {img}
         <button
           onClick={() => {
             history.push(path);
@@ -48,13 +50,13 @@ const NavBar = () => {
     <div className="Sidebar">
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
         <Fragment></Fragment>
-          {renderNavItem(CREDENTIALS_URL, 'Credenciales','img/cred.svg')}
-          {renderNavItem(REQUESTS_URL, 'Solicitudes', 'img/request.svg')}
-          {renderNavItem(ACTIVITIES_URL, 'Actividades', 'img/list.svg')}
-          <Menu.Item className="logoutBottom" onClick={() => signOut()}>
-            <img src="img/salir.svg" alt=""/>
-            <button>Cerrar sesión</button>
-          </Menu.Item>
+        {renderNavItem(CREDENTIALS_URL, 'Credenciales', <CredIcon className="credentials" />)}
+        {renderNavItem(REQUESTS_URL, 'Solicitudes', <RequestIcon className="request" />)}
+        {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
+        <Menu.Item className="logoutBottom" onClick={() => signOut()}>
+          <img src="img/salir.svg" alt="" />
+          <button>Cerrar sesión</button>
+        </Menu.Item>
       </Menu>
     </div>
   );
