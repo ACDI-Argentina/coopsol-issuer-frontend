@@ -14,7 +14,6 @@ const Credentials = () => {
   const getCredentialData = useApi();
 
   const [credentials, setCredentials] = useState([]);
-
   useEffect(() => {
     getCredentialData(getCredentials, setCredentials, () => {});
   }, []);
@@ -22,7 +21,7 @@ const Credentials = () => {
   return (
     <div className="Credentials">
       <TitlePage />
-      <TabTable />
+      <TabTable credentialsData={credentials} />
     </div>
   );
 };

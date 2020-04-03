@@ -29,10 +29,10 @@ const NavBar = () => {
     history.push(LOGIN_URL);
   };
 
-  const renderNavItem = (path, name, className) => {
+  const renderNavItem = (path, name, img) => {
     return (
-      <Menu.Item key={path} className={className}>
-        <img src="img/cred.svg" alt=""/>
+      <Menu.Item key={path}>
+        <img src={img} alt=""/>
         <button
           onClick={() => {
             history.push(path);
@@ -48,9 +48,9 @@ const NavBar = () => {
     <div className="Sidebar">
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
         <Fragment></Fragment>
-          {renderNavItem(CREDENTIALS_URL, 'Credenciales')}
-          {renderNavItem(REQUESTS_URL, 'Solicitudes')}
-          {renderNavItem(ACTIVITIES_URL, 'Actividades')}
+          {renderNavItem(CREDENTIALS_URL, 'Credenciales','img/cred.svg')}
+          {renderNavItem(REQUESTS_URL, 'Solicitudes', 'img/request.svg')}
+          {renderNavItem(ACTIVITIES_URL, 'Actividades', 'img/list.svg')}
           <Menu.Item className="logoutBottom" onClick={() => signOut()}>
             <img src="img/salir.svg" alt=""/>
             <button>Cerrar sesión</button>

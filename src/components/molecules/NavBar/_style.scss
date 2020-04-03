@@ -67,7 +67,7 @@ button {
     }
     .logoutBottom {
       position: absolute;
-      top: 43em;
+      top: 92vh;
       width: 18%;
       @include primary-title($body, $secondary-color);
     }
@@ -86,6 +86,10 @@ button {
       background-color: transparent;
       border-left: 5px solid $primary-color;
       @include primary-title($body, $secondary-color);
+      transition: all 0.9s;
+      img{
+        fill: red;
+      }
     }
   }
   .ant-menu-horizontal > .ant-menu-submenu:hover {
