@@ -4,7 +4,6 @@ import { Table, Menu, Dropdown, Button, Input, DatePicker } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
-const { Column, ColumnGroup } = Table;
 
 const TableFilters = ({ onApplyFilter }) => {
   const filters = {

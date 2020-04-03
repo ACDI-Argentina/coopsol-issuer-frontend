@@ -1,7 +1,6 @@
 import React from 'react';
 import './_style.scss';
 
-import { useApi } from '../../../services/useApi';
 import TitlePage from '../../atoms/TitlePage/TitlePage';
 import TabTable from '../../molecules/TabTable/TabTable';
 

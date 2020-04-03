@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 
 const { getCredentials } = api();
 
-const TabTable = ({}) => {
+const TabTable = () => {
   const [pagination, setPagination] = useState({
     page: 0
   });
@@ -36,19 +36,19 @@ const TabTable = ({}) => {
       title: 'Acciones',
       dataIndex: '',
       key: 'action',
-      render: () => <a>Revocar credencial</a>
+      render: () => <a href="">Revocar credencial</a>
     }
   ];
 
   const getCredentialData = useApi();
 
-  useEffect(() => {
-    fetchCredentials();
-  }, [pagination.page, filters]);
-
   const fetchCredentials = () => {
     getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
   };
+
+  useEffect(() => {
+    fetchCredentials();
+  }, [pagination.page, filters]);
 
   const onApplyFilter = filter => {
     setFilters(filter);
