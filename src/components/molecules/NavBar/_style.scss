@@ -24,19 +24,14 @@ body .ant-menu-submenu > .ant-menu {
   button:hover {
     color: $white;
   }
-
 }
 
 button:focus-within {
-  outline-color:transparent;
-}
-
-button {
-  cursor: pointer!important;
+  outline-color: transparent;
 }
 
 .ant-menu-vertical .ant-menu-item {
-  margin:0!important;
+  margin: 0 !important;
 }
 
 .NavBar {
@@ -57,7 +52,7 @@ button {
     border-bottom: transparent;
     .ant-menu-item:hover {
       border-bottom: 2px solid transparent;
-      transition: background-color 0.1s ease!important;
+      transition: background-color 0.1s ease !important;
     }
     li {
       button {
