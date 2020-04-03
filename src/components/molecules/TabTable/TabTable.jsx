@@ -32,7 +32,7 @@ const TabTable = ({ credentialsData }) => {
 
   console.log('data', credentialsData);
 
-  const onApplyFilter = () => {};
+  const onApplyFilter = field => {};
 
   return (
     <div className="TabTableContent">

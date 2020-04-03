@@ -2,6 +2,8 @@ import React from 'react';
 import './_style.scss';
 import { Table, Menu, Dropdown, Button, Input, DatePicker } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
 const { Column, ColumnGroup } = Table;
 
 const TableFilters = ({ onApplyFilter, colWidths }) => {
@@ -15,20 +17,41 @@ const TableFilters = ({ onApplyFilter, colWidths }) => {
     creditState: 'Estado'
   };
 
+  const [activeFilters, setActiveFilters] = useState({});
+
+  const onInputChange = ev => {
+    setActiveFilters({ ...activeFilters, [ev.target.id]: ev.target.value });
+  };
+
+  const onDateChange = (date, key) => {
+    console.log(date, key);
+  };
+
+  const onDropdownChange = value => {
+    console.log(value.key);
+  };
+
   const renderInput = key => {
-    return <Input placeholder={filters[key]} suffix={<UserOutlined />} />;
+    return (
+      <Input
+        onChange={onInputChange}
+        id={key}
+        placeholder={filters[key]}
+        suffix={<UserOutlined />}
+      />
+    );
   };
 
   const renderDate = key => {
-    return <DatePicker placeholder={filters[key]} />;
+    return <DatePicker onChange={date => onDateChange(date, key)} placeholder={filters[key]} />;
   };
 
   const renderDropdown = key => {
     const menu = (
-      <Menu onClick={() => {}}>
-        <Menu.Item key="1">1st menu item</Menu.Item>
-        <Menu.Item key="2">2nd menu item</Menu.Item>
-        <Menu.Item key="3">3rd item</Menu.Item>
+      <Menu onClick={onDropdownChange}>
+        <Menu.Item key="type1">1st menu item</Menu.Item>
+        <Menu.Item key="type2">2nd menu item</Menu.Item>
+        <Menu.Item key="type3">3rd item</Menu.Item>
       </Menu>
     );
 
