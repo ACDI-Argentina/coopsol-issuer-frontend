@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './_style.scss';
-import { UnorderedListOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
-import { Tabs, Table } from 'antd';
-import TableFilters from '../TableFilters/table-filters';
+import { Tabs } from 'antd';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useApi } from '../../../services/useApi';
+import api from '../../../services/api-calls/all';
+import CredentialTable from '../CredentialTable/credential-table';
+import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 
 const { TabPane } = Tabs;
 
-const TabTable = ({ credentialsData }) => {
-  const [credentialsColumns, setCredentialColumns] = useState([
+const { getCredentials } = api();
+
+const TabTable = ({}) => {
+  const [pagination, setPagination] = useState({
+    page: 0
+  });
+  const [loading, setLoading] = useState(false);
+  const [credentials, setCredentials] = useState([]);
+  const [filters, setFilters] = useState({});
+
+  const credentialsColumns = [
     {
       title: 'Tipo de credencial',
       dataIndex: 'credentialType',
@@ -29,52 +38,73 @@ const TabTable = ({ credentialsData }) => {
       key: 'action',
       render: () => <a>Revocar credencial</a>
     }
-  ]);
+  ];
 
-  console.log('data', credentialsData);
+  const getCredentialData = useApi();
+
+  useEffect(() => {
+    fetchCredentials();
+  }, [pagination.page, filters]);
+
+  const fetchCredentials = () => {
+    getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
+  };
 
   const onApplyFilter = filter => {
-    console.log(filter);
+    setFilters(filter);
+  };
+
+  const onSuccess = data => {
+    setPagination({
+      total: 50
+    });
+    setLoading(false);
+    setCredentials(data);
+  };
+
+  const onError = () => {
+    setLoading(false);
+  };
+
+  const handleTableChange = pagination => {
+    let page = pagination.current;
+    setLoading(true);
+    setPagination({
+      total: 50,
+      page: page
+    });
+    fetchCredentials(page);
   };
 
   return (
     <div className="TabTableContent">
-      <Tabs defaultActiveKey="1">
+      <Tabs>
         <TabPane
-          tab={
-            <Tooltip title="Credenciales en uso">
-              <span>
-                <UnorderedListOutlined />
-                Credenciales vigentes
-              </span>
-            </Tooltip>
-          }
-          key="1"
+          tab={<TabTooltip tooltip={'Credenciales en uso'} title={'Credenciales vigentes'} />}
+          key={'1'}
         >
-          <TableFilters onApplyFilter={onApplyFilter} />
-          <Table columns={credentialsColumns} dataSource={credentialsData} pagination={false} />
+          <CredentialTable
+            onApplyFilter={onApplyFilter}
+            onChange={handleTableChange}
+            columns={credentialsColumns}
+            dataSource={credentials}
+            loading={loading}
+            pagination={pagination}
+          />
         </TabPane>
+
         <TabPane
-          tab={
-            <Tooltip title="Credenciales caducadas">
-              <span>
-                <UnorderedListOutlined />
-                Credenciales revocadas
-              </span>
-            </Tooltip>
-          }
+          tab={<TabTooltip tooltip={'Credenciales revocadas'} title={'Credenciales caducadas'} />}
           key="2"
         >
           Tab 2
         </TabPane>
         <TabPane
           tab={
-            <Tooltip title="A espera de generación del DID">
-            <span>
-              <UnorderedListOutlined />
-              Credenciales pendientes
-            </span>
-            </Tooltip>
+            <TabTooltip
+              tooltip={'Credenciales pendientes'}
+              title={'A espera de generación del DID'}
+            />
           }
           key="3"
         >
@@ -82,12 +112,10 @@ const TabTable = ({ credentialsData }) => {
         </TabPane>
         <TabPane
           tab={
-            <Tooltip title="A espera de aprobación crediticia desde sitema BONDAREA BOCS">
-            <span>
-              <UnorderedListOutlined />
-              Pendientes BOCS
-            </span>
-            </Tooltip>
+            <TabTooltip
+              tooltip={'Pendientes BOCS'}
+              title={'A espera de aprobación crediticia desde sitema BONDAREA BOCS'}
+            />
           }
           key="4"
         >
