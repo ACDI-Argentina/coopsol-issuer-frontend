@@ -43,6 +43,7 @@ const TabTable = () => {
   const getCredentialData = useApi();
 
   const fetchCredentials = () => {
+    setLoading(true);
     getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
   };
 
