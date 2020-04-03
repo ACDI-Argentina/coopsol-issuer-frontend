@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
 const { Column, ColumnGroup } = Table;
 
-const TableFilters = ({ onApplyFilter, colWidths }) => {
+const TableFilters = ({ onApplyFilter }) => {
   const filters = {
     credentialType: 'Tipo de credencial',
     name: 'Nombre y Apellido',
@@ -20,15 +20,41 @@ const TableFilters = ({ onApplyFilter, colWidths }) => {
   const [activeFilters, setActiveFilters] = useState({});
 
   const onInputChange = ev => {
-    setActiveFilters({ ...activeFilters, [ev.target.id]: ev.target.value });
+    let key = ev.target.id;
+    let newFilter = { ...activeFilters, [key]: ev.target.value };
+
+    clearEmptyFilter(key, newFilter);
+    filter(newFilter);
+  };
+
+  const clearEmptyFilter = (key, obj) => {
+    if (!obj[key]) {
+      delete obj[key];
+    }
   };
 
   const onDateChange = (date, key) => {
-    console.log(date, key);
+    let newFilter = { ...activeFilters };
+
+    if (!date) {
+      delete newFilter[key];
+    } else {
+      newFilter[key] = date.format(DEFAULT_DATE_FORMAT);
+    }
+
+    filter(newFilter);
   };
 
   const onDropdownChange = value => {
-    console.log(value.key);
+    let key = value.item.props.id;
+    let newFilter = { ...activeFilters, [key]: value.key };
+    clearEmptyFilter(key, newFilter);
+    filter(newFilter);
+  };
+
+  const filter = filter => {
+    setActiveFilters(filter);
+    onApplyFilter(filter);
   };
 
   const renderInput = key => {
@@ -49,9 +75,15 @@ const TableFilters = ({ onApplyFilter, colWidths }) => {
   const renderDropdown = key => {
     const menu = (
       <Menu onClick={onDropdownChange}>
-        <Menu.Item key="type1">1st menu item</Menu.Item>
-        <Menu.Item key="type2">2nd menu item</Menu.Item>
-        <Menu.Item key="type3">3rd item</Menu.Item>
+        <Menu.Item id={key} key="type1">
+          1st menu item
+        </Menu.Item>
+        <Menu.Item id={key} key="type2">
+          2nd menu item
+        </Menu.Item>
+        <Menu.Item id={key} key="type3">
+          3rd item
+        </Menu.Item>
       </Menu>
     );
 
