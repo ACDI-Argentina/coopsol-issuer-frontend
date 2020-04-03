@@ -10,7 +10,7 @@ import TabTable from '../../molecules/TabTable/TabTable';
 
 const { getCredentials } = api();
 
-const Credentials = () => {
+const Credentials = ({ history }) => {
   const getCredentialData = useApi();
 
   const [credentials, setCredentials] = useState([]);
@@ -20,7 +20,7 @@ const Credentials = () => {
 
   return (
     <div className="Credentials">
-      <TitlePage />
+      <TitlePage history={history} />
       <TabTable credentialsData={credentials} />
     </div>
   );

@@ -4,20 +4,21 @@ import PrivateRoute from './private-route';
 
 import Login from '../pages/Login/login';
 import Credentials from '../pages/Credentials/credentials';
-import FileUploader from '../pages/FileUploader/file-uploader';
 import Error404 from '../pages/Error404/error404';
 
 import {
   HOME_URL,
   LOGIN_URL,
-  UPLOAD_FILE_URL,
   CREDENTIALS_URL,
   ACTIVITIES_URL,
-  REQUESTS_URL
+  REQUESTS_URL,
+  ADD_CREDENTIALS
 } from '../../utils/constants';
 import history from './history';
 import Activities from '../pages/Activities/activities';
 import Requests from '../pages/Requests/requests';
+import AddCredentials from '../pages/AddCredentials/add-credentials';
+import SimpleHeader from '../molecules/SimpleHeader/simple-header';
 
 const routesConfig = [
   {
@@ -31,10 +32,11 @@ const routesConfig = [
   { path: ACTIVITIES_URL, component: Activities, requireAuthentication: true, exact: true },
   { path: REQUESTS_URL, component: Requests, requireAuthentication: true, exact: true },
   {
-    path: UPLOAD_FILE_URL,
-    component: FileUploader,
+    path: ADD_CREDENTIALS,
+    component: AddCredentials,
     requireAuthentication: true,
-    exact: true
+    exact: true,
+    replaceHeader: SimpleHeader
   },
   { component: Error404, requireAuthentication: false }
 ];

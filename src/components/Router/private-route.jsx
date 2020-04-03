@@ -5,7 +5,12 @@ import { UserContext } from '../../services/providers/user-context.jsx';
 import Header from '../molecules/header/header';
 import { LOGIN_URL } from '../../utils/constants';
 
-const PrivateRoute = ({ component: Component, requireAuthentication, ...rest }) => {
+const PrivateRoute = ({
+  component: Component,
+  requireAuthentication,
+  replaceHeader: ReplaceHeader,
+  ...rest
+}) => {
   const { user } = useContext(UserContext);
 
   if (!requireAuthentication) {
@@ -13,7 +18,7 @@ const PrivateRoute = ({ component: Component, requireAuthentication, ...rest }) 
   }
   return user.accessToken ? (
     <div className="Container">
-      <Header />
+      {ReplaceHeader ? <ReplaceHeader /> : <Header />}
       <div className="Content">
         <Route {...rest} render={properties => <Component {...properties} />} />
       </div>
