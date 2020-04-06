@@ -49,7 +49,7 @@ const TabTable = () => {
       dataIndex: '',
       key: 'action',
       render: item => {
-        return <RevokeCredentials credential={item} />;
+        return <RevokeCredentials credential={item} onRevoked={fetchCredentials} />;
       }
     }
   ];
