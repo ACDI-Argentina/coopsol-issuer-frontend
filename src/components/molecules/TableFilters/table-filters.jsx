@@ -70,6 +70,7 @@ const TableFilters = ({ onApplyFilter }) => {
   const renderDate = key => {
     return (
       <DatePicker
+        locale="es"
         format={DEFAULT_DATE_FORMAT}
         onChange={date => onDateChange(date, key)}
         placeholder={filters[key]}
