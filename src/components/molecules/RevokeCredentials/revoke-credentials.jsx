@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './_style.scss';
 import { Menu, Dropdown, Modal, message } from 'antd';
 import { useState } from 'react';
@@ -50,7 +50,7 @@ const RevokeCredentials = () => {
   return (
     <div className="RevokeCredentials">
       <Dropdown overlay={menu} className="RevokeCredentials">
-        <a className="ant-dropdown-link" href="" onClick={e => e.preventDefault()}>
+        <a className="ant-dropdown-link" href="/" onClick={e => e.preventDefault()}>
           Revocar credencial <DownOutlined />
         </a>
       </Dropdown>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './_style.scss';
-import { Tabs, Menu, Dropdown, message } from 'antd';
+import { Tabs, message } from 'antd';
 import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
@@ -9,7 +9,6 @@ import RevokeCredentials from '../RevokeCredentials/revoke-credentials';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import moment from 'moment';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
-import { DownOutlined } from '@ant-design/icons';
 const { TabPane } = Tabs;
 
 const { getCredentials } = api();
