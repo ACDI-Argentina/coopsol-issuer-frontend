@@ -55,6 +55,8 @@ const TabTable = () => {
 
   const fetchCredentials = () => {
     setLoading(true);
+    console.log('Fetching', { page: pagination.page, ...filters });
+
     getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
   };
 
@@ -68,7 +70,8 @@ const TabTable = () => {
 
   const onSuccess = data => {
     setPagination({
-      total: 50
+      total: 50,
+      page: pagination.page
     });
     setLoading(false);
     setCredentials(data);
@@ -80,12 +83,12 @@ const TabTable = () => {
 
   const handleTableChange = pagination => {
     let page = pagination.current;
+
     setLoading(true);
     setPagination({
       total: 50,
       page: page
     });
-    fetchCredentials(page);
   };
 
   return (
