@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './_style.scss';
-import { Menu, Dropdown, Modal } from 'antd';
+import { Menu, Dropdown, Modal, message } from 'antd';
 import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
@@ -24,7 +24,9 @@ const RevokeCredentials = () => {
     setVisible(false);
   };
 
-  const onError = () => {};
+  const onError = () => {
+    message.error('No se pudieron revocar las credenciales, intente nuevamente.');
+  };
 
   const handleCancel = e => {
     console.log(e);
