@@ -10,16 +10,16 @@ import Loader from '../../atoms/Loader/loader';
 
 const { revokeCredentials } = api();
 
-const RevokeCredentials = () => {
+const RevokeCredentials = ({ credential }) => {
   const [visible, setVisible] = useState(false);
-  const [selectedRevokeType, setSelectedRevokeType] = useState(null);
+  const [selectedCredential, setSelectedCredential] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const credentialCall = useApi();
 
   const handleOk = e => {
     setLoading(true);
-    credentialCall(revokeCredentials, { id: selectedRevokeType }, onSuccess, onError);
+    credentialCall(revokeCredentials, { id: credential.id }, onSuccess, onError);
   };
 
   const onSuccess = () => {
@@ -37,7 +37,7 @@ const RevokeCredentials = () => {
   };
 
   const onItemClick = id => {
-    setSelectedRevokeType(id);
+    setSelectedCredential({ id });
     setVisible(true);
   };
 

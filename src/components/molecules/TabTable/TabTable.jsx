@@ -48,7 +48,9 @@ const TabTable = () => {
       title: 'Acciones',
       dataIndex: '',
       key: 'action',
-      render: () => <RevokeCredentials />
+      render: item => {
+        return <RevokeCredentials credential={item} />;
+      }
     }
   ];
 
@@ -77,7 +79,7 @@ const TabTable = () => {
   };
 
   const onError = () => {
-    message.error('No se pudieron revocar las credenciales, intente nuevamente.');
+    message.error('No se pudieron obtener las credenciales, intente nuevamente.');
     setLoading(false);
   };
 

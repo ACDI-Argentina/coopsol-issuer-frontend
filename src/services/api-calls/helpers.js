@@ -14,6 +14,31 @@ export const createQueryString = query =>
     .map(key => `${key}=${query[key] || ''}`)
     .join('&');
 
+const replaceUrlParams = (url, paramsData) => {
+  let currentParam = '';
+  let isAdding = false;
+  let params = [];
+
+  for (let i = 0; i < url.length; i++) {
+    if (url[i] === '}') {
+      isAdding = false;
+    }
+    if (isAdding) {
+      currentParam += url[i];
+    } else if (currentParam) {
+      params.push(currentParam);
+      currentParam = '';
+    }
+    if (url[i] === '{') {
+      isAdding = true;
+    }
+  }
+  params.forEach(p => {
+    url = url.replace('{' + p + '}', paramsData[p]);
+  });
+
+  return `${url}`;
+};
 const addQueryString = (url, query) => {
   const queryStringParameters = createQueryString(query || {});
   return query ? `${url}?${queryStringParameters}` : url;
@@ -39,6 +64,8 @@ const makeDeleteRequest = httpClient => (url, bodyParameters = {}, queryParamete
 };
 
 const makePatchRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
+  url = replaceUrlParams(url, bodyParameters);
+
   const completeUrl = addQueryString(url, queryParameters);
   return httpClient.patch(completeUrl, { ...bodyParameters });
 };
