@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import { DownOutlined } from '@ant-design/icons';
+import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
 const { revokeCredentials } = api();
 
@@ -45,22 +46,22 @@ const RevokeCredentials = () => {
   );
 
   return (
-    <div>
+    <div className="RevokeCredentials">
       <Dropdown overlay={menu} className="RevokeCredentials">
         <a className="ant-dropdown-link" href="" onClick={e => e.preventDefault()}>
           Revocar credencial <DownOutlined />
         </a>
       </Dropdown>
-      <Modal
-        visible={visible}
-        cancelText={'Cancelar'}
-        okText="Confirmar"
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <Modal width="400px" className="RevokeCredentials" visible={visible} onCancel={handleCancel}>
+        <div className="title">
+          <h1>Revocar credencial</h1>
+        </div>
+        <div className="body">¿Seguro que quiere revocar esta credencial?</div>
+
+        <div className="footer">
+          <ButtonPrimary onClick={handleOk} text="Cancelar" />
+          <ButtonPrimary onClick={handleCancel} text="Confirmar" />
+        </div>
       </Modal>
     </div>
   );
