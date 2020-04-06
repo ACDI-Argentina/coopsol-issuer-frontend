@@ -6,21 +6,24 @@ import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import { DownOutlined } from '@ant-design/icons';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
+import Loader from '../../atoms/Loader/loader';
 
 const { revokeCredentials } = api();
 
 const RevokeCredentials = () => {
   const [visible, setVisible] = useState(false);
   const [selectedRevokeType, setSelectedRevokeType] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const credentialCall = useApi();
 
   const handleOk = e => {
-    setVisible(false);
+    setLoading(true);
     credentialCall(revokeCredentials, { id: selectedRevokeType }, onSuccess, onError);
   };
 
   const onSuccess = () => {
+    setLoading(false);
     setVisible(false);
   };
 
@@ -61,8 +64,10 @@ const RevokeCredentials = () => {
         <div className="body">¿Seguro que quiere revocar esta credencial?</div>
 
         <div className="footer">
-          <ButtonPrimary onClick={handleOk} text="Cancelar" />
-          <ButtonPrimary onClick={handleCancel} text="Confirmar" />
+          <ButtonPrimary onClick={handleCancel} text="Cancelar" />
+          <ButtonPrimary onClick={handleOk} text="Confirmar" />
+
+          <Loader loading={loading} />
         </div>
       </Modal>
     </div>
