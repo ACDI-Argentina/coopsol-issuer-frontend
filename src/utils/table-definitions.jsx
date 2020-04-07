@@ -29,7 +29,7 @@ export const getCredentialsColumns = fetchCredentials => [
     title: 'Ult. actualización',
     dataIndex: 'lastUpdate',
     key: 'lastUpdate',
-    render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
+    render: value => <div>{value ? moment(value).format(DEFAULT_DATE_FORMAT) : ''}</div>
   },
   {
     title: 'Acciones',
@@ -40,3 +40,36 @@ export const getCredentialsColumns = fetchCredentials => [
     }
   }
 ];
+
+export let defaultFilters = (credentialTypes, credentialStates) => ({
+  credentialType: {
+    type: 'dropdown',
+    name: 'Tipo',
+    data: credentialTypes
+  },
+  name: {
+    type: 'input',
+    name: 'Nombre y Apellido'
+  },
+  dniBeneficiary: {
+    type: 'input',
+    name: 'DNI'
+  },
+  idDidiCredential: {
+    type: 'input',
+    name: 'DID'
+  },
+  dateOfIssue: {
+    type: 'date',
+    name: 'Generada'
+  },
+  dateOfExpiry: {
+    type: 'date',
+    name: 'Caduca'
+  },
+  credentialState: {
+    type: 'dropdown',
+    name: 'Estado',
+    data: credentialStates
+  }
+});

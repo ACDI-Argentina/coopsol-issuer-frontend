@@ -4,45 +4,9 @@ import { Menu, Dropdown, Button, Input, DatePicker, message } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
-import { useEffect } from 'react';
-import { useApi } from '../../../services/useApi';
-import api from '../../../services/api-calls/all';
 
-const { getCredentialTypes, getCredentialStates } = api();
-
-const TableFilters = ({ onApplyFilter }) => {
-  const filters = {
-    credentialType: 'Tipo',
-    name: 'Nombre y Apellido',
-    dniBeneficiary: 'DNI',
-    idDidiCredential: 'DID',
-    dateOfIssue: 'Generada',
-    dateOfExpiry: 'Caduca',
-    credentialState: 'Estado'
-  };
-
-  const credentialCall = useApi();
-
+const TableFilters = ({ onApplyFilter, filters }) => {
   const [activeFilters, setActiveFilters] = useState({});
-  const [credentialTypes, setCredentialTypes] = useState(['t,', 'a', 'as']);
-  const [credentialStates, setCredentialStates] = useState([]);
-
-  useEffect(() => {
-    credentialCall(getCredentialTypes, null, onTypesSuccess, onError);
-    credentialCall(getCredentialStates, null, onStatesSuccess, onError);
-  }, []);
-
-  const onTypesSuccess = data => {
-    setCredentialTypes(data);
-  };
-
-  const onStatesSuccess = data => {
-    setCredentialStates(data);
-  };
-
-  const onError = () => {
-    message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
-  };
 
   const onInputChange = ev => {
     let key = ev.target.id;
@@ -87,7 +51,8 @@ const TableFilters = ({ onApplyFilter }) => {
       <Input
         onChange={onInputChange}
         id={key}
-        placeholder={filters[key]}
+        key={key}
+        placeholder={filters[key].name}
         suffix={<UserOutlined />}
       />
     );
@@ -97,9 +62,10 @@ const TableFilters = ({ onApplyFilter }) => {
     return (
       <DatePicker
         locale="es"
+        key={key}
         format={DEFAULT_DATE_FORMAT}
         onChange={date => onDateChange(date, key)}
-        placeholder={filters[key]}
+        placeholder={filters[key].name}
       />
     );
   };
@@ -119,25 +85,33 @@ const TableFilters = ({ onApplyFilter }) => {
     );
 
     return (
-      <Dropdown overlay={menu}>
+      <Dropdown overlay={menu} key={key}>
         <Button>
-          {activeFilters[key] ? activeFilters[key] : filters[key]} <DownOutlined />
+          {activeFilters[key] ? activeFilters[key] : filters[key].name} <DownOutlined />
         </Button>
       </Dropdown>
     );
   };
 
-  return (
-    <div className="TableFilters">
-      {renderDropdown('credentialType', credentialTypes)}
-      {renderInput('name')}
-      {renderInput('dniBeneficiary')}
-      {renderInput('idDidiCredential')}
-      {renderDate('dateOfIssue')}
-      {renderDate('dateOfExpiry')}
-      {renderDropdown('credentialState', credentialStates)}
-    </div>
-  );
+  const renderFilters = () => {
+    let filterComps = [];
+    Object.keys(filters).forEach(key => {
+      switch (filters[key].type) {
+        case 'input':
+          filterComps.push(renderInput(key));
+          break;
+        case 'date':
+          filterComps.push(renderDate(key));
+          break;
+        case 'dropdown':
+          filterComps.push(renderDropdown(key, filters[key].data));
+          break;
+      }
+    });
+    return filterComps;
+  };
+
+  return <div className="TableFilters">{renderFilters()}</div>;
 };
 
 export default TableFilters;

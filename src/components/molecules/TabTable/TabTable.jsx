@@ -7,59 +7,40 @@ import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 
-import { getCredentialsColumns } from '../../../utils/table-definitions';
+import { getCredentialsColumns, defaultFilters } from '../../../utils/table-definitions';
+import {
+  CREDENTIAL_STATE_ACTIVE,
+  CREDENTIAL_STATE_PENDING,
+  CREDENTIAL_STATE_REVOKED
+} from '../../../utils/constants';
 const { TabPane } = Tabs;
 
-const { getCredentials } = api();
+const { getCredentials, getCredentialTypes, getCredentialStates } = api();
 
 const TabTable = () => {
-  const [pagination, setPagination] = useState({
-    page: 0
-  });
-  const [loading, setLoading] = useState(false);
-  const [credentials, setCredentials] = useState([]);
-  const [filters, setFilters] = useState({});
+  const credentialCall = useApi();
 
-  const getCredentialData = useApi();
-
-  const fetchCredentials = () => {
-    setLoading(true);
-    getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
-  };
-
-  const credentialsColumns = getCredentialsColumns(fetchCredentials);
+  const [credentialTypes, setCredentialTypes] = useState([]);
+  const [credentialStates, setCredentialStates] = useState([]);
 
   useEffect(() => {
-    fetchCredentials();
-  }, [pagination.page, filters]);
+    credentialCall(getCredentialTypes, null, onTypesSuccess, onError);
+    credentialCall(getCredentialStates, null, onStatesSuccess, onError);
+  }, []);
 
-  const onApplyFilter = filter => {
-    setFilters(filter);
+  const onTypesSuccess = data => {
+    setCredentialTypes(data);
   };
 
-  const onSuccess = data => {
-    setPagination({
-      total: 50,
-      page: pagination.page
-    });
-    setLoading(false);
-    setCredentials(data);
+  const onStatesSuccess = data => {
+    setCredentialStates(data);
   };
 
   const onError = () => {
-    message.error('No se pudieron obtener las credenciales, intente nuevamente.');
-    setLoading(false);
+    message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
   };
 
-  const handleTableChange = pagination => {
-    let page = pagination.current;
-
-    setLoading(true);
-    setPagination({
-      total: 50,
-      page: page
-    });
-  };
+  const activeCredentialsFilter = defaultFilters(credentialTypes, credentialStates);
 
   return (
     <div className="TabTableContent">
@@ -69,12 +50,10 @@ const TabTable = () => {
           key={'1'}
         >
           <CredentialTable
-            onApplyFilter={onApplyFilter}
-            onChange={handleTableChange}
-            columns={credentialsColumns}
-            dataSource={credentials}
-            loading={loading}
-            pagination={pagination}
+            columns={getCredentialsColumns}
+            dataSource={getCredentials}
+            filters={activeCredentialsFilter}
+            defaultFilters={{ credentialState: CREDENTIAL_STATE_ACTIVE }}
           />
         </TabPane>
 
@@ -82,7 +61,14 @@ const TabTable = () => {
           tab={<TabTooltip title={'Credenciales revocadas'} tooltip={'Credenciales caducadas'} />}
           key="2"
         >
-          Tab 2
+          <CredentialTable
+            columns={getCredentialsColumns}
+            dataSource={getCredentials}
+            filters={activeCredentialsFilter}
+            defaultFilters={{
+              credentialState: [CREDENTIAL_STATE_PENDING, CREDENTIAL_STATE_REVOKED].join(',')
+            }}
+          />
         </TabPane>
         <TabPane
           tab={
@@ -93,7 +79,14 @@ const TabTable = () => {
           }
           key="3"
         >
-          Tab 2
+          <CredentialTable
+            columns={getCredentialsColumns}
+            dataSource={getCredentials}
+            filters={{}}
+            defaultFilters={{
+              credentialState: 'none'
+            }}
+          />
         </TabPane>
         <TabPane
           tab={
@@ -104,7 +97,14 @@ const TabTable = () => {
           }
           key="4"
         >
-          Tab 2
+          <CredentialTable
+            columns={getCredentialsColumns}
+            dataSource={getCredentials}
+            filters={{}}
+            defaultFilters={{
+              credentialState: 'none'
+            }}
+          />
         </TabPane>
       </Tabs>
     </div>
