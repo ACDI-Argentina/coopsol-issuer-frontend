@@ -8,6 +8,7 @@ const CredentialTable = ({ dataSource, columns, loading, onChange, pagination, o
     <div>
       <TableFilters onApplyFilter={onApplyFilter} />
       <Table
+        rowKey={'id'}
         columns={columns}
         dataSource={dataSource}
         loading={loading}

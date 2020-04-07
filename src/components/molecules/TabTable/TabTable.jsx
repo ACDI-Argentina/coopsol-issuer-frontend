@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import './_style.scss';
-import { Tabs } from 'antd';
+import { Tabs, message } from 'antd';
 import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
+import RevokeCredentials from '../RevokeCredentials/revoke-credentials';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import moment from 'moment';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
@@ -47,7 +48,9 @@ const TabTable = () => {
       title: 'Acciones',
       dataIndex: '',
       key: 'action',
-      render: () => <a href="">Revocar credencial</a>
+      render: item => {
+        return <RevokeCredentials credential={item} onRevoked={fetchCredentials} />;
+      }
     }
   ];
 
@@ -55,8 +58,6 @@ const TabTable = () => {
 
   const fetchCredentials = () => {
     setLoading(true);
-    console.log('Fetching', { page: pagination.page, ...filters });
-
     getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
   };
 
@@ -78,6 +79,7 @@ const TabTable = () => {
   };
 
   const onError = () => {
+    message.error('No se pudieron obtener las credenciales, intente nuevamente.');
     setLoading(false);
   };
 

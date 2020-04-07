@@ -1,6 +1,6 @@
 import React from 'react';
 import './_style.scss';
-import { Table, Menu, Dropdown, Button, Input, DatePicker } from 'antd';
+import { Menu, Dropdown, Button, Input, DatePicker } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
@@ -70,6 +70,7 @@ const TableFilters = ({ onApplyFilter }) => {
   const renderDate = key => {
     return (
       <DatePicker
+        locale="es"
         format={DEFAULT_DATE_FORMAT}
         onChange={date => onDateChange(date, key)}
         placeholder={filters[key]}

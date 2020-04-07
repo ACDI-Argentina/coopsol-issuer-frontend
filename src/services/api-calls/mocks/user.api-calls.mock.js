@@ -35,7 +35,10 @@ const getCredentials = () => [
   }
 ];
 
+const revokeCredentials = () => ({});
+
 export default () => ({
   uploadFile,
-  getCredentials
+  getCredentials,
+  revokeCredentials
 });
