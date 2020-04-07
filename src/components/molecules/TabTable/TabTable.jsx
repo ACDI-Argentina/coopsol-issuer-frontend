@@ -7,7 +7,11 @@ import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 
-import { getCredentialsColumns, defaultFilters } from '../../../utils/table-definitions';
+import {
+  getCredentialsColumns,
+  defaultFilters,
+  getRevokedCredentialsColumns
+} from '../../../utils/table-definitions';
 import {
   CREDENTIAL_STATE_ACTIVE,
   CREDENTIAL_STATE_PENDING,
@@ -62,7 +66,7 @@ const TabTable = () => {
           key="2"
         >
           <CredentialTable
-            columns={getCredentialsColumns}
+            columns={getRevokedCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
             defaultFilters={{

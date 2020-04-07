@@ -41,6 +41,12 @@ export const getCredentialsColumns = fetchCredentials => [
   }
 ];
 
+export const getRevokedCredentialsColumns = () => {
+  let cols = getCredentialsColumns();
+  cols.splice(cols.length - 1, 1);
+  return cols;
+};
+
 export let defaultFilters = (credentialTypes, credentialStates) => ({
   credentialType: {
     type: 'dropdown',
