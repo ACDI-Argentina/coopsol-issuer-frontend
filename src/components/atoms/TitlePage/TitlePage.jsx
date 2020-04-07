@@ -12,7 +12,7 @@ const TitlePage = ({ history }) => {
     <div className="TitlePage">
       <div className="title">
         <h1>Credenciales</h1>
-        <ButtonPrimary onClick={addCredential} text="+ Crear nueva credencial" />
+        <ButtonPrimary onClick={addCredential} text="+ Crear nueva credencial" theme="primary" />
       </div>
       <p className="subtitle">
         Acá podés crear credenciales, precredenciales, ver el listados de las que se encuentran
