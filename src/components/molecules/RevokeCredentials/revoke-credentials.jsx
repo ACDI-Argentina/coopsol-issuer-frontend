@@ -7,6 +7,9 @@ import api from '../../../services/api-calls/all';
 import { DownOutlined } from '@ant-design/icons';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import Loader from '../../atoms/Loader/loader';
+import Lottie from 'react-lottie';
+import animationData from '../../../assets/3046-me-at-office.json';
+import TextAreaComments from '../../atoms/TextArea/text-area';
 
 const { revokeCredentials } = api();
 
@@ -50,6 +53,14 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
       <Menu.Item onClick={() => onItemClick('leave')}>Desvinculación</Menu.Item>
     </Menu>
   );
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
 
   return (
     <div className="RevokeCredentials">
@@ -59,14 +70,22 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
         </a>
       </Dropdown>
       <Modal width="400px" className="RevokeCredentials" visible={visible} onCancel={handleCancel}>
+        <Lottie options={defaultOptions} height={250} width={250} />
         <div className="title">
           <h1>Revocar credencial</h1>
         </div>
-        <div className="body">¿Seguro que quiere revocar esta credencial?</div>
-
+        <div className="body">
+          <p>
+            Por favor, indique los motivos por los cuales
+            <br />
+            desea revocar esta credencial.
+          </p>
+          <label htmlFor="">Motivos de revocación</label>
+          <TextAreaComments text="Motivos de revocación" />
+        </div>
         <div className="footer">
-          <ButtonPrimary onClick={handleCancel} text="Cancelar" />
-          <ButtonPrimary onClick={handleOk} text="Confirmar" />
+          <ButtonPrimary onClick={handleCancel} text="Cancelar" theme="cancel" />
+          <ButtonPrimary onClick={handleOk} text="Confirmar" theme="primary" />
 
           <Loader loading={loading} />
         </div>
