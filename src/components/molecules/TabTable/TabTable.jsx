@@ -65,7 +65,7 @@ const TabTable = () => {
     <div className="TabTableContent">
       <Tabs>
         <TabPane
-          tab={<TabTooltip tooltip={'Credenciales en uso'} title={'Credenciales vigentes'} />}
+          tab={<TabTooltip title={'Credenciales en uso'} tooltip={'Credenciales vigentes'} />}
           key={'1'}
         >
           <CredentialTable
@@ -79,7 +79,7 @@ const TabTable = () => {
         </TabPane>
 
         <TabPane
-          tab={<TabTooltip tooltip={'Credenciales revocadas'} title={'Credenciales caducadas'} />}
+          tab={<TabTooltip title={'Credenciales revocadas'} tooltip={'Credenciales caducadas'} />}
           key="2"
         >
           Tab 2
@@ -87,8 +87,8 @@ const TabTable = () => {
         <TabPane
           tab={
             <TabTooltip
-              tooltip={'Credenciales pendientes'}
-              title={'A espera de generación del DID'}
+              title={'Credenciales pendientes'}
+              tooltip={'A espera de generación del DID'}
             />
           }
           key="3"
@@ -98,8 +98,8 @@ const TabTable = () => {
         <TabPane
           tab={
             <TabTooltip
-              tooltip={'Pendientes BOCS'}
-              title={'A espera de aprobación crediticia desde sitema BONDAREA BOCS'}
+              title={'Pendientes BOCS'}
+              tooltip={'A espera de aprobación crediticia desde sitema BONDAREA BOCS'}
             />
           }
           key="4"
