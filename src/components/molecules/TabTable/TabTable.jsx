@@ -5,10 +5,9 @@ import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
-import RevokeCredentials from '../RevokeCredentials/revoke-credentials';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
-import moment from 'moment';
-import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
+
+import { getCredentialsColumns } from '../../../utils/table-definitions';
 const { TabPane } = Tabs;
 
 const { getCredentials } = api();
@@ -21,50 +20,14 @@ const TabTable = () => {
   const [credentials, setCredentials] = useState([]);
   const [filters, setFilters] = useState({});
 
-  const credentialsColumns = [
-    {
-      title: 'Tipo de credencial',
-      dataIndex: 'credentialType',
-      key: 'credentialType'
-    },
-    { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
-    { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
-    { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
-    {
-      title: 'Generada',
-      dataIndex: 'dateOfIssue',
-      key: 'dateOfIssue',
-      render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
-    },
-    {
-      title: 'Caduca',
-      dataIndex: 'dateOfExpiry',
-      key: 'dateOfExpiry',
-      render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
-    },
-    { title: 'Estado', dataIndex: 'credentialState', key: 'credentialState' },
-    {
-      title: 'Ult. actualización',
-      dataIndex: 'lastUpdate',
-      key: 'lastUpdate',
-      render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
-    },
-    {
-      title: 'Acciones',
-      dataIndex: '',
-      key: 'action',
-      render: item => {
-        return <RevokeCredentials credential={item} onRevoked={fetchCredentials} />;
-      }
-    }
-  ];
-
   const getCredentialData = useApi();
 
   const fetchCredentials = () => {
     setLoading(true);
     getCredentialData(getCredentials, { page: pagination.page, ...filters }, onSuccess, onError);
   };
+
+  const credentialsColumns = getCredentialsColumns(fetchCredentials);
 
   useEffect(() => {
     fetchCredentials();
