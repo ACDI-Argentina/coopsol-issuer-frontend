@@ -1,10 +1,10 @@
 export const useApi = () => {
-  return async (apiCall, set, onError) => {
+  return async (apiCall, data, onSuccess, onError) => {
     try {
-      const data = await apiCall();
-      if (data.data) {
-        set(data.data);
-      } else set(data);
+      const res = await apiCall(data);
+      if (res.data) {
+        onSuccess(res.data);
+      } else onSuccess(res);
     } catch (error) {
       console.log(error);
       if (onError) {

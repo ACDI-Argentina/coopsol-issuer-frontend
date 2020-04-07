@@ -1,14 +1,8 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext } from 'react';
 import { Menu, message } from 'antd';
 import './_style.scss';
 import { UserContext } from '../../../services/providers/user-context';
-import {
-  LOGIN_URL,
-  CREDENTIALS_URL,
-  REQUESTS_URL,
-  ACTIVITIES_URL,
-  PROFILE_URL
-} from '../../../utils/constants';
+import { LOGIN_URL, CREDENTIALS_URL, REQUESTS_URL, ACTIVITIES_URL } from '../../../utils/constants';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
 import history from '../../Router/history';

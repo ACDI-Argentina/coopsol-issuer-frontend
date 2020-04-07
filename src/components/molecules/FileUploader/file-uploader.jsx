@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import apiCalls from '../../../services/api-calls/all';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
-import { Upload, message } from 'antd';
+import { Upload } from 'antd';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import './_style.scss';
 import MessageLoader from '../MessageLoader/message-loader';

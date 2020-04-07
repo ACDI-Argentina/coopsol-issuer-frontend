@@ -15,7 +15,6 @@ const AntForm = React.forwardRef((p, r) => {
     disabled,
     noSubmitButton,
     RECAPTCHA_SITE_KEY,
-    submitButtonClass,
     resetOnSubmit,
     topSubmitButton
   } = p;
@@ -87,7 +86,9 @@ const AntForm = React.forwardRef((p, r) => {
           </Form.Item>
         </div>
       )}
-      <label className="RecoverPassword" htmlFor="">¿Olvidaste tu contraseña? <span>¡Click aquí!</span></label> 
+      <label className="RecoverPassword" htmlFor="">
+        ¿Olvidaste tu contraseña? <span>¡Click aquí!</span>
+      </label>
       {!topSubmitButton && submitButton()}
     </Form>
   );
