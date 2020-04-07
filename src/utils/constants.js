@@ -9,3 +9,5 @@ export const PAGE_SIZE = 20;
 export const CREDENTIALS_URL = '/credentials';
 export const REQUESTS_URL = '/requests';
 export const ACTIVITIES_URL = '/activities';
+export const PROFILE_URL = '/profile';
+export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';

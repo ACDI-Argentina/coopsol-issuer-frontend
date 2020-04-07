@@ -34,8 +34,8 @@ button:focus-within {
   margin: 0 !important;
 }
 
-.NavBar {
-  position: relative;
+.Sidebar {
+  height: 90vh;
   .ant-menu-horizontal > .ant-menu-item:hover,
   .ant-menu-horizontal > .ant-menu-submenu:hover,
   .ant-menu-horizontal > .ant-menu-item-active,
@@ -48,18 +48,75 @@ button:focus-within {
     border-bottom: 2px solid transparent;
   }
   .ant-menu {
-    background-color: transparent;
+    background-color: $white;
     border-bottom: transparent;
+    height: 100%;
+    padding: 20px 0;
+    &::before,
+    &::after {
+      display: none;
+    }
     .ant-menu-item:hover {
       border-bottom: 2px solid transparent;
       transition: background-color 0.1s ease !important;
+      transition: all 0.5s;
+    }
+    .logoutBottom {
+      position: absolute;
+      top: 92vh;
+      width: 18%;
+      @include primary-title($body, $secondary-color);
     }
     li {
+      @include primary-title($body, #e5e5e5);
       button {
         background-color: transparent;
         padding: 0;
         border: transparent;
-        color: $white;
+        margin-left: 1em;
+        width: 80%;
+        text-align: left;
+      }
+    }
+    li:not(.ant-menu-item-selected) {
+      .credentials {
+        path:first-child {
+          fill: #e5e5e5;
+          fill-opacity: 1;
+        }
+        path:nth-child(3),
+        path:nth-child(4),
+        path:nth-child(5) {
+          fill: #eceff3;
+        }
+        path:last-child {
+          fill: #c4c4c4;
+        }
+      }
+
+      .request,
+      .list {
+        path:nth-child(1),
+        path:nth-child(5),
+        path:nth-child(6) {
+          fill: #e5e5e5;
+        }
+
+        path:nth-child(2),
+        path:nth-child(3),
+        path:nth-child(4) {
+          fill: #c4c4c4;
+        }
+      }
+    }
+
+    &:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      background-color: transparent;
+      border-left: 5px solid $primary-color;
+      @include primary-title($body, $secondary-color);
+      transition: all 0.9s;
+      img {
+        fill: red;
       }
     }
   }
@@ -81,14 +138,6 @@ button:focus-within {
     color: #d1c4c3;
     border-bottom: none;
     z-index: 1;
-  }
-
-  .NavBar {
-    ul {
-      width: 50px;
-      background-repeat: no-repeat !important;
-      background-position: center center !important;
-    }
   }
 }
 

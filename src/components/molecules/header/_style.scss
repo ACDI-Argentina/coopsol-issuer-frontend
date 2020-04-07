@@ -1,25 +1,17 @@
-@import "../../../css/general_styling";
+@import '../../../css/general_styling';
 
 .header {
-  width: 100%;
+  width: 18%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0 80px;
-  height: 10vh;
-  border-bottom: 1px solid #ECEFF3;
-  .logo {
-    width: 60%;
-    button {
-      background-color: transparent;
-      border: transparent;
-      padding: 0;
-    }
-  }
-  .NavBar {
-    width: 40%;
-    justify-content: flex-end;
+  flex-direction: column;
+  .TopNav {
+    border-bottom: 1px solid #eceff3;
+    width: 100%;
+    height: 10vh;
     display: flex;
+    background-color: $white;
+    border-right: 1px solid #f0f0f0;
+    justify-content: center;
   }
 }
 
@@ -31,4 +23,3 @@
     width: 80%;
   }
 }
-

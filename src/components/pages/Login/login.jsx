@@ -26,7 +26,7 @@ const Login = ({ history }) => {
     setLoading(true);
     setErrorMessage(null);
     try {
-      const response = loginRequest(values);
+      const response = await loginRequest(values);
       setUser(response.data);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
