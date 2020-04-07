@@ -42,7 +42,7 @@ const TabTable = () => {
       key: 'dateOfExpiry',
       render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
     },
-    { title: 'Estado', dataIndex: 'creditState', key: 'creditState' },
+    { title: 'Estado', dataIndex: 'credentialState', key: 'credentialState' },
     { title: 'Ult. actualización', dataIndex: 'lastUpdate', key: 'lastUpdate' },
     {
       title: 'Acciones',

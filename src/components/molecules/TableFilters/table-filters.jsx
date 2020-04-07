@@ -1,9 +1,14 @@
 import React from 'react';
 import './_style.scss';
-import { Menu, Dropdown, Button, Input, DatePicker } from 'antd';
+import { Menu, Dropdown, Button, Input, DatePicker, message } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
+import { useEffect } from 'react';
+import { useApi } from '../../../services/useApi';
+import api from '../../../services/api-calls/all';
+
+const { getCredentialTypes, getCredentialStates } = api();
 
 const TableFilters = ({ onApplyFilter }) => {
   const filters = {
@@ -13,10 +18,31 @@ const TableFilters = ({ onApplyFilter }) => {
     idDidiCredential: 'DID',
     dateOfIssue: 'Generada',
     dateOfExpiry: 'Caduca',
-    creditState: 'Estado'
+    credentialState: 'Estado'
   };
 
+  const credentialCall = useApi();
+
   const [activeFilters, setActiveFilters] = useState({});
+  const [credentialTypes, setCredentialTypes] = useState(['t,', 'a', 'as']);
+  const [credentialStates, setCredentialStates] = useState([]);
+
+  useEffect(() => {
+    credentialCall(getCredentialTypes, null, onTypesSuccess, onError);
+    credentialCall(getCredentialStates, null, onStatesSuccess, onError);
+  }, []);
+
+  const onTypesSuccess = data => {
+    setCredentialTypes(data);
+  };
+
+  const onStatesSuccess = data => {
+    setCredentialStates(data);
+  };
+
+  const onError = () => {
+    message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
+  };
 
   const onInputChange = ev => {
     let key = ev.target.id;
@@ -78,18 +104,14 @@ const TableFilters = ({ onApplyFilter }) => {
     );
   };
 
-  const renderDropdown = key => {
+  const renderDropdown = (key, values) => {
     const menu = (
       <Menu onClick={onDropdownChange}>
-        <Menu.Item id={key} key="type1">
-          1st menu item
-        </Menu.Item>
-        <Menu.Item id={key} key="type2">
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item id={key} key="type3">
-          3rd item
-        </Menu.Item>
+        {values.map(v => (
+          <Menu.Item id={key} key={v}>
+            {v}
+          </Menu.Item>
+        ))}
       </Menu>
     );
 
@@ -104,13 +126,13 @@ const TableFilters = ({ onApplyFilter }) => {
 
   return (
     <div className="TableFilters">
-      {renderDropdown('credentialType')}
+      {renderDropdown('credentialType', credentialTypes)}
       {renderInput('name')}
       {renderInput('dniBeneficiary')}
       {renderInput('idDidiCredential')}
       {renderDate('dateOfIssue')}
       {renderDate('dateOfExpiry')}
-      {renderDropdown('creditState')}
+      {renderDropdown('credentialState', credentialStates)}
     </div>
   );
 };
