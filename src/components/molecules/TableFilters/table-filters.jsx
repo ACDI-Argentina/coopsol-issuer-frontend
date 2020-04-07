@@ -53,7 +53,7 @@ const TableFilters = ({ onApplyFilter }) => {
   };
 
   const clearEmptyFilter = (key, obj) => {
-    if (!obj[key]) {
+    if (!obj[key] || obj[key] === 'none') {
       delete obj[key];
     }
   };
@@ -64,7 +64,7 @@ const TableFilters = ({ onApplyFilter }) => {
     if (!date) {
       delete newFilter[key];
     } else {
-      newFilter[key] = date.format(DEFAULT_DATE_FORMAT);
+      newFilter[key] = date.format('YYYY-MM-DD'); // backend format
     }
 
     filter(newFilter);
@@ -107,6 +107,9 @@ const TableFilters = ({ onApplyFilter }) => {
   const renderDropdown = (key, values) => {
     const menu = (
       <Menu onClick={onDropdownChange}>
+        <Menu.Item id={key} key={'none'}>
+          Ninguno
+        </Menu.Item>
         {values.map(v => (
           <Menu.Item id={key} key={v}>
             {v}
@@ -118,7 +121,7 @@ const TableFilters = ({ onApplyFilter }) => {
     return (
       <Dropdown overlay={menu}>
         <Button>
-          {filters[key]} <DownOutlined />
+          {activeFilters[key] ? activeFilters[key] : filters[key]} <DownOutlined />
         </Button>
       </Dropdown>
     );

@@ -43,7 +43,12 @@ const TabTable = () => {
       render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
     },
     { title: 'Estado', dataIndex: 'credentialState', key: 'credentialState' },
-    { title: 'Ult. actualización', dataIndex: 'lastUpdate', key: 'lastUpdate' },
+    {
+      title: 'Ult. actualización',
+      dataIndex: 'lastUpdate',
+      key: 'lastUpdate',
+      render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
+    },
     {
       title: 'Acciones',
       dataIndex: '',
