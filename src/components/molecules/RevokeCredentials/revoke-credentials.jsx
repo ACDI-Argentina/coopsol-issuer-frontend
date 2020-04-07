@@ -84,8 +84,10 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
           <TextAreaComments text="Motivos de revocación" />
         </div>
         <div className="footer">
-          <ButtonPrimary onClick={handleCancel} text="Cancelar" theme="cancel" />
-          <ButtonPrimary onClick={handleOk} text="Confirmar" theme="primary" />
+          <div className="buttons">
+            <ButtonPrimary onClick={handleCancel} text="Cancelar" theme="cancel" />
+            <ButtonPrimary onClick={handleOk} text="Confirmar" theme="primary" />
+          </div>
 
           <Loader loading={loading} />
         </div>

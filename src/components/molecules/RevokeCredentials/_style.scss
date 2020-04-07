@@ -1,7 +1,6 @@
 @import '../../../css/general_styling';
 
 .RevokeCredentials {
-  
   .ant-modal-body {
     display: flex;
     flex-direction: column;
@@ -20,7 +19,7 @@
         margin-bottom: 2em;
         text-align: center;
       }
-      label{
+      label {
         @include label($label, $secondary-color);
       }
       .ant-input {
@@ -35,10 +34,13 @@
         }
       }
     }
-    .footer{
+    .footer {
       width: 90%;
-      display: flex;
-      justify-content: space-between;
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+      }
     }
     button {
       height: 35px;
