@@ -5,8 +5,10 @@ import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
 
-const TableFilters = ({ onApplyFilter, filters }) => {
-  const [activeFilters, setActiveFilters] = useState({});
+const TableFilters = ({ onApplyFilter, filters, defaultFilters }) => {
+  console.log('filters', filters);
+
+  const [activeFilters, setActiveFilters] = useState(defaultFilters);
 
   const onInputChange = ev => {
     let key = ev.target.id;

@@ -69,9 +69,7 @@ const TabTable = () => {
             columns={getRevokedCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
-            defaultFilters={{
-              credentialState: [CREDENTIAL_STATE_PENDING, CREDENTIAL_STATE_REVOKED].join(',')
-            }}
+            defaultFilters={{ credentialState: CREDENTIAL_STATE_REVOKED }}
           />
         </TabPane>
         <TabPane

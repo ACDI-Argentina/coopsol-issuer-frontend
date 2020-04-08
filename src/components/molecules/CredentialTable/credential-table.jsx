@@ -55,7 +55,11 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
 
   return (
     <div>
-      <TableFilters onApplyFilter={onApplyFilter} filters={filters} />
+      <TableFilters
+        onApplyFilter={onApplyFilter}
+        filters={filters}
+        defaultFilters={activeFilters}
+      />
       <Table
         rowKey={'id'}
         columns={tableColumns}
