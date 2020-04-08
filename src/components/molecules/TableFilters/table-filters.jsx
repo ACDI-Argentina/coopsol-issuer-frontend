@@ -4,6 +4,7 @@ import { Menu, Dropdown, Button, Input, DatePicker } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
+import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
 const TableFilters = ({ onApplyFilter }) => {
   const filters = {
@@ -111,6 +112,7 @@ const TableFilters = ({ onApplyFilter }) => {
       {renderDate('dateOfIssue')}
       {renderDate('dateOfExpiry')}
       {renderDropdown('creditState')}
+      <ButtonPrimary text="Buscar" theme="primary"/>
     </div>
   );
 };
