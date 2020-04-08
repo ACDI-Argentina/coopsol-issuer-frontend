@@ -6,9 +6,7 @@ import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
-const TableFilters = ({ onApplyFilter, filters, defaultFilters }) => {
-  console.log('filters', filters);
-
+const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
   const [activeFilters, setActiveFilters] = useState(defaultFilters);
 
   const onInputChange = ev => {
@@ -116,7 +114,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters }) => {
 
   return (
     <div className="TableFilters">
-      {renderFilters()} <ButtonPrimary text="Buscar" theme="primary" />
+      {renderFilters()} <ButtonPrimary text="Buscar" theme="primary" onClick={onSearch} />
     </div>
   );
 };

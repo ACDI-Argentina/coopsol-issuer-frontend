@@ -31,9 +31,13 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
 
   const tableColumns = columns(fetchCredentials);
 
+  const onSearch = () => {
+    fetchCredentials();
+  };
+
   useEffect(() => {
     fetchCredentials();
-  }, [pagination.page, activeFilters]);
+  }, [pagination.page]);
 
   const onApplyFilter = filter => {
     setActiveFilters(filter);
@@ -59,6 +63,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         onApplyFilter={onApplyFilter}
         filters={filters}
         defaultFilters={activeFilters}
+        onSearch={onSearch}
       />
       <Table
         rowKey={'id'}
