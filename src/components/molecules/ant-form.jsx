@@ -86,9 +86,7 @@ const AntForm = React.forwardRef((p, r) => {
           </Form.Item>
         </div>
       )}
-      <label className="RecoverPassword" htmlFor="">
-        ¿Olvidaste tu contraseña? <span>¡Click aquí!</span>
-      </label>
+
       {!topSubmitButton && submitButton()}
     </Form>
   );
