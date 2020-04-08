@@ -15,7 +15,7 @@
       color: $secondary-color;
       border-color: $secondary-color;
     }
-    width: 13%;
+    width: 10%;
     text-align: left;
   }
 
@@ -27,5 +27,8 @@
     position: absolute;
     right: 15px;
     top: 14px;
+  }
+  .ButtonPrimary{
+    height: 40px;
   }
 }

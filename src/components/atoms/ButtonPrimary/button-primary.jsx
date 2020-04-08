@@ -36,7 +36,6 @@ ButtonPrimary.defaultProps = {
   disabled: undefined,
   iconLeft: undefined,
   iconRight: undefined,
-  theme: undefined,
   type: 'button',
   htmlType: undefined,
   onClick: () => {}

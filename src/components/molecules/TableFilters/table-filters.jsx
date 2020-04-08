@@ -4,6 +4,7 @@ import { Menu, Dropdown, Button, Input, DatePicker, message } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
+import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
 const TableFilters = ({ onApplyFilter, filters, defaultFilters }) => {
   console.log('filters', filters);
@@ -113,7 +114,11 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters }) => {
     return filterComps;
   };
 
-  return <div className="TableFilters">{renderFilters()}</div>;
+  return (
+    <div className="TableFilters">
+      {renderFilters()} <ButtonPrimary text="Buscar" theme="primary" />
+    </div>
+  );
 };
 
 export default TableFilters;
