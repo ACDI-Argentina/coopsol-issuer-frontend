@@ -123,7 +123,7 @@ const TabTable = () => {
               title={'A espera de generación del DID'}
             />
           }
-          key="3"
+          key="4"
         >
           Tab 2
         </TabPane>
@@ -134,7 +134,7 @@ const TabTable = () => {
               title={'A espera de aprobación crediticia desde sitema BONDAREA BOCS'}
             />
           }
-          key="4"
+          key="5"
         >
           Tab 2
         </TabPane>

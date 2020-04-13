@@ -24,7 +24,7 @@ const FileUploader = ({ onUploaded, history }) => {
       formData.set('file', file);
       const response = await uploadFile(formData);
       setResponseStatus(response.status);
-      setSuccess('Archivo subido correctamente!');
+      setSuccess('Tu archivo fue subido correctamente!');
       setUploading(false);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
@@ -66,7 +66,7 @@ const FileUploader = ({ onUploaded, history }) => {
     }
     return (
       <ButtonPrimary
-        text="Upload"
+        text="Subir archivo"
         theme="ThemePrimary"
         onClick={handleUpload}
         disabled={!showContainer}

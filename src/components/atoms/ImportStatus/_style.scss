@@ -1,0 +1,31 @@
+@import '../../../css/general_styling';
+
+.import-status {
+  padding: 1em;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin: 2em 0;
+  justify-content: space-between;
+}
+
+.check{
+  background-color: $background-approved;
+  label {
+    img {
+      margin-right: 1.5em;
+    }
+    @include primary-text-bold($body, #203342);
+  }
+}
+
+.pending{
+  background-color: #FFFAF0;
+  label {
+    img {
+      margin-right: 1.5em;
+    }
+    @include primary-text-bold($body, #F1AF34);
+  }
+}
