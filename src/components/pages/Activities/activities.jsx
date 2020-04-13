@@ -2,6 +2,7 @@ import React from 'react';
 import './_style.scss';
 import TitlePage from '../../atoms/TitlePage/TitlePage';
 import api from '../../../services/api-calls/all';
+import CredentialTable from '../../molecules/CredentialTable/credential-table';
 
 // const { endpoint } = api();
 
@@ -16,9 +17,7 @@ const Activities = () => {
         <h4>
           <img src="img/table-list.svg" /> Listado de actividades
         </h4>
-        <div className="TableContent">
-
-        </div>
+        <CredentialTable/>
       </div>
     </div>
   );
