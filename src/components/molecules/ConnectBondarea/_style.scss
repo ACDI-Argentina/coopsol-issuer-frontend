@@ -1,0 +1,18 @@
+@import '../../../css/general_styling';
+.ConnectBondarea {
+  .ant-modal-content {
+    text-align: center;
+  }
+
+  .ant-modal-footer {
+    display: none;
+  }
+
+  .title h1 {
+    @include primary-title($title-secondary, $secondary-color);
+    margin-bottom: 0.5em;
+  }
+  .body {
+    @include primary-text($body, $secondary-color);
+  }
+}

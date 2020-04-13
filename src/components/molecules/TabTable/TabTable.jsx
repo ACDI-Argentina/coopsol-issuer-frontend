@@ -9,14 +9,15 @@ import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 
 import {
   getCredentialsColumns,
-  defaultFilters,
-  getRevokedCredentialsColumns
+  getRevokedCredentialsColumns,
+  getPendingColumns
 } from '../../../utils/table-definitions';
 import {
   CREDENTIAL_STATE_ACTIVE,
   CREDENTIAL_STATE_PENDING,
   CREDENTIAL_STATE_REVOKED
 } from '../../../utils/constants';
+import { defaultFilters } from '../../../utils/tables/table-filters-definitions';
 const { TabPane } = Tabs;
 
 const { getCredentials, getCredentialTypes, getCredentialStates } = api();
@@ -82,12 +83,10 @@ const TabTable = () => {
           key="3"
         >
           <CredentialTable
-            columns={getCredentialsColumns}
+            columns={getPendingColumns}
             dataSource={getCredentials}
             filters={{}}
-            defaultFilters={{
-              credentialState: 'none'
-            }}
+            defaultFilters={{}}
           />
         </TabPane>
         <TabPane

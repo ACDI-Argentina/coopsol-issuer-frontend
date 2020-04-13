@@ -69,7 +69,12 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
           Revocar credencial <DownOutlined />
         </a>
       </Dropdown>
-      <Modal width="400px" className="RevokeCredentials" visible={visible} onCancel={handleCancel}>
+      <Modal
+        width="400px"
+        className="RevokeCredentials modal-buttons"
+        visible={visible}
+        onCancel={handleCancel}
+      >
         <Lottie options={defaultOptions} height={250} width={250} />
         <div className="title">
           <h1>Revocar credencial</h1>

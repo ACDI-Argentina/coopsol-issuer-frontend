@@ -114,7 +114,10 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
 
   return (
     <div className="TableFilters">
-      {renderFilters()} <ButtonPrimary text="Buscar" theme="primary" onClick={onSearch} />
+      {renderFilters()}{' '}
+      {Object.keys(filters).length > 0 && (
+        <ButtonPrimary text="Buscar" theme="primary" onClick={onSearch} />
+      )}
     </div>
   );
 };
