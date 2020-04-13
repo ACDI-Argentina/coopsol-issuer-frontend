@@ -10,43 +10,38 @@ import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
-  getPendingColumns
+  getPendingColumns,
+  getDidColumns
 } from '../../../utils/table-definitions';
+import { CREDENTIAL_STATE_ACTIVE, CREDENTIAL_STATE_REVOKED } from '../../../utils/constants';
 import {
-  CREDENTIAL_STATE_ACTIVE,
-  CREDENTIAL_STATE_PENDING,
-  CREDENTIAL_STATE_REVOKED
-} from '../../../utils/constants';
-import { defaultFilters } from '../../../utils/tables/table-filters-definitions';
+  defaultFilters,
+  pendingCredentialsFilter,
+  didCredentialsFilter
+} from '../../../utils/tables/table-filters-definitions';
 const { TabPane } = Tabs;
 
-const { getCredentials, getCredentialTypes, getCredentialStates } = api();
+const { getCredentials, getCredentialTypes } = api();
 
 const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
-  const [credentialStates, setCredentialStates] = useState([]);
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, onTypesSuccess, onError);
-    credentialCall(getCredentialStates, null, onStatesSuccess, onError);
   }, []);
 
   const onTypesSuccess = data => {
     setCredentialTypes(data);
   };
 
-  const onStatesSuccess = data => {
-    setCredentialStates(data);
-  };
-
   const onError = () => {
     message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
   };
 
-  const activeCredentialsFilter = defaultFilters(credentialTypes, credentialStates);
-
+  const activeCredentialsFilter = defaultFilters(credentialTypes);
+  const pendingDidFilter = didCredentialsFilter(credentialTypes);
   return (
     <div className="TabTableContent">
       <Tabs>
@@ -83,9 +78,9 @@ const TabTable = () => {
           key="3"
         >
           <CredentialTable
-            columns={getPendingColumns}
+            columns={getDidColumns}
             dataSource={getCredentials}
-            filters={{}}
+            filters={pendingDidFilter}
             defaultFilters={{}}
           />
         </TabPane>
@@ -99,12 +94,10 @@ const TabTable = () => {
           key="4"
         >
           <CredentialTable
-            columns={getCredentialsColumns}
+            columns={getPendingColumns}
             dataSource={getCredentials}
-            filters={{}}
-            defaultFilters={{
-              credentialState: 'none'
-            }}
+            filters={pendingCredentialsFilter}
+            defaultFilters={{}}
           />
         </TabPane>
       </Tabs>

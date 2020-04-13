@@ -43,19 +43,9 @@ const getCredentialTypes = () => [
   'CredentialIdentity',
   'CredentialEntrepreneurship'
 ];
-const getCredentialStates = () => [
-  'Pendiente-bondarea',
-  'Pendiente-didi',
-  'Vigente',
-  'Vencida',
-  'Caducada',
-  'Revocada'
-];
-
 export default () => ({
   uploadFile,
   getCredentials,
   revokeCredentials,
-  getCredentialTypes,
-  getCredentialStates
+  getCredentialTypes
 });

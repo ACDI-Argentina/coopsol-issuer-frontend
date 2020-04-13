@@ -50,6 +50,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
   const renderInput = key => {
     return (
       <Input
+        className="input"
         onChange={onInputChange}
         id={key}
         key={key}
@@ -63,6 +64,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
     return (
       <DatePicker
         locale="es"
+        className="datepicker"
         key={key}
         format={DEFAULT_DATE_FORMAT}
         onChange={date => onDateChange(date, key)}
@@ -86,7 +88,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
     );
 
     return (
-      <Dropdown overlay={menu} key={key}>
+      <Dropdown className="dropdown" overlay={menu} key={key}>
         <Button>
           {activeFilters[key] ? activeFilters[key] : filters[key].name} <DownOutlined />
         </Button>
