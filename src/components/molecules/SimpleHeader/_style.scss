@@ -1,2 +1,21 @@
+@import '../../../css/general_styling';
+
 .SimpleHeader {
+  position: absolute;
+  height: 75px;
+  width: 100%;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  .ant-btn {
+    border: none;
+    box-shadow: 0 2px 0 transparent;
+    @include primary-title($body, $secondary-color);
+    &:hover,
+    &:focus {
+      @include primary-title($body, $primary-color);
+    }
+  }
 }

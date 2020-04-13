@@ -1,6 +1,7 @@
 @import '../../../css/general_styling';
 
 .ButtonPrimary {
+  background: $primary-color;
   height: 50px;
   border-radius: 11px;
   width: max-content;
@@ -8,12 +9,18 @@
   border: none;
   cursor: pointer;
   box-sizing: border-box;
+  box-shadow: 2px 4px 11px rgba(14, 168, 155, 0.15);
+
+  p {
+    @include primary-title($body, $white);
+  }
 }
 .ThemeDisable {
-  background: white;
+  background: $light-grey;
   cursor: auto;
   p {
     color: $dark-grey;
+    @include primary-title($body, $white);
   }
 
   &:hover {
