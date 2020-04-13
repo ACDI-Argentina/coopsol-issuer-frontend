@@ -5,7 +5,7 @@ import { Table } from 'antd';
 
 const CredentialTable = ({ dataSource, columns, loading, onChange, pagination, onApplyFilter }) => {
   return (
-    <div>
+    <div className="TableContent">
       <TableFilters onApplyFilter={onApplyFilter} />
       <Table
         rowKey={'id'}
