@@ -1,2 +1,20 @@
+@import '../../../css/general_styling';
+
 .Activities {
+  height: 100vh;
+  .ActivitiesContent {
+    margin-top: 15px;
+    height: 68vh;
+    h4{
+        border-bottom: 1px solid #f0f0f0;
+        @include label($body, #c4c4c4);
+        padding: 0 60px;
+        img{
+            margin-right: .5em;
+        }
+    }
+    .TableContent{
+        background-color: $background-grey;
+    }
+  }
 }

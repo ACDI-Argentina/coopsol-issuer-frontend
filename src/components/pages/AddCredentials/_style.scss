@@ -1,2 +1,55 @@
-.Requests {
+@import '../../../css/general_styling';
+
+.SurveyImportContainer {
+  display: flex;
+  padding: 85px 60px 0 60px;
+  justify-content: space-between;
+  .SurveyImport {
+    width: 100%;
+    h3 {
+      @include primary-title($title-secondary, $secondary-color);
+    }
+    .UploadContent {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .SuccessCreation {
+      display: flex;
+    }
+    .right-img {
+      margin-top: -5em;
+    }
+  }
+}
+.AddCredentials {
+  .TitlePage button {
+    display: none;
+  }
+}
+
+.slide-fwd-center {
+  -webkit-animation: slide-fwd-center 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-fwd-center 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@-webkit-keyframes slide-fwd-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  100% {
+    -webkit-transform: translateZ(160px);
+    transform: translateZ(160px);
+  }
+}
+@keyframes slide-fwd-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  100% {
+    -webkit-transform: translateZ(160px);
+    transform: translateZ(160px);
+  }
 }

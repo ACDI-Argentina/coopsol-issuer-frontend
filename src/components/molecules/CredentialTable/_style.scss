@@ -1,0 +1,12 @@
+@import '../../../css/general_styling';
+
+.TableContent {
+    background-color: $background-grey;
+    height: 95%;
+  .ant-table-wrapper {
+    padding: 0 60px;
+    .ant-table-thead {
+      @include label($label, $secondary-color);
+    }
+  }
+}

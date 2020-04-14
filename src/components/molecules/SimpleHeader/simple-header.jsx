@@ -11,6 +11,7 @@ const SimpleHeader = () => {
 
   return (
     <div className="SimpleHeader">
+      <img src="/img/back.svg" alt=""/>
       <Button onClick={onBack}>Volver</Button>
     </div>
   );

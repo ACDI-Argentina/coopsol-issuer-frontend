@@ -1,7 +1,7 @@
 @import '../../../css/general_styling';
 
 .TabTableContent {
-  margin-top: 15px;
+  margin-top: 25px;
   height: 68vh;
   .ant-tabs {
     @include label($body, #c4c4c4);
@@ -15,7 +15,7 @@
           background-color: transparent;
         }
         .ant-tabs-tab {
-          width: 25%;
+          width: 20%;
           margin: 0;
           &:hover {
             color: rgb(175, 175, 175);

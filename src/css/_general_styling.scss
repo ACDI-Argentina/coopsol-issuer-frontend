@@ -37,6 +37,15 @@ $label: 10px;
   }
 }
 
+@mixin primary-text-bold($font-size, $font-color) {
+  margin: 0;
+  font-family: 'raleway-bold';
+  font-size: $font-size;
+  @if $font-color {
+    color: $font-color;
+  }
+}
+
 @mixin primary-title($font-size, $font-color) {
   margin: 0;
   font-family: 'poppins-bold';
@@ -83,6 +92,11 @@ $label: 10px;
 @font-face {
   font-family: 'raleway-regular';
   src: url(./fonts/Raleway-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'raleway-bold';
+  src: url(./fonts/Raleway-SemiBold.ttf);
 }
 
 //Antd
