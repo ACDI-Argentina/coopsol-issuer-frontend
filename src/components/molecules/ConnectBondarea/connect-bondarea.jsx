@@ -6,7 +6,6 @@ import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import { DownOutlined } from '@ant-design/icons';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
-import history from '../../Router/history';
 
 const { revokeCredentials } = api();
 
@@ -29,7 +28,7 @@ const ConnectBondarea = ({ credential, onRevoked }) => {
 
     setTimeout(() => {
       setLoading(false);
-      setSuccess(false);
+      setSuccess(true);
     }, 1500);
   };
 
@@ -41,8 +40,8 @@ const ConnectBondarea = ({ credential, onRevoked }) => {
     connect();
   };
 
-  const generateCredentials = () => {
-    history.push('/credentials/add');
+  const viewCredentials = () => {
+    window.location.reload();
   };
 
   const renderConnecting = () => {
@@ -66,15 +65,11 @@ const ConnectBondarea = ({ credential, onRevoked }) => {
         </div>
         <div className="body">
           <p>La conexión se realizó existosamente!</p>
-          <p>Ya puedes generar tus credenciales</p>
+          <p>La credencial se agregó correcectamente</p>
         </div>
         <div className="footer">
           <div className="buttons">
-            <ButtonPrimary
-              onClick={generateCredentials}
-              text="Generar credenciales"
-              theme="primary"
-            />
+            <ButtonPrimary onClick={viewCredentials} text="Ver credenciales" theme="primary" />
           </div>
         </div>
       </div>
