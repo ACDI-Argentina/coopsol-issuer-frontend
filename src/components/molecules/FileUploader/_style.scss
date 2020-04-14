@@ -21,8 +21,8 @@
     }
   }
   .preview {
-    .ant-upload-drag-container{
-      img{
+    .ant-upload-drag-container {
+      img {
         margin-bottom: 1em;
       }
     }
@@ -51,7 +51,7 @@
         }
       }
     }
-    .message {
+    .result-container {
       height: 250px;
       border-radius: 7px;
       border: 1px solid #b4b7ff;
@@ -94,7 +94,6 @@
         h4 {
           @include primary-text($body, $secondary-color);
           text-align: left;
-
         }
         ul {
           height: 140px;
@@ -114,11 +113,16 @@
             p {
               @include primary-text($body, $secondary-color);
               margin: 0;
+              padding-left: 5px;
             }
           }
         }
       }
     }
+  }
+
+  .hidden {
+    display: none;
   }
 
   .buttonSection {
