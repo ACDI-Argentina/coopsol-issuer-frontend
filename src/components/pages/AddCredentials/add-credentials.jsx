@@ -23,7 +23,7 @@ const AddCredentials = ({ history }) => {
   return (
     <div className="AddCredentials">
       <TitlePage
-        title="Generación de Credenciales"
+        text="Generación de Credenciales"
         description="Completá los siguientes pasos para poder generar una precredencial."
       />
       <div className="SurveyImportContainer">
@@ -35,7 +35,7 @@ const AddCredentials = ({ history }) => {
             </div>
           ) : (
             <div className="UploadContent">
-              <div>
+              <div className="left-side">
                 <h3>Importar datos de encuesta socioeconómica</h3>
                 <p>Para poder generar una nueva credencial suba el archivo de encuestas.</p>
                 {!uploadedFile ? (

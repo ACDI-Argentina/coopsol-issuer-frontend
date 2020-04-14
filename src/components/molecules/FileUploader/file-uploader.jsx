@@ -80,6 +80,7 @@ const FileUploader = ({ onUploaded, history }) => {
         <div className="UploadReport">
           <div className="preview">
             <Dragger {...props} onChange={onFileChanged} className={showContainer ? 'hidden' : ''}>
+              <img src="/img/upload-file.svg" alt="" />
               <p className="ant-upload-text">
                 Haga clic o arrastre un archivo a este área para cargar
               </p>
@@ -88,8 +89,45 @@ const FileUploader = ({ onUploaded, history }) => {
 
             <div className="title">
               <div className="message">
-                {error && <div className="error">{error}</div>}
-                {success && <div className="success">{success}</div>}
+                <div className="result">
+                  <label className="process">Lineas procesadas: 1350</label>
+                  <label className="r-success">
+                    <img src="/img/check.svg" alt="" />
+                    1350 líneas
+                  </label>
+                  <label className="r-error">
+                    <img src="/img/error.svg" alt="" />0 líneas
+                  </label>
+                </div>
+                {error && (
+                  <div className="error">
+                    <h4>Por favor, corregí los errores que se muestran y volvelo a subir</h4>
+                    <ul>
+                      <li>
+                        <img src="/img/error.svg" alt="" />
+                        <label htmlFor="">Celda AF2.</label>
+                        <p>Error: Sólo caracteres numéricos </p>
+                      </li>
+                      <li>
+                        <img src="/img/error.svg" alt="" />
+                        <label htmlFor="">Celda AF2.</label>
+                        <p>Error: Sólo caracteres numéricos </p>
+                      </li>
+                      <li>
+                        <img src="/img/error.svg" alt="" />
+                        <label htmlFor="">Celda AF2.</label>
+                        <p>Error: Sólo caracteres numéricos </p>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                {success && (
+                  <div className="success">
+                    <img src="/img/success-file.svg" alt="" />
+                    <h4>Tu archivo fue cargado exitosamente!</h4>
+                    <p>Presioná crear credencial para continuar.</p>
+                  </div>
+                )}
               </div>
               <MessageLoader loading={uploading} message={'Subiendo archivo...'} />
               <div className="buttonSection">{renderButtons()}</div>

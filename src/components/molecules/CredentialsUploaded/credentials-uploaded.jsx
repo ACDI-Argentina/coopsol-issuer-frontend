@@ -10,7 +10,7 @@ const CredentialsUploaded = ({ history, theme }) => {
     history.push('/credentials');
   };
   return (
-    <div className="SurveyImport">
+    <div className="left-side">
       <h3>Ya están creadas las credenciales</h3>
       <p>El proceso de creación fue realizado correctamente.</p>
 
