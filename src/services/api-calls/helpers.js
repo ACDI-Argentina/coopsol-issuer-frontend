@@ -58,6 +58,11 @@ const makePostRequest = httpClient => (url, bodyParameters = {}, queryParameters
   return httpClient.post(completeUrl, { ...bodyParameters });
 };
 
+const makePostFileRequest = httpClient => (url, formData, queryParameters) => {
+  const completeUrl = addQueryString(url, queryParameters);
+  return httpClient.post(completeUrl, formData);
+};
+
 const makeDeleteRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
   const completeUrl = addQueryString(url, queryParameters);
   return httpClient.delete(completeUrl, { ...bodyParameters });
@@ -74,7 +79,8 @@ export default client => ({
   makeGetRequest: makeGetRequest(client),
   makePostRequest: makePostRequest(client),
   makePatchRequest: makePatchRequest(client),
-  makeDeleteRequest: makePatchRequest(client)
+  makeDeleteRequest: makePatchRequest(client),
+  makePostFileRequest: makePostFileRequest(client)
 });
 
 export const processedErrorMessage = (error, messageText) => {
