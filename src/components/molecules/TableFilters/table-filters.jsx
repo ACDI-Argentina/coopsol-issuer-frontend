@@ -1,23 +1,13 @@
 import React from 'react';
 import './_style.scss';
-import { Menu, Dropdown, Button, Input, DatePicker } from 'antd';
+import { Menu, Dropdown, Button, Input, DatePicker, message } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
-const TableFilters = ({ onApplyFilter }) => {
-  const filters = {
-    credentialType: 'Tipo',
-    name: 'Nombre y Apellido',
-    dniBeneficiary: 'DNI',
-    idDidiCredential: 'DID',
-    dateOfIssue: 'Generada',
-    dateOfExpiry: 'Caduca',
-    creditState: 'Estado'
-  };
-
-  const [activeFilters, setActiveFilters] = useState({});
+const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
+  const [activeFilters, setActiveFilters] = useState(defaultFilters);
 
   const onInputChange = ev => {
     let key = ev.target.id;
@@ -28,7 +18,7 @@ const TableFilters = ({ onApplyFilter }) => {
   };
 
   const clearEmptyFilter = (key, obj) => {
-    if (!obj[key]) {
+    if (!obj[key] || obj[key] === 'none') {
       delete obj[key];
     }
   };
@@ -39,7 +29,7 @@ const TableFilters = ({ onApplyFilter }) => {
     if (!date) {
       delete newFilter[key];
     } else {
-      newFilter[key] = date.format(DEFAULT_DATE_FORMAT);
+      newFilter[key] = date.format('YYYY-MM-DD'); // backend format
     }
 
     filter(newFilter);
@@ -62,7 +52,8 @@ const TableFilters = ({ onApplyFilter }) => {
       <Input
         onChange={onInputChange}
         id={key}
-        placeholder={filters[key]}
+        key={key}
+        placeholder={filters[key].name}
         suffix={<UserOutlined />}
       />
     );
@@ -72,47 +63,58 @@ const TableFilters = ({ onApplyFilter }) => {
     return (
       <DatePicker
         locale="es"
+        key={key}
         format={DEFAULT_DATE_FORMAT}
         onChange={date => onDateChange(date, key)}
-        placeholder={filters[key]}
+        placeholder={filters[key].name}
       />
     );
   };
 
-  const renderDropdown = key => {
+  const renderDropdown = (key, values) => {
     const menu = (
       <Menu onClick={onDropdownChange}>
-        <Menu.Item id={key} key="type1">
-          1st menu item
+        <Menu.Item id={key} key={'none'}>
+          Ninguno
         </Menu.Item>
-        <Menu.Item id={key} key="type2">
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item id={key} key="type3">
-          3rd item
-        </Menu.Item>
+        {values.map(v => (
+          <Menu.Item id={key} key={v}>
+            {v}
+          </Menu.Item>
+        ))}
       </Menu>
     );
 
     return (
-      <Dropdown overlay={menu}>
+      <Dropdown overlay={menu} key={key}>
         <Button>
-          {filters[key]} <DownOutlined />
+          {activeFilters[key] ? activeFilters[key] : filters[key].name} <DownOutlined />
         </Button>
       </Dropdown>
     );
   };
 
+  const renderFilters = () => {
+    let filterComps = [];
+    Object.keys(filters).forEach(key => {
+      switch (filters[key].type) {
+        case 'input':
+          filterComps.push(renderInput(key));
+          break;
+        case 'date':
+          filterComps.push(renderDate(key));
+          break;
+        case 'dropdown':
+          filterComps.push(renderDropdown(key, filters[key].data));
+          break;
+      }
+    });
+    return filterComps;
+  };
+
   return (
     <div className="TableFilters">
-      {renderDropdown('credentialType')}
-      {renderInput('name')}
-      {renderInput('dniBeneficiary')}
-      {renderInput('idDidiCredential')}
-      {renderDate('dateOfIssue')}
-      {renderDate('dateOfExpiry')}
-      {renderDropdown('creditState')}
-      <ButtonPrimary text="Buscar" theme="primary"/>
+      {renderFilters()} <ButtonPrimary text="Buscar" theme="primary" onClick={onSearch} />
     </div>
   );
 };

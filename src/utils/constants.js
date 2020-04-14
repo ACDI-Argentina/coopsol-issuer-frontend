@@ -11,3 +11,7 @@ export const REQUESTS_URL = '/requests';
 export const ACTIVITIES_URL = '/activities';
 export const PROFILE_URL = '/profile';
 export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
+
+export const CREDENTIAL_STATE_ACTIVE = 'Vigente';
+export const CREDENTIAL_STATE_PENDING = 'Pendiente';
+export const CREDENTIAL_STATE_REVOKED = 'Revocada';

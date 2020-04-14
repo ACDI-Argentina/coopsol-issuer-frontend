@@ -11,7 +11,7 @@ const getCredentials = () => [
     dateOfExpiry: '20-04-2020',
     name: 'Juan',
     dniBeneficiary: 42587423,
-    creditState: 'Vigente'
+    credentialState: 'Vigente'
   },
   {
     credentialType: 'Credencial',
@@ -21,7 +21,7 @@ const getCredentials = () => [
     dateOfExpiry: '20-04-2020',
     name: 'Pablo',
     dniBeneficiary: 34845328,
-    creditState: 'Vigente'
+    credentialState: 'Vigente'
   },
   {
     credentialType: 'Master',
@@ -31,14 +31,31 @@ const getCredentials = () => [
     dateOfExpiry: '24-04-2020',
     name: 'Ruben',
     dniBeneficiary: 19545024,
-    creditState: 'Vencida'
+    credentialState: 'Vencida'
   }
 ];
 
 const revokeCredentials = () => ({});
 
+const getCredentialTypes = () => [
+  'CredentialCredit',
+  'CredentialDwelling',
+  'CredentialIdentity',
+  'CredentialEntrepreneurship'
+];
+const getCredentialStates = () => [
+  'Pendiente-bondarea',
+  'Pendiente-didi',
+  'Vigente',
+  'Vencida',
+  'Caducada',
+  'Revocada'
+];
+
 export default () => ({
   uploadFile,
   getCredentials,
-  revokeCredentials
+  revokeCredentials,
+  getCredentialTypes,
+  getCredentialStates
 });
