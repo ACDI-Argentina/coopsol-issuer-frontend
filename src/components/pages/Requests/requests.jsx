@@ -4,7 +4,7 @@ import TitlePage from '../../atoms/TitlePage/TitlePage';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../../molecules/CredentialTable/credential-table';
 
-// const { endpoint } = api();
+const { getCredentials } = api();
 
 const Requests = () => {
   return (
@@ -19,9 +19,9 @@ const Requests = () => {
         </h4>
         <CredentialTable
           columns={() => {}}
-          dataSource={() => {}}
+          dataSource={getCredentials}
           filters={{}}
-          defaultFilters={{}}
+          defaultFilters={{ credentialState: 'none' }}
         />
       </div>
     </div>
