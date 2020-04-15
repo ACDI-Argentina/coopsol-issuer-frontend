@@ -1,57 +1,75 @@
-@import "./css/general_styling";
+@import './css/general_styling';
 
 body {
-    background-color: $white;
+  background-color: $white;
 }
 
 .App {
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: 60%; 
-    background: linear-gradient(to left, $white, rgba(251, 251, 255, 1));
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background: linear-gradient(to left, $white, rgba(251, 251, 255, 1));
 
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .Container {
     width: 100%;
-    height: 100vh;
     display: flex;
-    flex-direction: column;
-
-    .Container{
-      width: 100%;
-      display: flex;
-      .Content{
-        background-color: $white;
-        width: 82%;
-      }
+    .Content {
+      background-color: $white;
+      width: 82%;
     }
+  }
 }
 
 button:disabled {
   pointer-events: none;
 }
 
+.modal-buttons {
+  .footer {
+    width: 90%;
+    margin: auto;
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  button {
+    height: 35px;
+    margin: auto;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
 
 @media only screen and (max-width: 768px) {
-    .App {
-       width: 100%;
-    }
+  .App {
+    width: 100%;
   }
+}
 @media only screen and (max-width: 600px) {
-    .App {
-      padding: 2em;
-        background-size: 90%;
-    }
+  .App {
+    padding: 2em;
+    background-size: 90%;
   }
+}
 
-  @media only screen and (max-width: 500px) {
-    .App {
-      
-        padding:2em;
-    }
+@media only screen and (max-width: 500px) {
+  .App {
+    padding: 2em;
   }
+}
 
-  @media only screen and (max-width: 360px) {
-    .App {
-      
-        background-size: 130%;
-    }
+@media only screen and (max-width: 360px) {
+  .App {
+    background-size: 130%;
   }
+}

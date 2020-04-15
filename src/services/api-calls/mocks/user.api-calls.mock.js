@@ -37,25 +37,27 @@ const getCredentials = () => [
 
 const revokeCredentials = () => ({});
 
+const getCredentialStates = () => ({
+  CREDENTIAL_ACTIVE: 'Vigente',
+  CREDENTIAL_REVOKED: 'Revocada'
+});
+
+const getCredentialStatus = () => ({
+  CREDENTIAL_PENDING_DIDI: 'Pendiente-didi',
+  CREDENTIAL_PENDING_BONDAREA: 'Pendiente-bondarea'
+});
+
 const getCredentialTypes = () => [
   'CredentialCredit',
   'CredentialDwelling',
   'CredentialIdentity',
   'CredentialEntrepreneurship'
 ];
-const getCredentialStates = () => [
-  'Pendiente-bondarea',
-  'Pendiente-didi',
-  'Vigente',
-  'Vencida',
-  'Caducada',
-  'Revocada'
-];
-
 export default () => ({
   uploadFile,
   getCredentials,
   revokeCredentials,
   getCredentialTypes,
+  getCredentialStatus,
   getCredentialStates
 });

@@ -3,7 +3,6 @@
 .TableFilters {
   display: flex;
   padding: 20px 60px;
-  justify-content: space-between;
   .ant-btn,
   .ant-input-affix-wrapper,
   .ant-picker {
@@ -15,7 +14,7 @@
       color: $secondary-color;
       border-color: $secondary-color;
     }
-    width: 10%;
+    width: 15%;
     text-align: left;
   }
 
@@ -28,7 +27,13 @@
     right: 15px;
     top: 14px;
   }
-  .ButtonPrimary{
+  .ButtonPrimary {
     height: 40px;
+  }
+
+  .input,
+  .datepicker,
+  .dropdown {
+    margin-right: 15px;
   }
 }
