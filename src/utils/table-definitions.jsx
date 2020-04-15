@@ -76,7 +76,7 @@ export const getPendingColumns = () => [
 export const getDidColumns = fetchCredentials => {
   let columns = getCredentialsColumns(fetchCredentials);
 
-  let didColumn = columns.findIndex(e => e.key == 'idDidiCredential');
+  let didColumn = columns.findIndex(e => e.key === 'idDidiCredential');
   columns.splice(didColumn, 1);
   return columns;
 };

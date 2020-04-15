@@ -36,8 +36,25 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   useEffect(() => {
-    fetchCredentials();
-  }, [pagination.page]);
+    if (shouldPerformRequest(activeFilters)) {
+      fetchCredentials();
+    }
+  }, [activeFilters]);
+
+  useEffect(() => {
+    let newFilters = defaultFilters ? defaultFilters : {};
+    setActiveFilters(newFilters);
+  }, [pagination.page, defaultFilters]);
+
+  const shouldPerformRequest = newFilters => {
+    let keys = Object.keys(newFilters);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (!newFilters[key]) return false;
+    }
+
+    return true;
+  };
 
   const onApplyFilter = filter => {
     setActiveFilters(filter);
