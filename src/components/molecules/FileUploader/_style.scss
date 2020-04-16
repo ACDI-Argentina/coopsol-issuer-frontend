@@ -1,20 +1,17 @@
 @import '../../../css/general_styling';
 
 .FileUploader {
-  .hidden {
-    display: none;
-  }
-
   .ant-upload.ant-upload-drag {
-    margin: 35px 0;
+    margin: 20px 0 15px 0;
+    height: 250px;
+    border-radius: 7px;
     &:not(.ant-upload-disabled):hover {
       border-color: #b4b7ff;
       background-color: #fdfefe;
       transition: all 0.9s;
-      transition: ease-out 0.9s;
     }
     .ant-upload-btn {
-      height: 105px;
+      height: 100%;
     }
     p.ant-upload-text {
       @include label(12px, $secondary-color);
@@ -24,15 +21,26 @@
     }
   }
   .preview {
+    .ant-upload-drag-container {
+      img {
+        margin-bottom: 1em;
+      }
+    }
     .ant-upload-list {
       line-height: 55px;
-      margin: 2em 0;
-      padding: 0 1em;
+      margin: 1em 0;
       .ant-upload-list-item {
         height: 55px;
         margin: 0px;
-        border-top: solid 1px $light-grey;
-        border-bottom: solid 1px $light-grey;
+        background-color: #fdfefe;
+        border-radius: 5px;
+        &:hover .ant-upload-list-item-info {
+          border-radius: 5px;
+          background-color: #f0f1ff;
+        }
+        .ant-upload-list-item-info {
+          padding: 0 1em;
+        }
         .ant-upload-list-item-info .anticon-loading .anticon,
         .ant-upload-list-item-info .ant-upload-text-icon .anticon {
           top: 20px;
@@ -43,9 +51,78 @@
         }
       }
     }
-    .message {
-      @include primary-text($body, $primary-color);
+    .result-container {
+      height: 250px;
+      border-radius: 7px;
+      border: 1px solid #b4b7ff;
+      background-color: #fdfefe;
+      .result {
+        background-color: #eff3fa;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img {
+          margin-right: 0.5em;
+        }
+        .process {
+          @include label($label, $secondary-color);
+        }
+        .r-success {
+          @include label($label, $primary-color);
+        }
+        .r-error {
+          @include label($label, $error);
+        }
+      }
+      .success {
+        height: 85%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        h4 {
+          @include label($body, $secondary-color);
+          margin-top: 0.5em;
+        }
+        p {
+          @include primary-text($body, $secondary-color);
+        }
+      }
+      .error {
+        padding: 10px 15px;
+        h4 {
+          @include primary-text($body, $secondary-color);
+          text-align: left;
+        }
+        ul {
+          height: 140px;
+          overflow: auto;
+          padding: 0;
+          border-top: 1px solid $light-grey;
+          li {
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+            img {
+              margin-right: 0.5em;
+            }
+            label {
+              @include label($body, $error);
+            }
+            p {
+              @include primary-text($body, $secondary-color);
+              margin: 0;
+              padding-left: 5px;
+            }
+          }
+        }
+      }
     }
+  }
+
+  .hidden {
+    display: none;
   }
 
   .buttonSection {

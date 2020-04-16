@@ -1,6 +1,18 @@
 /* eslint-disable max-len */
 
-const uploadFile = () => ({});
+const uploadFile = () => ({
+  data: {
+    totalRows: 1966,
+    validRows: 1960,
+    totalInsertedRows: 1960,
+    totalErrorsRows: 6,
+    totalDeletedRows: 0,
+    totalProcessedForms: 2,
+    errorRows: ['[Q34]:Respuesta: String to Date conversion failed from null to dd/MM/yy'],
+    fileError: null,
+    fileValid: true
+  }
+});
 
 const getCredentials = () => [
   {
