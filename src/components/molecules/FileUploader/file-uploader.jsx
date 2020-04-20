@@ -76,23 +76,27 @@ const FileUploader = ({ onUploaded, history }) => {
   const renderUploadedInfo = () => {
     if (!uploadResponse) return null;
 
-    const { totalRows, validRows, totalErrorsRows, errorRows } = uploadResponse;
+    const { totalReadRows, totalValidRows, totalErrorsRows, errorRows } = uploadResponse;
 
     const errors = errorRows.map(err => (
       <li>
-        <img src="/img/error.svg" alt="" />
-        <label htmlFor="">Celda AF2 </label>
-        <p>Error: Sólo caracteres numéricos </p>
+        {err.errorHeader && (
+          <span>
+            <img src="/img/error.svg" alt="" />
+            <label htmlFor="">Celda {err.errorHeader} </label>
+          </span>
+        )}
+        <p>{err.errorBody} </p>
       </li>
     ));
 
     return (
       <div className="result-container">
         <div className="result">
-          <label className="process">Lineas procesadas: {totalRows}</label>
+          <label className="process">Lineas procesadas: {totalReadRows}</label>
           <label className="r-success">
             <img src="/img/check.svg" alt="" />
-            {validRows} líneas
+            {totalValidRows} líneas
           </label>
           <label className="r-error">
             <img src="/img/error.svg" alt="" />
