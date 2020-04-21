@@ -1,6 +1,10 @@
 @import '../../../css/general_styling';
 
 .FileUploader {
+  .ant-upload-list-item-card-actions {
+    opacity: 1;
+
+  }
   .ant-upload.ant-upload-drag {
     margin: 20px 0 15px 0;
     height: 250px;
