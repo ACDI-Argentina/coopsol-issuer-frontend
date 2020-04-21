@@ -83,7 +83,7 @@ const FileUploader = ({ onUploaded, history }) => {
         {err.errorHeader && (
           <span>
             <img src="/img/error.svg" alt="" />
-            <label htmlFor="">Celda {err.errorHeader} </label>
+            <label htmlFor="">{err.errorHeader} </label>
           </span>
         )}
         <p>{err.errorBody} </p>
