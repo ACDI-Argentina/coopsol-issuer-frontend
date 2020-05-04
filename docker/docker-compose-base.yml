@@ -1,0 +1,73 @@
+version: "3"
+services:
+  backend:
+    image: docker.atixlabs.com/projectChangeMe-backend:0.0.1-SNAPSHOT-822f8e52
+    environment:
+      - spring_profiles_active=${ENVIRONMENT}
+      - PROJECTCHANGEME_DB=${PROJECTCHANGEME_DB}
+      - PROJECTCHANGEME_DB_USER=${PROJECTCHANGEME_DB_USER}
+      - PROJECTCHANGEME_DB_PASSWORD=${PROJECTCHANGEME_DB_PASSWORD}
+    depends_on:
+      - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.${ENVIRONMENT}.projectChangeMe.atixlabs.com`)"
+      - "traefik.http.routers.backend.entrypoints=web-secure"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=le"
+  frontend:
+    image: docker.atixlabs.com/projectChangeMe-frontend:0.1.0-5742bc3b
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+    depends_on:
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`frontend.${ENVIRONMENT}.projectChangeMe.atixlabs.com`)"
+      - "traefik.http.routers.frontend.entrypoints=web-secure"
+      - "traefik.http.routers.frontend.tls=true"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
+  proxy:
+    image: traefik:v2.2.0
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web-secure.address=:443"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=web-secure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesResolvers.le.acme.email=info@atixlabs.com"
+      - "--certificatesResolvers.le.acme.storage=/certs/acme.json"
+      - "--certificatesResolvers.le.acme.httpChallenge.entrypoint=web"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:8080:8080"
+    volumes:
+      # - ./trafeik-${ENVIRONMENT}.toml:/etc/traefik/traefik.toml
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/home/app/certs/:/certs"
+    depends_on:
+      - backend
+      - frontend
+  db:
+    image: postgres:9.3
+    environment:
+      - POSTGRES_USER=${PROJECTCHANGEME_DB_USER}
+      - POSTGRES_PASSWORD=${PROJECTCHANGEME_DB_PASSWORD}
+      - POSTGRES_DB=${PROJECTCHANGEME_DB}
+    volumes:
+      - "/db-data:/var/lib/postgresql/data"
+    ports:
+      - "127.0.0.1:5432:5432"
+  monitoring:
+    image: google/cadvisor:latest
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+    ports:
+      - "127.0.0.1:9000:8080"
+    
