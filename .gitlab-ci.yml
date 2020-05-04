@@ -1,5 +1,5 @@
 include:
-  - local: ".gitlab-ci-backend.yml"
+  - local: ".gitlab-ci-frontend.yml"
 
 # https://gitlab.com/gitlab-com/support-forum/issues/4416#note_216039772
 variables:
