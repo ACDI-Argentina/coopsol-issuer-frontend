@@ -1,0 +1,67 @@
+include:
+  - local: ".gitlab-ci-backend.yml"
+
+# https://gitlab.com/gitlab-com/support-forum/issues/4416#note_216039772
+variables:
+  DOCKER_TLS_CERTDIR: ""
+
+stages:
+  - test
+  - package
+  - deploy
+
+deploy-staging:
+  stage: deploy
+  image: docker.atixlabs.com/docker:19.03.1-compose
+  when: manual
+  environment:
+    name: staging
+    url: https://frontend.staging.semillas.atixlabs.com
+  services:
+    - docker:19.03.1-dind
+  script:
+    # Setup ssh
+    - apk add --update curl openssh bash
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan semillas-staging.atixlabs.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # Deploy
+    - docker login -u gitlabci -p $CI_JOB_TOKEN $CI_REGISTRY
+    - cd ./ops/docker && bash ./deploy.sh "staging"
+  only:
+    refs:
+      - SEMI-135-setup-ci
+      # Only run on release/x.y.x and hotfix/xxxx
+      - /^release.*$/
+      - develop
+      - /^hotfix.*$/
+
+deploy-uat:
+  stage: deploy
+  image: docker.atixlabs.com/docker:19.03.1-compose
+  when: manual
+  environment:
+    name: uat
+    url: https://frontend.uat.semillas.atixlabs.com
+  services:
+    - docker:19.03.1-dind
+  script:
+    # Setup ssh
+    - apk add --update curl openssh bash
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan semillas-uat.atixlabs.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # Deploy
+    - docker login -u gitlabci -p $CI_JOB_TOKEN $CI_REGISTRY
+    - cd ./ops/docker && bash ./deploy.sh "uat"
+  only:
+    refs:
+      # Only run on release/x.y.x and hotfix/xxxx
+      - /^release.*$/
+      - /^hotfix.*$/
