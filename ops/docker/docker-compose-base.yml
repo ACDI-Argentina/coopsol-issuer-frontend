@@ -1,29 +1,14 @@
 version: "3"
 services:
-  backend:
-    image: docker.atixlabs.com/projectChangeMe-backend:0.0.1-SNAPSHOT-822f8e52
-    environment:
-      - spring_profiles_active=${ENVIRONMENT}
-      - PROJECTCHANGEME_DB=${PROJECTCHANGEME_DB}
-      - PROJECTCHANGEME_DB_USER=${PROJECTCHANGEME_DB_USER}
-      - PROJECTCHANGEME_DB_PASSWORD=${PROJECTCHANGEME_DB_PASSWORD}
-    depends_on:
-      - db
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`api.${ENVIRONMENT}.projectChangeMe.atixlabs.com`)"
-      - "traefik.http.routers.backend.entrypoints=web-secure"
-      - "traefik.http.routers.backend.tls=true"
-      - "traefik.http.routers.backend.tls.certresolver=le"
   frontend:
-    image: docker.atixlabs.com/projectChangeMe-frontend:0.1.0-5742bc3b
+    image: docker.atixlabs.com/semillas-frontend:0.1.0-5742bc3b
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
     depends_on:
-      - backend
+      - frontend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`frontend.${ENVIRONMENT}.projectChangeMe.atixlabs.com`)"
+      - "traefik.http.routers.frontend.rule=Host(`frontend.${ENVIRONMENT}.semillas.atixlabs.com`)"
       - "traefik.http.routers.frontend.entrypoints=web-secure"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=le"
@@ -49,25 +34,5 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "/home/app/certs/:/certs"
     depends_on:
-      - backend
       - frontend
-  db:
-    image: postgres:9.3
-    environment:
-      - POSTGRES_USER=${PROJECTCHANGEME_DB_USER}
-      - POSTGRES_PASSWORD=${PROJECTCHANGEME_DB_PASSWORD}
-      - POSTGRES_DB=${PROJECTCHANGEME_DB}
-    volumes:
-      - "/db-data:/var/lib/postgresql/data"
-    ports:
-      - "127.0.0.1:5432:5432"
-  monitoring:
-    image: google/cadvisor:latest
-    volumes:
-      - "/:/rootfs:ro"
-      - "/var/run:/var/run:rw"
-      - "/sys:/sys:ro"
-      - "/var/lib/docker/:/var/lib/docker:ro"
-    ports:
-      - "127.0.0.1:9000:8080"
     
