@@ -1,7 +1,7 @@
 version: "3"
 services:
   frontend:
-    image: docker.atixlabs.com/semillas-frontend:0.1.0-5742bc3b
+    image: docker.atixlabs.com/semillas-frontend:0.1.0-9da0f668
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
     depends_on:
