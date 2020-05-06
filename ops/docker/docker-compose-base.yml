@@ -1,11 +1,9 @@
 version: "3"
 services:
   frontend:
-    image: docker.atixlabs.com/semillas/semillas-middleware-frontend:0.1.0-d99be9bc
+    image: docker.atixlabs.com/semillas/semillas-middleware-frontend:0.1.0-2d4b5245
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
-    depends_on:
-      - frontend
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`frontend.${ENVIRONMENT}.semillas.atixlabs.com`)"
