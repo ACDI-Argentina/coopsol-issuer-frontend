@@ -1,7 +1,7 @@
 {
   "name": "semillas-middleware-frontend",
   "version": "0.1.0",
-  "dockerImage": "docker.atixlabs.com/semillas-middleware-frontend",
+  "dockerImage": "docker.atixlabs.com/semillas/semillas-middleware-frontend",
   "private": true,
   "dependencies": {
     "@atixlabs/eslint-config": "1.1.2",
