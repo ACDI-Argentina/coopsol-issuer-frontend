@@ -1,0 +1,10 @@
+{
+  "authorized_keys": [
+    {
+      "key": "{{ lookup('file', '../staging/ansible/ssh-keys/alan-verbner.pub') }}"
+    },
+    {
+      "key": "{{ lookup('file', './gitlabci.pub') }}"
+    }
+  ]
+}

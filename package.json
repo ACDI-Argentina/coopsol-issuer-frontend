@@ -1,6 +1,7 @@
 {
   "name": "semillas-middleware-frontend",
   "version": "0.1.0",
+  "dockerImage": "docker.atixlabs.com/semillas/semillas-middleware-frontend",
   "private": true,
   "dependencies": {
     "@atixlabs/eslint-config": "1.1.2",
@@ -22,7 +23,9 @@
     "build": "react-scripts build",
     "lint": "./node_modules/.bin/eslint \"./**/*.js\" \"./**/*.jsx\"",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t $npm_package_dockerImage:$npm_package_version-$CI_COMMIT_SHORT_SHA .",
+    "docker:push": "docker push $npm_package_dockerImage:$npm_package_version-$CI_COMMIT_SHORT_SHA"
   },
   "devDependencies": {
     "babel-eslint": "10.1.0",
