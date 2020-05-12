@@ -26,18 +26,16 @@ import {
 } from '../../../utils/tables/table-filters-definitions';
 const { TabPane } = Tabs;
 
-const { getCredentials, getCredentialTypes, getCredentialStatus, getCredentialStates } = api();
+const { getCredentials, getCredentialTypes, getCredentialStates } = api();
 
 const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
-  const [credentialStatus, setCredentialStatus] = useState({});
   const [credentialStates, setCredentialStates] = useState({});
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
-    credentialCall(getCredentialStatus, null, setCredentialStatus, onError);
     credentialCall(getCredentialStates, null, setCredentialStates, onError);
   }, []);
 
@@ -86,7 +84,7 @@ const TabTable = () => {
             columns={getDidColumns}
             dataSource={getCredentials}
             filters={pendingDidFilter}
-            defaultFilters={{ credentialStatus: credentialStatus[CREDENTIAL_PENDING_DIDI] }}
+            defaultFilters={{ credentialStates: credentialStates[CREDENTIAL_PENDING_DIDI] }}
           />
         </TabPane>
         <TabPane
@@ -102,7 +100,7 @@ const TabTable = () => {
             columns={getPendingColumns}
             dataSource={getCredentials}
             filters={pendingCredentialsFilter}
-            defaultFilters={{ credentialStatus: credentialStatus[CREDENTIAL_PENDING_BONDAREA] }}
+            defaultFilters={{ credentialStates: credentialStates[CREDENTIAL_PENDING_BONDAREA] }}
           />
         </TabPane>
       </Tabs>
