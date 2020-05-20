@@ -14,18 +14,6 @@ export const getCredentialsColumns = fetchCredentials => [
   { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
   { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
   { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
-  {
-    title: 'Generada',
-    dataIndex: 'dateOfIssue',
-    key: 'dateOfIssue',
-    render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
-  },
-  {
-    title: 'Caduca',
-    dataIndex: 'dateOfExpiry',
-    key: 'dateOfExpiry',
-    render: value => <div>{moment(value).format(DEFAULT_DATE_FORMAT)}</div>
-  },
   { title: 'Estado', dataIndex: 'credentialState', key: 'credentialState' },
   {
     title: 'Ult. actualización',
