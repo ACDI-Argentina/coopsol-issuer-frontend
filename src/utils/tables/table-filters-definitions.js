@@ -16,26 +16,11 @@ export const defaultFilters = credentialTypes => ({
     type: 'input',
     name: 'DID'
   },
-  dateOfIssue: {
+  lastUpdate: {
     type: 'date',
-    name: 'Generada'
+    name: 'Ult. actualización'
   },
-  dateOfExpiry: {
-    type: 'date',
-    name: 'Caduca'
-  }
 });
-
-export const pendingCredentialsFilter = {
-  name: {
-    type: 'input',
-    name: 'Nombre y Apellido'
-  },
-  dniBeneficiary: {
-    type: 'input',
-    name: 'DNI'
-  }
-};
 
 export const didCredentialsFilter = credentialTypes => ({
   credentialType: {
@@ -51,12 +36,8 @@ export const didCredentialsFilter = credentialTypes => ({
     type: 'input',
     name: 'DNI'
   },
-  dateOfIssue: {
+  lastUpdate: {
     type: 'date',
-    name: 'Generada'
+    name: 'Ult. actualización'
   },
-  dateOfExpiry: {
-    type: 'date',
-    name: 'Caduca'
-  }
 });
