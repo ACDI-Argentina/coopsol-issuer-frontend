@@ -63,7 +63,7 @@ button:focus-within {
     }
     .logoutBottom {
       position: absolute;
-      bottom: 8vh;
+      bottom: 4vh;
       width: 100%;
       @include primary-title($body, $secondary-color);
     }
