@@ -14,6 +14,11 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
 
   const getCredentialData = useApi();
 
+  const getDetailedInformation = record => {
+    // Definir que informacion se va a mostrar acá
+    return '-'
+  };
+
   const handleTableChange = pagination => {
     let page = pagination.current;
 
@@ -88,6 +93,9 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         rowKey={'id'}
         columns={tableColumns}
         dataSource={credentials}
+        expandable={{
+          expandedRowRender: record => <p style={{ margin: 0 }}>{getDetailedInformation(record)}</p>,
+        }}
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}

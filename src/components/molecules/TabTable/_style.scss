@@ -50,6 +50,13 @@
         .ant-table-thead {
           @include label($label, $secondary-color);
         }
+        .ant-table-tbody {
+          .ant-table-expanded-row { 
+            td {
+              background: #f1f1f1;
+            }
+          }
+        }
       }
     }
   }
