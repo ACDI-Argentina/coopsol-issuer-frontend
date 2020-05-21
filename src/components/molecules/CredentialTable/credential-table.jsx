@@ -57,7 +57,9 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   const onApplyFilter = filter => {
-    setActiveFilters(filter);
+    defaultFilters ? 
+      setActiveFilters({...filter, ...defaultFilters}) :
+      setActiveFilters(filter);
   };
 
   const onSuccess = data => {
