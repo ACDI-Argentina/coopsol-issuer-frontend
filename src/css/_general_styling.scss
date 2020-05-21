@@ -26,6 +26,9 @@ $title-secondary: 18px;
 $body: 14px;
 $label: 10px;
 
+// Utils
+$sidebar-size: 18%;
+
 //Text
 
 @mixin primary-text($font-size, $font-color) {

@@ -20,7 +20,8 @@ body {
     display: flex;
     .Content {
       background-color: $white;
-      width: 82%;
+      width: calc(100% -  #{$sidebar-size});
+      margin-left: $sidebar-size;
     }
   }
 }
