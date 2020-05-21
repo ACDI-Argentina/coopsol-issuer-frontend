@@ -89,6 +89,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
+        scroll={{ y: 300 }}
       />
     </div>
   );
