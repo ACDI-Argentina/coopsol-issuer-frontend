@@ -66,7 +66,7 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
     <div className="RevokeCredentials">
       <Dropdown overlay={menu} className="RevokeCredentials">
         <a className="ant-dropdown-link" href="/" onClick={e => e.preventDefault()}>
-          Revocar credencial <DownOutlined />
+          Revocar <DownOutlined />
         </a>
       </Dropdown>
       <Modal

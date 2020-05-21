@@ -84,25 +84,9 @@ const TabTable = () => {
             columns={getDidColumns}
             dataSource={getCredentials}
             filters={pendingDidFilter}
-            defaultFilters={{ credentialStates: credentialStates[CREDENTIAL_PENDING_DIDI] }}
+            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_PENDING_DIDI] }}
           />
-        </TabPane>
-        <TabPane
-          tab={
-            <TabTooltip
-              title={'Pendientes BOCS'}
-              tooltip={'A espera de aprobación crediticia desde sitema BONDAREA BOCS'}
-            />
-          }
-          key="5"
-        >
-          <CredentialTable
-            columns={getPendingColumns}
-            dataSource={getCredentials}
-            filters={pendingCredentialsFilter}
-            defaultFilters={{ credentialStates: credentialStates[CREDENTIAL_PENDING_BONDAREA] }}
-          />
-        </TabPane>
+        </TabPane>        
       </Tabs>
     </div>
   );
