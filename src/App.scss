@@ -23,6 +23,9 @@ body {
       width: calc(100% -  #{$sidebar-size});
       margin-left: $sidebar-size;
     }
+    .SimpleHeader + .Content {
+      margin-left: 0px;
+    }
   }
 }
 
