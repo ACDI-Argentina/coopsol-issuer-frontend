@@ -6,21 +6,21 @@ import ImportStatus from '../../atoms/ImportStatus/import-status';
 // const { endpoint } = api();
 
 const CredentialsUploaded = ({ history, theme }) => {
-  const goToCredentials = () => {
-    history.push('/credentials');
+  const goToCredentials = defaultActiveName => {
+    history.push('/credentials', { defaultActiveName });
   };
+  
   return (
     <div className="left-side">
-      <h3>Ya están creadas las credenciales</h3>
+      <h3>Las Credenciales fueron creadas de manera exitosa.</h3>
       <p>El proceso de creación fue realizado correctamente.</p>
 
       <ImportStatus text="Archivo de encuestas" theme="check" />
-      <ImportStatus text="Conexión con Bondarea" theme="pending" />
       <div className="buttonSection">
         <ButtonPrimary
           text="Ir al listado de credenciales"
           theme="ThemePrimary"
-          onClick={goToCredentials}
+          onClick={() => goToCredentials('pending')}
         />
       </div>
     </div>

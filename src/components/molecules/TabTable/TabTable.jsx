@@ -11,7 +11,8 @@ import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
   getPendingColumns,
-  getDidColumns
+  getDidColumns,
+  getTabKey
 } from '../../../utils/table-definitions';
 import {
   CREDENTIAL_PENDING_DIDI,
@@ -28,7 +29,7 @@ const { TabPane } = Tabs;
 
 const { getCredentials, getCredentialTypes, getCredentialStates } = api();
 
-const TabTable = () => {
+const TabTable = ({defaultActiveName}) => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
@@ -45,9 +46,11 @@ const TabTable = () => {
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
+  const defaultActiveKey = getTabKey(defaultActiveName);
+  
   return (
     <div className="TabTableContent">
-      <Tabs>
+      <Tabs defaultActiveKey={defaultActiveKey}>
         <TabPane
           tab={<TabTooltip title={'Credenciales en uso'} tooltip={'Credenciales vigentes'} />}
           key={'1'}

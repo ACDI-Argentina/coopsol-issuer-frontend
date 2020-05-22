@@ -80,3 +80,12 @@ export const getDidColumns = fetchCredentials => {
   columns.splice(didColumn, 1);
   return columns;
 };
+
+export const getTabKey = tabName => {
+  let tabKeys = {
+    'inUse': "1",
+    'revoked': "2",
+    'pending': "4",
+  }
+  return tabKeys[tabName] || "1";
+}

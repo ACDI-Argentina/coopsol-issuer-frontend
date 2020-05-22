@@ -22,6 +22,9 @@ body {
       background-color: $white;
       width: 82%;
     }
+    .SimpleHeader + .Content {
+      width: 100%;
+    }
   }
 }
 
