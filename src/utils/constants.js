@@ -11,6 +11,7 @@ export const REQUESTS_URL = '/requests';
 export const ACTIVITIES_URL = '/activities';
 export const PROFILE_URL = '/profile';
 export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
+export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm`;
 
 export const CREDENTIAL_ACTIVE = 'CREDENTIAL_ACTIVE';
 export const CREDENTIAL_REVOKE = 'CREDENTIAL_REVOKE';
