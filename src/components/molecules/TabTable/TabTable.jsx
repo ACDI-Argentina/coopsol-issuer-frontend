@@ -10,18 +10,15 @@ import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
-  getPendingColumns,
   getDidColumns
 } from '../../../utils/table-definitions';
 import {
   CREDENTIAL_PENDING_DIDI,
-  CREDENTIAL_PENDING_BONDAREA,
   CREDENTIAL_REVOKE,
   CREDENTIAL_ACTIVE
 } from '../../../utils/constants';
 import {
   defaultFilters,
-  pendingCredentialsFilter,
   didCredentialsFilter
 } from '../../../utils/tables/table-filters-definitions';
 const { TabPane } = Tabs;
