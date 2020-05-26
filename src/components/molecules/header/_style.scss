@@ -1,7 +1,8 @@
 @import '../../../css/general_styling';
 
 .header {
-  width: 18%;
+  position: fixed;
+  width: $sidebar-size;
   display: flex;
   flex-direction: column;
   .TopNav {
