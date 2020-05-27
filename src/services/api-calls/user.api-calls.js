@@ -9,12 +9,15 @@ const getCredentialTypes = makeGetRequest => () => makeGetRequest('credentials/t
 
 const getCredentialStates = makeGetRequest => () => makeGetRequest('credentials/states');
 
+const getRevocationReasons = makeGetRequest => () => makeGetRequest('credentials/revocation-reasons');
+
 export default client => {
   const { makePostRequest, makeGetRequest, makePatchRequest, makeDeleteRequest } = helpers(client);
   return {
     getCredentials: getCredentials(makeGetRequest),
     revokeCredentials: revokeCredentials(makePatchRequest),
     getCredentialTypes: getCredentialTypes(makeGetRequest),
-    getCredentialStates: getCredentialStates(makeGetRequest)
+    getCredentialStates: getCredentialStates(makeGetRequest),
+    getRevocationReasons: getRevocationReasons(makeGetRequest)
   };
 };

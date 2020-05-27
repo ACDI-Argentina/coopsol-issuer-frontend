@@ -13,11 +13,10 @@ import TextAreaComments from '../../atoms/TextArea/text-area';
 
 const { revokeCredentials } = api();
 
-const RevokeCredentials = ({ credential, onRevoked }) => {
+const RevokeCredentials = ({ credential, onRevoked, reasons }) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const credentialCall = useApi();
 
   const handleOk = e => {
@@ -30,7 +29,7 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
     setVisible(false);
     onRevoked();
   };
-
+  
   const onError = () => {
     message.error('No se pudieron revocar las credenciales, intente nuevamente.');
   };
@@ -47,10 +46,9 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => onItemClick('mora')}>Mora</Menu.Item>
-      <Menu.Item onClick={() => onItemClick('creditEnd')}>Fin del credito</Menu.Item>
-      <Menu.Item onClick={() => onItemClick('death')}>Fallecimiento</Menu.Item>
-      <Menu.Item onClick={() => onItemClick('leave')}>Desvinculación</Menu.Item>
+      {
+        reasons.map(({id, label}) => <Menu.Item onClick={() => onItemClick(id)}> {label} </Menu.Item>)
+      }
     </Menu>
   );
   const defaultOptions = {
