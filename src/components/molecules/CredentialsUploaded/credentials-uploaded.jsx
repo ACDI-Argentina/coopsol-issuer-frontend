@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './_style.scss';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import ImportStatus from '../../atoms/ImportStatus/import-status';
+import { AppContext } from '../../../services/providers/app-context';
 
 // const { endpoint } = api();
 
 const CredentialsUploaded = ({ history, theme }) => {
-  const goToCredentials = defaultActiveName => {
-    history.push('/credentials', { defaultActiveName });
-  };
+  const { setAppState } = useContext(AppContext);
   
+  const goToCredentials = defaultActiveTabKey => {
+    setAppState({defaultActiveTabKey});
+    history.push('/credentials');
+  };
+
   return (
     <div className="left-side">
       <h3>Las Credenciales fueron creadas de manera exitosa.</h3>
@@ -20,7 +24,7 @@ const CredentialsUploaded = ({ history, theme }) => {
         <ButtonPrimary
           text="Ir al listado de credenciales"
           theme="ThemePrimary"
-          onClick={() => goToCredentials('pending')}
+          onClick={() => goToCredentials('4')}
         />
       </div>
     </div>

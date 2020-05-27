@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './_style.scss';
 import { Tabs, message } from 'antd';
 import { useState } from 'react';
@@ -6,13 +6,13 @@ import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
+import { AppContext } from '../../../services/providers/app-context';
 
 import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
   getPendingColumns,
-  getDidColumns,
-  getTabKey
+  getDidColumns
 } from '../../../utils/table-definitions';
 import {
   CREDENTIAL_PENDING_DIDI,
@@ -27,11 +27,13 @@ const { TabPane } = Tabs;
 
 const { getCredentials, getCredentialTypes, getCredentialStates } = api();
 
-const TabTable = ({defaultActiveName}) => {
+const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
   const [credentialStates, setCredentialStates] = useState({});
+
+  const { appState } = useContext(AppContext);
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
@@ -44,11 +46,10 @@ const TabTable = ({defaultActiveName}) => {
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
-  const defaultActiveKey = getTabKey(defaultActiveName);
   
   return (
     <div className="TabTableContent">
-      <Tabs defaultActiveKey={defaultActiveKey}>
+      <Tabs defaultActiveKey={appState.defaultActiveTabKey}>
         <TabPane
           tab={<TabTooltip title={'Credenciales en uso'} tooltip={'Credenciales vigentes'} />}
           key={'1'}
