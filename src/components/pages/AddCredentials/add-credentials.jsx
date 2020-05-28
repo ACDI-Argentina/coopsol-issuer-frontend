@@ -24,7 +24,7 @@ const AddCredentials = ({ history }) => {
     <div className="AddCredentials">
       <TitlePage
         text="Generación de Credenciales"
-        description="Completá los siguientes pasos para poder generar una precredencial."
+        description="Completá los siguientes pasos para poder generar una credencial."
       />
       <div className="SurveyImportContainer">
         <div className="SurveyImport">

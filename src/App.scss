@@ -26,6 +26,9 @@ body {
     .SimpleHeader + .Content {
       margin-left: 0px;
     }
+    .SimpleHeader + .Content {
+      width: 100%;
+    }
   }
 }
 

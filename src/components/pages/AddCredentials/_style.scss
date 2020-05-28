@@ -2,7 +2,7 @@
 
 .SurveyImportContainer {
   display: flex;
-  padding: 25px 60px 0 60px;
+  padding: 35px 60px 0 60px;
   justify-content: space-between;
   .SurveyImport {
     width: 100%;
@@ -10,7 +10,7 @@
       @include primary-title($title-secondary, $secondary-color);
     }
     .left-side {
-      width: 45%;
+      width: 48%;
     }
     .UploadContent {
       display: flex;
