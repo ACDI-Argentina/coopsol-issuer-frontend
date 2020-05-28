@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './_style.scss';
 import { Tabs, message } from 'antd';
 import { useState } from 'react';
@@ -6,10 +6,12 @@ import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
+import { AppContext } from '../../../services/providers/app-context';
 
 import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
+  getPendingColumns,
   getDidColumns
 } from '../../../utils/table-definitions';
 import {
@@ -39,6 +41,8 @@ const TabTable = () => {
     setRevocationReasons(parsedReasons);
   }
 
+  const { appState } = useContext(AppContext);
+
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
     credentialCall(getCredentialStates, null, setCredentialStates, onError);
@@ -52,9 +56,10 @@ const TabTable = () => {
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
+  
   return (
     <div className="TabTableContent">
-      <Tabs>
+      <Tabs defaultActiveKey={appState.defaultActiveTabKey}>
         <TabPane
           tab={<TabTooltip title={'Credenciales en uso'} tooltip={'Credenciales vigentes'} />}
           key={'1'}

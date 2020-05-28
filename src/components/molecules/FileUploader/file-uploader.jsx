@@ -76,7 +76,7 @@ const FileUploader = ({ onUploaded, history }) => {
   const renderUploadedInfo = () => {
     if (!uploadResponse) return null;
 
-    const { totalReadRows, totalValidRows, totalErrorsRows, errorRows } = uploadResponse;
+    const { totalProcessedForms, totalReadRows, totalValidRows, totalErrorsRows, errorRows } = uploadResponse;
 
     const errors = errorRows.map(err => (
       <li>
@@ -94,6 +94,10 @@ const FileUploader = ({ onUploaded, history }) => {
       <div className="result-container">
         <div className="result">
           <label className="process">Lineas procesadas: {totalReadRows}</label>
+          <label className="r-success">
+            <img src="/img/check.svg" alt="" />
+            {totalProcessedForms} formulario(s)
+          </label>
           <label className="r-success">
             <img src="/img/check.svg" alt="" />
             {totalValidRows} líneas
