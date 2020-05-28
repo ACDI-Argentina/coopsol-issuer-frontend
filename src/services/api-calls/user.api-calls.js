@@ -3,7 +3,7 @@ import helpers from './helpers';
 const getCredentials = makeGetRequest => data => makeGetRequest('credentials', data);
 
 const revokeCredentials = makePatchRequest => data =>
-  makePatchRequest('credential/revoke/{id}', data);
+  makePatchRequest('credentials/revoke/{id}/reason/{reason}', data);
 
 const getCredentialTypes = makeGetRequest => () => makeGetRequest('credentials/types');
 

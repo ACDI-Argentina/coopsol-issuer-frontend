@@ -21,7 +21,7 @@ const RevokeCredentials = ({ credential, onRevoked, reasons }) => {
 
   const handleOk = e => {
     setLoading(true);
-    credentialCall(revokeCredentials, { id: credential.id, reason: 'Test' }, onSuccess, onError);
+    credentialCall(revokeCredentials, { id: credential.id, reason: selectedReason }, onSuccess, onError);
   };
 
   const onSuccess = () => {
