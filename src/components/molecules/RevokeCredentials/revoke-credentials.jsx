@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './_style.scss';
 import { Menu, Dropdown, Modal, message } from 'antd';
 import { useState } from 'react';
@@ -10,14 +10,16 @@ import Loader from '../../atoms/Loader/loader';
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/3046-me-at-office.json';
 import TextAreaComments from '../../atoms/TextArea/text-area';
+import { AppContext } from '../../../services/providers/app-context';
 
 const { revokeCredentials } = api();
 
-const RevokeCredentials = ({ credential, onRevoked, reasons }) => {
+const RevokeCredentials = ({ credential, onRevoked }) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
   const credentialCall = useApi();
+  const { appState } = useContext(AppContext);
 
   const handleOk = e => {
     setLoading(true);
@@ -47,8 +49,8 @@ const RevokeCredentials = ({ credential, onRevoked, reasons }) => {
   const menu = (
     <Menu>
       {
-        (reasons && reasons.length) ?
-          reasons.map(({id, label}) => <Menu.Item key={id} onClick={() => onItemClick(id)}> {label} </Menu.Item>)
+        (appState.revocationReasons && appState.revocationReasons.length) ?
+        appState.revocationReasons.map(({id, label}) => <Menu.Item key={id} onClick={() => onItemClick(id)}> {label} </Menu.Item>)
           : <Menu.Item> Cargando razones posibles </Menu.Item>
       }
     </Menu>

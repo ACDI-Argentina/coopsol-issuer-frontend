@@ -3,7 +3,7 @@ import moment from 'moment';
 import { DEFAULT_DATETIME_FORMAT } from './constants';
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
 
-export const getCredentialsColumns = (fetchCredentials, revocationReasons) => [
+export const getCredentialsColumns = (fetchCredentials) => [
   {
     title: 'Tipo de credencial',
     dataIndex: 'credentialType',
@@ -35,8 +35,8 @@ export const getRevokedCredentialsColumns = () => {
   return cols;
 };
 
-export const getDidColumns = (fetchCredentials, revocationReasons) => {
-  let columns = getCredentialsColumns(fetchCredentials, revocationReasons);
+export const getDidColumns = (fetchCredentials) => {
+  let columns = getCredentialsColumns(fetchCredentials);
 
   let didColumn = columns.findIndex(e => e.key === 'idDidiCredential');
   columns.splice(didColumn, 1);

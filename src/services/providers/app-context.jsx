@@ -1,7 +1,8 @@
 import React, { createContext, useReducer } from 'react';
 
 const initialState = {
-    defaultActiveTabKey: null
+    defaultActiveTabKey: null,
+    revocationReasons: []
 };
 
 const reducer = (appState, newAppState) => {
