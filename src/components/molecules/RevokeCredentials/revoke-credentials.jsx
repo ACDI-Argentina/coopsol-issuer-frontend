@@ -47,7 +47,7 @@ const RevokeCredentials = ({ credential, onRevoked, reasons }) => {
   const menu = (
     <Menu>
       {
-        reasons.length ?
+        (reasons && reasons.length) ?
           reasons.map(({id, label}) => <Menu.Item key={id} onClick={() => onItemClick(id)}> {label} </Menu.Item>)
           : <Menu.Item> Cargando razones posibles </Menu.Item>
       }
