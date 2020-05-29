@@ -32,16 +32,16 @@ const TabTable = () => {
 
   const [credentialTypes, setCredentialTypes] = useState([]);
   const [credentialStates, setCredentialStates] = useState({});
-  const [revocationReasons, setRevocationReasons] = useState({});
+
+  const { appState, setAppState } = useContext(AppContext);
 
   const onSuccessGetReasons = (reasons) => {
-    let parsedReasons = Object.keys(reasons).map(id => { 
+    let revocationReasons = Object.keys(reasons).map(id => { 
       return { id, label: reasons[id] }
     })
-    setRevocationReasons(parsedReasons);
+    setAppState({revocationReasons});
   }
 
-  const { appState } = useContext(AppContext);
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
@@ -69,7 +69,6 @@ const TabTable = () => {
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
             defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] }}
-            revocationReasons={revocationReasons}
           />
         </TabPane>
 
@@ -98,7 +97,6 @@ const TabTable = () => {
             dataSource={getCredentials}
             filters={pendingDidFilter}
             defaultFilters={{ credentialState: credentialStates[CREDENTIAL_PENDING_DIDI] }}
-            revocationReasons={revocationReasons}
           />
         </TabPane>
       </Tabs>

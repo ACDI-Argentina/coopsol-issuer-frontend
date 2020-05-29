@@ -4,7 +4,7 @@ import TableFilters from '../TableFilters/table-filters';
 import { Table, message } from 'antd';
 import { useApi } from '../../../services/useApi';
 
-const CredentialTable = ({ dataSource, columns, defaultFilters, filters, revocationReasons }) => {
+const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
@@ -29,7 +29,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, revocat
     getCredentialData(dataSource, { page: pagination.page, ...activeFilters }, onSuccess, onError);
   };
 
-  const tableColumns = columns(fetchCredentials, revocationReasons);
+  const tableColumns = columns(fetchCredentials);
 
   const onSearch = () => {
     fetchCredentials();
