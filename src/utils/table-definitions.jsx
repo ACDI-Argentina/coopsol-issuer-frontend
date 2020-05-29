@@ -24,7 +24,7 @@ export const getCredentialsColumns = (fetchCredentials, revocationReasons) => [
     dataIndex: '',
     key: 'action',
     render: item => {
-      return <RevokeCredentials credential={item} onRevoked={fetchCredentials} reasons={revocationReasons} />;
+      return item.revocable ? <RevokeCredentials credential={item} onRevoked={fetchCredentials} /> : '-';
     }
   }
 ];
