@@ -49,7 +49,7 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
   const menu = (
     <Menu>
       {
-        (appState.revocationReasons && appState.revocationReasons.length) ?
+        appState.revocationReasons.length ?
         appState.revocationReasons.map(({id, label}) => <Menu.Item key={id} onClick={() => onItemClick(id)}> {label} </Menu.Item>)
           : <Menu.Item> Cargando razones posibles </Menu.Item>
       }
