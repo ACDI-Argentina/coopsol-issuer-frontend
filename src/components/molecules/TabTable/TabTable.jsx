@@ -25,24 +25,34 @@ import {
 } from '../../../utils/tables/table-filters-definitions';
 const { TabPane } = Tabs;
 
-const { getCredentials, getCredentialTypes, getCredentialStates } = api();
+const { getCredentials, getCredentialTypes, getCredentialStates, getRevocationReasons } = api();
 
 const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
   const [credentialStates, setCredentialStates] = useState({});
+  const [revocationReasons, setRevocationReasons] = useState({});
+
+  const onSuccessGetReasons = (reasons) => {
+    let parsedReasons = Object.keys(reasons).map(id => { 
+      return { id, label: reasons[id] }
+    })
+    setRevocationReasons(parsedReasons);
+  }
 
   const { appState } = useContext(AppContext);
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
     credentialCall(getCredentialStates, null, setCredentialStates, onError);
+    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError);
   }, []);
 
   const onError = () => {
     message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
   };
+
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
@@ -59,6 +69,7 @@ const TabTable = () => {
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
             defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] }}
+            revocationReasons={revocationReasons}
           />
         </TabPane>
 
@@ -87,8 +98,9 @@ const TabTable = () => {
             dataSource={getCredentials}
             filters={pendingDidFilter}
             defaultFilters={{ credentialState: credentialStates[CREDENTIAL_PENDING_DIDI] }}
+            revocationReasons={revocationReasons}
           />
-        </TabPane>        
+        </TabPane>
       </Tabs>
     </div>
   );
