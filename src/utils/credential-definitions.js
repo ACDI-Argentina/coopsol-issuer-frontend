@@ -42,10 +42,13 @@ const labels = {
 
 export default (fields) => {
     let result = [];
-    for (const k in fields) {
-      const value = fields[k];
-      if ((value !== null) && !blacklist.includes(k)) {
-        result.push({ label: labels[k], value });
+    for (const prop in fields) {
+      const value = fields[prop];
+      if ((value !== null) && !blacklist.includes(prop)) {
+        result.push({ 
+            value,
+            label: labels[prop] 
+        });
       }
     }
     return result;
