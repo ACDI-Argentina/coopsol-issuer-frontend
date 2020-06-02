@@ -1,0 +1,13 @@
+.CredentialDetail {
+    .ant-descriptions-item {
+        padding-bottom: 0px !important; 
+        &-label {
+            font-weight: 400;
+            font-size: 12px;
+        }
+        &-content {
+            color: black;
+            padding-bottom: 8px;
+        }
+    }
+}
