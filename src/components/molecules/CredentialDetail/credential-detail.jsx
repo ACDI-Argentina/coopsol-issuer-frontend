@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './_style.scss';
 import { Descriptions } from 'antd';
-import getFields from '../../../utils/credential-definitions';
+import getFilteredFields from '../../../utils/credential-definitions';
 
 const CredentialDetail = ({ fields }) => {
 
-  const filteredFields = getFields(fields);
+  const filteredFields = getFilteredFields(fields);
 
   return (
     <div className="CredentialDetail">
