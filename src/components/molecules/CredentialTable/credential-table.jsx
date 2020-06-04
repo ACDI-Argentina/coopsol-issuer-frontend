@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
+import CredentialDetail from '../CredentialDetail/credential-detail';
 import { Table, message } from 'antd';
 import { useApi } from '../../../services/useApi';
 
@@ -91,6 +92,9 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
+        expandable={{
+          expandedRowRender: record => <CredentialDetail fields={record} />
+        }}
       />
     </div>
   );
