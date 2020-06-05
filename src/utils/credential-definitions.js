@@ -6,7 +6,7 @@ const blacklist = [
     "idDidiCredential",
     "lastUpdate",
     "name",
-    "revocable"
+    "isRevocable"
 ];
 
 const labels = { 
