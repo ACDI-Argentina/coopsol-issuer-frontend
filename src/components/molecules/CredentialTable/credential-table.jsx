@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
+import CredentialDetail from '../CredentialDetail/credential-detail';
 import { Table, message } from 'antd';
 import { useApi } from '../../../services/useApi';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({
-    page: 0
+    page: 0,
+    defaultPageSize: 10
   });
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState([]);
@@ -15,12 +17,9 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const getCredentialData = useApi();
 
   const handleTableChange = pagination => {
-    let page = pagination.current;
-
-    setLoading(true);
     setPagination({
-      total: 50,
-      page: page
+      ...pagination,
+      page: pagination.current
     });
   };
 
@@ -44,7 +43,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   useEffect(() => {
     let newFilters = defaultFilters ? defaultFilters : {};
     setActiveFilters(newFilters);
-  }, [pagination.page, defaultFilters]);
+  }, [defaultFilters]);
 
   const shouldPerformRequest = newFilters => {
     let keys = Object.keys(newFilters);
@@ -63,12 +62,12 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   const onSuccess = data => {
+    setCredentials(data);
     setPagination({
-      total: 50,
-      page: pagination.page
+      ...pagination,
+      total: data.length
     });
     setLoading(false);
-    setCredentials(data);
   };
 
   const onError = () => {
@@ -91,6 +90,9 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
+        expandable={{
+          expandedRowRender: record => <CredentialDetail fields={record} />
+        }}
       />
     </div>
   );

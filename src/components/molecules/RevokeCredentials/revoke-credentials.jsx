@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './_style.scss';
 import { Menu, Dropdown, Modal, message } from 'antd';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import Loader from '../../atoms/Loader/loader';
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/3046-me-at-office.json';
 import TextAreaComments from '../../atoms/TextArea/text-area';
+import { AppContext } from '../../../services/providers/app-context';
 
 const { revokeCredentials } = api();
 
@@ -17,12 +18,12 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const credentialCall = useApi();
+  const { appState } = useContext(AppContext);
 
   const handleOk = e => {
     setLoading(true);
-    credentialCall(revokeCredentials, { id: credential.id, reason: 'Test' }, onSuccess, onError);
+    credentialCall(revokeCredentials, { id: credential.id, reason: selectedReason }, onSuccess, onError);
   };
 
   const onSuccess = () => {
@@ -30,7 +31,7 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
     setVisible(false);
     onRevoked();
   };
-
+  
   const onError = () => {
     message.error('No se pudieron revocar las credenciales, intente nuevamente.');
   };
@@ -47,10 +48,11 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => onItemClick('mora')}>Mora</Menu.Item>
-      <Menu.Item onClick={() => onItemClick('creditEnd')}>Fin del credito</Menu.Item>
-      <Menu.Item onClick={() => onItemClick('death')}>Fallecimiento</Menu.Item>
-      <Menu.Item onClick={() => onItemClick('leave')}>Desvinculación</Menu.Item>
+      {
+        appState.revocationReasons.length ?
+        appState.revocationReasons.map(({id, label}) => <Menu.Item key={id} onClick={() => onItemClick(id)}> {label} </Menu.Item>)
+          : <Menu.Item> Cargando razones posibles </Menu.Item>
+      }
     </Menu>
   );
   const defaultOptions = {
