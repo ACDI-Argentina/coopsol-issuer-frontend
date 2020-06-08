@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import apiCalls from '../../../services/api-calls/all';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { Upload, message } from 'antd';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import './_style.scss';
 import MessageLoader from '../MessageLoader/message-loader';
+import { UserContext } from '../../../services/providers/user-context';
+import { processError } from '../../../services/api-calls/helpers';
 
 const { uploadFile } = apiCalls();
 const { Dragger } = Upload;
@@ -14,6 +16,7 @@ const FileUploader = ({ onUploaded, history }) => {
   const [showContainer, setShowContainer] = useState(false);
   const [uploadResponse, setUploadResponse] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const handleUpload = async () => {
     setUploading(true);
@@ -25,6 +28,7 @@ const FileUploader = ({ onUploaded, history }) => {
       //setSuccess('Tu archivo fue subido correctamente!');
       setUploading(false);
     } catch (error) {
+      processError(error, setUser);
       message.error(processedErrorMessage(error));
       setUploadResponse(null);
       setUploading(false);

@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
 import CredentialDetail from '../CredentialDetail/credential-detail';
 import { Table, message } from 'antd';
 import { useApi } from '../../../services/useApi';
+import { UserContext } from '../../../services/providers/user-context';
+import { processError } from '../../../services/api-calls/helpers';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({
-    page: 0,
-    defaultPageSize: 10
+    page: 1,
+    defaultPageSize: 20
   });
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState([]);
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
+  const { setUser } = useContext(UserContext);
 
   const getCredentialData = useApi();
 
@@ -45,6 +48,10 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
     setActiveFilters(newFilters);
   }, [defaultFilters]);
 
+  useEffect(() => {
+    fetchCredentials();
+  }, [pagination.page]);
+
   const shouldPerformRequest = newFilters => {
     let keys = Object.keys(newFilters);
     for (let i = 0; i < keys.length; i++) {
@@ -62,15 +69,17 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   const onSuccess = data => {
-    setCredentials(data);
+    const { content, numberOfElements } = data;
+    setCredentials(content);
     setPagination({
       ...pagination,
-      total: data.length
+      total: numberOfElements
     });
     setLoading(false);
   };
 
-  const onError = () => {
+  const onError = (error) => {
+    processError(error, setUser);
     message.error('No se pudieron obtener las credenciales, intente nuevamente.');
     setLoading(false);
   };
