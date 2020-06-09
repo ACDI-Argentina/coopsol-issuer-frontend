@@ -11,6 +11,7 @@ import Lottie from 'react-lottie';
 import animationData from '../../../assets/3046-me-at-office.json';
 import TextAreaComments from '../../atoms/TextArea/text-area';
 import { AppContext } from '../../../services/providers/app-context';
+import { UserContext } from '../../../services/providers/user-context';
 
 const { revokeCredentials } = api();
 
@@ -20,10 +21,11 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
   const [loading, setLoading] = useState(false);
   const credentialCall = useApi();
   const { appState } = useContext(AppContext);
+  const { setUser } = useContext(UserContext);
 
   const handleOk = e => {
     setLoading(true);
-    credentialCall(revokeCredentials, { id: credential.id, reason: selectedReason }, onSuccess, onError);
+    credentialCall(revokeCredentials, { id: credential.id, reason: selectedReason }, onSuccess, onError, setUser);
   };
 
   const onSuccess = () => {

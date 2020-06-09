@@ -8,7 +8,6 @@ import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
-import { processError } from '../../../services/api-calls/helpers';
 
 import {
   getCredentialsColumns,
@@ -47,13 +46,12 @@ const TabTable = () => {
 
 
   useEffect(() => {
-    credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
-    credentialCall(getCredentialStates, null, setCredentialStates, onError);
-    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError);
+    credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
+    credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
+    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
   }, []);
 
-  const onError = (error) => {
-    processError(error, setUser);
+  const onError = () => {
     message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
   };
 

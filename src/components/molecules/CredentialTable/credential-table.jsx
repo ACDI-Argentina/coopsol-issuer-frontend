@@ -5,7 +5,6 @@ import CredentialDetail from '../CredentialDetail/credential-detail';
 import { Table, message } from 'antd';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
-import { processError } from '../../../services/api-calls/helpers';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({
@@ -28,7 +27,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
 
   const fetchCredentials = () => {
     setLoading(true);
-    getCredentialData(dataSource, { page: pagination.page, ...activeFilters }, onSuccess, onError);
+    getCredentialData(dataSource, { page: pagination.page, ...activeFilters }, onSuccess, onError, setUser);
   };
 
   const tableColumns = columns(fetchCredentials);
@@ -79,7 +78,6 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   const onError = (error) => {
-    processError(error, setUser);
     message.error('No se pudieron obtener las credenciales, intente nuevamente.');
     setLoading(false);
   };

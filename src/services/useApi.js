@@ -1,5 +1,7 @@
+import { processError } from '../services/api-calls/helpers';
+
 export const useApi = () => {
-  return async (apiCall, data, onSuccess, onError) => {
+  return async (apiCall, data, onSuccess, onError, setUser) => {
     try {
       const res = await apiCall(data);
       if (res.data) {
@@ -7,6 +9,7 @@ export const useApi = () => {
       } else onSuccess(res);
     } catch (error) {
       console.log(error);
+      processError(error, setUser);
       if (onError) {
         onError(error);
       }
