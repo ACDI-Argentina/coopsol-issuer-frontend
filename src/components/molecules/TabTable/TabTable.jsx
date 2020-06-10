@@ -7,6 +7,7 @@ import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import { AppContext } from '../../../services/providers/app-context';
+import { UserContext } from '../../../services/providers/user-context';
 
 import {
   getCredentialsColumns,
@@ -34,6 +35,7 @@ const TabTable = () => {
   const [credentialStates, setCredentialStates] = useState({});
 
   const { appState, setAppState } = useContext(AppContext);
+  const { setUser } = useContext(UserContext);
 
   const onSuccessGetReasons = (reasons) => {
     let revocationReasons = Object.keys(reasons).map(id => { 
@@ -44,9 +46,9 @@ const TabTable = () => {
 
 
   useEffect(() => {
-    credentialCall(getCredentialTypes, null, setCredentialTypes, onError);
-    credentialCall(getCredentialStates, null, setCredentialStates, onError);
-    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError);
+    credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
+    credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
+    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
   }, []);
 
   const onError = () => {

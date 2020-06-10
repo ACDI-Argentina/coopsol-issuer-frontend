@@ -97,3 +97,14 @@ export const processedErrorMessage = (error, messageText) => {
       return messageText || UNEXPECTED_ERROR;
   }
 };
+
+export const processError = (error, setUser) => {
+  const status = get(error, 'response.status');
+  if (!status) return;
+  switch (status) {
+    case STATUS_401:
+      return setUser ? setUser(null) : undefined;
+    default:
+      break;
+  }
+};
