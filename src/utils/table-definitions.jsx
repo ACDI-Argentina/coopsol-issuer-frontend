@@ -1,6 +1,6 @@
 import React from 'react';
-import moment from 'moment';
-import { DEFAULT_DATETIME_FORMAT } from './constants';
+import moment from 'moment-timezone';
+import { DEFAULT_DATETIME_FORMAT, DEFAULT_TIME_ZONE } from './constants';
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
 
 export const getCredentialsColumns = fetchCredentials => [
@@ -16,7 +16,16 @@ export const getCredentialsColumns = fetchCredentials => [
     title: 'Ult. actualización',
     dataIndex: 'lastUpdate',
     key: 'lastUpdate',
-    render: value => <div>{value ? moment(value).format(DEFAULT_DATETIME_FORMAT) : ''}</div>
+    render: value => (
+      <div>
+        {value
+          ? moment
+              .utc(value)
+              .tz(DEFAULT_TIME_ZONE)
+              .format(DEFAULT_DATETIME_FORMAT)
+          : ''}
+      </div>
+    )
   },
   {
     title: 'Acciones',
