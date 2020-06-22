@@ -14,8 +14,7 @@
           background-color: transparent;
         }
         .ant-tabs-tab {
-          width: 20%;
-          margin: 0;
+          margin: 0 15px;
           &:hover {
             color: rgb(175, 175, 175);
           }
@@ -26,6 +25,7 @@
           @include label($body, $secondary-color);
           border-bottom: 4px solid $primary-color;
           transition: ease-out 0.2s;
+          margin: 0 15px;
           &:focus {
             outline: transparent;
           }
