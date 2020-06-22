@@ -27,7 +27,13 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
 
   const fetchCredentials = () => {
     setLoading(true);
-    getCredentialData(dataSource, { page: pagination.page, ...activeFilters }, onSuccess, onError, setUser);
+    getCredentialData(
+      dataSource,
+      { page: pagination.page, ...activeFilters },
+      onSuccess,
+      onError,
+      setUser
+    );
   };
 
   const tableColumns = columns(fetchCredentials);
@@ -62,22 +68,20 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   const onApplyFilter = filter => {
-    defaultFilters ? 
-      setActiveFilters({...filter, ...defaultFilters}) :
-      setActiveFilters(filter);
+    defaultFilters ? setActiveFilters({ ...filter, ...defaultFilters }) : setActiveFilters(filter);
   };
 
   const onSuccess = data => {
-    const { content, numberOfElements } = data;
+    const { content, totalElements } = data;
     setCredentials(content);
     setPagination({
       ...pagination,
-      total: numberOfElements
+      total: totalElements
     });
     setLoading(false);
   };
 
-  const onError = (error) => {
+  const onError = error => {
     message.error('No se pudieron obtener las credenciales, intente nuevamente.');
     setLoading(false);
   };
