@@ -23,10 +23,14 @@
     }
     .right-img {
       margin-top: -5em;
+      width: 446px;
+      height: 414px;
     }
   }
 }
-.AddCredentials, .Activities, .Requests{
+.AddCredentials,
+.Activities,
+.Requests {
   .TitlePage button {
     display: none;
   }

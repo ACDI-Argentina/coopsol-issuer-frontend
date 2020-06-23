@@ -1,56 +1,57 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { useState } from 'react';
+import './_style.scss';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
-import { DownOutlined } from '@ant-design/icons';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
-const { revokeCredentials } = api();
+const { forceSyncBondarea } = api();
 
-const ConnectBondarea = ({ credential, onRevoked }) => {
+const SyncBondareaModal = () => {
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
-  const credentialCall = useApi();
+  const syncBondarea = useApi();
 
-  const onConnect = e => {
+  const onClick = e => {
     e.preventDefault();
     setVisible(true);
-    connect();
-  };
-
-  const connect = () => {
-    setLoading(true);
-    // credentialCall(revokeCredentials, { id: credential.id, reason: 'Test' }, onSuccess, onError);
-
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-    }, 1500);
   };
 
   const handleCancel = e => {
     setVisible(false);
   };
 
-  const retry = () => {
-    connect();
+  const onSync = () => {
+    setLoading(true);
+    syncBondarea(forceSyncBondarea, {}, onSuccess, onError);
   };
 
-  const viewCredentials = () => {
-    window.location.reload();
+  const retry = () => {
+    onSync();
+  };
+
+  const onSuccess = () => {
+    setLoading(false);
+    setSuccess(true);
+  };
+
+  const onError = () => {
+    setLoading(false);
+    setError(true);
   };
 
   const renderConnecting = () => {
     return (
       <div>
         <div className="title">
-          <h1>Conectando con Bondarea...</h1>
+          <h1>Sincronizando con Bondarea...</h1>
         </div>
         <div className="body">
-          <p>Estamos buscando datos nuevamente, aguarde un momento por favor...</p>
+          <p>Aguarde un momento por favor...</p>
         </div>
       </div>
     );
@@ -60,20 +61,38 @@ const ConnectBondarea = ({ credential, onRevoked }) => {
     return (
       <div>
         <div className="title">
-          <h1>Conexión exitosa...</h1>
+          <h1>Sincronización exitosa...</h1>
         </div>
         <div className="body">
-          <p>La conexión se realizó existosamente!</p>
-          <p>La credencial se agregó correcectamente</p>
+          <p>La sincronización se realizó existosamente!</p>
         </div>
         <div className="footer">
           <div className="buttons">
-            <ButtonPrimary onClick={viewCredentials} text="Ver credenciales" theme="primary" />
+            <ButtonPrimary onClick={handleCancel} text="Terminar" theme="primary" />
           </div>
         </div>
       </div>
     );
   };
+  const renderModal = () => {
+    return (
+      <div>
+        <div className="title">
+          <h1>Sincronizar con Bondarea</h1>
+        </div>
+        <div className="body">
+          <p>¿Desea forzar la sincronización con Bondarea?</p>
+        </div>
+        <div className="footer">
+          <div className="buttons">
+            <ButtonPrimary onClick={handleCancel} text="Cancelar" theme="cancel" />
+            <ButtonPrimary onClick={onSync} text="Aceptar" theme="primary" />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderError = () => {
     return (
       <div>
@@ -98,32 +117,31 @@ const ConnectBondarea = ({ credential, onRevoked }) => {
       return renderConnecting();
     } else if (success) {
       return renderSuccess();
+    } else if (error) {
+      return renderError();
     }
-    return renderError();
+    return renderModal();
   };
 
   return (
-    <div className="ConnectBondarea">
-      <a className="ant-dropdown-link" href="/" onClick={onConnect}>
-        <DownOutlined /> Conectar Bondarea
-      </a>
+    <React.Fragment>
+      <ButtonPrimary
+        onClick={onClick}
+        text="Forzar sincronización con Bondarea"
+        theme="primary SyncBondarea"
+      />
       <Modal
         width="400px"
-        className="ConnectBondarea modal-buttons"
+        className="SyncBondarea modal-buttons"
         maskClosable={false}
         visible={visible}
         closable={false}
         onCancel={handleCancel}
       >
-        <ButtonPrimary
-          onClick={() => {}}
-          text="Forzar sincronización con Bondarea"
-          theme="primary"
-        />
         {renderModalStatus()}
       </Modal>
-    </div>
+    </React.Fragment>
   );
 };
 
-export default ConnectBondarea;
+export default SyncBondareaModal;
