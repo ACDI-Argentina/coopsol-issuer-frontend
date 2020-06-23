@@ -9,7 +9,11 @@ const getCredentialTypes = makeGetRequest => () => makeGetRequest('credentials/t
 
 const getCredentialStates = makeGetRequest => () => makeGetRequest('credentials/states');
 
-const getRevocationReasons = makeGetRequest => () => makeGetRequest('credentials/revocation-reasons');
+const getRevocationReasons = makeGetRequest => () =>
+  makeGetRequest('credentials/revocation-reasons');
+
+const forceSyncBondarea = makePostRequest => () =>
+  makePostRequest('/bondarea/force-sync-generate', {});
 
 export default client => {
   const { makePostRequest, makeGetRequest, makePatchRequest, makeDeleteRequest } = helpers(client);
@@ -18,6 +22,7 @@ export default client => {
     revokeCredentials: revokeCredentials(makePatchRequest),
     getCredentialTypes: getCredentialTypes(makeGetRequest),
     getCredentialStates: getCredentialStates(makeGetRequest),
-    getRevocationReasons: getRevocationReasons(makeGetRequest)
+    getRevocationReasons: getRevocationReasons(makeGetRequest),
+    forceSyncBondarea: forceSyncBondarea(makePostRequest)
   };
 };
