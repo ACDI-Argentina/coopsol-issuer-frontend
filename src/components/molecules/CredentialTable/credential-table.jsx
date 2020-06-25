@@ -8,8 +8,7 @@ import { UserContext } from '../../../services/providers/user-context';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({
-    page: 1,
-    defaultPageSize: 20
+    page: 0
   });
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState([]);
@@ -21,7 +20,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const handleTableChange = pagination => {
     setPagination({
       ...pagination,
-      page: pagination.current
+      page: pagination.current - 1
     });
   };
 
@@ -72,11 +71,13 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   };
 
   const onSuccess = data => {
-    const { content, totalElements } = data;
+    const { content, totalElements, size } = data;
+
     setCredentials(content);
     setPagination({
       ...pagination,
-      total: totalElements
+      total: totalElements,
+      pageSize: size
     });
     setLoading(false);
   };
