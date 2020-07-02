@@ -7,7 +7,6 @@ export const USER = 'user';
 export const ACCESS_TOKEN = 'accessToken';
 export const MENU = 'menu';
 export const CREDENTIALS_URL = '/credentials';
-export const REQUESTS_URL = '/requests';
 export const ACTIVITIES_URL = '/activities';
 export const PROFILE_URL = '/profile';
 export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
