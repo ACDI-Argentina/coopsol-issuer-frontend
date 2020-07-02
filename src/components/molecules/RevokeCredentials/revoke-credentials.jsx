@@ -13,6 +13,7 @@ import TextAreaComments from '../../atoms/TextArea/text-area';
 import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
+import { CREDIT_HOLDER_RELATIONSHIP } from '../../../utils/constants';
 
 const { revokeCredentials } = api();
 
@@ -78,6 +79,16 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
     }
   };
 
+  const showWarning = () => {
+    return (
+      credential.relationWithCreditHolder === CREDIT_HOLDER_RELATIONSHIP && (
+        <p className="warning">
+          Al revocar ésta credencial titular también se revocarán todas las credenciales asociadas
+        </p>
+      )
+    );
+  };
+
   return (
     <div className="RevokeCredentials">
       <Dropdown overlay={menu} className="RevokeCredentials">
@@ -101,6 +112,8 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
             <br />
             desea revocar esta credencial.
           </p>
+          {showWarning()}
+
           <label htmlFor="">Motivos de revocación</label>
           <TextAreaComments text="Motivos de revocación" />
         </div>

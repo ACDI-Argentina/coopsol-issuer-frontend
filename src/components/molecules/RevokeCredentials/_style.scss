@@ -34,7 +34,6 @@
         }
       }
     }
-
   }
   .ant-modal-footer {
     display: none;
@@ -46,5 +45,13 @@
     font-size: 5px;
     width: 6px;
     height: 6px;
+  }
+
+  .warning {
+    padding: 1em;
+    background-color: #f1af34;
+    font-weight: bold;
+    border-radius: 1em;
+    color: $medium-grey;
   }
 }
