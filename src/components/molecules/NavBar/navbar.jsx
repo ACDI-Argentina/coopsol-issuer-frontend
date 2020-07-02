@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
-import { Menu, message } from 'antd';
+import { Menu } from 'antd';
 import './_style.scss';
 import { UserContext } from '../../../services/providers/user-context';
 import { LOGIN_URL, CREDENTIALS_URL, REQUESTS_URL, ACTIVITIES_URL } from '../../../utils/constants';
-import { processedErrorMessage } from '../../../services/api-calls/helpers';
+import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
 import history from '../../Router/history';
 import { ReactComponent as CredIcon } from '../../../img/cred.svg';
 import { ReactComponent as RequestIcon } from '../../../img/request.svg';
 import { ReactComponent as ListIcon } from '../../../img/list.svg';
+import { showErrorMessage } from '../../../utils/alertMessages';
 const { logoutRequest } = apiCalls();
 
 const NavBar = () => {
@@ -19,7 +20,7 @@ const NavBar = () => {
       await logoutRequest();
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
-      message.error(errorMessage);
+      showErrorMessage(errorMessage, processError(error));
     }
     setUser(null);
     history.push(LOGIN_URL);

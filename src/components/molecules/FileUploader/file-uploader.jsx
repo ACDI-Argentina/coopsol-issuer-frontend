@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import apiCalls from '../../../services/api-calls/all';
-import { processedErrorMessage } from '../../../services/api-calls/helpers';
-import { Upload, message } from 'antd';
+import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
+import { Upload } from 'antd';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import './_style.scss';
 import MessageLoader from '../MessageLoader/message-loader';
+import { showErrorMessage } from '../../../utils/alertMessages';
 
 const { uploadFile } = apiCalls();
 const { Dragger } = Upload;
@@ -25,7 +26,7 @@ const FileUploader = ({ onUploaded, history }) => {
       //setSuccess('Tu archivo fue subido correctamente!');
       setUploading(false);
     } catch (error) {
-      message.error(processedErrorMessage(error));
+      showErrorMessage(processedErrorMessage(error), processError(error));
       setUploadResponse(null);
       setUploading(false);
     }
@@ -76,7 +77,13 @@ const FileUploader = ({ onUploaded, history }) => {
   const renderUploadedInfo = () => {
     if (!uploadResponse) return null;
 
-    const { totalProcessedForms, totalReadRows, totalValidRows, totalErrorsRows, errorRows } = uploadResponse;
+    const {
+      totalProcessedForms,
+      totalReadRows,
+      totalValidRows,
+      totalErrorsRows,
+      errorRows
+    } = uploadResponse;
 
     const errors = errorRows.map(err => (
       <li>

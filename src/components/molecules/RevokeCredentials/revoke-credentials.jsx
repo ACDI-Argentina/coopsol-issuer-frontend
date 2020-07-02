@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './_style.scss';
-import { Menu, Dropdown, Modal, message } from 'antd';
+import { Menu, Dropdown, Modal } from 'antd';
 import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
@@ -12,6 +12,7 @@ import animationData from '../../../assets/3046-me-at-office.json';
 import TextAreaComments from '../../atoms/TextArea/text-area';
 import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
+import { showErrorMessage } from '../../../utils/alertMessages';
 
 const { revokeCredentials } = api();
 
@@ -25,7 +26,13 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
 
   const handleOk = e => {
     setLoading(true);
-    credentialCall(revokeCredentials, { id: credential.id, reason: selectedReason }, onSuccess, onError, setUser);
+    credentialCall(
+      revokeCredentials,
+      { id: credential.id, reason: selectedReason },
+      onSuccess,
+      onError,
+      setUser
+    );
   };
 
   const onSuccess = () => {
@@ -33,9 +40,9 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
     setVisible(false);
     onRevoked();
   };
-  
-  const onError = () => {
-    message.error('No se pudieron revocar las credenciales, intente nuevamente.');
+
+  const onError = (error, status) => {
+    showErrorMessage('No se pudieron revocar las credenciales, intente nuevamente.', status);
   };
 
   const handleCancel = e => {
@@ -50,11 +57,16 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
 
   const menu = (
     <Menu>
-      {
-        appState.revocationReasons.length ?
-        appState.revocationReasons.map(({id, label}) => <Menu.Item key={id} onClick={() => onItemClick(id)}> {label} </Menu.Item>)
-          : <Menu.Item> Cargando razones posibles </Menu.Item>
-      }
+      {appState.revocationReasons.length ? (
+        appState.revocationReasons.map(({ id, label }) => (
+          <Menu.Item key={id} onClick={() => onItemClick(id)}>
+            {' '}
+            {label}{' '}
+          </Menu.Item>
+        ))
+      ) : (
+        <Menu.Item> Cargando razones posibles </Menu.Item>
+      )}
     </Menu>
   );
   const defaultOptions = {

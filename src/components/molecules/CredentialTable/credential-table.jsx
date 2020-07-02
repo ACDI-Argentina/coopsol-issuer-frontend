@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
 import CredentialDetail from '../CredentialDetail/credential-detail';
-import { Table, message } from 'antd';
+import { Table } from 'antd';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
+import { showErrorMessage } from '../../../utils/alertMessages';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({
@@ -82,8 +83,8 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
     setLoading(false);
   };
 
-  const onError = error => {
-    message.error('No se pudieron obtener las credenciales, intente nuevamente.');
+  const onError = (error, status) => {
+    showErrorMessage('No se pudieron obtener las credenciales, intente nuevamente.', status);
     setLoading(false);
   };
 

@@ -103,8 +103,10 @@ export const processError = (error, setUser) => {
   if (!status) return;
   switch (status) {
     case STATUS_401:
-      return setUser ? setUser(null) : undefined;
+      if (setUser) setUser(null);
     default:
       break;
   }
+
+  return status;
 };
