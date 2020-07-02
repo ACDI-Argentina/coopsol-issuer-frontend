@@ -1,23 +1,12 @@
 import React from 'react';
 import './_style.scss';
 import TitlePage from '../../atoms/TitlePage/TitlePage';
-import api from '../../../services/api-calls/all';
 import FileUploader from '../../molecules/FileUploader/file-uploader';
-import { useState } from 'react';
-import CredentialCreation from '../../molecules/CredentialCreation/credential-creation';
-import CredentialsUploaded from '../../molecules/CredentialsUploaded/credentials-uploaded';
-
-// const { endpoint } = api();
+import { CREATED_CREDENTIALS } from '../../../utils/constants';
 
 const AddCredentials = ({ history }) => {
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [showConnectedScreen, setShowConnectedScreen] = useState(false);
-
   const onUploaded = fileId => {
-    setUploadedFile(fileId);
-  };
-  const onConnected = () => {
-    setShowConnectedScreen(true);
+    history.push(CREATED_CREDENTIALS);
   };
 
   return (
@@ -28,25 +17,14 @@ const AddCredentials = ({ history }) => {
       />
       <div className="SurveyImportContainer">
         <div className="SurveyImport">
-          {showConnectedScreen ? (
-            <div className="SuccessCreation">
-              <CredentialsUploaded history={history} />
-              <img className="right-img" src="/img/credential-success.svg" alt="" />
+          <div className="UploadContent">
+            <div className="left-side">
+              <h3>Importar datos de encuesta socioeconómica</h3>
+              <p>Para poder generar una nueva credencial suba el archivo de encuestas.</p>
+              <FileUploader onUploaded={onUploaded} history={history} />
             </div>
-          ) : (
-            <div className="UploadContent">
-              <div className="left-side">
-                <h3>Importar datos de encuesta socioeconómica</h3>
-                <p>Para poder generar una nueva credencial suba el archivo de encuestas.</p>
-                {!uploadedFile ? (
-                  <FileUploader onUploaded={onUploaded} history={history} />
-                ) : (
-                  <CredentialCreation uploadedFile={uploadedFile} onConnected={onConnected} />
-                )}
-              </div>
-              <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />
-            </div>
-          )}
+            <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />
+          </div>
         </div>
       </div>
     </div>

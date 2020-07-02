@@ -1,6 +1,7 @@
 export const HOME_URL = '/';
 export const LOGIN_URL = '/login';
 export const ADD_CREDENTIALS = '/credentials/add';
+export const CREATED_CREDENTIALS = '/credentials/created';
 export const DOCUMENT_NAME = 'semillas-frontend';
 export const USER = 'user';
 export const ACCESS_TOKEN = 'accessToken';
