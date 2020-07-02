@@ -99,6 +99,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         rowKey={'id'}
         columns={tableColumns}
         dataSource={credentials}
+        scroll={{ x: 1300 }}
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
