@@ -11,6 +11,7 @@ export const getCredentialsColumns = fetchCredentials => [
   },
   { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
   { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
+  { title: 'DNI Titular', dataIndex: 'creditHolderDni', key: 'creditHolderDni' },
   { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
   {
     title: 'Ult. actualización',
@@ -44,6 +45,14 @@ export const getCredentialsColumns = fetchCredentials => [
 export const getRevokedCredentialsColumns = () => {
   let cols = getCredentialsColumns();
   cols.splice(cols.length - 1, 1);
+
+  const revocationReason = {
+    title: 'Razón de revocación',
+    dataIndex: 'revocationReason',
+    key: 'revocationReason'
+  };
+  cols.splice(cols.length - 1, 0, revocationReason);
+
   return cols;
 };
 
