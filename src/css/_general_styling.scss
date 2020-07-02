@@ -78,6 +78,11 @@ $sidebar-size: 18%;
 // Font Family
 
 @font-face {
+  font-family: 'poppins-light';
+  src: url(./fonts/Poppins-Light.ttf);
+}
+
+@font-face {
   font-family: 'poppins-regular';
   src: url(./fonts/Poppins-Regular.ttf);
 }
@@ -117,6 +122,6 @@ $sidebar-size: 18%;
   }
 }
 
-button:focus{
+button:focus {
   outline: transparent;
 }
