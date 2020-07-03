@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import './_style.scss';
-import { Tabs, message } from 'antd';
+import { Tabs } from 'antd';
 import { useState } from 'react';
 import { useApi } from '../../../services/useApi';
 import api from '../../../services/api-calls/all';
@@ -24,6 +24,7 @@ import {
   defaultFilters,
   didCredentialsFilter
 } from '../../../utils/tables/table-filters-definitions';
+import { showErrorMessage } from '../../../utils/alertMessages';
 const { TabPane } = Tabs;
 
 const { getCredentials, getCredentialTypes, getCredentialStates, getRevocationReasons } = api();
@@ -37,13 +38,12 @@ const TabTable = () => {
   const { appState, setAppState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
 
-  const onSuccessGetReasons = (reasons) => {
-    let revocationReasons = Object.keys(reasons).map(id => { 
-      return { id, label: reasons[id] }
-    })
-    setAppState({revocationReasons});
-  }
-
+  const onSuccessGetReasons = reasons => {
+    let revocationReasons = Object.keys(reasons).map(id => {
+      return { id, label: reasons[id] };
+    });
+    setAppState({ revocationReasons });
+  };
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
@@ -51,14 +51,13 @@ const TabTable = () => {
     credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
   }, []);
 
-  const onError = () => {
-    message.error('No se pudieron obtener los tipos de filtro, intente nuevamente.');
+  const onError = (error, status) => {
+    showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
   };
-
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
-  
+
   return (
     <div className="TabTableContent">
       <Tabs defaultActiveKey={appState.defaultActiveTabKey}>

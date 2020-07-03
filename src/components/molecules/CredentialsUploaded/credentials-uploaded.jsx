@@ -4,14 +4,16 @@ import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import ImportStatus from '../../atoms/ImportStatus/import-status';
 import { AppContext } from '../../../services/providers/app-context';
 
-// const { endpoint } = api();
-
-const CredentialsUploaded = ({ history, theme }) => {
+const CredentialsUploaded = ({ history }) => {
   const { setAppState } = useContext(AppContext);
-  
+
   const goToCredentials = defaultActiveTabKey => {
-    setAppState({defaultActiveTabKey});
+    setAppState({ defaultActiveTabKey });
     history.push('/credentials');
+  };
+
+  const goBack = () => {
+    history.goBack();
   };
 
   return (
@@ -26,6 +28,7 @@ const CredentialsUploaded = ({ history, theme }) => {
           theme="ThemePrimary"
           onClick={() => goToCredentials('4')}
         />
+        <ButtonPrimary text="Seguir cargando" theme="ThemePrimary" onClick={goBack} />
       </div>
     </div>
   );

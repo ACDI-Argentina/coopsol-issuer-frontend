@@ -28,9 +28,12 @@
       @include primary-text-bold($body, #f1af34);
     }
   }
-  .buttonSection{
+  .buttonSection {
     display: flex;
     justify-content: center;
     margin-top: 2em;
+    button {
+      margin: 1em;
+    }
   }
 }

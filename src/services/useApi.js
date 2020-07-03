@@ -9,9 +9,9 @@ export const useApi = () => {
       } else onSuccess(res);
     } catch (error) {
       console.log(error);
-      processError(error, setUser);
+      const statusCode = processError(error, setUser);
       if (onError) {
-        onError(error);
+        onError(error, statusCode);
       }
     }
   };

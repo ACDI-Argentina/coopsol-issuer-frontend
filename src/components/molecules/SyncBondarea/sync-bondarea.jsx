@@ -25,6 +25,11 @@ const SyncBondareaModal = () => {
     setVisible(false);
   };
 
+  const onClose = () => {
+    setSuccess(false);
+    setError(false);
+  };
+
   const onSync = () => {
     setLoading(true);
     syncBondarea(forceSyncBondarea, {}, onSuccess, onError);
@@ -134,6 +139,7 @@ const SyncBondareaModal = () => {
         width="400px"
         className="SyncBondarea modal-buttons"
         maskClosable={false}
+        afterClose={onClose}
         visible={visible}
         closable={false}
         onCancel={handleCancel}
