@@ -12,7 +12,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
   });
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState([]);
-  const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
+  const [activeFilters, setActiveFilters] = useState({});
   const { setUser } = useContext(UserContext);
 
   const getCredentialData = useApi();
@@ -45,16 +45,12 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
     if (shouldPerformRequest(activeFilters)) {
       fetchCredentials();
     }
-  }, [activeFilters]);
+  }, [activeFilters, pagination.page]);
 
   useEffect(() => {
     let newFilters = defaultFilters ? defaultFilters : {};
     setActiveFilters(newFilters);
-  }, [defaultFilters]);
-
-  useEffect(() => {
-    fetchCredentials();
-  }, [pagination.page]);
+  }, Object.values(defaultFilters));
 
   const shouldPerformRequest = newFilters => {
     let keys = Object.keys(newFilters);
@@ -63,7 +59,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
       if (!newFilters[key]) return false;
     }
 
-    return true;
+    return keys.length > 0;
   };
 
   const onApplyFilter = filter => {
