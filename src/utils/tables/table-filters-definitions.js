@@ -12,6 +12,10 @@ export const defaultFilters = credentialTypes => ({
     type: 'input',
     name: 'DNI'
   },
+  creditHolderDni: {
+    type: 'input',
+    name: 'DNI Titular'
+  },
   idDidiCredential: {
     type: 'input',
     name: 'DID'
@@ -19,7 +23,7 @@ export const defaultFilters = credentialTypes => ({
   lastUpdate: {
     type: 'date',
     name: 'Ult. actualización'
-  },
+  }
 });
 
 export const didCredentialsFilter = credentialTypes => ({
@@ -36,8 +40,12 @@ export const didCredentialsFilter = credentialTypes => ({
     type: 'input',
     name: 'DNI'
   },
+  creditHolderDni: {
+    type: 'input',
+    name: 'DNI Titular'
+  },
   lastUpdate: {
     type: 'date',
     name: 'Ult. actualización'
-  },
+  }
 });
