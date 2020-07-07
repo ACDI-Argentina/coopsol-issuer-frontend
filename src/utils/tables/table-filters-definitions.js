@@ -71,10 +71,12 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
   },
   dateFrom: {
     type: 'date',
-    name: 'Desde'
+    name: 'Desde',
+    format: date => date.toISOString()
   },
   dateTo: {
     type: 'date',
-    name: 'Hasta'
+    name: 'Hasta',
+    format: date => date.toISOString()
   }
 });

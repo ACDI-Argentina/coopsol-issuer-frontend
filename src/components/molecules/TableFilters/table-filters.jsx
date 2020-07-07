@@ -29,7 +29,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
     if (!date) {
       delete newFilter[key];
     } else {
-      newFilter[key] = date.format('YYYY-MM-DD'); // backend format
+      newFilter[key] = filters[key].format ? filters[key].format(date) : date.format('YYYY-MM-DD'); // backend format
     }
 
     filter(newFilter);
