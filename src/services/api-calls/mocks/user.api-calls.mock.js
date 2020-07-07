@@ -65,11 +65,53 @@ const getCredentialTypes = () => [
   'CredentialIdentity',
   'CredentialEntrepreneurship'
 ];
+
+const getActivityLog = () => ({
+  content: [
+    {
+      texecutionDateTime: '07/07/2020 10:16:04',
+      user: 'admin',
+      level: 'ERROR',
+      actionType: 'DIDI',
+      message: 'Error de conexión con Didi'
+    },
+    {
+      texecutionDateTime: '07/07/2020 10:16:04',
+      user: 'admin',
+      level: 'INFO',
+      actionType: 'DIDI',
+      message: 'Sincronización DIDI OK'
+    }
+  ],
+  totalElements: 2,
+  totalPages: 1,
+  number: 0,
+  size: 20,
+  numberOfElements: 2
+});
+
+const getLogTypes = () => [
+  { id: 0, description: 'ENCUESTA' },
+  { id: 1, description: 'BONDAREA' },
+  { id: 2, description: 'DIDI' },
+  { id: 3, description: 'CREDENCIAL' },
+  { id: 4, description: 'SOLICITUD CREDENCIAL' }
+];
+
+const getLogLevels = () => [
+  { id: 0, description: 'INFO' },
+  { id: 1, description: 'WARN' },
+  { id: 2, description: 'ERROR' }
+];
+
 export default () => ({
   uploadFile,
   getCredentials,
   revokeCredentials,
   getCredentialTypes,
   getCredentialStatus,
-  getCredentialStates
+  getCredentialStates,
+  getActivityLog,
+  getLogTypes,
+  getLogLevels
 });

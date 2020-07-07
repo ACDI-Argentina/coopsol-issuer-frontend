@@ -15,6 +15,12 @@ const getRevocationReasons = makeGetRequest => () =>
 const forceSyncBondarea = makePostRequest => () =>
   makePostRequest('/bondarea/force-sync-generate', {});
 
+const getActivityLog = makeGetRequest => data => makeGetRequest('action/find', data);
+
+const getLogTypes = makeGetRequest => () => makeGetRequest('action/types');
+
+const getLogLevels = makeGetRequest => () => makeGetRequest('action/levels');
+
 export default client => {
   const { makePostRequest, makeGetRequest, makePatchRequest, makeDeleteRequest } = helpers(client);
   return {
@@ -23,6 +29,9 @@ export default client => {
     getCredentialTypes: getCredentialTypes(makeGetRequest),
     getCredentialStates: getCredentialStates(makeGetRequest),
     getRevocationReasons: getRevocationReasons(makeGetRequest),
-    forceSyncBondarea: forceSyncBondarea(makePostRequest)
+    forceSyncBondarea: forceSyncBondarea(makePostRequest),
+    getActivityLog: getActivityLog(makeGetRequest),
+    getLogTypes: getLogTypes(makeGetRequest),
+    getLogLevels: getLogLevels(makeGetRequest)
   };
 };

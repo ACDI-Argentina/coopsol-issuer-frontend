@@ -57,7 +57,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
     let keys = Object.keys(newFilters);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (!newFilters[key]) return false;
+      if (newFilters[key] == undefined) return false;
     }
 
     return keys.length > 0;
