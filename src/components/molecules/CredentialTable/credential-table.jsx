@@ -29,7 +29,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
     setLoading(true);
     getCredentialData(
       dataSource,
-      { page: pagination.page, ...activeFilters },
+      { ...activeFilters, page: pagination.page },
       onSuccess,
       onError,
       setUser
