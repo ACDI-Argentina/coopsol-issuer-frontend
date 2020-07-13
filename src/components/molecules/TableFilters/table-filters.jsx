@@ -29,7 +29,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
     if (!date) {
       delete newFilter[key];
     } else {
-      newFilter[key] = date.format('YYYY-MM-DD'); // backend format
+      newFilter[key] = filters[key].format ? filters[key].format(date) : date.format('YYYY-MM-DD'); // backend format
     }
 
     filter(newFilter);
@@ -37,6 +37,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
 
   const onDropdownChange = value => {
     let key = value.item.props.id;
+
     let newFilter = { ...activeFilters, [key]: value.key };
     clearEmptyFilter(key, newFilter);
     filter(newFilter);
@@ -80,17 +81,22 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
           Ninguno
         </Menu.Item>
         {values.map(v => (
-          <Menu.Item id={key} key={v}>
-            {v}
+          <Menu.Item id={key} key={v.description ? v.id : v}>
+            {v.description || v}
           </Menu.Item>
         ))}
       </Menu>
     );
 
+    const value =
+      (activeFilters[key] &&
+        (values.find(v => v.description && v.id == activeFilters[key]) || activeFilters[key])) ||
+      filters[key].name;
+
     return (
       <Dropdown className="dropdown" overlay={menu} key={key}>
         <Button>
-          {activeFilters[key] ? activeFilters[key] : filters[key].name} <DownOutlined />
+          {value.description || value} <DownOutlined />
         </Button>
       </Dropdown>
     );

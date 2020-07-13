@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './_style.scss';
 import TitlePage from '../../atoms/TitlePage/TitlePage';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../../molecules/CredentialTable/credential-table';
+import { getActivitiesColumns } from '../../../utils/table-definitions';
+import { defaultActivityFilters } from '../../../utils/tables/table-filters-definitions';
+import { useApi } from '../../../services/useApi';
+import { UserContext } from '../../../services/providers/user-context';
+import { showErrorMessage } from '../../../utils/alertMessages';
+import { useEffect } from 'react';
 
-const { getCredentials } = api();
+const { getActivityLog, getLogTypes, getLogLevels } = api();
 
 const Activities = () => {
+  const { setUser } = useContext(UserContext);
+
+  const filtersCall = useApi();
+
+  const [logTypes, setLogTypes] = useState([]);
+  const [logLevels, setLogLevels] = useState([]);
+
+  useEffect(() => {
+    filtersCall(getLogTypes, null, setLogTypes, onError, setUser);
+    filtersCall(getLogLevels, null, setLogLevels, onError, setUser);
+  }, []);
+
+  const filters = defaultActivityFilters(logTypes, logLevels);
+
+  const onError = (error, status) => {
+    showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
+  };
+
   return (
     <div className="Activities">
       <TitlePage
@@ -18,10 +42,10 @@ const Activities = () => {
           <img src="img/table-list.svg" /> Listado de actividades
         </h4>
         <CredentialTable
-          columns={() => {}}
-          dataSource={getCredentials}
-          filters={{}}
-          defaultFilters={{ credentialState: 'none' }}
+          columns={() => getActivitiesColumns}
+          dataSource={getActivityLog}
+          filters={filters}
+          defaultFilters={{ page: 0 }}
         />
       </div>
     </div>

@@ -49,3 +49,34 @@ export const didCredentialsFilter = credentialTypes => ({
     name: 'Ult. actualización'
   }
 });
+
+export const defaultActivityFilters = (logTypes, logLevels) => ({
+  actionType: {
+    type: 'dropdown',
+    name: 'Tipo',
+    data: logTypes
+  },
+  level: {
+    type: 'dropdown',
+    name: 'Nivel',
+    data: logLevels
+  },
+  message: {
+    type: 'input',
+    name: 'Descripción'
+  },
+  username: {
+    type: 'input',
+    name: 'Usuario'
+  },
+  dateFrom: {
+    type: 'date',
+    name: 'Desde',
+    format: date => date.toISOString()
+  },
+  dateTo: {
+    type: 'date',
+    name: 'Hasta',
+    format: date => date.toISOString()
+  }
+});

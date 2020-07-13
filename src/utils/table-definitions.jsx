@@ -1,7 +1,7 @@
 import React from 'react';
-import moment from 'moment-timezone';
 import { DEFAULT_DATETIME_FORMAT, DEFAULT_TIME_ZONE } from './constants';
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
+import { parseDate } from './dateHelpers';
 
 export const getCredentialsColumns = fetchCredentials => [
   {
@@ -17,16 +17,7 @@ export const getCredentialsColumns = fetchCredentials => [
     title: 'Ult. actualización',
     dataIndex: 'lastUpdate',
     key: 'lastUpdate',
-    render: value => (
-      <div>
-        {value
-          ? moment
-              .utc(value)
-              .tz(DEFAULT_TIME_ZONE)
-              .format(DEFAULT_DATETIME_FORMAT)
-          : ''}
-      </div>
-    )
+    render: value => <div>{parseDate(value)}</div>
   },
   {
     title: 'Acciones',
@@ -63,3 +54,20 @@ export const getDidColumns = fetchCredentials => {
   columns.splice(didColumn, 1);
   return columns;
 };
+
+export const getActivitiesColumns = [
+  {
+    title: 'Acción',
+    dataIndex: 'actionType',
+    key: 'actionType'
+  },
+  { title: 'Nivel', dataIndex: 'level', key: 'level' },
+  { title: 'Mensaje', dataIndex: 'message', key: 'message' },
+  { title: 'Usuario', dataIndex: 'user', key: 'user' },
+  {
+    title: 'Fecha de ejecución',
+    dataIndex: 'texecutionDateTime',
+    key: 'texecutionDateTime',
+    render: value => <div>{parseDate(value)}</div>
+  }
+];
