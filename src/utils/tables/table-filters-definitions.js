@@ -16,10 +16,6 @@ export const defaultFilters = credentialTypes => ({
     type: 'input',
     name: 'DNI Titular'
   },
-  idDidiCredential: {
-    type: 'input',
-    name: 'DID'
-  },
   lastUpdate: {
     type: 'date',
     name: 'Ult. actualización'
@@ -60,10 +56,6 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
     type: 'dropdown',
     name: 'Nivel',
     data: logLevels
-  },
-  message: {
-    type: 'input',
-    name: 'Descripción'
   },
   username: {
     type: 'input',

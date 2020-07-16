@@ -1,6 +1,6 @@
 const development = {
   endpoints: {
-    backend: 'https://api.staging.semillas.atixlabs.com/'
+    backend: 'http://localhost:8080/'
   }
 };
 

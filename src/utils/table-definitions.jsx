@@ -57,17 +57,17 @@ export const getDidColumns = fetchCredentials => {
 
 export const getActivitiesColumns = [
   {
+    title: 'Fecha de ejecución',
+    dataIndex: 'texecutionDateTime',
+    key: 'texecutionDateTime',
+    render: value => <div>{parseDate(value)}</div>
+  },
+  {
     title: 'Acción',
     dataIndex: 'actionType',
     key: 'actionType'
   },
   { title: 'Nivel', dataIndex: 'level', key: 'level' },
   { title: 'Mensaje', dataIndex: 'message', key: 'message' },
-  { title: 'Usuario', dataIndex: 'user', key: 'user' },
-  {
-    title: 'Fecha de ejecución',
-    dataIndex: 'texecutionDateTime',
-    key: 'texecutionDateTime',
-    render: value => <div>{parseDate(value)}</div>
-  }
+  { title: 'Usuario', dataIndex: 'user', key: 'user' }
 ];
