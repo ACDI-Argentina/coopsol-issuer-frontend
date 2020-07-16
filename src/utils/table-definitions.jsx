@@ -58,8 +58,8 @@ export const getDidColumns = fetchCredentials => {
 export const getActivitiesColumns = [
   {
     title: 'Fecha de ejecución',
-    dataIndex: 'texecutionDateTime',
-    key: 'texecutionDateTime',
+    dataIndex: 'executionDateTime',
+    key: 'executionDateTime',
     render: value => <div>{parseDate(value)}</div>
   },
   {
