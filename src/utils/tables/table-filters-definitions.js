@@ -64,11 +64,11 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
   dateFrom: {
     type: 'date',
     name: 'Desde',
-    format: date => date.toISOString()
+    format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
   },
   dateTo: {
     type: 'date',
     name: 'Hasta',
-    format: date => date.toISOString()
+    format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
   }
 });
