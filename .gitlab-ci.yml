@@ -55,7 +55,7 @@ deploy-production:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan semillas-staging.atixlabs.com >> ~/.ssh/known_hosts
+    - ssh-keyscan 20.49.23.47 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     # Deploy
     - docker login -u gitlabci -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -67,7 +67,7 @@ deploy-production:
       - /^release.*$/
       - develop
       - /^hotfix.*$/
-    
+
 deploy-uat:
   stage: deploy
   image: docker.atixlabs.com/docker:19.03.1-compose
