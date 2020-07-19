@@ -67,7 +67,7 @@ deploy-production:
       - /^release.*$/
       - develop
       - /^hotfix.*$/
-      -
+    
 deploy-uat:
   stage: deploy
   image: docker.atixlabs.com/docker:19.03.1-compose
