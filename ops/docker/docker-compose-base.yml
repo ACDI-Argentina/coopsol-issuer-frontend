@@ -6,7 +6,7 @@ services:
       - ENVIRONMENT=${ENVIRONMENT}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`frontend.${ENVIRONMENT}.semillas.atixlabs.com`)"
+      - "traefik.http.routers.frontend.rule=Host(`${FRONTEND_URL}`)"
       - "traefik.http.routers.frontend.entrypoints=web-secure"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=le"

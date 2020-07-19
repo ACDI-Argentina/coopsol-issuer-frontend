@@ -39,6 +39,35 @@ deploy-staging:
       - develop
       - /^hotfix.*$/
 
+deploy-production:
+  stage: deploy
+  image: docker.atixlabs.com/docker:19.03.1-compose
+  when: manual
+  environment:
+    name: production
+    url: https://semillas.didi.org.ar
+  services:
+    - docker:19.03.1-dind
+  script:
+    # Setup ssh
+    - apk add --update curl openssh bash
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan semillas-staging.atixlabs.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # Deploy
+    - docker login -u gitlabci -p $CI_JOB_TOKEN $CI_REGISTRY
+    - cd ./ops/docker && bash ./deploy.sh "production"
+  only:
+    refs:
+      - ADD-DEPLOY-PROD-CONFIG
+      # Only run on release/x.y.x and hotfix/xxxx
+      - /^release.*$/
+      - develop
+      - /^hotfix.*$/
+      -
 deploy-uat:
   stage: deploy
   image: docker.atixlabs.com/docker:19.03.1-compose

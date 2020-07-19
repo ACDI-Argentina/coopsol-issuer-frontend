@@ -44,7 +44,7 @@ package-frontend:
 
   only:
     refs:
-      - SEMI-135-setup-ci
+      - ADD-DEPLOY-PROD-CONFIG
       # Only run on develop, release/x.y.x and hotfix/xxxx
       - develop
       - /^release.*$/
