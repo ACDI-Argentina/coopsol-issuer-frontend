@@ -18,7 +18,7 @@ const uat = {
 
 const production = {
   endpoints: {
-    backend: 'api.semillas.didi.org.ar'
+    backend: 'https://api.semillas.didi.org.ar/'
   }
 };
 
