@@ -69,14 +69,14 @@ const getCredentialTypes = () => [
 const getActivityLog = () => ({
   content: [
     {
-      texecutionDateTime: '07/07/2020 10:16:04',
+      executionDateTime: '07/07/2020 10:16:04',
       user: 'admin',
       level: 'ERROR',
       actionType: 'DIDI',
       message: 'Error de conexión con Didi'
     },
     {
-      texecutionDateTime: '07/07/2020 10:16:04',
+      executionDateTime: '07/07/2020 10:16:04',
       user: 'admin',
       level: 'INFO',
       actionType: 'DIDI',

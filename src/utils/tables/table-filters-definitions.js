@@ -16,10 +16,6 @@ export const defaultFilters = credentialTypes => ({
     type: 'input',
     name: 'DNI Titular'
   },
-  idDidiCredential: {
-    type: 'input',
-    name: 'DID'
-  },
   lastUpdate: {
     type: 'date',
     name: 'Ult. actualización'
@@ -61,10 +57,6 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
     name: 'Nivel',
     data: logLevels
   },
-  message: {
-    type: 'input',
-    name: 'Descripción'
-  },
   username: {
     type: 'input',
     name: 'Usuario'
@@ -72,11 +64,11 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
   dateFrom: {
     type: 'date',
     name: 'Desde',
-    format: date => date.toISOString()
+    format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
   },
   dateTo: {
     type: 'date',
     name: 'Hasta',
-    format: date => date.toISOString()
+    format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
   }
 });
