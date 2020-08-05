@@ -1,13 +1,20 @@
 .CredentialDetail {
-    .ant-descriptions-item {
-        padding-bottom: 0px !important; 
-        &-label {
-            font-weight: 400;
-            font-size: 12px;
+    .ant-descriptions {
+        &-row {
+            vertical-align: top;
         }
-        &-content {
-            color: black;
-            padding-bottom: 8px;
+        &-item {
+            padding-bottom: 0px !important;
+            &-label {
+                font-weight: 400;
+                font-size: 12px;
+            }
+            &-content {
+                color: black;
+                padding-bottom: 8px;
+                padding-right: 20px;
+                width: 100%;
+            }
         }
     }
 }

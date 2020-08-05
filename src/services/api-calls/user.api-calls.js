@@ -15,7 +15,7 @@ const getRevocationReasons = makeGetRequest => () =>
 const forceSyncBondarea = makePostRequest => () =>
   makePostRequest('/bondarea/force-sync-generate', {});
 
-const syncDidi = makePostRequest => () => makePostRequest('/credentials/didi/sync', {});
+const syncDidi = makeGetRequest => () => makeGetRequest('/syncdidi/emmitcredentials', {});
 
 const getActivityLog = makeGetRequest => data => makeGetRequest('action/find', data);
 
@@ -35,6 +35,6 @@ export default client => {
     getActivityLog: getActivityLog(makeGetRequest),
     getLogTypes: getLogTypes(makeGetRequest),
     getLogLevels: getLogLevels(makeGetRequest),
-    syncDidi: syncDidi(makePostRequest)
+    syncDidi: syncDidi(makeGetRequest)
   };
 };
