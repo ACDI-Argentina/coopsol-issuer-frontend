@@ -2,7 +2,11 @@ import React from 'react';
 import './_style.scss';
 import ButtonPrimary from '../ButtonPrimary/button-primary';
 import { ADD_CREDENTIALS } from '../../../utils/constants';
-import SyncBondareaModal from '../../molecules/SyncBondarea/sync-bondarea';
+
+import api from '../../../services/api-calls/all';
+import SyncModal from '../../molecules/SyncModal/sync-modal';
+
+const { forceSyncBondarea, syncDidi } = api();
 
 const TitlePage = ({ history, text, description }) => {
   const addCredential = () => {
@@ -14,7 +18,8 @@ const TitlePage = ({ history, text, description }) => {
       <div className="title">
         <h1>{text}</h1>
         <div>
-          <SyncBondareaModal />
+          <SyncModal syncCall={syncDidi} name="DIDI" />
+          <SyncModal syncCall={forceSyncBondarea} name="Bondarea" />
           <ButtonPrimary onClick={addCredential} text="+ Crear nueva credencial" theme="primary" />
         </div>
       </div>

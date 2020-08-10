@@ -3,18 +3,15 @@ import { Modal } from 'antd';
 import { useState } from 'react';
 import './_style.scss';
 import { useApi } from '../../../services/useApi';
-import api from '../../../services/api-calls/all';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
-const { forceSyncBondarea } = api();
-
-const SyncBondareaModal = () => {
+const SyncModal = ({ syncCall, name }) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const syncBondarea = useApi();
+  const sync = useApi();
 
   const onClick = e => {
     e.preventDefault();
@@ -32,7 +29,7 @@ const SyncBondareaModal = () => {
 
   const onSync = () => {
     setLoading(true);
-    syncBondarea(forceSyncBondarea, {}, onSuccess, onError);
+    sync(syncCall, {}, onSuccess, onError);
   };
 
   const retry = () => {
@@ -53,7 +50,7 @@ const SyncBondareaModal = () => {
     return (
       <div>
         <div className="title">
-          <h1>Sincronizando con Bondarea...</h1>
+          <h1>Sincronizando con {name}...</h1>
         </div>
         <div className="body">
           <p>Aguarde un momento por favor...</p>
@@ -83,10 +80,10 @@ const SyncBondareaModal = () => {
     return (
       <div>
         <div className="title">
-          <h1>Sincronizar con Bondarea</h1>
+          <h1>Sincronizar con {name}</h1>
         </div>
         <div className="body">
-          <p>¿Desea forzar la sincronización con Bondarea?</p>
+          <p>¿Desea sincronizar con {name}?</p>
         </div>
         <div className="footer">
           <div className="buttons">
@@ -105,7 +102,7 @@ const SyncBondareaModal = () => {
           <h1>Conexión erronea</h1>
         </div>
         <div className="body">
-          <p>No se pudo conectar exitosamente con los créditos Bondarea.</p>
+          <p>No se pudo conectar exitosamente con {name}.</p>
         </div>
         <div className="footer">
           <div className="buttons">
@@ -130,14 +127,10 @@ const SyncBondareaModal = () => {
 
   return (
     <React.Fragment>
-      <ButtonPrimary
-        onClick={onClick}
-        text="Forzar sincronización con Bondarea"
-        theme="primary SyncBondarea"
-      />
+      <ButtonPrimary onClick={onClick} text={`Sincronizar ${name}`} theme="primary SyncModal" />
       <Modal
         width="400px"
-        className="SyncBondarea modal-buttons"
+        className="SyncModal modal-buttons"
         maskClosable={false}
         afterClose={onClose}
         visible={visible}
@@ -150,4 +143,4 @@ const SyncBondareaModal = () => {
   );
 };
 
-export default SyncBondareaModal;
+export default SyncModal;

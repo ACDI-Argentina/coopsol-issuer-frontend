@@ -20,7 +20,7 @@ body {
     display: flex;
     .Content {
       background-color: $white;
-      width: calc(100% -  #{$sidebar-size});
+      width: calc(100% - #{$sidebar-size});
       margin-left: $sidebar-size;
     }
     .SimpleHeader + .Content {
@@ -79,4 +79,8 @@ button:disabled {
   .App {
     background-size: 130%;
   }
+}
+
+.ant-pagination-options {
+  display: none;
 }
