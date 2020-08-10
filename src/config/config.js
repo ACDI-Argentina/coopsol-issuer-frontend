@@ -18,8 +18,7 @@ const uat = {
 
 const production = {
   endpoints: {
-    // FIXME: Set this
-    backend: ''
+    backend: 'https://api.semillas.didi.org.ar/'
   }
 };
 
