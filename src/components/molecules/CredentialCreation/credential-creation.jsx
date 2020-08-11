@@ -20,7 +20,7 @@ const CredentialCreation = ({ uploadedFile, onConnected }) => {
 
   return (
     <div className="CredentialCreation">
-      <MessageLoader loading={loading} message={'Conectando con Créditos Bondaria...'} />
+      <MessageLoader loading={loading} message={'Conectando ...'} />
     </div>
   );
 };
