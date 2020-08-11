@@ -7,7 +7,7 @@ import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
 
-const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
+const CredentialTable = ({ dataSource, columns, defaultFilters, filters, formatContent }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
@@ -69,8 +69,9 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
 
   const onSuccess = data => {
     const { content, totalElements, size } = data;
+    const formattedContent = formatContent ? formatContent(content) : content;
 
-    setCredentials(content);
+    setCredentials(formattedContent);
     setPagination({
       ...pagination,
       total: totalElements,

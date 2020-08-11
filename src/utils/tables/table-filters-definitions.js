@@ -72,3 +72,15 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
     format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
   }
 });
+
+export const defaultProviderFilters = categories => ({
+  criteriaQuery: {
+    type: 'input',
+    name: 'Buscar'
+  },
+  categoryId: {
+    type: 'dropdown',
+    name: 'Categoria',
+    data: categories
+  }
+});

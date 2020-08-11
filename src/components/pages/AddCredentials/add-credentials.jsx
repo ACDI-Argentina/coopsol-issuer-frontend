@@ -1,6 +1,6 @@
 import React from 'react';
 import './_style.scss';
-import TitlePage from '../../atoms/TitlePage/TitlePage';
+import TitlePage from '../../atoms/TitlePage/title-page';
 import FileUploader from '../../molecules/FileUploader/file-uploader';
 import { CREATED_CREDENTIALS } from '../../../utils/constants';
 

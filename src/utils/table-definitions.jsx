@@ -71,3 +71,46 @@ export const getActivitiesColumns = [
   { title: 'Mensaje', dataIndex: 'message', key: 'message' },
   { title: 'Usuario', dataIndex: 'user', key: 'user' }
 ];
+
+export const providerColumns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name'
+  },
+  {
+    title: 'Phone',
+    dataIndex: 'phone',
+    key: 'phone'
+  },
+  {
+    title: 'WhatsApp',
+    dataIndex: 'whatsappNumber',
+    key: 'whatsappNumber'
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email'
+  },
+  {
+    title: 'Benefit',
+    dataIndex: 'benefit',
+    key: 'benefit'
+  },
+  {
+    title: 'Speciality',
+    dataIndex: 'speciality',
+    key: 'speciality'
+  },
+  {
+    title: 'Category',
+    dataIndex: 'categoryName',
+    key: 'categoryName'
+  },
+  {
+    title: 'Active',
+    dataIndex: 'activeLabel',
+    key: 'activeLabel'
+  }
+];
