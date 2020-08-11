@@ -159,6 +159,12 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
     );
   };
 
+  const renderErrorItem = (item) => {
+    const line = item.errorHeader;
+    const message = item.errorBody.split(':')[1];
+    return <p className="text-error">{`${line}: ${message}`}</p>
+  }
+
   const renderValidation = () => {
     return (
       <>
@@ -172,11 +178,7 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
                 <Alert message={`Se encontraron: ${validation.totalErrorsRows} errores.`} type="error" showIcon className="my-2"/>
                 <Collapse >
                   <Panel header="Detalle errores" key="1">
-                    {validation.errorRows.map(item => {
-                      const line = item.errorHeader;
-                      const message = item.errorBody.split(':')[1];
-                      return <p className="text-error">{`${line}: ${message}`}</p>
-                    })}
+                    {validation.errorRows.map(renderErrorItem)}
                   </Panel>
                 </Collapse>
               </>
@@ -199,11 +201,12 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
               <p className="ant-upload-hint">Formatos aceptados: .xlsx</p>
             </Dragger>
 
-            {validation && renderValidation()}
 
             <div className="title">
               {renderUploadedInfo()}
               <MessageLoader loading={uploading} message={'Subiendo archivo...'} />
+
+            {validation && renderValidation()}
 
               <div className="buttonSection">{renderButtons()}</div>
             </div>
