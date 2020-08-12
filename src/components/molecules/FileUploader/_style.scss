@@ -134,4 +134,9 @@
     justify-content: center;
     margin-top: 2em;
   }
+
+  .ant-collapse-content-box {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
 }

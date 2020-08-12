@@ -57,3 +57,16 @@ export default fields => {
   }
   return result;
 };
+
+export const CREDENTIALS_SOURCES = [
+  {
+    name: 'socioeconomica',
+    label: 'Encuesta Socioeconómica',
+    showValidate: false
+  },
+  {
+    name: 'sancor',
+    label: 'Sancor Salud',
+    showValidate: true
+  }
+];

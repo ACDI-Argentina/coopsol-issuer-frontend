@@ -125,3 +125,25 @@ $sidebar-size: 18%;
 button:focus {
   outline: transparent;
 }
+
+.my-2 {
+  margin-bottom: .5rem;
+  margin-top: .5rem;
+}
+
+.my-3 {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.text-error {
+  color: $error;
+}
+
+.bg-error {
+  background-color: $error;
+}
+
+.text-success {
+  color: $primary-color;
+}
