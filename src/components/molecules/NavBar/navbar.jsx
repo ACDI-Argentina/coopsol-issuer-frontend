@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Menu } from 'antd';
 import './_style.scss';
 import { UserContext } from '../../../services/providers/user-context';
-import { LOGIN_URL, CREDENTIALS_URL, ACTIVITIES_URL } from '../../../utils/constants';
+import { LOGIN_URL, CREDENTIALS_URL, ACTIVITIES_URL, PROVIDERS_URL } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
 import history from '../../Router/history';
@@ -46,6 +46,7 @@ const NavBar = () => {
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
         {renderNavItem(CREDENTIALS_URL, 'Credenciales', <CredIcon className="credentials" />)}
         {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
+        {renderNavItem(PROVIDERS_URL, 'Providers', <ListIcon className="list" />)}
         <Menu.Item className="logoutBottom" onClick={() => signOut()}>
           <img src="img/salir.svg" alt="" />
           <button>Cerrar sesión</button>

@@ -9,7 +9,6 @@ import { CREDENTIALS_SOURCES } from '../../../utils/credential-definitions';
 const { Option } = Select;
 
 const AddCredentials = ({ history }) => {
-
   const [source, setSource] = useState(CREDENTIALS_SOURCES[0]);
 
   const onUploaded = fileId => {
@@ -28,11 +27,13 @@ const AddCredentials = ({ history }) => {
       />
       <div className="SurveyImportContainer">
         <div className="my-3">
-          <div>
-            Seleccione el tipo de encuesta que desea cargar:
-          </div>
+          <div>Seleccione el tipo de encuesta que desea cargar:</div>
           <Select value={source.name} style={{ width: 260 }} onChange={handleSourceChange}>
-            { CREDENTIALS_SOURCES.map((item, index) => <Option value={item.name} key={index}>{item.label}</Option>) }
+            {CREDENTIALS_SOURCES.map((item, index) => (
+              <Option value={item.name} key={index}>
+                {item.label}
+              </Option>
+            ))}
           </Select>
         </div>
         <div className="SurveyImport">
@@ -40,11 +41,11 @@ const AddCredentials = ({ history }) => {
             <div className="left-side">
               <h3>{`Importar datos de ${source.label}`}</h3>
               <p>Para poder generar una nueva credencial suba el archivo de encuestas.</p>
-              <FileUploader 
-                onUploaded={onUploaded} 
-                history={history} 
-                source={source} 
-                onChangeSource={(option) => handleSourceChange(null, option)} 
+              <FileUploader
+                onUploaded={onUploaded}
+                history={history}
+                source={source}
+                onChangeSource={option => handleSourceChange(null, option)}
               />
             </div>
             <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />

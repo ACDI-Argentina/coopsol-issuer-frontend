@@ -12,13 +12,15 @@ import {
   CREDENTIALS_URL,
   ACTIVITIES_URL,
   ADD_CREDENTIALS,
-  CREATED_CREDENTIALS
+  CREATED_CREDENTIALS,
+  PROVIDERS_URL
 } from '../../utils/constants';
 import history from './history';
 import Activities from '../pages/Activities/activities';
 import AddCredentials from '../pages/AddCredentials/add-credentials';
 import SimpleHeader from '../molecules/SimpleHeader/simple-header';
 import CredentialCreated from '../pages/CredentialCreated/credential-created';
+import Providers from '../pages/Providers/providers';
 
 const routesConfig = [
   {
@@ -44,6 +46,7 @@ const routesConfig = [
     exact: true,
     replaceHeader: SimpleHeader
   },
+  { path: PROVIDERS_URL, component: Providers, requireAuthentication: true, exact: true },
   { component: Error404, requireAuthentication: false }
 ];
 

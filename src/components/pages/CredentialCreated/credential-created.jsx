@@ -1,6 +1,6 @@
 import React from 'react';
 import '../AddCredentials/_style.scss';
-import TitlePage from '../../atoms/TitlePage/TitlePage';
+import TitlePage from '../../atoms/TitlePage/title-page';
 import { useState } from 'react';
 import CredentialCreation from '../../molecules/CredentialCreation/credential-creation';
 import CredentialsUploaded from '../../molecules/CredentialsUploaded/credentials-uploaded';

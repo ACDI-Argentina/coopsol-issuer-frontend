@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './_style.scss';
-import TitlePage from '../../atoms/TitlePage/TitlePage';
+import TitlePage from '../../atoms/TitlePage/title-page';
 import api from '../../../services/api-calls/all';
 import CredentialTable from '../../molecules/CredentialTable/credential-table';
 import { getActivitiesColumns } from '../../../utils/table-definitions';
@@ -11,6 +11,10 @@ import { showErrorMessage } from '../../../utils/alertMessages';
 import { useEffect } from 'react';
 
 const { getActivityLog, getLogTypes, getLogLevels } = api();
+
+const onError = (error, status) => {
+  showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
+};
 
 const Activities = () => {
   const { setUser } = useContext(UserContext);
@@ -26,10 +30,6 @@ const Activities = () => {
   }, []);
 
   const filters = defaultActivityFilters(logTypes, logLevels);
-
-  const onError = (error, status) => {
-    showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
-  };
 
   return (
     <div className="Activities">
