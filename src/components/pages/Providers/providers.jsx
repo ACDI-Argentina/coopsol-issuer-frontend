@@ -29,14 +29,14 @@ const onError = (error, status) => {
 };
 
 const Providers = () => {
-  const { getProviders, getCategories } = apiCalls();
+  const { getProviders, getProviderCategories } = apiCalls();
   const filtersCall = useApi();
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState([]);
   const { setUser } = useContext(UserContext);
 
   useEffect(() => {
-    filtersCall(getCategories, null, setCategories, onError, setUser);
+    filtersCall(getProviderCategories, null, setCategories, onError, setUser);
   }, []);
 
   const formatCategories = () => {

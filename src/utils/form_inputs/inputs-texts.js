@@ -1,8 +1,17 @@
-export const firstName = { name: 'name', placeholder: 'First Name', label: 'First Name' };
+export const firstName = { name: 'firstName', placeholder: 'First Name', label: 'First Name' };
+export const name = { name: 'name', placeholder: 'Nombre', label: 'Nombre' };
 export const lastName = { name: 'lastName', placeholder: 'Last Name', label: 'Last Name' };
 export const username = { name: 'username', placeholder: 'Usuario', label: 'Usuario' };
+export const email = { name: 'email', placeholder: 'Email', label: 'Email' };
+export const whatsapp = { name: 'whatsapp', placeholder: 'Whatsapp', label: 'Whatsapp' };
 export const phone = { name: 'phone', placeholder: 'Phone', label: 'Phone' };
 export const password = { name: 'password', placeholder: 'Contraseña', label: 'Contraseña' };
+export const benefit = { name: 'benefit', placeholder: 'Beneficio', label: 'Beneficio' };
+export const speciality = {
+  name: 'speciality',
+  placeholder: 'Especialidad',
+  label: 'Especialidad'
+};
 export const confirmPassword = {
   name: 'confirmPassword',
   placeholder: 'Confirm password',

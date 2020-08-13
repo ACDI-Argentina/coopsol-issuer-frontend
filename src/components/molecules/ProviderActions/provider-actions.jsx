@@ -1,15 +1,16 @@
 import React from 'react';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import { useRedirect } from '../../Router/redirect';
-import { PROVIDERS_URL } from '../../../utils/constants';
+import { CREATE_PROVIDER_URL } from '../../../utils/constants';
 
 const ProviderActions = () => {
   const { redirect, setUrlToRedirect } = useRedirect();
 
   return (
     <>
+      {redirect()}
       <ButtonPrimary
-        onClick={() => setUrlToRedirect(PROVIDERS_URL)}
+        onClick={() => setUrlToRedirect(CREATE_PROVIDER_URL)}
         text="+ Crear nuevo proveedor"
         theme="primary"
       />

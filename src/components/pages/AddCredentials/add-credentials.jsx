@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './_style.scss';
 import { Select } from 'antd';
-import TitlePage from '../../atoms/TitlePage/TitlePage';
+import TitlePage from '../../atoms/TitlePage/title-page';
 import FileUploader from '../../molecules/FileUploader/file-uploader';
 import { CREATED_CREDENTIALS } from '../../../utils/constants';
 import { CREDENTIALS_SOURCES } from '../../../utils/credential-definitions';

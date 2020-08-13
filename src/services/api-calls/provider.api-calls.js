@@ -1,13 +1,16 @@
 import helpers from './helpers';
 
-const getProviders = makeGetRequest => data => makeGetRequest('providers', data);
+const getProviders = makeGetRequest => data => makeGetRequest('providers/filtered', data);
 
-const getCategories = makeGetRequest => () => makeGetRequest('providerCategories', {});
+const getProviderCategories = makeGetRequest => () => makeGetRequest('providerCategories', {});
+
+const createProvider = makePostRequest => data => makePostRequest('providerCategories', data);
 
 export default client => {
-  const { makeGetRequest } = helpers(client);
+  const { makeGetRequest, makePostRequest } = helpers(client);
   return {
+    getProviderCategories: getProviderCategories(makeGetRequest),
     getProviders: getProviders(makeGetRequest),
-    getCategories: getCategories(makeGetRequest)
+    createProvider: createProvider(makePostRequest)
   };
 };
