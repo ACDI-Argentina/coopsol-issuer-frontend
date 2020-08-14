@@ -13,8 +13,10 @@ body .ant-menu-submenu-popup:hover {
 body .ant-menu-submenu > .ant-menu {
   background-color: $dark-grey;
   border-radius: 4px;
-  .ant-menu-item:hover {
-    background-color: grey;
+  .ant-menu-item {
+    &:hover {
+      background-color: grey;
+    }
   }
   button {
     background-color: transparent;
@@ -32,6 +34,7 @@ button:focus-within {
 
 .ant-menu-vertical .ant-menu-item {
   margin: 0 !important;
+  text-overflow: clip !important;
 }
 
 .Sidebar {
@@ -70,6 +73,7 @@ button:focus-within {
     li {
       @include primary-title($body, #e5e5e5);
       button {
+        cursor: pointer;
         background-color: transparent;
         padding: 0;
         border: transparent;

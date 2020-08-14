@@ -84,3 +84,19 @@ export const defaultProviderFilters = categories => ({
     data: categories
   }
 });
+
+export const defaultIdentityFilters = {
+  dni: {
+    type: 'input',
+    name: 'DNI'
+  },
+  name: {
+    type: 'input',
+    name: 'Nombre y Apellido'
+  },
+  requestDate: {
+    type: 'date',
+    name: 'Fecha',
+    format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
+  }
+};

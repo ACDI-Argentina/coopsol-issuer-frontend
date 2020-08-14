@@ -11,7 +11,7 @@ const ProviderActions = () => {
       {redirect()}
       <ButtonPrimary
         onClick={() => setUrlToRedirect(CREATE_PROVIDER_URL)}
-        text="+ Crear nuevo proveedor"
+        text="+ Nuevo Prestador"
         theme="primary"
       />
     </>
