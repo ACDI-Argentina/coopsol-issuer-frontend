@@ -14,10 +14,7 @@ const CredentialCreated = ({ history }) => {
 
   return (
     <div className="AddCredentials">
-      <TitlePage
-        text="Generación de Credenciales"
-        description="Completá los siguientes pasos para poder generar una credencial."
-      />
+      <TitlePage text="Generación de Credenciales" />
       <div className="SurveyImportContainer">
         <div className="SurveyImport">
           {showConnectedScreen ? (
