@@ -3,7 +3,6 @@ import './_style.scss';
 import { Menu, Dropdown, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import { isNull } from 'util';
 
 // It should receive a list of id value objects
 // ex. [{id:1, value:"salud"}, {id:2, value:"oportunidad"}]
@@ -11,10 +10,7 @@ const SelectBox = ({ inputs, onChange }) => {
   const [text, setText] = useState('Seleccionar');
 
   const handleClick = event => {
-    console.log("key: ", event.key);
-    console.log(inputs);
-    const pickedValue = inputs.reduce((r, x) => (x.id == event.key ? x : r), null);
-    console.log(pickedValue);
+    const pickedValue = inputs.reduce((r, x) => (x.id === Number(event.key) ? x : r), null);
     setText(pickedValue.name);
     onChange(pickedValue);
   };
