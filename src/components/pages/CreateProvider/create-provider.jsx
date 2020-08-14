@@ -5,9 +5,9 @@ import apiCalls from '../../../services/api-calls/all';
 import { useRedirect } from '../../Router/redirect';
 import { providerInputs } from '../../../utils/form_inputs/inputs-create-provider';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
+import { STATUS_CREATED } from '../../../services/api-calls/messages.constants.json';
 import './_style.scss';
 import AntForm from '../../molecules/ant-form';
-import Sider from 'antd/lib/layout/Sider';
 import SelectBox from '../../molecules/SelectBox/select-box';
 
 const CreateProvider = () => {
@@ -35,7 +35,11 @@ const CreateProvider = () => {
         return;
       }
       provider.categoryId = providerCategory.id;
-      await createProvider(provider);
+      const response = await createProvider(provider);
+      if (response.status === STATUS_CREATED){
+        message.success("Prestador creado.");
+        setUrlToRedirect(PROVIDERS_URL);
+      } 
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       message.error(errorMessage);
