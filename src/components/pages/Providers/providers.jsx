@@ -62,7 +62,6 @@ const Providers = () => {
           dataSource={getProviders}
           filters={filters}
           defaultFilters={{ page: 0 }}
-          // formatContent={formatContent}
         />
       </div>
     </div>

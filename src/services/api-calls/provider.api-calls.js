@@ -1,6 +1,6 @@
 import helpers from './helpers';
 
-const getProviders = makeGetRequest => data => makeGetRequest('providers', data);
+const getProviders = makeGetRequest => data => makeGetRequest('providers/filtered', data);
 
 const getCategories = makeGetRequest => () => makeGetRequest('providerCategories', {});
 

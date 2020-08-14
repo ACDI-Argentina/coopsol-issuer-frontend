@@ -98,7 +98,7 @@ export const providerColumns = () => [
     title: 'Categoría',
     dataIndex: '',
     key: 'categoryName',
-    render: item => <span>{item.providerCategoryDto.name}</span>
+    render: item => <span>{item.providerCategory.name}</span>
   },
   {
     title: 'Especialidad',
@@ -108,14 +108,15 @@ export const providerColumns = () => [
   {
     title: 'Beneficio',
     dataIndex: 'benefit',
-    key: 'benefit'
+    key: 'benefit',
+    render: value => <span>{value}%</span>
+  },
+  {
+    title: 'Activo',
+    dataIndex: 'active',
+    key: 'active',
+    render: value => <span>{value ? 'Si' : 'No'}</span>
   }
-  // {
-  //   title: 'Activo',
-  //   dataIndex: 'activeLabel',
-  //   key: 'activeLabel',
-  //   render: value => <span>{value ? 'Si' : 'No'}</span>
-  // }
 ];
 
 const baseIdentityColumns = [
