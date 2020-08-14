@@ -96,9 +96,9 @@ export const providerColumns = () => [
   },
   {
     title: 'Categoría',
-    dataIndex: '',
+    dataIndex: 'providerCategory',
     key: 'categoryName',
-    render: item => <span>{item.providerCategory.name}</span>
+    render: providerCategory => <span>{providerCategory.name}</span>
   },
   {
     title: 'Especialidad',
