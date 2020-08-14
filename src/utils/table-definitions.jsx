@@ -72,14 +72,19 @@ export const getActivitiesColumns = [
   { title: 'Usuario', dataIndex: 'user', key: 'user' }
 ];
 
-export const providerColumns = [
+export const providerColumns = () => [
   {
-    title: 'Name',
+    title: 'Nombre',
     dataIndex: 'name',
     key: 'name'
   },
   {
-    title: 'Phone',
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email'
+  },
+  {
+    title: 'Teléfono',
     dataIndex: 'phone',
     key: 'phone'
   },
@@ -89,28 +94,25 @@ export const providerColumns = [
     key: 'whatsappNumber'
   },
   {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email'
+    title: 'Categoría',
+    dataIndex: '',
+    key: 'categoryName',
+    render: item => <span>{item.providerCategoryDto.name}</span>
   },
   {
-    title: 'Benefit',
-    dataIndex: 'benefit',
-    key: 'benefit'
-  },
-  {
-    title: 'Speciality',
+    title: 'Especialidad',
     dataIndex: 'speciality',
     key: 'speciality'
   },
   {
-    title: 'Category',
-    dataIndex: 'categoryName',
-    key: 'categoryName'
-  },
-  {
-    title: 'Active',
-    dataIndex: 'activeLabel',
-    key: 'activeLabel'
+    title: 'Beneficio',
+    dataIndex: 'benefit',
+    key: 'benefit'
   }
+  // {
+  //   title: 'Activo',
+  //   dataIndex: 'activeLabel',
+  //   key: 'activeLabel',
+  //   render: value => <span>{value ? 'Si' : 'No'}</span>
+  // }
 ];

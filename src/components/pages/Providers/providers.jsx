@@ -10,19 +10,19 @@ import { showErrorMessage } from '../../../utils/alertMessages';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 
-const formatContent = content => {
-  if (content) {
-    content.forEach(element => {
-      element.categoryName = element.providerCategory.name;
-      if (element.active) {
-        element.activeLabel = 'Yes';
-      } else {
-        element.activeLabel = 'No';
-      }
-    });
-  }
-  return content;
-};
+// const formatContent = content => {
+//   if (content) {
+//     content.forEach(element => {
+//       element.categoryName = element.providerCategory.name;
+//       if (element.active) {
+//         element.activeLabel = 'Yes';
+//       } else {
+//         element.activeLabel = 'No';
+//       }
+//     });
+//   }
+//   return content;
+// };
 
 const onError = (error, status) => {
   showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', error);
@@ -32,7 +32,7 @@ const Providers = () => {
   const { getProviders, getCategories } = apiCalls();
   const filtersCall = useApi();
   const [categories, setCategories] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState({});
   const { setUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -55,21 +55,14 @@ const Providers = () => {
 
   return (
     <div className="providerMain">
-      <TitlePage
-        text="Listado de proveedores"
-        description="Acá podés ver un listado con los proveedores."
-        content={<ProviderActions />}
-      />
+      <TitlePage text="Listado de Prestadores" content={<ProviderActions />} />
       <div className="providersContent">
-        <h4>
-          <img src="img/table-list.svg" /> Listado de proveedores
-        </h4>
         <CredentialTable
-          columns={() => providerColumns}
+          columns={providerColumns}
           dataSource={getProviders}
           filters={filters}
           defaultFilters={{ page: 0 }}
-          formatContent={formatContent}
+          // formatContent={formatContent}
         />
       </div>
     </div>
