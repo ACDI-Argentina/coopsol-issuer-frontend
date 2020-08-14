@@ -5,5 +5,6 @@
   "API_ERROR_500": "Hubo un error al realizar la operacion",
   "STATUS_401": 401,
   "STATUS_403": 403,
-  "STATUS_500": 500
+  "STATUS_500": 500,
+  "STATUS_CREATED": 202
 }

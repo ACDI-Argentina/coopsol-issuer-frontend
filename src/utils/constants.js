@@ -21,3 +21,6 @@ export const CREDENTIAL_PENDING_DIDI = 'PENDING_DIDI';
 export const CREDENTIAL_PENDING_BONDAREA = 'CREDENTIAL_PENDING_BONDAREA';
 
 export const CREDIT_HOLDER_RELATIONSHIP = 'titular';
+
+export const PROVIDERS_URL = '/providers';
+export const CREATE_PROVIDER_URL = '/create-provider';
