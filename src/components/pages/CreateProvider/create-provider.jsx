@@ -13,26 +13,33 @@ import SelectBox from '../../molecules/SelectBox/select-box';
 const CreateProvider = () => {
   const { createProvider, getProviderCategories } = apiCalls();
   const { redirect, setUrlToRedirect } = useRedirect();
-  const [providerCategories, setProviderCategories] = useState({});
+  const [providerCategories, setProviderCategories] = useState([]);
   const [providerCategory, setProviderCategory] = useState({});
   const [loading, setLoading] = useState(false);
 
   const fetchProviderCategories = async () => {
     try {
       const response = await getProviderCategories();
-      console.log(response);
+      setProviderCategories(response);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       message.error(errorMessage);
     }
   };
 
-  const handleSubmit = () => {
-    console.log('submit');
-  };
-
-  const handleChange = () => {
-    console.log('change');
+  const handleSubmit = async provider => {
+    try {
+      if (!provider) return;
+      if (Object.keys(providerCategory).length === 0) {
+        message.warning('Necesitas seleccionar una categoria');
+        return;
+      }
+      provider.categoryId = providerCategory.id;
+      await createProvider(provider);
+    } catch (error) {
+      const errorMessage = processedErrorMessage(error);
+      message.error(errorMessage);
+    }
   };
 
   useEffect(() => {
@@ -48,7 +55,7 @@ const CreateProvider = () => {
       </div>
       <div className="userDetails">
         <div className="formStyle">
-          <SelectBox></SelectBox>
+          Categoria: <SelectBox inputs={providerCategories} onChange={setProviderCategory} />
           <AntForm
             inputs={providerInputs}
             handleSubmit={handleSubmit}

@@ -4,7 +4,7 @@ const getProviders = makeGetRequest => data => makeGetRequest('providers/filtere
 
 const getProviderCategories = makeGetRequest => () => makeGetRequest('providerCategories', {});
 
-const createProvider = makePostRequest => data => makePostRequest('providerCategories', data);
+const createProvider = makePostRequest => data => makePostRequest('provider', data);
 
 export default client => {
   const { makeGetRequest, makePostRequest } = helpers(client);

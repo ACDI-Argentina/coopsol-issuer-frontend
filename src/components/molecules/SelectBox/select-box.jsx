@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import './_style.scss';
 import { Menu, Dropdown, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
+import { getObjectFromListOfJsonsById } from '../../../utils/func-helpers';
 
-// It should
-const SelectBox = inputs => {
+// It should receive a list of id value objects
+// ex. [{id:1, value:"salud"}, {id:2, value:"oportunidad"}]
+const SelectBox = ({ inputs, onChange }) => {
   const [text, setText] = useState('Seleccionar');
 
-  const handleClick = e => {
-    const handledElement = e.key;
-    console.log('click ', e);
+  const handleClick = event => {
+    const pickedValue = getObjectFromListOfJsonsById(inputs, event.key);
+    setText(pickedValue.name);
+    onChange(pickedValue);
   };
 
   const menu = (
     <Menu onClick={handleClick}>
-      <Menu.Item key="1">Option 1</Menu.Item>
-      <Menu.Item key="2">Option 2</Menu.Item>
+      {inputs && inputs.map(input => <Menu.Item key={input.id}>{input.name}</Menu.Item>)}
     </Menu>
   );
 
@@ -26,6 +29,11 @@ const SelectBox = inputs => {
       </Button>
     </Dropdown>
   );
+};
+
+SelectBox.propTypes = {
+  inputs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default SelectBox;
