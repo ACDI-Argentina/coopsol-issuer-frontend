@@ -1,0 +1,55 @@
+@import './general_styling';
+
+.TabTableContent {
+    margin-top: 25px;
+    height: 68vh;
+    .ant-tabs {
+      @include label($body, #c4c4c4);
+      .ant-tabs-bar {
+        padding: 0 60px;
+        margin: 0;
+        .ant-tabs-nav {
+          width: 100%;
+          .ant-tabs-ink-bar {
+            background-color: transparent;
+          }
+          .ant-tabs-tab {
+            margin: 0 15px;
+            &:hover {
+              color: rgb(175, 175, 175);
+            }
+          }
+  
+          .ant-tabs-tab-active {
+            outline: none;
+            @include label($body, $secondary-color);
+            border-bottom: 4px solid $primary-color;
+            transition: ease-out 0.2s;
+            margin: 0 15px;
+            &:focus {
+              outline: transparent;
+            }
+          }
+        }
+      }
+      .ant-tabs-content {
+        background-color: $background-grey;
+        height: 100%;
+        &:focus {
+          outline: transparent;
+        }
+        .ant-tabs-tabpane,
+        .ant-tabs-tabpane-active {
+          &:focus {
+            outline: transparent;
+          }
+        }
+        .ant-table-wrapper {
+          padding: 0 60px;
+          .ant-table-thead {
+            @include label($label, $secondary-color);
+          }
+        }
+      }
+    }
+  }

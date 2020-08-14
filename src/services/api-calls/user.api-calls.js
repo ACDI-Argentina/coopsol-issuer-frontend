@@ -2,6 +2,8 @@ import helpers from './helpers';
 
 const getCredentials = makeGetRequest => data => makeGetRequest('credentials', data);
 
+const getAny = makeGetRequest => ({ url, params }) => makeGetRequest(url, params);
+
 const revokeCredentials = makePatchRequest => data =>
   makePatchRequest('credentials/revoke/{id}/reason/{reason}', data);
 
@@ -26,6 +28,7 @@ const getLogLevels = makeGetRequest => () => makeGetRequest('action/levels');
 export default client => {
   const { makePostRequest, makeGetRequest, makePatchRequest, makeDeleteRequest } = helpers(client);
   return {
+    getAny: getAny(makeGetRequest),
     getCredentials: getCredentials(makeGetRequest),
     revokeCredentials: revokeCredentials(makePatchRequest),
     getCredentialTypes: getCredentialTypes(makeGetRequest),
