@@ -4,7 +4,7 @@ import './_style.scss';
 const ButtonLogin = ({ text, theme, onClick, iconLeft, iconRight, disabled, type, htmlType }) => {
   return (
     <div className="ButtonLogin">
-      <p>Ingresar</p>
+      <p>{text}</p>
       <button
         type={type}
         htmltype={htmlType}
