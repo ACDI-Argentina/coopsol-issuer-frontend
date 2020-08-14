@@ -7,7 +7,7 @@ import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
 
-const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
+const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
@@ -99,9 +99,11 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters }) => {
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
-        expandable={{
-          expandedRowRender: record => <CredentialDetail fields={record} />
-        }}
+        expandable={
+          !noExpand && {
+            expandedRowRender: record => <CredentialDetail fields={record} />
+          }
+        }
       />
     </div>
   );
