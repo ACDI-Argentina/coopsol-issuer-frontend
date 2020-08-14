@@ -26,11 +26,3 @@ export const getUrlParam = (parameter, defaultvalue) => {
   }
   return urlparameter;
 };
-
-export const getObjectFromListOfJsonsById = (list, value) => {
-  for (var i = 0; i < list.length; i++) {
-    if (list[i].id == value) {
-      return list[i];
-    }
-  }
-};
