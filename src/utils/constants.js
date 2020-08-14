@@ -10,6 +10,7 @@ export const CREDENTIALS_URL = '/credentials';
 export const ACTIVITIES_URL = '/activities';
 export const PROFILE_URL = '/profile';
 export const PROVIDERS_URL = '/providers';
+export const IDENTITIES_URL = '/identities';
 export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
 export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm`;
 export const DEFAULT_TIME_ZONE = 'America/Buenos_Aires';

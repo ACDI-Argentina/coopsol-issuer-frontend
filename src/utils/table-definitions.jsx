@@ -2,6 +2,7 @@ import React from 'react';
 import { DEFAULT_DATETIME_FORMAT, DEFAULT_TIME_ZONE } from './constants';
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
 import { parseDate } from './dateHelpers';
+import IdentityActions from '../components/molecules/IdentityActions/identity-actions';
 
 export const getCredentialsColumns = fetchCredentials => [
   {
@@ -112,5 +113,44 @@ export const providerColumns = [
     title: 'Active',
     dataIndex: 'activeLabel',
     key: 'activeLabel'
+  }
+];
+
+const baseIdentityColumns = [
+  {
+    title: 'Nombre y Apellido',
+    dataIndex: '',
+    key: 'name',
+    render: item => <span>{`${item.name} ${item.lastname}`}</span>
+  },
+  {
+    title: 'DNI Declarado',
+    dataIndex: 'dni',
+    key: 'dni'
+  },
+  {
+    title: 'Número de Celular',
+    dataIndex: 'phone',
+    key: 'phone'
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email'
+  }
+];
+
+export const identityPendingColumns = getData => [
+  ...baseIdentityColumns,
+  {
+    title: 'Fecha',
+    dataIndex: 'requestDate',
+    key: 'requestDate'
+  },
+  {
+    title: 'Acciones',
+    dataIndex: '',
+    key: 'action',
+    render: item => <IdentityActions identity={item} onAction={getData} />
   }
 ];
