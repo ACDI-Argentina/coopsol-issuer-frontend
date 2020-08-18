@@ -4,7 +4,11 @@ import TitlePage from '../../atoms/TitlePage/title-page';
 import { Tabs } from 'antd';
 import mock from './mock';
 import ApiTable from '../../molecules/ApiTable/api-table';
-import { identityPendingColumns } from '../../../utils/table-definitions';
+import {
+  identityPendingColumns,
+  identityApprovedColumns,
+  identityRejectColumns
+} from '../../../utils/tables/identities-definitions.jsx';
 import { defaultIdentityFilters } from '../../../utils/tables/table-filters-definitions';
 const { TabPane } = Tabs;
 
@@ -27,11 +31,19 @@ const Identities = () => {
               filters={defaultIdentityFilters}
             />
           </TabPane>
-          <TabPane tab="Solicitudes Rechazadas" key="2">
-            {/* <ApiTable data={mock.reject} endpoint="/some/endpoint"  /> */}
+          <TabPane tab="Solicitudes Aprobadas" key="2">
+            <ApiTable
+              data={mock.approved}
+              columns={identityApprovedColumns}
+              filters={defaultIdentityFilters}
+            />
           </TabPane>
-          <TabPane tab="Solicitudes Aprobadas" key="3">
-            {/* <ApiTable data={mock.approved} endpoint="/some/endpoint" /> */}
+          <TabPane tab="Solicitudes Rechazadas" key="3">
+            <ApiTable
+              data={mock.reject}
+              columns={identityRejectColumns}
+              filters={defaultIdentityFilters}
+            />
           </TabPane>
         </Tabs>
       </div>

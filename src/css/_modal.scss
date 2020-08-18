@@ -1,0 +1,39 @@
+@import './general_styling';
+
+.ant-modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .title h1 {
+    @include primary-title($title-secondary, $secondary-color);
+    margin-bottom: 0.5em;
+    text-align: center;
+  }
+  .body {
+    @include primary-text($body, $secondary-color);
+    margin-bottom: 2em;
+    width: 90%;
+    p {
+      margin-bottom: 2em;
+      text-align: center;
+    }
+    label {
+      @include label($label, $secondary-color);
+    }
+    .ant-input {
+      border-radius: 11px;
+      max-width: 100%;
+      &:hover {
+        border: 1px solid $secondary-color;
+      }
+      &:focus {
+        border-color: $secondary-color;
+        box-shadow: 0 0 0 2px transparent;
+      }
+    }
+  }
+}
+.ant-modal-footer {
+  display: none;
+}
