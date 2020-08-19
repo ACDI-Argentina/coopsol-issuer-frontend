@@ -126,9 +126,47 @@ button:focus {
   outline: transparent;
 }
 
+.ant-btn {
+  border-radius: 11px;
+  font-weight: bold;
+  &:hover {
+    border-color: rgb(40, 40, 40);
+    color: rgb(40, 40, 40);
+  }
+}
+
+.ant-btn-primary {
+  background-color: $primary-color;
+  border: none;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: $primary-color;
+    color: white;
+  }
+}
+
+.ant-btn-dangerous {
+  &:hover,
+  &:active,
+  &:focus {
+    color: #ff7875;
+    background-color: #fff;
+    border-color: #ff7875;
+  }
+}
+
 .my-2 {
-  margin-bottom: .5rem;
-  margin-top: .5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .my-3 {
