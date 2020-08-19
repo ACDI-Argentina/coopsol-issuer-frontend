@@ -18,10 +18,7 @@ const CredentialsUploaded = ({ history }) => {
 
   return (
     <div className="left-side">
-      <h3>Las Credenciales fueron creadas de manera exitosa.</h3>
-      <p>El proceso de creación fue realizado correctamente.</p>
-
-      <ImportStatus text="Archivo de encuestas" theme="check" />
+      <ImportStatus text="Archivo cargado con éxito!" theme="check" />
       <div className="buttonSection">
         <ButtonPrimary
           text="Ir al listado de credenciales"

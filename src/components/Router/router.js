@@ -14,7 +14,8 @@ import {
   ADD_CREDENTIALS,
   CREATED_CREDENTIALS,
   PROVIDERS_URL,
-  IDENTITIES_URL
+  IDENTITIES_URL,
+  CREATE_PROVIDER_URL
 } from '../../utils/constants';
 import history from './history';
 import Activities from '../pages/Activities/activities';
@@ -23,6 +24,7 @@ import SimpleHeader from '../molecules/SimpleHeader/simple-header';
 import CredentialCreated from '../pages/CredentialCreated/credential-created';
 import Providers from '../pages/Providers/providers';
 import Identities from '../pages/Identities/identities';
+import CreateProvider from '../pages/CreateProvider/create-provider';
 
 const routesConfig = [
   {
@@ -50,6 +52,12 @@ const routesConfig = [
   },
   { path: PROVIDERS_URL, component: Providers, requireAuthentication: true, exact: true },
   { path: IDENTITIES_URL, component: Identities, requireAuthentication: true, exact: true },
+  {
+    path: CREATE_PROVIDER_URL,
+    component: CreateProvider,
+    requireAuthentication: true,
+    exact: true
+  },
   { component: Error404, requireAuthentication: false }
 ];
 

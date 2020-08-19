@@ -9,7 +9,6 @@ export const MENU = 'menu';
 export const CREDENTIALS_URL = '/credentials';
 export const ACTIVITIES_URL = '/activities';
 export const PROFILE_URL = '/profile';
-export const PROVIDERS_URL = '/providers';
 export const IDENTITIES_URL = '/identities';
 export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
 export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm`;
@@ -21,3 +20,6 @@ export const CREDENTIAL_PENDING_DIDI = 'PENDING_DIDI';
 export const CREDENTIAL_PENDING_BONDAREA = 'CREDENTIAL_PENDING_BONDAREA';
 
 export const CREDIT_HOLDER_RELATIONSHIP = 'titular';
+
+export const PROVIDERS_URL = '/providers';
+export const CREATE_PROVIDER_URL = '/create-provider';
