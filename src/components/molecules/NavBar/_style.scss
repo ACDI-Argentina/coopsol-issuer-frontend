@@ -71,7 +71,7 @@ button:focus-within {
       @include primary-title($body, $secondary-color);
     }
     li {
-      @include primary-title($body, #e5e5e5);
+      @include primary-title($body, #949494);
       button {
         cursor: pointer;
         background-color: transparent;
