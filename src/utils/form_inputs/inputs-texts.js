@@ -6,7 +6,12 @@ export const email = { name: 'email', placeholder: 'Email', label: 'Email' };
 export const whatsapp = { name: 'whatsappNumber', placeholder: 'Whatsapp', label: 'Whatsapp' };
 export const phone = { name: 'phone', placeholder: 'Phone', label: 'Phone' };
 export const password = { name: 'password', placeholder: 'Contraseña', label: 'Contraseña' };
-export const benefit = { name: 'benefit', placeholder: 'Beneficio', label: 'Beneficio' };
+export const benefit = { name: 'benefit', placeholder: 'ex. 20', label: 'Beneficio' };
+export const description = {
+  name: 'description',
+  placeholder: 'Descripcion',
+  label: 'Descripcion'
+};
 export const speciality = {
   name: 'speciality',
   placeholder: 'Especialidad',
