@@ -9,6 +9,7 @@ import { STATUS_CREATED } from '../../../services/api-calls/messages.constants.j
 import './_style.scss';
 import AntForm from '../../molecules/ant-form';
 import SelectBox from '../../molecules/SelectBox/select-box';
+import { isNullOrUndefined } from 'util';
 
 const CreateProvider = () => {
   const { createProvider, getProviderCategories } = apiCalls();
@@ -34,12 +35,13 @@ const CreateProvider = () => {
         message.warning('Necesitas seleccionar una categoria');
         return;
       }
+      if (isNullOrUndefined(provider.description)) provider.description = '';
       provider.categoryId = providerCategory.id;
       const response = await createProvider(provider);
-      if (response.status === STATUS_CREATED){
-        message.success("Prestador creado.");
+      if (response.status === STATUS_CREATED) {
+        message.success('Prestador creado.');
         setUrlToRedirect(PROVIDERS_URL);
-      } 
+      }
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       message.error(errorMessage);

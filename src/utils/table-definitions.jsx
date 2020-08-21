@@ -109,7 +109,7 @@ export const providerColumns = () => [
     title: 'Beneficio',
     dataIndex: 'benefit',
     key: 'benefit',
-    render: value => <span>{value}%</span>
+    render: value => <span>{value ? `${value}%` : ''}</span>
   },
   {
     title: 'Activo',
