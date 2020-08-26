@@ -4,6 +4,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import PropTypes from 'prop-types';
 import ButtonLogin from '../atoms/ButtonLogin/button-login';
 import { inputRenderer } from '../../utils/form-helper';
+const { useForm } = Form;
 
 const AntForm = React.forwardRef((p, r) => {
   const {
@@ -16,13 +17,16 @@ const AntForm = React.forwardRef((p, r) => {
     noSubmitButton,
     RECAPTCHA_SITE_KEY,
     resetOnSubmit,
-    topSubmitButton
+    topSubmitButton,
+    initialValues,
+    labelCol,
+    wrapperCol
   } = p;
 
   const [submittedCount, setSubmittedCount] = useState(0);
   const [captchaResult, setCaptchaResult] = useState();
   const [captchaWarning, setCaptchaWarning] = useState(false);
-  const [form] = Form.useForm();
+  const [form] = useForm();
 
   const formItems = inputRenderer(inputs, form, submittedCount);
 
@@ -75,6 +79,9 @@ const AntForm = React.forwardRef((p, r) => {
       onFinishFailed={handleErrorSubmit}
       colon={false}
       form={form}
+      initialValues={initialValues}
+      labelCol={labelCol}
+      wrapperCol={wrapperCol}
     >
       {topSubmitButton && submitButton()}
       {formItems}

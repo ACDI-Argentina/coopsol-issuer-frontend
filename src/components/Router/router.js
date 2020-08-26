@@ -58,6 +58,12 @@ const routesConfig = [
     requireAuthentication: true,
     exact: true
   },
+  {
+    path: `${PROVIDERS_URL}/:id`,
+    component: CreateProvider,
+    requireAuthentication: true,
+    exact: true
+  },
   { component: Error404, requireAuthentication: false }
 ];
 

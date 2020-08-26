@@ -23,9 +23,9 @@ const Identities = () => {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Solicitudes Pendientes" key="1">
             <ApiTable
-              //   endpoint="/identityRequests"
+              //   path="/identityRequests"
               //   dataField="content"
-              //   when endpoint is ready, data props's must be removed
+              //   when path is ready, data props's must be removed
               data={mock.pending}
               columns={identityPendingColumns}
               filters={defaultIdentityFilters}

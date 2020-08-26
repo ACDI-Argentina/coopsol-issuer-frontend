@@ -53,6 +53,12 @@ const makeGetRequest = httpClient => (url, parameters, queryParameters) => {
     .then(response => response.data);
 };
 
+const makePlainedGetRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
+  url = replaceUrlParams(url, bodyParameters);
+  const completeUrl = addQueryString(url, queryParameters);
+  return httpClient.get(completeUrl, { ...bodyParameters }).then(response => response.data);
+};
+
 const makePostRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
   const completeUrl = addQueryString(url, queryParameters);
   return httpClient.post(completeUrl, { ...bodyParameters });
@@ -76,6 +82,7 @@ const makePatchRequest = httpClient => (url, bodyParameters = {}, queryParameter
 };
 
 export default client => ({
+  makePlainedGetRequest: makePlainedGetRequest(client),
   makeGetRequest: makeGetRequest(client),
   makePostRequest: makePostRequest(client),
   makePatchRequest: makePatchRequest(client),
