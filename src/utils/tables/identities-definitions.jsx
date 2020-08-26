@@ -7,17 +7,20 @@ const baseIdentityColumns = [
     title: 'Nombre y Apellido',
     dataIndex: '',
     key: 'name',
+    fixed: 'left',
     render: item => <span>{`${item.name} ${item.lastname}`}</span>
   },
   {
     title: 'DNI Declarado',
     dataIndex: 'dni',
-    key: 'dni'
+    key: 'dni',
+    width: 100
   },
   {
     title: 'Número de Celular',
     dataIndex: 'phone',
-    key: 'phone'
+    key: 'phone',
+    width: 160
   },
   {
     title: 'Email',
@@ -30,12 +33,14 @@ const reviewedIdentityColumns = [
   {
     title: 'Fecha Solicitud',
     dataIndex: 'requestDate',
-    key: 'requestDate'
+    key: 'requestDate',
+    width: 100
   },
   {
     title: 'Fecha Revisión',
     dataIndex: 'reviewDate',
-    key: 'reviewDate'
+    key: 'reviewDate',
+    width: 100
   }
 ];
 
@@ -44,12 +49,15 @@ export const identityPendingColumns = getData => [
   {
     title: 'Fecha',
     dataIndex: 'requestDate',
-    key: 'requestDate'
+    key: 'requestDate',
+    width: 100
   },
   {
     title: 'Acciones',
     dataIndex: '',
     key: 'action',
+    fixed: 'right',
+    width: 230,
     render: row => <IdentityActions identity={row} onAction={getData} />
   }
 ];
@@ -61,6 +69,7 @@ export const identityApprovedColumns = getData => [
     title: 'Estado',
     dataIndex: '',
     key: 'state',
+    width: 140,
     render: row => (
       <span className="text-success">
         <img src="/img/check.svg" alt="check" width="12" className="mr-1" />
@@ -77,6 +86,8 @@ export const identityRejectColumns = getData => [
     title: 'Estado',
     dataIndex: '',
     key: 'state',
+    fixed: 'right',
+    width: 230,
     render: row => <IdentityRejectActions identity={row} onAction={getData} />
   }
 ];
