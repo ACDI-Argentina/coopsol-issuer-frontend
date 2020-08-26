@@ -6,7 +6,9 @@ import {
   API_ERROR_500,
   STATUS_401,
   STATUS_403,
-  STATUS_500
+  STATUS_500,
+  BEGIN_SUCCESS_STATUS,
+  END_SUCCESS_STATUS
 } from './messages.constants.json';
 
 export const createQueryString = query =>
@@ -89,6 +91,10 @@ export default client => ({
   makeDeleteRequest: makePatchRequest(client),
   makePostFileRequest: makePostFileRequest(client)
 });
+
+export const isSuccess = response => {
+  return response.status >= BEGIN_SUCCESS_STATUS && response.status <= END_SUCCESS_STATUS;
+};
 
 export const processedErrorMessage = (error, messageText) => {
   const status = get(error, 'response.status');

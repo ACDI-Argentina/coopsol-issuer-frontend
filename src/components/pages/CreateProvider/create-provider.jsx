@@ -4,10 +4,9 @@ import { PROVIDERS_URL } from '../../../utils/constants';
 import apiCalls from '../../../services/api-calls/all';
 import { useRedirect } from '../../Router/redirect';
 import { providerInputs } from '../../../utils/form_inputs/inputs-create-provider';
-import { processedErrorMessage } from '../../../services/api-calls/helpers';
+import { processedErrorMessage, isSuccess } from '../../../services/api-calls/helpers';
 import './_style.scss';
 import AntForm from '../../molecules/ant-form';
-import { isNullOrUndefined } from 'util';
 import { useParams } from 'react-router-dom';
 import SelectBox from '../../molecules/SelectBox/select-box';
 
@@ -17,8 +16,7 @@ const CreateProvider = () => {
   const [providerCategories, setProviderCategories] = useState([]);
   const [values, setValues] = useState(null);
   const [providerCategory, setProviderCategory] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [formLoading, setFormLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   const isEdition = !!id;
@@ -48,10 +46,10 @@ const CreateProvider = () => {
         message.warning('Necesitas seleccionar una categoria');
         return;
       }
-      if (isNullOrUndefined(provider.description)) provider.description = '';
+      provider.description = provider.description ?? '';
       provider.categoryId = providerCategory.id;
       const response = isEdition ? await makeEdit(provider) : await makeCreate(provider);
-      if (response.ok) {
+      if (isSuccess(response)) {
         const successMessage = `Prestador ${isEdition ? 'actualizado' : 'creado'}.`;
         message.success(successMessage);
         setUrlToRedirect(PROVIDERS_URL);
@@ -71,24 +69,23 @@ const CreateProvider = () => {
       const data = await getProviderById({ id });
       setValues(data);
       setProviderCategory(data.providerCategoryDto);
-      setFormLoading(false);
+      setLoading(false);
     }
     if (isEdition) {
       getData();
     } else {
-      setFormLoading(false);
+      setLoading(false);
     }
   }, [id]);
 
   return (
     <div className="mainSection">
       {redirect()}
-      <div className="loadingComponent">{loading && <Spin tip="Loading.." />}</div>
       <div className="backAndUser">
         <button onClick={() => setUrlToRedirect(PROVIDERS_URL)}> > Back</button>
       </div>
       <div className="userDetails">
-        {!formLoading ? (
+        {!loading ? (
           <div className="formStyle">
             <Row gutter={8} align="middle" style={{ marginBottom: 20 }}>
               <Col span={4} style={{ textAlign: 'right' }}>
