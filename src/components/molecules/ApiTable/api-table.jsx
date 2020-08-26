@@ -7,7 +7,7 @@ import { useApi } from '../../../services/useApi';
 const { getAny } = api();
 const call = useApi();
 
-const ApiTable = ({ data, endpoint, columns, filters }) => {
+const ApiTable = ({ data, path, columns, filters }) => {
   const [loading, setLoading] = useState(false);
   const [localData, setLocalData] = useState(data);
   const [activeFilters, setActiveFilters] = useState({});
@@ -17,7 +17,7 @@ const ApiTable = ({ data, endpoint, columns, filters }) => {
 
   const makeGet = () => {
     setLoading(true);
-    const url = endpoint;
+    const url = path;
     const params = { page: 0 };
     call(getAny, { url, params }, handleSuccess, handleSuccess);
   };

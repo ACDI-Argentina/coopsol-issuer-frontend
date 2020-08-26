@@ -6,7 +6,9 @@ import {
   API_ERROR_500,
   STATUS_401,
   STATUS_403,
-  STATUS_500
+  STATUS_500,
+  BEGIN_SUCCESS_STATUS,
+  END_SUCCESS_STATUS
 } from './messages.constants.json';
 
 export const createQueryString = query =>
@@ -53,6 +55,12 @@ const makeGetRequest = httpClient => (url, parameters, queryParameters) => {
     .then(response => response.data);
 };
 
+const makePlainedGetRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
+  url = replaceUrlParams(url, bodyParameters);
+  const completeUrl = addQueryString(url, queryParameters);
+  return httpClient.get(completeUrl, { ...bodyParameters }).then(response => response.data);
+};
+
 const makePostRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
   const completeUrl = addQueryString(url, queryParameters);
   return httpClient.post(completeUrl, { ...bodyParameters });
@@ -76,12 +84,17 @@ const makePatchRequest = httpClient => (url, bodyParameters = {}, queryParameter
 };
 
 export default client => ({
+  makePlainedGetRequest: makePlainedGetRequest(client),
   makeGetRequest: makeGetRequest(client),
   makePostRequest: makePostRequest(client),
   makePatchRequest: makePatchRequest(client),
   makeDeleteRequest: makePatchRequest(client),
   makePostFileRequest: makePostFileRequest(client)
 });
+
+export const isSuccess = response => {
+  return response.status >= BEGIN_SUCCESS_STATUS && response.status <= END_SUCCESS_STATUS;
+};
 
 export const processedErrorMessage = (error, messageText) => {
   const status = get(error, 'response.status');

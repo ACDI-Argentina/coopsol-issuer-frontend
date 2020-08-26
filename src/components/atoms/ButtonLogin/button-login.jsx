@@ -5,13 +5,8 @@ const ButtonLogin = ({ text, theme, onClick, iconLeft, iconRight, disabled, type
   return (
     <div className="ButtonLogin">
       <p>{text}</p>
-      <button
-        type={type}
-        htmltype={htmlType}
-        onClick={onClick}
-        disabled={disabled}
-      >
-        <img src="img/arrow-right.svg" alt="" />
+      <button type={type} htmltype={htmlType} onClick={onClick} disabled={disabled}>
+        <img src="/img/arrow-right.svg" alt="" />
       </button>
     </div>
   );

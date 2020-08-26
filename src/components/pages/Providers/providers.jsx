@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './_style.scss';
-import { providerColumns } from '../../../utils/table-definitions';
+import { providerColumns } from '../../../utils/tables/providers-definitions';
 import apiCalls from '../../../services/api-calls/all';
 import TitlePage from '../../atoms/TitlePage/title-page';
 import CredentialTable from '../../molecules/CredentialTable/credential-table';
@@ -9,20 +9,6 @@ import ProviderActions from '../../molecules/ProviderActions/provider-actions';
 import { showErrorMessage } from '../../../utils/alertMessages';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
-
-// const formatContent = content => {
-//   if (content) {
-//     content.forEach(element => {
-//       element.categoryName = element.providerCategory.name;
-//       if (element.active) {
-//         element.activeLabel = 'Yes';
-//       } else {
-//         element.activeLabel = 'No';
-//       }
-//     });
-//   }
-//   return content;
-// };
 
 const onError = (error, status) => {
   showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', error);

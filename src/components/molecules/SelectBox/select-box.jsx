@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './_style.scss';
 import { Menu, Dropdown, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 
-const SelectBox = ({ inputs, onChange }) => {
+const SelectBox = ({ inputs, onChange, initialValue }) => {
   const [text, setText] = useState('Seleccionar');
 
   const handleClick = event => {
@@ -12,6 +12,12 @@ const SelectBox = ({ inputs, onChange }) => {
     setText(pickedValue.name);
     onChange(pickedValue);
   };
+
+  useEffect(() => {
+    if (initialValue) {
+      setText(initialValue);
+    }
+  }, [initialValue]);
 
   const menu = (
     <Menu onClick={handleClick}>

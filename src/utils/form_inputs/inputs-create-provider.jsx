@@ -4,6 +4,16 @@ import { defaultInputProperties } from '../inputs-formats';
 
 export const providerInputs = [
   {
+    ...defaultInputProperties(name),
+    type: 'String',
+    rules: [REQUIRED_FIELD_RULE]
+  },
+  {
+    ...defaultInputProperties(speciality),
+    type: 'String',
+    rules: [REQUIRED_FIELD_RULE]
+  },
+  {
     ...defaultInputProperties(email),
     type: 'email',
     rules: [REQUIRED_FIELD_RULE],
@@ -20,18 +30,8 @@ export const providerInputs = [
     iconType: 'phone'
   },
   {
-    ...defaultInputProperties(name),
-    type: 'String',
-    rules: [REQUIRED_FIELD_RULE]
-  },
-  {
     ...defaultInputProperties(benefit),
     type: 'Number'
-  },
-  {
-    ...defaultInputProperties(speciality),
-    type: 'String',
-    rules: [REQUIRED_FIELD_RULE]
   },
   {
     ...defaultInputProperties(description),
