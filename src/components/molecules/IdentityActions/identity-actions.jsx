@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { Modal, Select, Input, Button } from 'antd';
+import React, { useState, useRef, useEffect } from 'react';
+import { Modal, Select, Input, Button, message } from 'antd';
 import Lottie from 'react-lottie';
+import apiCalls from '../../../services/api-calls/all';
 import animationData from '../../../assets/3046-me-at-office.json';
 import './_style.scss';
 import TextAreaComments from '../../atoms/TextArea/text-area';
-import { useEffect } from 'react';
+import { processedErrorMessage } from '../../../services/api-calls/helpers';
+import { REASONS } from '../../../utils/tables/identities-definitions';
 const { Option } = Select;
 
 const imageOptions = {
@@ -19,43 +21,55 @@ const imageOptions = {
 const IdentityActions = ({ onAction, identity }) => {
   const [approveModalVisible, setApproveModalVisible] = useState(false);
   const [rejectModalVisible, setRejectModalVisible] = useState(false);
-  const [localDni, setLocalDni] = useState(identity.dni);
+  const [dni, setDni] = useState(identity.dni);
+  const [rejectionObservations, setRejectionObservations] = useState(null);
   const [inEdition, setInEdition] = useState(false);
-  const [rejectReason, setRejectReason] = useState(null);
+  const [revocationReason, setRevocationReason] = useState(null);
+  const { rejectIdentityRequest, approveIdentityRequest } = apiCalls();
   let editInput = useRef(null);
 
-  const { name, lastname } = identity;
-  const REASONS = ['Datos inconsistentes', 'No es Beneficiario de Semillas'];
+  const { id, name, lastName } = identity;
 
   const rejectRequest = () => {
     setRejectModalVisible(true);
-    // onAction();
   };
 
   const approveRequest = () => {
     setApproveModalVisible(true);
-    // onAction();
   };
 
-  const approveConfirm = () => {
+  const approveConfirm = async () => {
+    try {
+      await approveIdentityRequest({ id, dni });
+      message.success('Solicitud de validación de identidad aprobada.');
+      onAction();
+    } catch (e) {
+      const errorMessage = processedErrorMessage(e);
+      message.error(errorMessage);
+    }
     setApproveModalVisible(false);
     setInEdition(false);
-    console.log('approve identity request');
-    // onAction();
   };
 
-  const rejectConfirm = () => {
-    console.log('approve identity request');
-    // onAction();
+  const rejectConfirm = async () => {
+    try {
+      await rejectIdentityRequest({ id, revocationReason, rejectionObservations });
+      message.success('Solicitud de validación de identidad rechazada.');
+      onAction();
+    } catch (e) {
+      const errorMessage = processedErrorMessage(e);
+      message.error(errorMessage);
+    }
+    setRejectModalVisible(false);
   };
 
   const rejectCancel = () => {
-    setRejectReason(null);
+    setRevocationReason(null);
     setRejectModalVisible(false);
   };
 
   const handleReasonChange = value => {
-    setRejectReason(value);
+    setRevocationReason(value);
   };
 
   const approveCancel = () => {
@@ -85,7 +99,7 @@ const IdentityActions = ({ onAction, identity }) => {
         </div>
         <div className="body">
           <p>
-            ¿Confirma que desea validar la identidad de {name} {lastname}, DNI
+            ¿Confirma que desea validar la identidad de {name} {lastName}, DNI
             <span>
               {inEdition ? (
                 <Input
@@ -93,13 +107,13 @@ const IdentityActions = ({ onAction, identity }) => {
                   placeholder="DNI"
                   style={{ width: 'inherit' }}
                   ref={editInput}
-                  onChange={e => setLocalDni(e.target.value)}
+                  onChange={e => setDni(e.target.value)}
                   minLength={7}
-                  maxLength={8}
-                  defaultValue={localDni}
+                  maxLength={9}
+                  defaultValue={dni}
                 />
               ) : (
-                ` ${localDni}`
+                ` ${dni}`
               )}
             </span>
             ?
@@ -126,13 +140,13 @@ const IdentityActions = ({ onAction, identity }) => {
           <h1>Rechazar Validación de Identidad</h1>
         </div>
         <div className="body">
-          <p>
+          <div className="my-2">
             Por favor, indique los motivos por los cuales desea rechazar esta solicitud de
             validación de identidad.
-          </p>
-          <p>
+          </div>
+          <div className="my-2">
             <Select
-              value={rejectReason}
+              value={revocationReason}
               style={{ width: '100%' }}
               onChange={handleReasonChange}
               placeholder="Seleccione el motivo del rechazo *"
@@ -143,11 +157,11 @@ const IdentityActions = ({ onAction, identity }) => {
                 </Option>
               ))}
             </Select>
-          </p>
-          <p>
+          </div>
+          <div>
             Obersvaciones (opcional)
-            <TextAreaComments />
-          </p>
+            <TextAreaComments onChange={e => setRejectionObservations(e.target.value)} />
+          </div>
         </div>
         <div className="footer">
           <div className="buttons">
@@ -157,7 +171,7 @@ const IdentityActions = ({ onAction, identity }) => {
             <Button
               onClick={rejectConfirm}
               danger
-              disabled={!rejectReason}
+              disabled={!revocationReason}
               block
               size="large"
               type="primary"

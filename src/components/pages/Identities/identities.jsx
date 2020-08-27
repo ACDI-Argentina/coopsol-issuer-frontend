@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './_style.scss';
 import TitlePage from '../../atoms/TitlePage/title-page';
 import { Tabs } from 'antd';
-import mock from './mock';
 import ApiTable from '../../molecules/ApiTable/api-table';
 import {
-  identityPendingColumns,
-  identityApprovedColumns,
-  identityRejectColumns
+  pendingColumns,
+  approvedColumns,
+  rejectColumns,
+  requestStates
 } from '../../../utils/tables/identities-definitions.jsx';
-import { defaultIdentityFilters } from '../../../utils/tables/table-filters-definitions';
+import { filters } from '../../../utils/tables/identities-definitions';
 const { TabPane } = Tabs;
+const { progress, failure, success } = requestStates;
 
 const Identities = () => {
   return (
@@ -23,26 +24,26 @@ const Identities = () => {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Solicitudes Pendientes" key="1">
             <ApiTable
-              //   path="/identityRequests"
-              //   dataField="content"
-              //   when path is ready, data props's must be removed
-              data={mock.pending}
-              columns={identityPendingColumns}
-              filters={defaultIdentityFilters}
+              path="/identityValidationRequests"
+              columns={pendingColumns}
+              filters={filters}
+              defaultFilters={{ requestState: progress }}
             />
           </TabPane>
           <TabPane tab="Solicitudes Aprobadas" key="2">
             <ApiTable
-              data={mock.approved}
-              columns={identityApprovedColumns}
-              filters={defaultIdentityFilters}
+              path="/identityValidationRequests"
+              columns={approvedColumns}
+              filters={filters}
+              defaultFilters={{ requestState: success }}
             />
           </TabPane>
           <TabPane tab="Solicitudes Rechazadas" key="3">
             <ApiTable
-              data={mock.reject}
-              columns={identityRejectColumns}
-              filters={defaultIdentityFilters}
+              path="/identityValidationRequests"
+              columns={rejectColumns}
+              filters={filters}
+              defaultFilters={{ requestState: failure }}
             />
           </TabPane>
         </Tabs>

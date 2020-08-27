@@ -3,6 +3,7 @@ import multiClient from './http-client-multipart';
 import user from './user.api-calls';
 import auth from './auth.api-calls';
 import providers from './provider.api-calls';
+import identities from './identity.api-calls';
 import authMock from './mocks/auth.api-calls.mock';
 import userMock from './mocks/user.api-calls.mock';
 import file from './file.api-calls';
@@ -17,5 +18,6 @@ export default () =>
         ...auth(defaultClient),
         ...user(defaultClient),
         ...file(multipartClient),
-        ...providers(defaultClient)
+        ...providers(defaultClient),
+        ...identities(defaultClient)
       };

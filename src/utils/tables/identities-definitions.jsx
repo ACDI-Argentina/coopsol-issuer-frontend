@@ -2,13 +2,14 @@ import React from 'react';
 import IdentityActions from '../../components/molecules/IdentityActions/identity-actions';
 import IdentityRejectActions from '../../components/molecules/IdentityRejectActions/identity-reject-actions';
 
-const baseIdentityColumns = [
+const baseColumns = [
   {
     title: 'Nombre y Apellido',
     dataIndex: '',
     key: 'name',
     fixed: 'left',
-    render: item => <span>{`${item.name} ${item.lastname}`}</span>
+    width: 170,
+    render: item => <span>{`${item.name} ${item.lastName}`}</span>
   },
   {
     title: 'DNI Declarado',
@@ -20,7 +21,7 @@ const baseIdentityColumns = [
     title: 'Número de Celular',
     dataIndex: 'phone',
     key: 'phone',
-    width: 160
+    width: 150
   },
   {
     title: 'Email',
@@ -29,28 +30,28 @@ const baseIdentityColumns = [
   }
 ];
 
-const reviewedIdentityColumns = [
+const reviewedColumns = [
   {
     title: 'Fecha Solicitud',
-    dataIndex: 'requestDate',
-    key: 'requestDate',
-    width: 100
+    dataIndex: 'date',
+    key: 'date',
+    width: 120
   },
   {
     title: 'Fecha Revisión',
     dataIndex: 'reviewDate',
     key: 'reviewDate',
-    width: 100
+    width: 120
   }
 ];
 
-export const identityPendingColumns = getData => [
-  ...baseIdentityColumns,
+export const pendingColumns = getData => [
+  ...baseColumns,
   {
     title: 'Fecha',
-    dataIndex: 'requestDate',
-    key: 'requestDate',
-    width: 100
+    dataIndex: 'date',
+    key: 'date',
+    width: 120
   },
   {
     title: 'Acciones',
@@ -62,9 +63,9 @@ export const identityPendingColumns = getData => [
   }
 ];
 
-export const identityApprovedColumns = getData => [
-  ...baseIdentityColumns,
-  ...reviewedIdentityColumns,
+export const approvedColumns = getData => [
+  ...baseColumns,
+  ...reviewedColumns,
   {
     title: 'Estado',
     dataIndex: '',
@@ -79,9 +80,9 @@ export const identityApprovedColumns = getData => [
   }
 ];
 
-export const identityRejectColumns = getData => [
-  ...baseIdentityColumns,
-  ...reviewedIdentityColumns,
+export const rejectColumns = getData => [
+  ...baseColumns,
+  ...reviewedColumns,
   {
     title: 'Estado',
     dataIndex: '',
@@ -90,4 +91,32 @@ export const identityRejectColumns = getData => [
     width: 230,
     render: row => <IdentityRejectActions identity={row} onAction={getData} />
   }
+];
+
+export const filters = {
+  dni: {
+    type: 'input',
+    name: 'DNI'
+  },
+  name: {
+    type: 'input',
+    name: 'Nombre y Apellido'
+  },
+  requestDate: {
+    type: 'date',
+    name: 'Fecha',
+    format: date => new Date(date.toDate().setHours(0, 0, 0, 0)).toISOString()
+  }
+};
+
+export const requestStates = {
+  progress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE'
+};
+
+export const REASONS = [
+  'Datos Inconsistentes',
+  'No es Beneficiario de Semillas',
+  'No es posible comunicarse'
 ];

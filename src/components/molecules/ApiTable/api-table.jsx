@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import TableFilters from '../TableFilters/table-filters';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import api from '../../../services/api-calls/all';
 import { useApi } from '../../../services/useApi';
+import { UserContext } from '../../../services/providers/user-context';
 
 const { getAny } = api();
 const call = useApi();
 
-const ApiTable = ({ data, path, columns, filters }) => {
+const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content' }) => {
   const [loading, setLoading] = useState(false);
   const [localData, setLocalData] = useState(data);
-  const [activeFilters, setActiveFilters] = useState({});
-  const [pagination, setPagination] = useState({
-    page: 0
-  });
+  const [activeFilters, setActiveFilters] = useState(defaultFilters);
+  const [pagination, setPagination] = useState({ page: 0 });
+  const { setUser } = useContext(UserContext);
 
   const makeGet = () => {
     setLoading(true);
     const url = path;
-    const params = { page: 0 };
-    call(getAny, { url, params }, handleSuccess, handleSuccess);
+    const params = { page: pagination.page, ...activeFilters };
+    call(getAny, { url, params }, handleSuccess, handleError, setUser);
   };
+
   const localColumns = columns(makeGet);
 
   const handleTableChange = pagination => {
@@ -31,8 +32,18 @@ const ApiTable = ({ data, path, columns, filters }) => {
   };
 
   const handleSuccess = res => {
-    console.log(res);
-    setLocalData(res);
+    const { totalElements, size } = res;
+    setLocalData(res[dataField]);
+    setPagination({
+      ...pagination,
+      total: totalElements,
+      pageSize: size
+    });
+    setLoading(false);
+  };
+
+  const handleError = res => {
+    message.error('Ocurrió un error al obtener las solicitudes.');
     setLoading(false);
   };
 
@@ -40,9 +51,13 @@ const ApiTable = ({ data, path, columns, filters }) => {
     setActiveFilters({ ...activeFilters, ...filter });
   };
 
-  // useEffect(() => {
-  //   makeGet();
-  // }, []);
+  useEffect(() => {
+    makeGet();
+  }, []);
+
+  useEffect(() => {
+    makeGet();
+  }, [pagination.page]);
 
   return (
     <>
