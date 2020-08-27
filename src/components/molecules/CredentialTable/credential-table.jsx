@@ -46,7 +46,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     if (shouldPerformRequest(activeFilters)) {
       fetchCredentials();
     }
-  }, [pagination.page, activeFilters]);
+  }, [pagination.page, defaultFilters]);
 
   useEffect(() => {
     let newFilters = defaultFilters ? defaultFilters : {};
