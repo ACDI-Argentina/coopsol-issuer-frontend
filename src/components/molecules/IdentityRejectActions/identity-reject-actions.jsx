@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import { Modal, Anchor, Button } from 'antd';
-import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
+import { Modal, Button, message } from 'antd';
 import './_style.scss';
-const { Link } = Anchor;
+import apiCalls from '../../../services/api-calls/all';
 
 const IdentityRejectActions = ({ onAction, identity }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const { regretIdentityRequest } = apiCalls();
 
   const revertRequest = () => {
     setModalVisible(true);
-    // onAction();
   };
 
-  const handleConfirm = () => {
-    console.log('approve identity request');
-    // onAction();
+  const handleConfirm = async () => {
+    try {
+      await regretIdentityRequest(identity.id);
+      message.success('Solicitud revertida correctamente.');
+      onAction();
+    } catch (e) {
+      message.error('Ocurrió un error al procesar la solicitud.');
+    }
+    setModalVisible(false);
   };
 
   const handleCancel = () => {

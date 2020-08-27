@@ -2,15 +2,14 @@ import React from 'react';
 import { DEFAULT_DATETIME_FORMAT, DEFAULT_TIME_ZONE } from './constants';
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
 import { parseDate } from './dateHelpers';
-import IdentityActions from '../components/molecules/IdentityActions/identity-actions';
 
 export const getCredentialsColumns = fetchCredentials => [
+  { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name', fixed: 'left' },
   {
     title: 'Tipo de credencial',
     dataIndex: 'credentialType',
     key: 'credentialType'
   },
-  { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name' },
   { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
   { title: 'DNI Titular', dataIndex: 'creditHolderDni', key: 'creditHolderDni' },
   { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
@@ -24,6 +23,8 @@ export const getCredentialsColumns = fetchCredentials => [
     title: 'Acciones',
     dataIndex: '',
     key: 'action',
+    fixed: 'right',
+    width: 130,
     render: item => {
       return item.isRevocable ? (
         <RevokeCredentials credential={item} onRevoked={fetchCredentials} />
