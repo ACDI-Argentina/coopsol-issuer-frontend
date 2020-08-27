@@ -11,7 +11,6 @@ const Credentials = ({ history }) => {
         content={<CredentialActions history={history} />}
         history={history}
         text="Credenciales"
-        description="Acá podés crear credenciales, precredenciales, ver el listados de  las que se encuentran vigentes y las que están pendientes."
       />
       <TabTable />
     </div>
