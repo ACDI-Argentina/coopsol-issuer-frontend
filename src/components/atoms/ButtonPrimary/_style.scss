@@ -10,7 +10,7 @@
   cursor: pointer;
   box-sizing: border-box;
   box-shadow: 2px 4px 11px rgba(14, 168, 155, 0.15);
-  
+
   p {
     @include primary-title($body, $white);
   }
@@ -22,7 +22,7 @@
     color: $dark-grey;
     @include primary-title($body, $white);
   }
-  
+
   &:hover {
     background: $light-grey;
     //box-shadow: $shadow-blue;
@@ -61,6 +61,7 @@
 
   &:hover {
     background: $error;
+    color: $white;
     p {
       color: $white;
     }
