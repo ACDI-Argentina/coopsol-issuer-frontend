@@ -116,7 +116,16 @@ export const requestStates = {
 };
 
 export const REASONS = [
-  'Datos Inconsistentes',
-  'No es Beneficiario de Semillas',
-  'No es posible comunicarse'
+  {
+    value: 'INCONSISTENT_DATA',
+    label: 'Datos Inconsistentes'
+  },
+  {
+    value: 'IMPOSSIBLE_TO_COMMUNICATE',
+    label: 'No es posible comunicarse'
+  },
+  {
+    value: 'NOT_BENEFICIARY',
+    label: 'No es Beneficiario de Semillas'
+  }
 ];
