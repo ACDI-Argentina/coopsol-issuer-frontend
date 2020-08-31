@@ -4,19 +4,21 @@ import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-
 import { parseDate } from './dateHelpers';
 
 export const getCredentialsColumns = fetchCredentials => [
-  { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name', fixed: 'left' },
+  { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name', fixed: 'left', width: 180 },
   {
     title: 'Tipo de credencial',
     dataIndex: 'credentialType',
-    key: 'credentialType'
+    key: 'credentialType',
+    width: 240
   },
-  { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary' },
-  { title: 'DNI Titular', dataIndex: 'creditHolderDni', key: 'creditHolderDni' },
-  { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential' },
+  { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary', width: 130 },
+  { title: 'DNI Titular', dataIndex: 'creditHolderDni', key: 'creditHolderDni', width: 130 },
+  { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential', width: 460 },
   {
     title: 'Ult. actualización',
     dataIndex: 'lastUpdate',
     key: 'lastUpdate',
+    width: 180,
     render: value => <div>{parseDate(value)}</div>
   },
   {
@@ -42,7 +44,8 @@ export const getRevokedCredentialsColumns = () => {
   const revocationReason = {
     title: 'Razón de revocación',
     dataIndex: 'revocationReason',
-    key: 'revocationReason'
+    key: 'revocationReason',
+    width: 180
   };
   cols.splice(cols.length - 1, 0, revocationReason);
 

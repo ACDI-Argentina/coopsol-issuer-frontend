@@ -24,7 +24,7 @@ const IdentityActions = ({ onAction, identity }) => {
   const [dni, setDni] = useState(identity.dni);
   const [rejectionObservations, setRejectionObservations] = useState(null);
   const [inEdition, setInEdition] = useState(false);
-  const [revocationReason, setRevocationReason] = useState(null);
+  const [rejectReason, setRejectReason] = useState(null);
   const { rejectIdentityRequest, approveIdentityRequest } = apiCalls();
   let editInput = useRef(null);
 
@@ -53,7 +53,7 @@ const IdentityActions = ({ onAction, identity }) => {
 
   const rejectConfirm = async () => {
     try {
-      await rejectIdentityRequest({ id, revocationReason, rejectionObservations });
+      await rejectIdentityRequest({ id, rejectReason, rejectionObservations });
       message.success('Solicitud de validación de identidad rechazada.');
       onAction();
     } catch (e) {
@@ -64,12 +64,12 @@ const IdentityActions = ({ onAction, identity }) => {
   };
 
   const rejectCancel = () => {
-    setRevocationReason(null);
+    setRejectReason(null);
     setRejectModalVisible(false);
   };
 
   const handleReasonChange = value => {
-    setRevocationReason(value);
+    setRejectReason(value);
   };
 
   const approveCancel = () => {
@@ -146,20 +146,20 @@ const IdentityActions = ({ onAction, identity }) => {
           </div>
           <div className="my-2">
             <Select
-              value={revocationReason}
+              value={rejectReason}
               style={{ width: '100%' }}
               onChange={handleReasonChange}
               placeholder="Seleccione el motivo del rechazo *"
             >
-              {REASONS.map((value, index) => (
-                <Option value={value} key={index}>
-                  {value}
+              {REASONS.map((item, index) => (
+                <Option value={item.value} key={index}>
+                  {item.label}
                 </Option>
               ))}
             </Select>
           </div>
           <div>
-            Obersvaciones (opcional)
+            Observaciones (opcional)
             <TextAreaComments onChange={e => setRejectionObservations(e.target.value)} />
           </div>
         </div>
@@ -171,7 +171,7 @@ const IdentityActions = ({ onAction, identity }) => {
             <Button
               onClick={rejectConfirm}
               danger
-              disabled={!revocationReason}
+              disabled={!rejectReason}
               block
               size="large"
               type="primary"
