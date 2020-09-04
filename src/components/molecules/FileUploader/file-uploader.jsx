@@ -28,7 +28,6 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
       const response = await uploadAction(formData);
       setUploadResponse(response.data);
       setFileName(response.data.zipName);
-      console.log({ response });
       setUploading(false);
     } catch (error) {
       showErrorMessage(processedErrorMessage(error), processError(error));
