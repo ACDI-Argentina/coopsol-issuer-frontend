@@ -3,13 +3,13 @@ import { USER } from '../../utils/constants';
 import { HEADERS } from './base';
 import { config } from '../../config/config';
 
-const configureAxios = ({ onError, onResponse }) => {
+const configureAxios = ({ onError, onResponse, responseType = 'json' }) => {
   let Authorization;
   console.log('Configuration axion multipart ' + JSON.stringify(HEADERS));
   const instance = axios.create({
     baseURL: config.endpoints.backend,
     timeout: 18000000,
-    responseType: 'json',
+    responseType,
     headers: {
       [HEADERS.CONTENT_TYPE]: HEADERS.MULTIPART,
       Authorization

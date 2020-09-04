@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import apiCalls from '../../../services/api-calls/all';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import { Upload, Alert, Collapse } from 'antd';
@@ -8,7 +8,7 @@ import MessageLoader from '../MessageLoader/message-loader';
 import { showErrorMessage } from '../../../utils/alertMessages';
 const { Panel } = Collapse;
 
-const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
+const { uploadFile, validateSancorFile, uploadSancorFile, getZipFile } = apiCalls();
 const { Dragger } = Upload;
 
 const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
@@ -17,6 +17,7 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
   const [uploadResponse, setUploadResponse] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [validation, setValidation] = useState();
+  const [fileName, setFileName] = useState();
 
   const handleUpload = async () => {
     setUploading(true);
@@ -26,7 +27,7 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
       setUploadResponse(response.data);
-      //setSuccess('Tu archivo fue subido correctamente!');
+      setFileName(response.data.zipName);
       setUploading(false);
     } catch (error) {
       showErrorMessage(processedErrorMessage(error), processError(error));
@@ -46,7 +47,7 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
   };
 
   const onFileChanged = data => {
-    data.file.name.toLowerCase().includes('sancor') && onChangeSource({key:"1"});
+    data.file.name.toLowerCase().includes('sancor') && onChangeSource({ key: '1' });
     setUploadResponse(null);
     setValidation(null);
     setShowContainer(data.fileList.length > 0);
@@ -54,6 +55,15 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
 
   const handleProcessFile = () => {
     onUploaded('id');
+  };
+
+  const handleDownloadPDFs = async () => {
+    const response = await getZipFile({ fileName });
+    const blob = new Blob([response], { type: 'application/zip' });
+    let a = document.createElement('a');
+    a.download = fileName;
+    a.href = URL.createObjectURL(blob);
+    a.click();
   };
 
   const handleValidate = async () => {
@@ -71,26 +81,28 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
   const renderButtons = () => {
     if (uploadResponse && uploadResponse.totalErrorsRows === 0) {
       return (
-        <ButtonPrimary
-          text="Crear credencial"
-          theme="ThemePrimary"
-          onClick={handleProcessFile}
-          disabled={!showContainer}
-        />
+        <>
+          <ButtonPrimary
+            text="Crear credencial"
+            theme="ThemePrimary"
+            onClick={handleProcessFile}
+            disabled={!showContainer}
+          />
+          <ButtonPrimary onClick={handleDownloadPDFs} theme="default" text="Descargar PDFs" />
+        </>
       );
     }
     return (
       !uploading && (
         <>
-          { 
-            source.showValidate &&
+          {source.showValidate && (
             <ButtonPrimary
               text="Validar"
               theme="ThemePrimary"
               onClick={handleValidate}
               disabled={!showContainer}
             />
-          }
+          )}
           <ButtonPrimary
             text="Subir archivo"
             theme="ThemePrimary"
@@ -113,8 +125,8 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
       errorRows
     } = uploadResponse;
 
-    const errors = errorRows.map(err => (
-      <li>
+    const errors = errorRows.map((err, index) => (
+      <li key={index}>
         {err.errorHeader && (
           <span>
             <img src="/img/error.svg" alt="" />
@@ -159,34 +171,44 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
     );
   };
 
-  const renderErrorItem = (item) => {
+  const renderErrorItem = item => {
     const line = item.errorHeader;
     const message = item.errorBody.split(':')[1];
-    return <p className="text-error">{`${line}: ${message}`}</p>
-  }
+    return <p className="text-error">{`${line}: ${message}`}</p>;
+  };
 
   const renderValidation = () => {
     return (
       <>
-        <Alert message="Proceso de validación ejecutado correctamente." type="info" closable showIcon className="my-2"/>
+        <Alert
+          message="Proceso de validación ejecutado correctamente."
+          type="info"
+          closable
+          showIcon
+          className="my-2"
+        />
         <div>
-          {
-            validation.totalErrorsRows === 0 ? 
-              <Alert message="El archivo no tiene errores" type="success" closable showIcon />
-              :
-              <>
-                <Alert message={`Se encontraron: ${validation.totalErrorsRows} errores.`} type="error" showIcon className="my-2"/>
-                <Collapse >
-                  <Panel header="Detalle errores" key="1">
-                    {validation.errorRows.map(renderErrorItem)}
-                  </Panel>
-                </Collapse>
-              </>
-          }
+          {validation.totalErrorsRows === 0 ? (
+            <Alert message="El archivo no tiene errores" type="success" closable showIcon />
+          ) : (
+            <>
+              <Alert
+                message={`Se encontraron: ${validation.totalErrorsRows} errores.`}
+                type="error"
+                showIcon
+                className="my-2"
+              />
+              <Collapse>
+                <Panel header="Detalle errores" key="1">
+                  {validation.errorRows.map(renderErrorItem)}
+                </Panel>
+              </Collapse>
+            </>
+          )}
         </div>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <div className="FileUploader">
@@ -201,12 +223,11 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
               <p className="ant-upload-hint">Formatos aceptados: .xlsx</p>
             </Dragger>
 
-
             <div className="title">
               {renderUploadedInfo()}
               <MessageLoader loading={uploading} message={'Subiendo archivo...'} />
 
-            {validation && renderValidation()}
+              {validation && renderValidation()}
 
               <div className="buttonSection">{renderButtons()}</div>
             </div>

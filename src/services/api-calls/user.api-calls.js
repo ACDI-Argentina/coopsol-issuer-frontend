@@ -26,7 +26,7 @@ const getLogTypes = makeGetRequest => () => makeGetRequest('action/types');
 const getLogLevels = makeGetRequest => () => makeGetRequest('action/levels');
 
 export default client => {
-  const { makePostRequest, makeGetRequest, makePatchRequest, makeDeleteRequest } = helpers(client);
+  const { makePostRequest, makeGetRequest, makePatchRequest } = helpers(client);
   return {
     getAny: getAny(makeGetRequest),
     getCredentials: getCredentials(makeGetRequest),
