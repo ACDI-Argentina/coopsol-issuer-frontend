@@ -1,7 +1,8 @@
 import { REGEX_PASSWORD, REGEX_EMAIL, REGEX_PHONE } from './validation-regular-exp';
-import { REQUIRED_FIELD, PASSWORD, EMAIL, PHONE } from './validation-messages';
+import { REQUIRED_FIELD, PASSWORD, EMAIL, PHONE, MIN_NUMBER } from './validation-messages';
 
 export const REQUIRED_FIELD_RULE = { required: true, message: REQUIRED_FIELD };
 export const PASSWORD_RULE = { pattern: REGEX_PASSWORD, message: PASSWORD, type: 'string' };
 export const EMAIL_RULE = { pattern: REGEX_EMAIL, message: EMAIL, type: 'string' };
 export const PHONE_RULE = { pattern: REGEX_PHONE, message: PHONE };
+export const MIN_NUMBER_RULE = min => ({ min, message: MIN_NUMBER(min), type: 'number' });

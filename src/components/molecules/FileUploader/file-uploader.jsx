@@ -8,26 +8,34 @@ import MessageLoader from '../MessageLoader/message-loader';
 import { showErrorMessage } from '../../../utils/alertMessages';
 const { Panel } = Collapse;
 
-const { uploadFile, validateSancorFile, uploadSancorFile, getZipFile } = apiCalls();
+const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
 const { Dragger } = Upload;
 
-const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
+const FileUploader = ({
+  buttonText,
+  createCredentials = true,
+  source,
+  history,
+  onChangeSource,
+  onUploaded,
+  onSuccessRequest
+}) => {
   const [file, setFile] = useState(null);
   const [showContainer, setShowContainer] = useState(false);
   const [uploadResponse, setUploadResponse] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [validation, setValidation] = useState();
-  const [fileName, setFileName] = useState();
 
   const handleUpload = async () => {
     setUploading(true);
     try {
       const formData = new FormData();
       formData.set('file', file);
+      formData.set('createCredentials', createCredentials);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
       setUploadResponse(response.data);
-      setFileName(response.data.zipName);
+      !createCredentials && onSuccessRequest(response);
       setUploading(false);
     } catch (error) {
       showErrorMessage(processedErrorMessage(error), processError(error));
@@ -57,15 +65,6 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
     onUploaded('id');
   };
 
-  const handleDownloadPDFs = async () => {
-    const response = await getZipFile({ fileName });
-    const blob = new Blob([response], { type: 'application/zip' });
-    let a = document.createElement('a');
-    a.download = fileName;
-    a.href = URL.createObjectURL(blob);
-    a.click();
-  };
-
   const handleValidate = async () => {
     try {
       setValidation(null);
@@ -79,17 +78,14 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
   };
 
   const renderButtons = () => {
-    if (uploadResponse && uploadResponse.totalErrorsRows === 0) {
+    if (uploadResponse && uploadResponse.totalErrorsRows === 0 && createCredentials) {
       return (
-        <>
-          <ButtonPrimary
-            text="Crear credencial"
-            theme="ThemePrimary"
-            onClick={handleProcessFile}
-            disabled={!showContainer}
-          />
-          <ButtonPrimary onClick={handleDownloadPDFs} theme="default" text="Descargar PDFs" />
-        </>
+        <ButtonPrimary
+          text="Crear credencial"
+          theme="ThemePrimary"
+          onClick={handleProcessFile}
+          disabled={!showContainer}
+        />
       );
     }
     return (
@@ -104,7 +100,7 @@ const FileUploader = ({ onUploaded, history, source, onChangeSource }) => {
             />
           )}
           <ButtonPrimary
-            text="Subir archivo"
+            text={buttonText ?? 'Subir archivo'}
             theme="ThemePrimary"
             onClick={handleUpload}
             disabled={!showContainer}
