@@ -7,7 +7,8 @@ import {
   CREDENTIALS_URL,
   ACTIVITIES_URL,
   PROVIDERS_URL,
-  IDENTITIES_URL
+  IDENTITIES_URL,
+  REPORTS_URL
 } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
@@ -54,6 +55,7 @@ const NavBar = () => {
         {renderNavItem(IDENTITIES_URL, 'Solicitudes', <RequestIcon className="request" />)}
         {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
         {renderNavItem(PROVIDERS_URL, 'Prestadores', <ListIcon className="list" />)}
+        {renderNavItem(REPORTS_URL, 'Reporte Encuestas', <ListIcon className="list" />)}
         <Menu.Item className="logoutBottom" onClick={() => signOut()}>
           <img src="img/salir.svg" alt="" />
           <button>Cerrar sesión</button>

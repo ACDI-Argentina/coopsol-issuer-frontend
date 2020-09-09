@@ -15,7 +15,8 @@ import {
   CREATED_CREDENTIALS,
   PROVIDERS_URL,
   IDENTITIES_URL,
-  CREATE_PROVIDER_URL
+  CREATE_PROVIDER_URL,
+  REPORTS_URL
 } from '../../utils/constants';
 import history from './history';
 import Activities from '../pages/Activities/activities';
@@ -25,6 +26,7 @@ import CredentialCreated from '../pages/CredentialCreated/credential-created';
 import Providers from '../pages/Providers/providers';
 import Identities from '../pages/Identities/identities';
 import CreateProvider from '../pages/CreateProvider/create-provider';
+import Reports from '../pages/Reports/reports';
 
 const routesConfig = [
   {
@@ -50,8 +52,9 @@ const routesConfig = [
     exact: true,
     replaceHeader: SimpleHeader
   },
-  { path: PROVIDERS_URL, component: Providers, requireAuthentication: true, exact: true },
   { path: IDENTITIES_URL, component: Identities, requireAuthentication: true, exact: true },
+  { path: PROVIDERS_URL, component: Providers, requireAuthentication: true, exact: true },
+  { path: REPORTS_URL, component: Reports, requireAuthentication: true, exact: true },
   {
     path: CREATE_PROVIDER_URL,
     component: CreateProvider,
