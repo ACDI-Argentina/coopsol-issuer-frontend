@@ -12,7 +12,7 @@ const staging = {
 
 const uat = {
   endpoints: {
-    backend: 'https://api.uat.semillas.atixlabs.com/'
+    backend: 'https://api.uat.semillas.atixlabs.xyz/'
   }
 };
 
