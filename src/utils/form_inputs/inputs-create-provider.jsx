@@ -1,16 +1,24 @@
-import { REQUIRED_FIELD_RULE, MIN_NUMBER_RULE } from '../validation-rules';
+import { REQUIRED_FIELD_RULE } from '../validation-rules';
 import { email, phone, whatsapp, benefit, name, speciality, description } from './inputs-texts';
 import { defaultInputProperties } from '../inputs-formats';
+import { MIN_NUMBER } from '../validation-messages';
+
+const validateMin = ({ getFieldValue }) => ({
+  validator(rule, value) {
+    if (!value || getFieldValue('benefit') > -1) {
+      return Promise.resolve();
+    }
+    return Promise.reject(MIN_NUMBER(0));
+  }
+});
 
 export const providerInputs = [
   {
     ...defaultInputProperties(name),
-    type: 'String',
     rules: [REQUIRED_FIELD_RULE]
   },
   {
     ...defaultInputProperties(speciality),
-    type: 'String',
     rules: [REQUIRED_FIELD_RULE]
   },
   {
@@ -26,13 +34,12 @@ export const providerInputs = [
   },
   {
     ...defaultInputProperties(whatsapp),
-    type: 'String',
     iconType: 'phone'
   },
   {
     ...defaultInputProperties(benefit),
-    type: 'Number',
-    rules: [MIN_NUMBER_RULE(0)]
+    type: 'number',
+    rules: [validateMin]
   },
   {
     ...defaultInputProperties(description),
