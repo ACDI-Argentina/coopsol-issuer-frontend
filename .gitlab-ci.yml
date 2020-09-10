@@ -74,7 +74,7 @@ deploy-uat:
   when: manual
   environment:
     name: uat
-    url: https://frontend.uat.semillas.atixlabs.com
+    url: https://frontend.uat.semillas.atixlabs.xyz
   services:
     - docker:19.03.1-dind
   script:
@@ -84,7 +84,7 @@ deploy-uat:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan semillas-uat.atixlabs.com >> ~/.ssh/known_hosts
+    - ssh-keyscan 45.79.93.176 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     # Deploy
     - docker login -u gitlabci -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -94,3 +94,4 @@ deploy-uat:
       # Only run on release/x.y.x and hotfix/xxxx
       - /^release.*$/
       - /^hotfix.*$/
+      - develop
