@@ -77,6 +77,10 @@ const IdentityActions = ({ onAction, identity }) => {
     setApproveModalVisible(false);
   };
 
+  const handleChangeDni = e => {
+    setDni(e.target.value);
+  };
+
   useEffect(() => {
     inEdition && editInput.current.focus();
   }, [inEdition]);
@@ -99,7 +103,7 @@ const IdentityActions = ({ onAction, identity }) => {
         </div>
         <div className="body">
           <p>
-            ¿Confirma que desea validar la identidad de {name} {lastName}, DNI
+            ¿Confirma que desea validar la identidad de {name} {lastName}, DNI{' '}
             <span>
               {inEdition ? (
                 <Input
@@ -107,13 +111,13 @@ const IdentityActions = ({ onAction, identity }) => {
                   placeholder="DNI"
                   style={{ width: 'inherit' }}
                   ref={editInput}
-                  onChange={e => setDni(e.target.value)}
+                  onChange={handleChangeDni}
                   minLength={7}
                   maxLength={9}
                   defaultValue={dni}
                 />
               ) : (
-                ` ${dni}`
+                `${dni}`
               )}
             </span>
             ?
