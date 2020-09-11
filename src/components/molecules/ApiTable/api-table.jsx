@@ -48,7 +48,7 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
   };
 
   const onApplyFilter = filter => {
-    setActiveFilters({ ...activeFilters, ...filter });
+    setActiveFilters({ ...filter });
   };
 
   useEffect(() => {
