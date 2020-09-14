@@ -82,5 +82,10 @@ export const defaultProviderFilters = categories => ({
     type: 'dropdown',
     name: 'Categoria',
     data: categories
+  },
+  activesOnly: {
+    type: 'dropdown',
+    name: 'Activo',
+    data: [{id: 0, description: 'No'}, {id: 1, description:'Si'}]
   }
 });
