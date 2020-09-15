@@ -28,6 +28,7 @@ const Identities = () => {
               columns={pendingColumns}
               filters={filters}
               defaultFilters={{ requestState: progress }}
+              noExpand
             />
           </TabPane>
           <TabPane tab="Solicitudes Aprobadas" key="2">
@@ -36,6 +37,7 @@ const Identities = () => {
               columns={approvedColumns}
               filters={filters}
               defaultFilters={{ requestState: success }}
+              noExpand
             />
           </TabPane>
           <TabPane tab="Solicitudes Rechazadas" key="3">
