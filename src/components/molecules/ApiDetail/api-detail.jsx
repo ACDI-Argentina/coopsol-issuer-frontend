@@ -4,7 +4,6 @@ import { Descriptions } from 'antd';
 import getFilteredFields from '../../../utils/identity-definitions';
 
 const ApiDetail = ({ fields }) => {
-  debugger;
   const filteredFields = getFilteredFields(fields);
   return (
     <div className="CredentialDetail">

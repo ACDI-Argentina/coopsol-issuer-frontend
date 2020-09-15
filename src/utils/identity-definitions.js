@@ -19,7 +19,6 @@ const labels = {
 export default fields => {
     let result = [];
     for (const prop in fields) {
-        debugger;
       const value = fields[prop];
       if (value !== null && !blacklist.includes(prop)) {
         result.push({
