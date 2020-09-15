@@ -99,6 +99,11 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
+        expandable={
+          !noExpand && {
+            expandedRowRender: record => <CredentialDetail fields={record} />
+          }
+        }
       />
     </div>
   );

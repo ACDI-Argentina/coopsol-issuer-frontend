@@ -46,6 +46,7 @@ const Activities = () => {
           dataSource={getActivityLog}
           filters={filters}
           defaultFilters={{ page: 0 }}
+          noExpand
         />
       </div>
     </div>
