@@ -4,11 +4,11 @@ import { Table, message } from 'antd';
 import api from '../../../services/api-calls/all';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
-
+import ApiDetail from '../ApiDetail/api-detail';
 const { getAny } = api();
 const call = useApi();
 
-const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content' }) => {
+const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content', filteredFields, noExpand }) => {
   const [loading, setLoading] = useState(false);
   const [localData, setLocalData] = useState(data);
   const [activeFilters, setActiveFilters] = useState(defaultFilters);
@@ -67,10 +67,15 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
         rowKey={'id'}
         columns={localColumns}
         dataSource={localData}
-        scroll={{ x: 950 }}
+        scroll={{ x: 'auto' }}
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
+        expandable={
+          !noExpand && {
+            expandedRowRender: record => <ApiDetail fields={record} filteredFields={filteredFields} />
+          }
+        }
       />
     </>
   );

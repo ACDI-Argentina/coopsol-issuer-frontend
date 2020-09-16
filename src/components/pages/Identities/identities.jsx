@@ -7,11 +7,13 @@ import {
   pendingColumns,
   approvedColumns,
   rejectColumns,
-  requestStates
+  requestStates,
+  collapseLabels
 } from '../../../utils/tables/identities-definitions.jsx';
 import { filters } from '../../../utils/tables/identities-definitions';
 const { TabPane } = Tabs;
 const { progress, failure, success } = requestStates;
+
 
 const Identities = () => {
   return (
@@ -28,6 +30,7 @@ const Identities = () => {
               columns={pendingColumns}
               filters={filters}
               defaultFilters={{ requestState: progress }}
+              noExpand
             />
           </TabPane>
           <TabPane tab="Solicitudes Aprobadas" key="2">
@@ -36,6 +39,7 @@ const Identities = () => {
               columns={approvedColumns}
               filters={filters}
               defaultFilters={{ requestState: success }}
+              noExpand
             />
           </TabPane>
           <TabPane tab="Solicitudes Rechazadas" key="3">
@@ -44,6 +48,7 @@ const Identities = () => {
               columns={rejectColumns}
               filters={filters}
               defaultFilters={{ requestState: failure }}
+              filteredFields={collapseLabels}
             />
           </TabPane>
         </Tabs>
