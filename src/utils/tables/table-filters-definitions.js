@@ -61,6 +61,10 @@ export const defaultActivityFilters = (logTypes, logLevels) => ({
     type: 'input',
     name: 'Usuario'
   },
+  message: {
+    type: 'input',
+    name: 'Descripción'
+  },
   dateFrom: {
     type: 'date',
     name: 'Desde',
