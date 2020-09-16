@@ -8,7 +8,7 @@ import ApiDetail from '../ApiDetail/api-detail';
 const { getAny } = api();
 const call = useApi();
 
-const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content', noExpand }) => {
+const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content', filteredFields, noExpand }) => {
   const [loading, setLoading] = useState(false);
   const [localData, setLocalData] = useState(data);
   const [activeFilters, setActiveFilters] = useState(defaultFilters);
@@ -73,7 +73,7 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
         pagination={pagination}
         expandable={
           !noExpand && {
-            expandedRowRender: record => <ApiDetail fields={record} />
+            expandedRowRender: record => <ApiDetail fields={record} filteredFields={filteredFields} />
           }
         }
       />

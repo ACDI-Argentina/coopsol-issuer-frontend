@@ -129,3 +129,8 @@ export const REASONS = [
     label: 'No es Beneficiario de Semillas'
   }
 ];
+
+export const collapseLabels = {
+  rejectReason: 'Razón',
+  rejectionObservations: 'Observación'
+};
