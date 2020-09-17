@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { message, Spin, Row, Col } from 'antd';
+import { message, Spin, Row, Col, Checkbox } from 'antd';
 import { PROVIDERS_URL } from '../../../utils/constants';
 import apiCalls from '../../../services/api-calls/all';
 import { useRedirect } from '../../Router/redirect';
@@ -16,6 +16,7 @@ const CreateProvider = () => {
   const [providerCategories, setProviderCategories] = useState([]);
   const [values, setValues] = useState(null);
   const [providerCategory, setProviderCategory] = useState({});
+  const [providerActive, setProviderActive] = useState({});
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
@@ -46,6 +47,7 @@ const CreateProvider = () => {
         message.warning('Necesitas seleccionar una categoria');
         return;
       }
+      provider.active = providerActive;
       provider.description = provider.description ?? '';
       provider.categoryId = providerCategory.id;
       const response = isEdition ? await makeEdit(provider) : await makeCreate(provider);
@@ -60,6 +62,10 @@ const CreateProvider = () => {
     }
   };
 
+  const checkActive = e => {
+    setProviderActive(e.target.checked);
+  }
+
   useEffect(() => {
     fetchProviderCategories();
   }, []);
@@ -69,6 +75,7 @@ const CreateProvider = () => {
       const data = await getProviderById({ id });
       setValues(data);
       setProviderCategory(data.providerCategoryDto);
+      setProviderActive(data.active);
       setLoading(false);
     }
     if (isEdition) {
@@ -99,6 +106,17 @@ const CreateProvider = () => {
                     initialValue={providerCategory && providerCategory.name}
                   />
                 )}
+              </Col>
+            </Row>
+            <Row gutter={8} align="middle" style={{ marginBottom: 20 }}>
+            <Col span={4} style={{ textAlign: 'right' }}>
+                Activo:
+              </Col>
+              <Col span={8}>
+                <Checkbox 
+                checked={providerActive}
+                onChange={checkActive}
+                />
               </Col>
             </Row>
             <div>
