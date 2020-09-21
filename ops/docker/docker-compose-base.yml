@@ -1,7 +1,7 @@
 version: "3"
 services:
   frontend:
-    image: docker.atixlabs.com/semillas/semillas-middleware-frontend:0.1.0-0751b40c
+    image: docker.atixlabs.com/semillas/semillas-middleware-frontend:0.1.0-a6a8361d
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
     labels:
