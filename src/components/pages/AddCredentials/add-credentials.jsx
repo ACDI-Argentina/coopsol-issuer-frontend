@@ -27,7 +27,7 @@ const AddCredentials = ({ history }) => {
       />
       <div className="SurveyImportContainer">
         <div className="my-3">
-          <div>Seleccione el tipo de encuesta que desea cargar:</div>
+          <div>Seleccione el archivo que desea cargar:</div>
           <Select value={source.name} style={{ width: 260 }} onChange={handleSourceChange}>
             {CREDENTIALS_SOURCES.map((item, index) => (
               <Option value={item.name} key={index}>
@@ -40,7 +40,7 @@ const AddCredentials = ({ history }) => {
           <div className="UploadContent">
             <div className="left-side">
               <h3>{`Importar datos de ${source.label}`}</h3>
-              <p>Para poder generar una nueva credencial suba el archivo de encuestas.</p>
+              <p>Para poder generar credenciales.</p>
               <FileUploader
                 onUploaded={onUploaded}
                 history={history}
