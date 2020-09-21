@@ -160,7 +160,7 @@ const FileUploader = ({
           <div className="success">
             <img src="/img/success-file.svg" alt="" />
             <h4>Tu archivo fue cargado exitosamente!</h4>
-            <p>Presioná crear credencial para continuar.</p>
+            <p>Presioná generar reportes para descargar el resultado.</p>
           </div>
         )}
       </div>
