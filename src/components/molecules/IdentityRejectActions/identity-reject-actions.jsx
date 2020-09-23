@@ -29,10 +29,6 @@ const IdentityRejectActions = ({ onAction, identity }) => {
   return (
     <>
       <div className="identity-actions">
-        <span className="text-error mr-2">
-          <img src="/img/ban.svg" alt="check" width="12" className="mr-1" />
-          Validación rechazada
-        </span>
         <a href="#" onClick={revertRequest}>
           Revertir Rechazo
         </a>

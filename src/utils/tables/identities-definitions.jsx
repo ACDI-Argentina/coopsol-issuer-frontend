@@ -83,14 +83,14 @@ export const approvedColumns = getData => [
 export const rejectColumns = getData => [
   ...baseColumns,
   ...reviewedColumns,
-  // {
-  //   title: 'Estado',
-  //   dataIndex: '',
-  //   key: 'state',
-  //   fixed: 'right',
-  //   width: 230,
-  //   render: row => <IdentityRejectActions identity={row} onAction={getData} />
-  // }
+  {
+    title: 'Acciones',
+    dataIndex: '',
+    key: 'state',
+    fixed: 'right',
+    width: 230,
+    render: row => <IdentityRejectActions identity={row} onAction={getData} />
+  }
 ];
 
 export const filters = {
