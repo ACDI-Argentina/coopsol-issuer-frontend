@@ -6,7 +6,11 @@ export const defaultFilters = credentialTypes => ({
   },
   name: {
     type: 'input',
-    name: 'Nombre y Apellido'
+    name: 'Nombre'
+  },
+  surname: {
+    type: 'input',
+    name: 'Apellido'
   },
   dniBeneficiary: {
     type: 'input',
@@ -30,7 +34,11 @@ export const didCredentialsFilter = credentialTypes => ({
   },
   name: {
     type: 'input',
-    name: 'Nombre y Apellido'
+    name: 'Nombre'
+  },
+  surname: {
+    type: 'input',
+    name: 'Apellido'
   },
   dniBeneficiary: {
     type: 'input',
