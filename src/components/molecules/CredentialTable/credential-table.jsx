@@ -26,7 +26,6 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
 
 
   const fetchCredentials = (page = 0) => {
-    console.log("hi");
     setLoading(true);
     getCredentialData(
       dataSource,
