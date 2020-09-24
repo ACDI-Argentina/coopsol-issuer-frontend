@@ -84,7 +84,7 @@ export const rejectColumns = getData => [
   ...baseColumns,
   ...reviewedColumns,
   {
-    title: 'Estado',
+    title: 'Acciones',
     dataIndex: '',
     key: 'state',
     fixed: 'right',
