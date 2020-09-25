@@ -100,7 +100,11 @@ export const filters = {
   },
   name: {
     type: 'input',
-    name: 'Nombre y Apellido'
+    name: 'Nombre'
+  },
+  surname: {
+    type: 'input',
+    name: 'Apellido'
   },
   requestDate: {
     type: 'date',
