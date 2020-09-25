@@ -58,7 +58,7 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
 
   useEffect(() => {
     makeGet(paged);
-  }, [paged, defaultFilters]);
+  }, [paged]);
 
   return (
     <>
