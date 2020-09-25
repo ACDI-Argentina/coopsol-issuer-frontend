@@ -57,20 +57,8 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
   };
 
   useEffect(() => {
-    if (shouldPerformRequest(activeFilters)) {
-      makeGet(paged);
-    }
+    makeGet(paged);
   }, [paged, defaultFilters]);
-
-  const shouldPerformRequest = newFilters => {
-    let keys = Object.keys(newFilters);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (newFilters[key] == undefined) return false;
-    }
-
-    return keys.length > 0;
-  };
 
   return (
     <>
