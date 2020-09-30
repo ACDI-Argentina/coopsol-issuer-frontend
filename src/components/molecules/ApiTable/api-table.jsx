@@ -13,23 +13,22 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
   const [localData, setLocalData] = useState(data);
   const [activeFilters, setActiveFilters] = useState(defaultFilters);
   const [pagination, setPagination] = useState({ page: 0 });
+  const [paged, setPaged] = useState(0);
   const { setUser } = useContext(UserContext);
 
-  const makeGet = () => {
+  const makeGet = ( page = 0) => { //makeGet = fetchCredentials
     setLoading(true);
     const url = path;
-    const params = { page: pagination.page, ...activeFilters };
+    const params = { page, ...activeFilters };
     call(getAny, { url, params }, handleSuccess, handleError, setUser);
   };
 
   const localColumns = columns(makeGet);
 
   const handleTableChange = pagination => {
-    setPagination({
-      ...pagination,
-      page: pagination.current - 1
-    });
-  };
+    setPagination(pagination);
+    setPaged(pagination.current - 1);
+ };
 
   const handleSuccess = res => {
     const { totalElements, size } = res;
@@ -42,6 +41,12 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
     setLoading(false);
   };
 
+  const onSearch = () => {
+    setPagination({ ...pagination, current: 1 });
+    setPaged(0);
+    makeGet();
+  };
+
   const handleError = res => {
     message.error('Ocurrió un error al obtener las solicitudes.');
     setLoading(false);
@@ -52,8 +57,8 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
   };
 
   useEffect(() => {
-    makeGet();
-  }, [pagination.page]);
+    makeGet(paged);
+  }, [paged]);
 
   return (
     <>
@@ -61,7 +66,7 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
         onApplyFilter={onApplyFilter}
         filters={filters}
         defaultFilters={activeFilters}
-        onSearch={makeGet}
+        onSearch={onSearch}
       />
       <Table
         rowKey={'id'}

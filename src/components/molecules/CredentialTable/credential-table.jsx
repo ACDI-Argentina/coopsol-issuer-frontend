@@ -14,22 +14,22 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState([]);
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
+  const [paged, setPaged] = useState(0);
   const { setUser } = useContext(UserContext);
 
   const getCredentialData = useApi();
 
   const handleTableChange = pagination => {
-    setPagination({
-      ...pagination,
-      page: pagination.current - 1
-    });
-  };
+    setPagination(pagination);
+    setPaged(pagination.current - 1);
+ };
 
-  const fetchCredentials = () => {
+
+  const fetchCredentials = (page = 0) => {
     setLoading(true);
     getCredentialData(
       dataSource,
-      { ...activeFilters, page: pagination.page },
+      { ...activeFilters, page },
       onSuccess,
       onError,
       setUser
@@ -39,14 +39,17 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   const tableColumns = columns(fetchCredentials);
 
   const onSearch = () => {
+    setPagination({ ...pagination, current: 1 });
+    setPaged(0);
     fetchCredentials();
   };
 
+
   useEffect(() => {
     if (shouldPerformRequest(activeFilters)) {
-      fetchCredentials();
+      fetchCredentials(paged);
     }
-  }, [pagination.page, defaultFilters]);
+  }, [paged, defaultFilters]);
 
   useEffect(() => {
     let newFilters = defaultFilters ? defaultFilters : {};
