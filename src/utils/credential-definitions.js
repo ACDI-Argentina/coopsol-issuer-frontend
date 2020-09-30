@@ -41,7 +41,16 @@ const labels = {
   ref: 'Ref',
   relationWithCreditHolder: 'Relación con titular',
   startActivity: 'Inicio de actividad',
-  totalCycles: 'Cuotas totales'
+  totalCycles: 'Cuotas totales',
+  generalConditions: "Condiciones generales",
+  lightInstallation: "Instalacion de luz",
+  neighborhoodType: "Tipo de barrio",
+  gas: "Red de gas",
+  carafe: "Garrafa",
+  water: "Red de agua",
+  address: "Dirección",
+  location: "Localidad",
+  neighborhood: "Barrio"
 };
 
 export default fields => {
