@@ -84,7 +84,7 @@ export const rejectColumns = getData => [
   ...baseColumns,
   ...reviewedColumns,
   {
-    title: 'Estado',
+    title: 'Acciones',
     dataIndex: '',
     key: 'state',
     fixed: 'right',
@@ -100,7 +100,11 @@ export const filters = {
   },
   name: {
     type: 'input',
-    name: 'Nombre y Apellido'
+    name: 'Nombre'
+  },
+  surname: {
+    type: 'input',
+    name: 'Apellido'
   },
   requestDate: {
     type: 'date',
