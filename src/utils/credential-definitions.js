@@ -42,21 +42,21 @@ const labels = {
   relationWithCreditHolder: 'Relación con titular',
   startActivity: 'Inicio de actividad',
   totalCycles: 'Cuotas totales',
-  generalConditions: "Condiciones generales",
-  lightInstallation: "Instalacion de luz",
-  neighborhoodType: "Tipo de barrio",
-  gas: "Red de gas",
-  carafe: "Garrafa",
-  water: "Red de agua",
-  address: "Dirección",
-  location: "Localidad",
-  neighborhood: "Barrio"
+  generalConditions: 'Condiciones generales',
+  lightInstallation: 'Instalacion de luz',
+  neighborhoodType: 'Tipo de barrio',
+  gas: 'Red de gas',
+  carafe: 'Garrafa',
+  water: 'Red de agua',
+  address: 'Dirección',
+  location: 'Localidad',
+  neighborhood: 'Barrio'
 };
 
 export default fields => {
   let result = [];
   for (const prop in fields) {
-    const value = fields[prop];
+    const value = wording(fields[prop]);
     if (value !== null && !blacklist.includes(prop)) {
       result.push({
         value,
@@ -65,6 +65,17 @@ export default fields => {
     }
   }
   return result;
+};
+
+const wording = value => {
+  switch (value) {
+    case true:
+      return 'Si';
+    case false:
+      return 'No';
+    default:
+      return value;
+  }
 };
 
 export const CREDENTIALS_SOURCES = [
