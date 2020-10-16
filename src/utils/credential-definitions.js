@@ -48,6 +48,7 @@ const labels = {
   gas: 'Red de gas',
   carafe: 'Garrafa',
   water: 'Red de agua',
+  waterWell: 'Pozo/Bomba',
   address: 'Dirección',
   location: 'Localidad',
   neighborhood: 'Barrio'
