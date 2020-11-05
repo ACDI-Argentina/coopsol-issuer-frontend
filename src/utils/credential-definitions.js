@@ -51,7 +51,10 @@ const labels = {
   waterWell: 'Pozo/Bomba',
   address: 'Dirección',
   location: 'Localidad',
-  neighborhood: 'Barrio'
+  neighborhood: 'Barrio',
+  expirationDate: 'Fecha de vencimiento de Cuota',
+  amount: "Monto total del Credito [$]",
+  creationDate: "Fecha de inicio del crédito"
 };
 
 export default fields => {
