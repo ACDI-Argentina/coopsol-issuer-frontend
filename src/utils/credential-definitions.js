@@ -39,7 +39,7 @@ const labels = {
   policyNumber: 'Póliza',
   possessionType: 'Tipo de tenencia',
   ref: 'Ref',
-  relationWithCreditHolder: 'Relación con titular',
+  relationWithCreditHolder: 'Carácter',
   startActivity: 'Inicio de actividad',
   totalCycles: 'Cuotas totales',
   generalConditions: 'Condiciones generales',
