@@ -19,7 +19,7 @@ const AddCredentials = ({ history }) => {
   };
 
   const onValidatedFile = generateCredentials => {
-    isCreateCredentials(generateCredentials)
+    setCreateCredentials(generateCredentials)
   };
 
   const handleSourceChange = (v, option) => {
