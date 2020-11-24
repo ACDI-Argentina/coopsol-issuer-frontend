@@ -12,7 +12,7 @@ const AddCredentials = ({ history }) => {
   
   const [source, setSource] = useState(CREDENTIALS_SOURCES[0]);
 
-  const [createCredentials, isCreateCredentials] = useState(false);
+  const [createCredentials, setCreateCredentials] = useState(false);
 
   const onUploaded = fileId => {
     history.push(CREATED_CREDENTIALS);
