@@ -18,7 +18,8 @@ const FileUploader = ({
   history,
   onChangeSource,
   onUploaded,
-  onValidatedFile
+  onValidatedFile,
+  onSuccessRequest
 }) => {
   const [file, setFile] = useState(null);
   const [showContainer, setShowContainer] = useState(false);
@@ -34,8 +35,12 @@ const FileUploader = ({
       formData.set('createCredentials', createCredentials);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
-      !createCredentials && setUploadResponse(response.data);
-      createCredentials && onUploaded(response);
+      if(onSuccessRequest != null){
+        onSuccessRequest(response);
+      } else {
+        !createCredentials && setUploadResponse(response.data);
+        createCredentials && onUploaded(response);
+      }
       setUploading(false);
     } catch (error) {
       showErrorMessage(processedErrorMessage(error), processError(error));
