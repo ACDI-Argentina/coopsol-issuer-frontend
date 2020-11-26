@@ -35,7 +35,7 @@ const FileUploader = ({
       formData.set('createCredentials', createCredentials);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
-      if(onSuccessRequest != null){
+      if(onSuccessRequest){
         onSuccessRequest(response);
       } else {
         !createCredentials && setUploadResponse(response.data);
@@ -64,7 +64,7 @@ const FileUploader = ({
     setUploadResponse(null);
     setValidation(null);
     setShowContainer(data.fileList.length > 0);
-    data.fileList.length === 0 && onValidatedFile(false)
+    data.fileList.length === 0 && onValidatedFile && onValidatedFile(false)
   };
 
   const handleProcessFile = () => {
