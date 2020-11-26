@@ -13,11 +13,12 @@ const { Dragger } = Upload;
 
 const FileUploader = ({
   buttonText,
-  createCredentials = true,
+  createCredentials = false,
   source,
   history,
   onChangeSource,
   onUploaded,
+  onValidatedFile,
   onSuccessRequest
 }) => {
   const [file, setFile] = useState(null);
@@ -34,8 +35,12 @@ const FileUploader = ({
       formData.set('createCredentials', createCredentials);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
-      setUploadResponse(response.data);
-      !createCredentials && onSuccessRequest(response);
+      if(onSuccessRequest){
+        onSuccessRequest(response);
+      } else {
+        !createCredentials && setUploadResponse(response.data);
+        createCredentials && onUploaded(response);
+      }
       setUploading(false);
     } catch (error) {
       showErrorMessage(processedErrorMessage(error), processError(error));
@@ -59,6 +64,7 @@ const FileUploader = ({
     setUploadResponse(null);
     setValidation(null);
     setShowContainer(data.fileList.length > 0);
+    data.fileList.length === 0 && onValidatedFile && onValidatedFile(false)
   };
 
   const handleProcessFile = () => {
@@ -78,12 +84,13 @@ const FileUploader = ({
   };
 
   const renderButtons = () => {
-    if (uploadResponse && uploadResponse.totalErrorsRows === 0 && createCredentials) {
+    if (uploadResponse && uploadResponse.totalErrorsRows === 0) {
+      onValidatedFile(true)
       return (
         <ButtonPrimary
-          text="Crear credencial"
+          text="Crear credenciales"
           theme="ThemePrimary"
-          onClick={handleProcessFile}
+          onClick={handleUpload}
           disabled={!showContainer}
         />
       );

@@ -9,10 +9,17 @@ import { CREDENTIALS_SOURCES } from '../../../utils/credential-definitions';
 const { Option } = Select;
 
 const AddCredentials = ({ history }) => {
+  
   const [source, setSource] = useState(CREDENTIALS_SOURCES[0]);
+
+  const [createCredentials, setCreateCredentials] = useState(false);
 
   const onUploaded = fileId => {
     history.push(CREATED_CREDENTIALS);
+  };
+
+  const onValidatedFile = generateCredentials => {
+    setCreateCredentials(generateCredentials)
   };
 
   const handleSourceChange = (v, option) => {
@@ -46,6 +53,8 @@ const AddCredentials = ({ history }) => {
                 history={history}
                 source={source}
                 onChangeSource={option => handleSourceChange(null, option)}
+                createCredentials = {createCredentials}
+                onValidatedFile = {onValidatedFile}
               />
             </div>
             <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />
