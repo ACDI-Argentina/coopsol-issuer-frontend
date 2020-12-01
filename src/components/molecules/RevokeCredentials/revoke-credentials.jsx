@@ -17,7 +17,7 @@ import { CREDIT_HOLDER_RELATIONSHIP } from '../../../utils/constants';
 
 const { revokeCredentials } = api();
 
-const RevokeCredentials = ({ credential, onRevoked }) => {
+const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -66,8 +66,8 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
           </Menu.Item>
         ))
       ) : (
-        <Menu.Item> Cargando razones posibles </Menu.Item>
-      )}
+          <Menu.Item> Cargando razones posibles </Menu.Item>
+        )}
     </Menu>
   );
   const defaultOptions = {
@@ -91,11 +91,19 @@ const RevokeCredentials = ({ credential, onRevoked }) => {
 
   return (
     <div className="RevokeCredentials">
-      <Dropdown overlay={menu} className="RevokeCredentials">
-        <a className="ant-dropdown-link" href="/" onClick={e => e.preventDefault()}>
-          Revocar <DownOutlined />
+      {reasonId && (
+        <a className="ant-dropdown-link" onClick={_ => onItemClick(reasonId)}>
+          Revocar
         </a>
-      </Dropdown>
+      )}
+
+      {!reasonId && (
+        <Dropdown overlay={menu} className="RevokeCredentials">
+          <a className="ant-dropdown-link" href="/" onClick={e => e.preventDefault()}>
+            Revocar <DownOutlined />
+          </a>
+        </Dropdown>
+      )}
       <Modal
         width="400px"
         className="RevokeCredentials modal-buttons"

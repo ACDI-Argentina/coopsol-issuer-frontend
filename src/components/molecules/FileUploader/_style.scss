@@ -112,7 +112,7 @@
               margin-right: 0.5em;
             }
             label {
-              @include label($body, $error);
+              @include label($body, $errorSoft);
             }
             p {
               @include primary-text($body, $secondary-color);
