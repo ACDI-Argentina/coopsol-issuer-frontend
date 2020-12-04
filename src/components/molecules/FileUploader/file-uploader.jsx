@@ -6,6 +6,7 @@ import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import './_style.scss';
 import MessageLoader from '../MessageLoader/message-loader';
 import { showErrorMessage } from '../../../utils/alertMessages';
+import RevokeCredentials from '../RevokeCredentials/revoke-credentials';
 const { Panel } = Collapse;
 
 const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
@@ -26,6 +27,8 @@ const FileUploader = ({
   const [uploadResponse, setUploadResponse] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [validation, setValidation] = useState();
+
+  const MANUAL_UPDATE = 6
 
   const handleUpload = async () => {
     setUploading(true);
@@ -69,6 +72,10 @@ const FileUploader = ({
 
   const handleProcessFile = () => {
     onUploaded('id');
+  };
+
+  const onRevoke = () => {
+    handleUpload()
   };
 
   const handleValidate = async () => {
@@ -132,11 +139,12 @@ const FileUploader = ({
       <li key={index}>
         {err.errorHeader && (
           <span>
-            <img src="/img/error.svg" alt="" />
+            <img src="/img/error-soft.svg" alt="" />
             <label htmlFor="">{err.errorHeader} </label>
           </span>
         )}
         <p>{err.errorBody} </p>
+        <p><RevokeCredentials credential={{'id': err.data}} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/></p>
       </li>
     ));
 
