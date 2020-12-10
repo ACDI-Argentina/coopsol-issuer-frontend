@@ -18,7 +18,8 @@ import {
 import {
   CREDENTIAL_PENDING_DIDI,
   CREDENTIAL_REVOKE,
-  CREDENTIAL_ACTIVE
+  CREDENTIAL_ACTIVE,
+  HOLDER_ACTIVE_KINSMAN_PENDING
 } from '../../../utils/constants';
 import {
   defaultFilters,
@@ -69,7 +70,7 @@ const TabTable = () => {
             columns={getCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
-            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] }}
+            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] + ',' + credentialStates[HOLDER_ACTIVE_KINSMAN_PENDING]}}
           />
         </TabPane>
 
