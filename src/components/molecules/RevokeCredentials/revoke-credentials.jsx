@@ -24,6 +24,7 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
   const credentialCall = useApi();
   const { appState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
+  const DUPLICATED_CREDENTIAL = 'DUPLICATED_CREDENTIAL'
 
   const handleOk = e => {
     setLoading(true);
@@ -91,7 +92,7 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
 
   return (
     <div className="RevokeCredentials">
-      {reasonId && (
+      {reasonId && credential.excelErrorType == DUPLICATED_CREDENTIAL && (
         <a className="ant-dropdown-link" onClick={_ => onItemClick(reasonId)}>
           Revocar
         </a>

@@ -144,7 +144,7 @@ const FileUploader = ({
           </span>
         )}
         <p>{err.errorBody} </p>
-        <p><RevokeCredentials credential={{'id': err.data}} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/></p>
+        <p><RevokeCredentials credential={{'id': err.data, 'excelErrorType': err.excelErrorType}} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/></p>
       </li>
     ));
 
