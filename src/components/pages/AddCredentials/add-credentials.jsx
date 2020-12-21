@@ -33,9 +33,11 @@ const AddCredentials = ({ history }) => {
         description="Completá los siguientes pasos para poder generar una credencial."
       />
       <div className="SurveyImportContainer">
-        <div className="my-3">
+      <div className="SurveyImport">
+        <div className="UploadContent">
+        <div className="left-side">
           <div>Seleccione el archivo que desea cargar:</div>
-          <Select value={source.name} style={{ width: 260 }} onChange={handleSourceChange}>
+          <Select value={source.name}  onChange={handleSourceChange}>
             {CREDENTIALS_SOURCES.map((item, index) => (
               <Option value={item.name} key={index}>
                 {item.label}
@@ -43,9 +45,12 @@ const AddCredentials = ({ history }) => {
             ))}
           </Select>
         </div>
+        <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />
+        </div>
+        </div>
         <div className="SurveyImport">
           <div className="UploadContent">
-            <div className="left-side">
+            <div className="upload-controls">
               <h3>{`Importar datos de ${source.label}`}</h3>
               <p>Para poder generar credenciales.</p>
               <FileUploader
@@ -57,7 +62,6 @@ const AddCredentials = ({ history }) => {
                 onValidatedFile = {onValidatedFile}
               />
             </div>
-            <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />
           </div>
         </div>
       </div>
