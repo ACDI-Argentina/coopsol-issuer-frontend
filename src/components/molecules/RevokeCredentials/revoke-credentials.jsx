@@ -131,7 +131,6 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
             <ButtonPrimary onClick={handleCancel} text="Cancelar" theme="cancel" />
             <ButtonPrimary onClick={handleOk} text="Confirmar" theme="primary" />
           </div>
-
           <Loader loading={loading} />
         </div>
       </Modal>
