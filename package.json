@@ -1,6 +1,6 @@
 {
   "name": "semillas-middleware-frontend",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "dockerImage": "docker.atixlabs.com/semillas/semillas-middleware-frontend",
   "private": true,
   "dependencies": {
