@@ -38,7 +38,7 @@ const FileUploader = ({
       formData.set('createCredentials', createCredentials);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
-      if(onSuccessRequest){
+      if(onSuccessRequest && response.data.downloadableFileName){
         onSuccessRequest(response);
       } else {
         !createCredentials && setUploadResponse(response.data);
