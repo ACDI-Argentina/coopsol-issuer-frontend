@@ -117,14 +117,9 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
         </div>
         <div className="body">
           <p>
-            Por favor, indique los motivos por los cuales
-            <br />
-            desea revocar esta credencial.
+            ¿Confirma la revocación de la credencial?
           </p>
           {showWarning()}
-
-          <label htmlFor="">Motivos de revocación</label>
-          <TextAreaComments text="Motivos de revocación" />
         </div>
         <div className="footer">
           <div className="buttons">
