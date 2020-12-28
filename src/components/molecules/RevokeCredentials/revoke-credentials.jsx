@@ -117,7 +117,7 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
         </div>
         <div className="body">
           <p>
-            ¿Confirma la revocacion de la credencial?
+            ¿Confirma la revocación de la credencial?
           </p>
           {showWarning()}
         </div>
