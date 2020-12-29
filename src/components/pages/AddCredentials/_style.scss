@@ -9,21 +9,14 @@
       @include primary-title($title-secondary, $secondary-color);
     }
     .left-side {
-      width: 48%;
-    }
-    .UploadContent {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
+      width: 20%;
     }
     .SuccessCreation {
       display: flex;
       justify-content: space-between;
     }
-    .right-img {
-      margin-top: -5em;
-      width: 446px;
-      height: 414px;
+    .upload-controls {
+      width: 100%;
     }
   }
 }
@@ -32,6 +25,26 @@
 .Requests {
   .TitlePage button {
     display: none;
+  }
+  .UploadContent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .right-img {
+    margin-top: -5em;
+    width: 500px;
+    height: 478px;
+    padding: 155px 10px 0 60px;
+  }
+  .FileTypeSelection {
+    padding: 20px 60px 0 60px;
+  }
+  h3 {
+    @include primary-title($title-secondary, $secondary-color);
+  }
+  .fileImportTypeTitle {
+    padding-top: 60px;
   }
 }
 
