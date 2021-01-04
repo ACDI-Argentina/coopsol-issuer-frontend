@@ -187,3 +187,8 @@ button:focus {
 .text-success {
   color: $primary-color;
 }
+
+.bold-text {
+  font-weight: bold;
+  text-transform: capitalize;
+}
