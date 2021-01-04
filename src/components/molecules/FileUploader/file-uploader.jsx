@@ -126,6 +126,17 @@ const FileUploader = ({
     );
   };
 
+  function renderShouldRevokeCredential(err) {
+    return (
+      <p>
+        Para continuar, debe revocar la Credencial:{" "}
+        <span className="bold-text">{err.category}</span> -{" "}
+        <span className="bold-text">{err.documentNumber}</span> -{" "}
+        <span className="bold-text">{`${err.name} ${err.lastName}`}</span>{" "}
+      </p>
+    );
+  }
+
   const renderUploadedInfo = () => {
     if (!uploadResponse) return null;
 
@@ -146,8 +157,7 @@ const FileUploader = ({
           </span>
         )}
         {err.errorType == DUPLICATED_CREDENTIAL ?
-          <p>Para continuar, debe revocar la Credencial: <span className="bold-text">{err.category}</span> - <span className="bold-text">{err.documentNumber}</span> - <span className="bold-text">{`${err.name} ${err.lastName}`}</span> </p> :
-          <p>{err.errorBody} </p>
+          renderShouldRevokeCredential(err) : <p>{err.errorBody}</p>
         }
         <p><RevokeCredentials credential={{ id: err.credentialId, name: `${err.name} ${err.lastName}`,
          dniBeneficiary: err.documentNumber, credentialType: err.category, excelErrorType: err.errorType }} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/>
