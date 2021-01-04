@@ -8,6 +8,7 @@ import MessageLoader from '../MessageLoader/message-loader';
 import { showErrorMessage } from '../../../utils/alertMessages';
 import RevokeCredentials from '../RevokeCredentials/revoke-credentials';
 import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
+
 const { Panel } = Collapse;
 
 const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
@@ -125,6 +126,17 @@ const FileUploader = ({
     );
   };
 
+  function renderShouldRevokeCredential(err) {
+    return (
+      <p>
+        Para continuar, debe revocar la Credencial:{" "}
+        <span className="bold-text">{err.category}</span> -{" "}
+        <span className="bold-text">{err.documentNumber}</span> -{" "}
+        <span className="bold-text">{`${err.name} ${err.lastName}`}</span>{" "}
+      </p>
+    );
+  }
+
   const renderUploadedInfo = () => {
     if (!uploadResponse) return null;
 
@@ -154,8 +166,12 @@ const FileUploader = ({
               )}
          </span>
         )}
-        <p>{err.errorBody} </p>
-        <p><RevokeCredentials credential={{'id': err.data, 'excelErrorType': err.excelErrorType}} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/></p>
+        {err.errorType == DUPLICATED_CREDENTIAL ?
+          renderShouldRevokeCredential(err) : <p>{err.errorBody}</p>
+        }
+        <p><RevokeCredentials credential={{ id: err.credentialId, name: `${err.name} ${err.lastName}`,
+         dniBeneficiary: err.documentNumber, credentialType: err.category, excelErrorType: err.errorType }} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/>
+         </p>
       </li>
     ));
 

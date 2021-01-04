@@ -117,8 +117,13 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
         </div>
         <div className="body">
           <p>
-            ¿Confirma la revocación de la credencial?
+            ¿Confirma revocar la siguiente credencial? :
           </p>
+          <ul>
+              <li>Titular: <span className="bold-text">{credential.name}</span></li>
+              <li>DNI: <span className="bold-text"> {credential.dniBeneficiary}</span> </li>
+              <li>Tipo: <span className="bold-text"> {credential.credentialType}</span></li>
+            </ul>
           {showWarning()}
         </div>
         <div className="footer">
