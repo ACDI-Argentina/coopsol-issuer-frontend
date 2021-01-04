@@ -14,6 +14,7 @@ import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
 import { CREDIT_HOLDER_RELATIONSHIP } from '../../../utils/constants';
+import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
 
 const { revokeCredentials } = api();
 
@@ -24,7 +25,6 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
   const credentialCall = useApi();
   const { appState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
-  const DUPLICATED_CREDENTIAL = 'DUPLICATED_CREDENTIAL'
 
   const handleOk = e => {
     setLoading(true);
@@ -131,7 +131,6 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
             <ButtonPrimary onClick={handleCancel} text="Cancelar" theme="cancel" />
             <ButtonPrimary onClick={handleOk} text="Confirmar" theme="primary" />
           </div>
-
           <Loader loading={loading} />
         </div>
       </Modal>

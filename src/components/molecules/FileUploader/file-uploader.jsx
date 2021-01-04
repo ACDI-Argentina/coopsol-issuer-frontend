@@ -151,10 +151,20 @@ const FileUploader = ({
     const errors = errorRows.map((err, index) => (
       <li key={index}>
         {err.errorHeader && (
-          <span>
-            <img src="/img/error-soft.svg" alt="" />
-            <label htmlFor="">{err.errorHeader} </label>
-          </span>
+           <span>
+              {err.errorType == DUPLICATED_CREDENTIAL && (
+                <>
+                  <img src="/img/error-soft.svg" alt="" />
+                  <label className="soft-error" htmlFor="">{err.errorHeader}</label>
+                </>
+              )}
+              {err.errorType != DUPLICATED_CREDENTIAL && (
+                <>
+                  <img src="/img/error.svg" alt="" />
+                  <label htmlFor="">{err.errorHeader}</label>
+                </>
+              )}
+         </span>
         )}
         {err.errorType == DUPLICATED_CREDENTIAL ?
           renderShouldRevokeCredential(err) : <p>{err.errorBody}</p>

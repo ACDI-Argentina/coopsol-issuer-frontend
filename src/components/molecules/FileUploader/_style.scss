@@ -112,12 +112,15 @@
               margin-right: 0.5em;
             }
             label {
-              @include label($body, $errorSoft);
+              @include label($body, $error);
             }
             p {
               @include primary-text($body, $secondary-color);
               margin: 0;
               padding-left: 5px;
+            }
+            .soft-error {
+              @include label($body, $errorSoft);
             }
           }
         }
