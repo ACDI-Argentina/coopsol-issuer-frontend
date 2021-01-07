@@ -17,7 +17,7 @@ const CredentialsUploaded = ({ history }) => {
   };
 
   return (
-    <div className="left-side">
+    <div className="left-side-success-upload">
       <ImportStatus text="Archivo cargado con éxito!" theme="check" />
       <div className="buttonSection">
         <ButtonPrimary
