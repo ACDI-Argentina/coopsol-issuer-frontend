@@ -18,7 +18,12 @@ import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
 
 const { revokeCredentials } = api();
 
-const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
+const RevokeCredentials = ({
+  credential,
+  onRevoked,
+  reasonId,
+  revokeOnlyThisCredential = false
+}) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,13 +33,12 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
 
   const handleOk = e => {
     setLoading(true);
-    credentialCall(
-      revokeCredentials,
-      { id: credential.id, reason: selectedReason },
-      onSuccess,
-      onError,
-      setUser
-    );
+    const params = {
+      id: credential.id,
+      reason: selectedReason,
+      revokeOnlyThisCredential
+    };
+    credentialCall(revokeCredentials, params, onSuccess, onError, setUser);
   };
 
   const onSuccess = () => {
@@ -67,8 +71,8 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
           </Menu.Item>
         ))
       ) : (
-          <Menu.Item> Cargando razones posibles </Menu.Item>
-        )}
+        <Menu.Item> Cargando razones posibles </Menu.Item>
+      )}
     </Menu>
   );
   const defaultOptions = {
@@ -116,14 +120,18 @@ const RevokeCredentials = ({ credential, onRevoked, reasonId }) => {
           <h1>Revocar credencial</h1>
         </div>
         <div className="body">
-          <p>
-            ¿Confirma revocar la siguiente credencial? :
-          </p>
+          <p>¿Confirma revocar la siguiente credencial? :</p>
           <ul>
-              <li>Titular: <span className="bold-text">{credential.name}</span></li>
-              <li>DNI: <span className="bold-text"> {credential.dniBeneficiary}</span> </li>
-              <li>Tipo: <span className="bold-text"> {credential.credentialType}</span></li>
-            </ul>
+            <li>
+              Titular: <span className="bold-text">{credential.name}</span>
+            </li>
+            <li>
+              DNI: <span className="bold-text"> {credential.dniBeneficiary}</span>{' '}
+            </li>
+            <li>
+              Tipo: <span className="bold-text"> {credential.credentialType}</span>
+            </li>
+          </ul>
           {showWarning()}
         </div>
         <div className="footer">

@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Upload, Alert, Collapse, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import apiCalls from '../../../services/api-calls/all';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
-import { Upload, Alert, Collapse } from 'antd';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
-import './_style.scss';
 import MessageLoader from '../MessageLoader/message-loader';
+import UploadedInfo from './uploaded-info';
 import { showErrorMessage } from '../../../utils/alertMessages';
-import RevokeCredentials from '../RevokeCredentials/revoke-credentials';
 import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
+import { CREDENTIAL_CATEGORIES } from '../../../utils/credential-definitions';
+
+import './_style.scss';
 
 const { Panel } = Collapse;
+const { Dragger } = Upload;
 
 const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
-const { Dragger } = Upload;
 
 const FileUploader = ({
   buttonText,
@@ -30,17 +33,17 @@ const FileUploader = ({
   const [uploading, setUploading] = useState(false);
   const [validation, setValidation] = useState();
 
-  const MANUAL_UPDATE = 6
-
-  const handleUpload = async () => {
+  const handleUpload = async (skipIdentityCredentials = false) => {
     setUploading(true);
+    console.log({ skipIdentityCredentials });
     try {
       const formData = new FormData();
       formData.set('file', file);
       formData.set('createCredentials', createCredentials);
+      formData.set('skipIdentityCredentials', skipIdentityCredentials);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
-      if(onSuccessRequest && response.data.downloadableFileName){
+      if (onSuccessRequest && response.data.downloadableFileName) {
         onSuccessRequest(response);
       } else {
         !createCredentials && setUploadResponse(response.data);
@@ -52,6 +55,31 @@ const FileUploader = ({
       setUploadResponse(null);
       setUploading(false);
     }
+  };
+
+  const handleUploadSkipping = () => {
+    Modal.confirm({
+      title: '¿Desea continuar?',
+      icon: <ExclamationCircleOutlined />,
+      content: (
+        <div>
+          <p>
+            Para reemplazar las credenciales de identidad duplicadas, primero debés revocar
+            manualmente las anteriores.
+          </p>
+          <p>
+            En caso de continuar,{' '}
+            <strong>
+              los cambios en las Credenciales de Identidad duplicadas serán descartados
+            </strong>
+            .
+          </p>
+        </div>
+      ),
+      onOk() {
+        handleUpload(true);
+      }
+    });
   };
 
   const props = {
@@ -69,16 +97,12 @@ const FileUploader = ({
     setUploadResponse(null);
     setValidation(null);
     setShowContainer(data.fileList.length > 0);
-    data.fileList.length === 0 && onValidatedFile && onValidatedFile(false)
+    data.fileList.length === 0 && onValidatedFile && onValidatedFile(false);
   };
 
-  const handleProcessFile = () => {
-    onUploaded('id');
-  };
+  const handleProcessFile = () => onUploaded('id');
 
-  const onRevoke = () => {
-    handleUpload()
-  };
+  const onRevoke = () => handleUpload();
 
   const handleValidate = async () => {
     try {
@@ -92,120 +116,40 @@ const FileUploader = ({
     }
   };
 
-  const renderButtons = () => {
-    if (uploadResponse && uploadResponse.totalErrorsRows === 0) {
-      onValidatedFile(true)
-      return (
-        <ButtonPrimary
-          text="Crear credenciales"
-          theme="ThemePrimary"
-          onClick={handleUpload}
-          disabled={!showContainer}
-        />
-      );
-    }
+  const hasOnlyDuplicatedIdentityCredentials = () => {
+    const { errorRows, totalErrorsRows } = uploadResponse;
     return (
-      !uploading && (
-        <>
-          {source.showValidate && (
-            <ButtonPrimary
-              text="Validar"
-              theme="ThemePrimary"
-              onClick={handleValidate}
-              disabled={!showContainer}
-            />
-          )}
-          <ButtonPrimary
-            text={buttonText ?? 'Subir archivo'}
-            theme="ThemePrimary"
-            onClick={handleUpload}
-            disabled={!showContainer}
-          />
-        </>
+      uploadResponse &&
+      totalErrorsRows &&
+      !errorRows.some(
+        err =>
+          err.errorType !== DUPLICATED_CREDENTIAL ||
+          !err.category.includes(CREDENTIAL_CATEGORIES.identity)
       )
     );
   };
 
-  function renderShouldRevokeCredential(err) {
-    return (
-      <p>
-        Para continuar, debe revocar la Credencial:{" "}
-        <span className="bold-text">{err.category}</span> -{" "}
-        <span className="bold-text">{err.documentNumber}</span> -{" "}
-        <span className="bold-text">{`${err.name} ${err.lastName}`}</span>{" "}
-      </p>
-    );
-  }
+  const hasResponseErrors = uploadResponse && uploadResponse.totalErrorsRows > 0;
 
-  const renderUploadedInfo = () => {
-    if (!uploadResponse) return null;
-
-    const {
-      totalProcessedForms,
-      totalReadRows,
-      totalValidRows,
-      totalErrorsRows,
-      errorRows
-    } = uploadResponse;
-
-    const errors = errorRows.map((err, index) => (
-      <li key={index}>
-        {err.errorHeader && (
-           <span>
-              {err.errorType == DUPLICATED_CREDENTIAL && (
-                <>
-                  <img src="/img/error-soft.svg" alt="" />
-                  <label className="soft-error" htmlFor="">{err.errorHeader}</label>
-                </>
-              )}
-              {err.errorType != DUPLICATED_CREDENTIAL && (
-                <>
-                  <img src="/img/error.svg" alt="" />
-                  <label htmlFor="">{err.errorHeader}</label>
-                </>
-              )}
-         </span>
-        )}
-        {err.errorType == DUPLICATED_CREDENTIAL ?
-          renderShouldRevokeCredential(err) : <p>{err.errorBody}</p>
-        }
-        <p><RevokeCredentials credential={{ id: err.credentialId, name: `${err.name} ${err.lastName}`,
-         dniBeneficiary: err.documentNumber, credentialType: err.category, excelErrorType: err.errorType }} reasonId={MANUAL_UPDATE} onRevoked={onRevoke}/>
-         </p>
-      </li>
-    ));
-
-    return (
-      <div className="result-container">
-        <div className="result">
-          <label className="process">Lineas procesadas: {totalReadRows}</label>
-          <label className="r-success">
-            <img src="/img/check.svg" alt="" />
-            {totalProcessedForms} formulario(s)
-          </label>
-          <label className="r-success">
-            <img src="/img/check.svg" alt="" />
-            {totalValidRows} líneas
-          </label>
-          <label className="r-error">
-            <img src="/img/error.svg" alt="" />
-            {totalErrorsRows} líneas
-          </label>
-        </div>
-        {totalErrorsRows > 0 && (
-          <div className="error">
-            <h4>Por favor, corregí los errores que se muestran y volvelo a subir</h4>
-            <ul>{errors}</ul>
-          </div>
-        )}
-        {totalErrorsRows === 0 && (
-          <div className="success">
-            <img src="/img/success-file.svg" alt="" />
-            <h4>Tu archivo fue cargado exitosamente!</h4>
-          </div>
-        )}
-      </div>
-    );
+  const renderCreateButton = () => {
+    if (!uploadResponse) return;
+    if (!hasResponseErrors || hasOnlyDuplicatedIdentityCredentials()) {
+      let action;
+      if (hasResponseErrors) {
+        action = handleUploadSkipping;
+      } else {
+        action = handleUpload;
+        onValidatedFile(true);
+      }
+      return (
+        <ButtonPrimary
+          text="Crear credenciales"
+          theme="ThemePrimary"
+          onClick={() => action()}
+          disabled={!showContainer}
+        />
+      );
+    }
   };
 
   const renderErrorItem = item => {
@@ -261,12 +205,38 @@ const FileUploader = ({
             </Dragger>
 
             <div className="title">
-              {renderUploadedInfo()}
+              <UploadedInfo
+                uploadResponse={uploadResponse}
+                onRevoke={onRevoke}
+                revokeOnlyThisCredential
+              />
+
               <MessageLoader loading={uploading} message={'Subiendo archivo...'} />
 
               {validation && renderValidation()}
 
-              <div className="buttonSection">{renderButtons()}</div>
+              <div className="buttonSection">
+                {renderCreateButton()}
+
+                {!uploading && !uploadResponse && (
+                  <>
+                    {source.showValidate && (
+                      <ButtonPrimary
+                        text="Validar"
+                        theme="ThemePrimary"
+                        onClick={handleValidate}
+                        disabled={!showContainer}
+                      />
+                    )}
+                    <ButtonPrimary
+                      text={buttonText ?? 'Subir archivo'}
+                      theme="ThemePrimary"
+                      onClick={() => handleUpload()}
+                      disabled={!showContainer}
+                    />
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

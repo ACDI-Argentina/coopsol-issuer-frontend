@@ -53,8 +53,8 @@ const labels = {
   location: 'Localidad',
   neighborhood: 'Barrio',
   expirationDate: 'Fecha de vencimiento de Cuota',
-  amount: "Monto total del Credito [$]",
-  startDate: "Fecha de inicio del crédito"
+  amount: 'Monto total del Credito [$]',
+  startDate: 'Fecha de inicio del crédito'
 };
 
 export default fields => {
@@ -94,3 +94,9 @@ export const CREDENTIALS_SOURCES = [
     showValidate: true
   }
 ];
+
+export const CREDENTIAL_CATEGORIES = {
+  identity: 'Identidad',
+  identityHolder: 'Identidad - Titular',
+  identityFamily: 'Identidad - Familiar'
+};
