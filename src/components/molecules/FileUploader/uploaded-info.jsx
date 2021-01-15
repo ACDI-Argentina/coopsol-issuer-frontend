@@ -23,15 +23,14 @@ const UploadedInfo = ({ uploadResponse, onRevoke, revokeOnlyThisCredential = fal
       <li key={index}>
         {err.errorHeader && (
           <span>
-            {err.errorType == DUPLICATED_CREDENTIAL && (
+            {err.errorType == DUPLICATED_CREDENTIAL ? (
               <>
                 <img src="/img/error-soft.svg" alt="" />
                 <label className="soft-error" htmlFor="">
                   {err.errorHeader}
                 </label>
               </>
-            )}
-            {err.errorType != DUPLICATED_CREDENTIAL && (
+            ) : (
               <>
                 <img src="/img/error.svg" alt="" />
                 <label htmlFor="">{err.errorHeader}</label>
