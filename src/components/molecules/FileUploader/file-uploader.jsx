@@ -17,25 +17,15 @@ const { Dragger } = Upload;
 
 const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
 
-const FileUploader = ({
-  buttonText,
-  createCredentials = false,
-  source,
-  history,
-  onChangeSource,
-  onUploaded,
-  onValidatedFile,
-  onSuccessRequest
-}) => {
+const FileUploader = ({ buttonText, source, onChangeSource, onUploaded, onSuccessRequest }) => {
   const [file, setFile] = useState(null);
   const [showContainer, setShowContainer] = useState(false);
   const [uploadResponse, setUploadResponse] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [validation, setValidation] = useState();
 
-  const handleUpload = async (skipIdentityCredentials = false) => {
+  const handleUpload = async (createCredentials = false, skipIdentityCredentials = false) => {
     setUploading(true);
-    console.log({ skipIdentityCredentials });
     try {
       const formData = new FormData();
       formData.set('file', file);
@@ -77,7 +67,7 @@ const FileUploader = ({
         </div>
       ),
       onOk() {
-        handleUpload(true);
+        handleUpload(true, true);
       }
     });
   };
@@ -97,10 +87,7 @@ const FileUploader = ({
     setUploadResponse(null);
     setValidation(null);
     setShowContainer(data.fileList.length > 0);
-    data.fileList.length === 0 && onValidatedFile && onValidatedFile(false);
   };
-
-  const handleProcessFile = () => onUploaded('id');
 
   const onRevoke = () => handleUpload();
 
@@ -116,36 +103,30 @@ const FileUploader = ({
     }
   };
 
-  const hasOnlyDuplicatedIdentityCredentials = () => {
-    const { errorRows, totalErrorsRows } = uploadResponse;
+  const isDuplicatedIdentity = err => {
     return (
-      uploadResponse &&
-      totalErrorsRows &&
-      !errorRows.some(
-        err =>
-          err.errorType !== DUPLICATED_CREDENTIAL ||
-          !err.category.includes(CREDENTIAL_CATEGORIES.identity)
-      )
+      err.errorType === DUPLICATED_CREDENTIAL &&
+      err.category?.includes(CREDENTIAL_CATEGORIES.identity)
     );
+  };
+
+  const hasOnlyDuplicatedIdentityCredentials = () => {
+    const { errorRows } = uploadResponse;
+    return errorRows.length && errorRows.every(isDuplicatedIdentity);
   };
 
   const hasResponseErrors = uploadResponse && uploadResponse.totalErrorsRows > 0;
 
   const renderCreateButton = () => {
     if (!uploadResponse) return;
+    let action;
     if (!hasResponseErrors || hasOnlyDuplicatedIdentityCredentials()) {
-      let action;
-      if (hasResponseErrors) {
-        action = handleUploadSkipping;
-      } else {
-        action = handleUpload;
-        onValidatedFile(true);
-      }
+      action = !hasResponseErrors ? handleUpload : handleUploadSkipping;
       return (
         <ButtonPrimary
           text="Crear credenciales"
           theme="ThemePrimary"
-          onClick={() => action()}
+          onClick={() => action(true)}
           disabled={!showContainer}
         />
       );
