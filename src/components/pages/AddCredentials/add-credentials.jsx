@@ -1,24 +1,18 @@
-import React, { useState } from "react";
-import "./_style.scss";
-import { Select } from "antd";
-import TitlePage from "../../atoms/TitlePage/title-page";
-import FileUploader from "../../molecules/FileUploader/file-uploader";
-import { CREATED_CREDENTIALS } from "../../../utils/constants";
-import { CREDENTIALS_SOURCES } from "../../../utils/credential-definitions";
+import React, { useState } from 'react';
+import './_style.scss';
+import { Select } from 'antd';
+import TitlePage from '../../atoms/TitlePage/title-page';
+import FileUploader from '../../molecules/FileUploader/file-uploader';
+import { CREATED_CREDENTIALS } from '../../../utils/constants';
+import { CREDENTIALS_SOURCES } from '../../../utils/credential-definitions';
 
 const { Option } = Select;
 
 const AddCredentials = ({ history }) => {
   const [source, setSource] = useState(CREDENTIALS_SOURCES[0]);
 
-  const [createCredentials, setCreateCredentials] = useState(false);
-
-  const onUploaded = (fileId) => {
+  const onUploaded = fileId => {
     history.push(CREATED_CREDENTIALS);
-  };
-
-  const onValidatedFile = (generateCredentials) => {
-    setCreateCredentials(generateCredentials);
   };
 
   const handleSourceChange = (v, option) => {
@@ -52,11 +46,7 @@ const AddCredentials = ({ history }) => {
             </div>
           </div>
         </div>
-        <img
-          className="right-img"
-          src="/img/create-credential.svg"
-          alt="createCredential"
-        />
+        <img className="right-img" src="/img/create-credential.svg" alt="createCredential" />
       </div>
       <div className="SurveyImportContainer">
         <div className="SurveyImport">
@@ -66,9 +56,7 @@ const AddCredentials = ({ history }) => {
                 onUploaded={onUploaded}
                 history={history}
                 source={source}
-                onChangeSource={(option) => handleSourceChange(null, option)}
-                createCredentials={createCredentials}
-                onValidatedFile={onValidatedFile}
+                onChangeSource={option => handleSourceChange(null, option)}
               />
             </div>
           </div>
