@@ -4,15 +4,9 @@ const development = {
   }
 };
 
-const staging = {
+const next = {
   endpoints: {
-    backend: 'https://api.staging.semillas.atixlabs.com/'
-  }
-};
-
-const uat = {
-  endpoints: {
-    backend: 'https://api.uat.semillas.atixlabs.xyz/'
+    backend: 'https://api.semillas.next.didi.org.ar/'
   }
 };
 
@@ -30,8 +24,7 @@ const test = {
 
 const configs = {
   development,
-  staging,
-  uat,
+  next,
   production,
   test
 };
