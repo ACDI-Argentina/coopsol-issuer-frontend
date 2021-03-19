@@ -10,6 +10,18 @@ const next = {
   }
 };
 
+const alpha = {
+  endpoints: {
+    backend: 'https://api.semillas.didi.org.ar/'
+  }
+};
+
+const beta = {
+  endpoints: {
+    backend: 'https://api.semillas.didi.org.ar/'
+  }
+};
+
 const production = {
   endpoints: {
     backend: 'https://api.semillas.didi.org.ar/'
