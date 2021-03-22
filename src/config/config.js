@@ -18,7 +18,7 @@ const alpha = {
 
 const beta = {
   endpoints: {
-    backend: 'https://api.semillas.didi.org.ar/'
+    backend: 'https://api.semillas.beta.didi.org.ar/'
   }
 };
 
