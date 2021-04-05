@@ -3,6 +3,7 @@
   "version": "1.0.20",
   "dockerImage": "docker.atixlabs.com/semillas/semillas-middleware-frontend",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
     "@atixlabs/eslint-config": "1.1.2",
     "antd": "4.1.0",
