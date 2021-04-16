@@ -6,9 +6,9 @@ import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 import ApiDetail from '../ApiDetail/api-detail';
 const { getAny } = api();
-const call = useApi();
 
 const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content', filteredFields, noExpand }) => {
+  const call = useApi();
   const [loading, setLoading] = useState(false);
   const [localData, setLocalData] = useState(data);
   const [activeFilters, setActiveFilters] = useState(defaultFilters);

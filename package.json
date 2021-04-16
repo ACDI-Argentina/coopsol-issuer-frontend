@@ -1,15 +1,18 @@
 {
   "name": "semillas-middleware-frontend",
   "version": "1.0.21",
-  "dockerImage": "docker.atixlabs.com/semillas/semillas-middleware-frontend",
-  "private": true,
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@atixlabs/eslint-config": "1.1.2",
-    "@microsoft/applicationinsights-react-js": "^3.1.0",
+    "@microsoft/applicationinsights-react-js": "3.1.0",
     "@microsoft/applicationinsights-web": "^2.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
+    "@typescript-eslint/parser": "^4.0.0",
     "antd": "4.1.0",
     "axios": "0.19.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "history": "^4.10.1",
     "moment-timezone": "^0.5.31",
     "node-sass": "4.13.1",
@@ -19,7 +22,7 @@
     "react-google-recaptcha": "2.0.1",
     "react-lottie": "^1.2.3",
     "react-router-dom": "5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "reactstrap": "8.4.1"
   },
   "scripts": {
@@ -28,30 +31,28 @@
     "build": "react-scripts build",
     "lint": "./node_modules/.bin/eslint \"./**/*.js\" \"./**/*.jsx\"",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "docker:build": "docker build -t $npm_package_dockerImage:$npm_package_version-$CI_COMMIT_SHORT_SHA .",
-    "docker:push": "docker push $npm_package_dockerImage:$npm_package_version-$CI_COMMIT_SHORT_SHA"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "babel-eslint": "10.1.0",
+    "babel-eslint": "^10.0.0",
     "commitizen": "^4.2.3",
     "cz-jira-smart-commit": "^3.0.0",
     "env-cmd": "10.0.1",
-    "eslint": "6.7.2",
+    "eslint": "^7.5.0",
     "eslint-plugin-filenames": "1.3.2",
-    "eslint-plugin-import": "2.19.1",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-react": "7.17.0",
+    "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-sonarjs": "0.5.0",
     "eslint-plugin-unicorn": "14.0.1",
     "prettier": "1.19.1"
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ],
     "development": [
       "last 1 chrome version",
