@@ -4,6 +4,12 @@ const development = {
   }
 };
 
+const qa = {
+  endpoints: {
+    backend: 'https://api.semillas.qa.didi.org.ar/'
+  }
+};
+
 const next = {
   endpoints: {
     backend: 'https://api.semillas.next.didi.org.ar/'
@@ -40,7 +46,8 @@ const configs = {
   alpha,
   beta,
   production,
-  test
+  test,
+  qa,
 };
 
 let environment = window._env_ || 'development';
