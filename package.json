@@ -31,7 +31,8 @@
     "build": "react-scripts build",
     "lint": "./node_modules/.bin/eslint \"./**/*.js\" \"./**/*.jsx\"",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "functional-test": "cd ./node_modules/DIDI-SSI-Semillas-web-functional-test/ && npm i && npm run test && npm run test-report"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.0",
@@ -46,7 +47,8 @@
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-sonarjs": "0.5.0",
     "eslint-plugin-unicorn": "14.0.1",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "DIDI-SSI-Semillas-web-functional-test": "git+https://github.com/ong-bitcoin-argentina/DIDI-SSI-Semillas-web-functional-test.git"
   },
   "browserslist": {
     "production": [
