@@ -98,6 +98,7 @@ export const isSuccess = response => {
 
 export const processedErrorMessage = (error, messageText) => {
   const status = get(error, 'response.status');
+  const message = get(error, 'response.data.message');
   if (!status) return UNEXPECTED_ERROR;
   switch (status) {
     case STATUS_401:
@@ -105,7 +106,10 @@ export const processedErrorMessage = (error, messageText) => {
     case STATUS_403:
       return API_ERROR_403;
     case STATUS_500:
-      return API_ERROR_500;
+      if (message === 'No message available')
+        return API_ERROR_500;
+      else
+        return message;
     default:
       return messageText || UNEXPECTED_ERROR;
   }
