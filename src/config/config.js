@@ -32,8 +32,6 @@ const configs = {
   development,
   next,
   alpha,
-  beta,
-  production,
   test,
   qa,
 };
