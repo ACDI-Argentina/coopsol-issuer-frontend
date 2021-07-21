@@ -18,19 +18,7 @@ const next = {
 
 const alpha = {
   endpoints: {
-    backend: 'https://api.semillas.didi.org.ar/'
-  }
-};
-
-const beta = {
-  endpoints: {
-    backend: 'https://api.semillas.beta.didi.org.ar/'
-  }
-};
-
-const production = {
-  endpoints: {
-    backend: 'https://api.semillas.didi.org.ar/'
+    backend: 'https://api.semillas.alpha.didi.org.ar/'
   }
 };
 
@@ -44,8 +32,6 @@ const configs = {
   development,
   next,
   alpha,
-  beta,
-  production,
   test,
   qa,
 };
