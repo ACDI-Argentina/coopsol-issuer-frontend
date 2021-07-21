@@ -6,7 +6,7 @@ import history from './history';
 const reactPlugin = new ReactPlugin();
 const appInsights = new ApplicationInsights({
     config: {
-        instrumentationKey: process.env.REACT_APP_INSIGTHS_IKEY,
+        instrumentationKey: window._ikey_ || process.env.REACT_APP_INSIGTHS_IKEY,
         extensions: [reactPlugin],
         extensionConfig: {
           [reactPlugin.identifier]: { history }

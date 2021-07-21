@@ -50,7 +50,7 @@ const configs = {
   qa,
 };
 
-let environment = window._env_ || 'development';
+let environment = window._env_ || process.env.ENVIRONMENT || 'development';
 
 export const setEnvironment = customEnvironment => (environment = customEnvironment);
 
