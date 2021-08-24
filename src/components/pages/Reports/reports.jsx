@@ -48,6 +48,7 @@ const Reports = () => {
             source={{ name: 'socioeconomica' }}
             buttonText="Generar Reportes"
             createCredentials={false}
+            pdfValidation={true}
           />
         </Col>
       </Row>
