@@ -17,7 +17,7 @@ const { Dragger } = Upload;
 
 const { uploadFile, validateSancorFile, uploadSancorFile } = apiCalls();
 
-const FileUploader = ({ buttonText, source, onChangeSource, onUploaded, onSuccessRequest }) => {
+const FileUploader = ({ buttonText, source, onChangeSource, onUploaded, onSuccessRequest, pdfValidation = false }) => {
   const [file, setFile] = useState(null);
   const [showContainer, setShowContainer] = useState(false);
   const [uploadResponse, setUploadResponse] = useState(null);
@@ -31,6 +31,7 @@ const FileUploader = ({ buttonText, source, onChangeSource, onUploaded, onSucces
       formData.set('file', file);
       formData.set('createCredentials', createCredentials);
       formData.set('skipIdentityCredentials', skipIdentityCredentials);
+      formData.set('pdfValidation', pdfValidation);
       const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
       const response = await uploadAction(formData);
       if (onSuccessRequest && response.data.downloadableFileName) {
