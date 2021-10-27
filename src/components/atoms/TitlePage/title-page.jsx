@@ -1,9 +1,7 @@
 import React from 'react';
 import './_style.scss';
-import ButtonPrimary from '../ButtonPrimary/button-primary';
-import SyncModal from '../../molecules/SyncModal/sync-modal';
 
-const TitlePage = ({ history, text, description, content }) => {
+const TitlePage = ({ text, description, content }) => {
   return (
     <div className="TitlePage">
       <div className="title">

@@ -25,7 +25,7 @@ const getLogTypes = makeGetRequest => () => makeGetRequest('action/types');
 
 const getLogLevels = makeGetRequest => () => makeGetRequest('action/levels');
 
-export default client => {
+const user = client => {
   const { makePostRequest, makeGetRequest, makePatchRequest } = helpers(client);
   return {
     getAny: getAny(makeGetRequest),
@@ -41,3 +41,5 @@ export default client => {
     syncDidi: syncDidi(makeGetRequest)
   };
 };
+
+export default user;

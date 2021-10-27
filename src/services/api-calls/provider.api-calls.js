@@ -11,7 +11,7 @@ const createProvider = makePostRequest => data => makePostRequest('providers', d
 
 const editProvider = makePatchRequest => data => makePatchRequest('providers/{id}', data);
 
-export default client => {
+const provider = client => {
   const { makeGetRequest, makePostRequest, makePatchRequest, makePlainedGetRequest } = helpers(
     client
   );
@@ -23,3 +23,5 @@ export default client => {
     editProvider: editProvider(makePatchRequest)
   };
 };
+
+export default provider;

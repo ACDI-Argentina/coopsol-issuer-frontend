@@ -71,6 +71,7 @@ const makePostFileRequest = httpClient => (url, formData, queryParameters) => {
   return httpClient.post(completeUrl, formData);
 };
 
+// eslint-disable-next-line no-unused-vars
 const makeDeleteRequest = httpClient => (url, bodyParameters = {}, queryParameters) => {
   const completeUrl = addQueryString(url, queryParameters);
   return httpClient.delete(completeUrl, { ...bodyParameters });
@@ -83,7 +84,7 @@ const makePatchRequest = httpClient => (url, bodyParameters = {}, queryParameter
   return httpClient.patch(completeUrl, { ...bodyParameters });
 };
 
-export default client => ({
+const clientCrud = client => ({
   makePlainedGetRequest: makePlainedGetRequest(client),
   makeGetRequest: makeGetRequest(client),
   makePostRequest: makePostRequest(client),
@@ -91,6 +92,8 @@ export default client => ({
   makeDeleteRequest: makePatchRequest(client),
   makePostFileRequest: makePostFileRequest(client)
 });
+
+export default clientCrud;
 
 export const isSuccess = response => {
   return response.status >= BEGIN_SUCCESS_STATUS && response.status <= END_SUCCESS_STATUS;
@@ -121,6 +124,7 @@ export const processError = (error, setUser) => {
   switch (status) {
     case STATUS_401:
       if (setUser) setUser(null);
+      break;
     default:
       break;
   }

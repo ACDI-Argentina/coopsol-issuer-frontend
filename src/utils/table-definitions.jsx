@@ -1,5 +1,4 @@
 import React from 'react';
-import { DEFAULT_DATETIME_FORMAT, DEFAULT_TIME_ZONE } from './constants';
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
 import { parseDate } from './dateHelpers';
 

@@ -4,10 +4,12 @@ const loginRequest = makePostRequest => data => makePostRequest('auth/login', da
 
 const logoutRequest = makeGetRequest => data => makeGetRequest('auth/logout', data);
 
-export default client => {
+const defaultClient = client => {
   const { makePostRequest, makeGetRequest } = helpers(client);
   return {
     loginRequest: loginRequest(makePostRequest),
     logoutRequest: logoutRequest(makeGetRequest)
   };
 };
+
+export default defaultClient;

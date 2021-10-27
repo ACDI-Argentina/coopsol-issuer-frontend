@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './_style.scss';
 import { Descriptions } from 'antd';
 

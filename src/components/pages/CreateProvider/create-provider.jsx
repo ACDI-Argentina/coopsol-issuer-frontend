@@ -68,6 +68,7 @@ const CreateProvider = () => {
 
   useEffect(() => {
     fetchProviderCategories();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -83,13 +84,14 @@ const CreateProvider = () => {
     } else {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
     <div className="mainSection">
       {redirect()}
       <div className="backAndUser">
-        <button onClick={() => setUrlToRedirect(PROVIDERS_URL)}> > Back</button>
+        <button onClick={() => setUrlToRedirect(PROVIDERS_URL)}>Back</button>
       </div>
       <div className="userDetails">
         {!loading ? (

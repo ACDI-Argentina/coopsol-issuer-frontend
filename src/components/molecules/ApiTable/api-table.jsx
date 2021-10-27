@@ -58,6 +58,7 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
 
   useEffect(() => {
     makeGet(paged);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paged]);
 
   return (

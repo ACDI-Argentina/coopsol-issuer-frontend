@@ -1,19 +1,13 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { useState } from 'react';
-import { useApi } from '../../../services/useApi';
-import api from '../../../services/api-calls/all';
 import { DownOutlined } from '@ant-design/icons';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
-
-const { revokeCredentials } = api();
 
 const ConnectBondarea = ({ credential, onRevoked }) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
-
-  const credentialCall = useApi();
 
   const onConnect = e => {
     e.preventDefault();

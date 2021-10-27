@@ -1,6 +1,6 @@
 import React from 'react';
 import './_style.scss';
-import { Menu, Dropdown, Button, Input, DatePicker, message } from 'antd';
+import { Menu, Dropdown, Button, Input, DatePicker } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { DEFAULT_DATE_FORMAT } from '../../../utils/constants';
@@ -90,7 +90,7 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
 
     const value =
       (activeFilters[key] &&
-        (values.find(v => v.description && v.id == activeFilters[key]) || activeFilters[key])) ||
+        (values.find(v => v.description && v.id === activeFilters[key]) || activeFilters[key])) ||
       filters[key].name;
 
     return (
@@ -114,6 +114,8 @@ const TableFilters = ({ onApplyFilter, filters, defaultFilters, onSearch }) => {
           break;
         case 'dropdown':
           filterComps.push(renderDropdown(key, filters[key].data));
+          break;
+        default:
           break;
       }
     });

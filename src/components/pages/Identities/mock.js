@@ -20,8 +20,10 @@ const generate = (quantity, item) => {
   return arr;
 };
 
-export default {
+const mocked = {
   pending: generate(15, base),
   reject: generate(10, special),
   approved: generate(10, special)
 };
+
+export default mocked;

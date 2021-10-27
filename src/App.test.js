@@ -13,5 +13,5 @@ import { setEnvironment } from '../src/config/config';
 setEnvironment('test');
 
 test('true', () => {
-  expect(true).toBeTruthy;
+  // expect(true).toBeTruthy;
 });

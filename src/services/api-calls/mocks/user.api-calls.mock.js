@@ -104,7 +104,7 @@ const getLogLevels = () => [
   { id: 2, description: 'ERROR' }
 ];
 
-export default () => ({
+const userMock = () => ({
   uploadFile,
   getCredentials,
   revokeCredentials,
@@ -115,3 +115,5 @@ export default () => ({
   getLogTypes,
   getLogLevels
 });
+
+export default userMock;

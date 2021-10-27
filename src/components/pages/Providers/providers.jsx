@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
 import './_style.scss';
 import { providerColumns } from '../../../utils/tables/providers-definitions';

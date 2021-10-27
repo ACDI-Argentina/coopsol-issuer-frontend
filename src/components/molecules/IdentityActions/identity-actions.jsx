@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Select, Input, Button, message } from 'antd';
 import Lottie from 'react-lottie';

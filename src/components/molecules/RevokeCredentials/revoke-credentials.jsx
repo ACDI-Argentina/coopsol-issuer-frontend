@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from 'react';
 import './_style.scss';
 import { Menu, Dropdown, Modal } from 'antd';
@@ -9,7 +10,6 @@ import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import Loader from '../../atoms/Loader/loader';
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/3046-me-at-office.json';
-import TextAreaComments from '../../atoms/TextArea/text-area';
 import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
@@ -96,8 +96,8 @@ const RevokeCredentials = ({
 
   return (
     <div className="RevokeCredentials">
-      {reasonId && credential.excelErrorType == DUPLICATED_CREDENTIAL && (
-        <a className="ant-dropdown-link" onClick={_ => onItemClick(reasonId)}>
+      {reasonId && credential.excelErrorType === DUPLICATED_CREDENTIAL && (
+        <a href="#" className="ant-dropdown-link" onClick={_ => onItemClick(reasonId)}>
           Revocar
         </a>
       )}
