@@ -13,6 +13,7 @@ export const compare = (element1, element2, key) => {
 
 const getUrlVars = () => {
   var vars = {};
+  // eslint-disable-next-line no-unused-vars
   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
     vars[key] = value;
   });

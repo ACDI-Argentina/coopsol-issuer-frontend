@@ -76,7 +76,9 @@ const loginRequest = () => ({
 
 const logoutRequest = () => ({});
 
-export default () => ({
+const auth = () => ({
   loginRequest,
   logoutRequest
 });
+
+export default auth;

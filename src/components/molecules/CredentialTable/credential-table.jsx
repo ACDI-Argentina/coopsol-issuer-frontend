@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
@@ -60,7 +61,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     let keys = Object.keys(newFilters);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (newFilters[key] == undefined) return false;
+      if (newFilters[key] === undefined) return false;
     }
 
     return keys.length > 0;

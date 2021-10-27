@@ -13,14 +13,16 @@ const defaultClient = client({});
 const multipartClient = multiClient({});
 const blobClient = multiClient({ responseType: 'blob' });
 
-export default () =>
+let all = () => 
   process.env.REACT_APP_CUSTOM_ENV === 'mocked'
-    ? { ...authMock(defaultClient), ...userMock(defaultClient) }
-    : {
-        ...auth(defaultClient),
-        ...user(defaultClient),
-        ...file(multipartClient),
-        ...downloads(blobClient),
-        ...providers(defaultClient),
-        ...identities(defaultClient)
-      };
+  ? { ...authMock(defaultClient), ...userMock(defaultClient) }
+  : {
+      ...auth(defaultClient),
+      ...user(defaultClient),
+      ...file(multipartClient),
+      ...downloads(blobClient),
+      ...providers(defaultClient),
+      ...identities(defaultClient)
+    };
+
+export default all;

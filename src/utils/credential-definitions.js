@@ -57,7 +57,7 @@ const labels = {
   startDate: 'Fecha de inicio del crédito'
 };
 
-export default fields => {
+const credential = fields => {
   let result = [];
   for (const prop in fields) {
     const value = wording(fields[prop]);
@@ -70,6 +70,8 @@ export default fields => {
   }
   return result;
 };
+
+export default credential;
 
 const wording = value => {
   switch (value) {

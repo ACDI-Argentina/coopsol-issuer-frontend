@@ -27,6 +27,7 @@ const Activities = () => {
   useEffect(() => {
     filtersCall(getLogTypes, null, setLogTypes, onError, setUser);
     filtersCall(getLogLevels, null, setLogLevels, onError, setUser);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filters = defaultActivityFilters(logTypes, logLevels);
@@ -39,7 +40,7 @@ const Activities = () => {
       />
       <div className="ActivitiesContent">
         <h4>
-          <img src="img/table-list.svg" /> Listado de actividades
+          <img alt="Listado de actividades" src="img/table-list.svg" /> Listado de actividades
         </h4>
         <CredentialTable
           columns={() => getActivitiesColumns}

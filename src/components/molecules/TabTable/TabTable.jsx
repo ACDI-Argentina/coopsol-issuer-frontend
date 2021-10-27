@@ -12,7 +12,6 @@ import { UserContext } from '../../../services/providers/user-context';
 import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
-  getPendingColumns,
   getDidColumns
 } from '../../../utils/table-definitions';
 import {
@@ -50,6 +49,7 @@ const TabTable = () => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
     credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
     credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onError = (error, status) => {

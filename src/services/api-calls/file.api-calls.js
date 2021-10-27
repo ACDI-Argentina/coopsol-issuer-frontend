@@ -8,7 +8,7 @@ const validateSancorFile = makePostFileRequest => data =>
 const uploadSancorFile = makePostFileRequest => data =>
   makePostFileRequest('api/file/sancorsalud/upload', data);
 
-export default client => {
+const files = client => {
   const { makePostFileRequest } = helpers(client);
   return {
     uploadFile: uploadFile(makePostFileRequest),
@@ -16,3 +16,5 @@ export default client => {
     uploadSancorFile: uploadSancorFile(makePostFileRequest)
   };
 };
+
+export default files;

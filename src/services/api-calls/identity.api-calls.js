@@ -9,7 +9,7 @@ const approveIdentityRequest = makePatchRequest => data =>
 const regretIdentityRequest = makePatchRequest => id =>
   makePatchRequest('identityValidationRequests/{id}', { id, requestState: progress });
 
-export default client => {
+const identity = client => {
   const { makePatchRequest } = helpers(client);
   return {
     rejectIdentityRequest: rejectIdentityRequest(makePatchRequest),
@@ -17,3 +17,5 @@ export default client => {
     regretIdentityRequest: regretIdentityRequest(makePatchRequest)
   };
 };
+
+export default identity;

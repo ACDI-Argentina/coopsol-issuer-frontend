@@ -1,8 +1,6 @@
 import React from 'react';
 import './_styles.scss';
 
-import api from '../../../services/api-calls/all';
-import FileUploader from '../../molecules/FileUploader/file-uploader';
 import { useState } from 'react';
 import MessageLoader from '../MessageLoader/message-loader';
 import { useEffect } from 'react';
@@ -10,12 +8,13 @@ import { useEffect } from 'react';
 // const { endpoint } = api();
 
 const CredentialCreation = ({ uploadedFile, onConnected }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       onConnected();
     }, 1000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

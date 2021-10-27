@@ -2,7 +2,7 @@ import React from 'react';
 import './_style.scss';
 import { Tooltip } from 'antd';
 
-const Tooltip = text => {
+const ToolTip = text => {
   return (
     <Tooltip title="prompt text">
       <span>{text}</span>
@@ -10,4 +10,4 @@ const Tooltip = text => {
   );
 };
 
-export default Tooltip;
+export default ToolTip;
