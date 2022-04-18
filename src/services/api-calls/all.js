@@ -15,7 +15,11 @@ const blobClient = multiClient({ responseType: 'blob' });
 
 let all = () => 
   process.env.REACT_APP_CUSTOM_ENV === 'mocked'
-  ? { ...authMock(defaultClient), ...userMock(defaultClient) }
+  ? { 
+    ...authMock(defaultClient), 
+    ...userMock(defaultClient),
+    getRevocationReasons: () => {}
+  }
   : {
       ...auth(defaultClient),
       ...user(defaultClient),
