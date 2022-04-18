@@ -32,7 +32,9 @@ const FileUploader = ({ buttonText, source, onChangeSource, onUploaded, onSucces
       formData.set('createCredentials', createCredentials);
       formData.set('skipIdentityCredentials', skipIdentityCredentials);
       formData.set('pdfValidation', pdfValidation);
-      const uploadAction = source.name === 'sancor' ? uploadSancorFile : uploadFile;
+
+      const uploadAction = uploadFile;
+
       const response = await uploadAction(formData);
       if (onSuccessRequest && response.data.downloadableFileName) {
         onSuccessRequest(response);

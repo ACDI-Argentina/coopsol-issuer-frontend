@@ -10,12 +10,14 @@ import { ConfigProvider } from 'antd';
 import moment from 'moment';
 import 'moment/locale/es';
 
-import { reactPlugin } from "./components/Router/AppInsights.js";
+/* import { reactPlugin } from "./components/Router/AppInsights.js"; */
 
 moment.locale('es');
 
+{/* <AppInsightsContext.Provider value={reactPlugin}>
+  </AppInsightsContext.Provider> */}
+
 const App = () => (
-    <AppInsightsContext.Provider value={reactPlugin}>
       <UserProvider>
         <ConfigProvider locale={esES}>
           <AppProvider>
@@ -25,7 +27,6 @@ const App = () => (
           </AppProvider>
         </ConfigProvider>
       </UserProvider>
-    </AppInsightsContext.Provider>
 );
 
 export default App;
