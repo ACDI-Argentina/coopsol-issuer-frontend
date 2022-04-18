@@ -16,10 +16,6 @@ export const defaultFilters = credentialTypes => ({
     type: 'input',
     name: 'DNI'
   },
-  creditHolderDni: {
-    type: 'input',
-    name: 'DNI Titular'
-  },
   lastUpdate: {
     type: 'date',
     name: 'Ult. actualización'
@@ -43,10 +39,6 @@ export const didCredentialsFilter = credentialTypes => ({
   dniBeneficiary: {
     type: 'input',
     name: 'DNI'
-  },
-  creditHolderDni: {
-    type: 'input',
-    name: 'DNI Titular'
   },
   lastUpdate: {
     type: 'date',
