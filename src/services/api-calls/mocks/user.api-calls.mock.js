@@ -1,7 +1,5 @@
 /* eslint-disable max-len */
 
-import { CREDENTIAL_REVOKE } from "../../../utils/constants";
-
 const uploadFile = () => ({
   data: {
     totalRows: 1966,
@@ -155,7 +153,6 @@ const credentials = [
 ];
 
 const getCredentials = (filter) => {
-  console.log(`Get credentials with filter`, credentials, filter)
 
   const fCredentials = credentials.filter(c => {
     if(filter.credentialState){
@@ -185,6 +182,9 @@ const getCredentials = (filter) => {
   }
 };
 
+const getRevocationReasons = () => {
+  return [];
+}
 
 
 const userMock = () => ({
@@ -196,7 +196,8 @@ const userMock = () => ({
   getCredentialStates,
   getActivityLog,
   getLogTypes,
-  getLogLevels
+  getLogLevels,
+  getRevocationReasons
 });
 
 export default userMock;

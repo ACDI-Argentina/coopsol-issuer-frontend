@@ -32,7 +32,11 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
 
   const handleSuccess = res => {
     const { totalElements, size } = res;
+    console.log(res);
     setLocalData(res[dataField]);
+    console.log(res[dataField]) //undefined!
+
+
     setPagination({
       ...pagination,
       total: totalElements,

@@ -50,7 +50,6 @@ const TabTable = () => {
     credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
     credentialCall(getCredentialStatus, null, setCredentialStatus, onError, setUser);
     credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
-    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,9 +59,6 @@ const TabTable = () => {
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
-
-
-  console.log(`Credential states:`, credentialStates)
 
   return (
     <div className="TabTableContent">
