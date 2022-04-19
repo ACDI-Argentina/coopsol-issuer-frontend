@@ -3,7 +3,7 @@ import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-
 import { parseDate } from './dateHelpers';
 
 export const getCredentialsColumns = fetchCredentials => [
-  { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential', width: 360 },
+  { title: 'DID', dataIndex: 'idDidiCredential', key: 'idDidiCredential', fixed: 'left', width: 360 },
   { title: 'Nombre y Apellido', dataIndex: 'name', key: 'name', fixed: 'left', width: 180 },
   {
     title: 'Tipo de credencial',
@@ -56,6 +56,10 @@ export const getDidColumns = fetchCredentials => {
 
   let didColumn = columns.findIndex(e => e.key === 'idDidiCredential');
   columns.splice(didColumn, 1);
+
+  let estadoColumn = columns.findIndex(e => e.key === 'credentialState');
+  columns.splice(estadoColumn, 1);
+
   return columns;
 };
 

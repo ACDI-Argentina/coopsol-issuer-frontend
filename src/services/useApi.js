@@ -4,9 +4,10 @@ export const useApi = () => {
   return async (apiCall, data, onSuccess, onError, setUser) => {
     try {
       const res = await apiCall(data);
-      if (res.data) {
+      if (res?.data) {
         onSuccess(res.data);
       } else onSuccess(res);
+      
     } catch (error) {
       console.log(error);
       const statusCode = processError(error, setUser);

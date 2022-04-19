@@ -16,9 +16,8 @@ import {
 } from '../../../utils/table-definitions';
 import {
   CREDENTIAL_PENDING_DIDI,
-  CREDENTIAL_REVOKE,
   CREDENTIAL_ACTIVE,
-  HOLDER_ACTIVE_KINSMAN_PENDING
+  CREDENTIAL_REVOKED,
 } from '../../../utils/constants';
 import {
   defaultFilters,
@@ -27,14 +26,15 @@ import {
 import { showErrorMessage } from '../../../utils/alertMessages';
 const { TabPane } = Tabs;
 
-const { getCredentials, getCredentialTypes, getCredentialStates, getRevocationReasons } = api();
+const { getCredentials, getCredentialTypes, getCredentialStates, getCredentialStatus, getRevocationReasons } = api();
 
 const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
-  const [credentialStates, setCredentialStates] = useState({});
-
+  const [credentialStates, setCredentialStates] = useState({}); 
+  const [credentialStatus, setCredentialStatus] = useState({}); 
+  
   const { appState, setAppState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
 
@@ -48,6 +48,8 @@ const TabTable = () => {
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
     credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
+    credentialCall(getCredentialStatus, null, setCredentialStatus, onError, setUser);
+    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
     credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -58,6 +60,9 @@ const TabTable = () => {
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
+
+
+  console.log(`Credential states:`, credentialStates)
 
   return (
     <div className="TabTableContent">
@@ -70,7 +75,7 @@ const TabTable = () => {
             columns={getCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
-            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] + ',' + credentialStates[HOLDER_ACTIVE_KINSMAN_PENDING]}}
+            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] + "" }}
           />
         </TabPane>
 
@@ -82,7 +87,7 @@ const TabTable = () => {
             columns={getRevokedCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
-            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_REVOKE] }}
+            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_REVOKED] + ""}}
           />
         </TabPane>
         <TabPane
@@ -92,13 +97,13 @@ const TabTable = () => {
               tooltip={'A espera de generación del DID'}
             />
           }
-          key="4"
+          key="3"
         >
           <CredentialTable
             columns={getDidColumns}
             dataSource={getCredentials}
             filters={pendingDidFilter}
-            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_PENDING_DIDI] }}
+            defaultFilters={{ credentialStatus: credentialStatus[CREDENTIAL_PENDING_DIDI]  + "" }}
           />
         </TabPane>
       </Tabs>

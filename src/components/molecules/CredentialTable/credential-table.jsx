@@ -73,7 +73,10 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
 
   const onSuccess = data => {
     const { content, totalElements, size } = data;
-    setCredentials(content);
+
+    console.log(`Active filters:`, activeFilters); // y que pasa con filters?
+
+    setCredentials(content); //! cuando se realiza el filtrado?
     setPagination({
       ...pagination,
       total: totalElements,
@@ -96,7 +99,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
         onSearch={onSearch}
       />
       <Table
-        rowKey={'id'}
+        rowKey={'key'}
         columns={tableColumns}
         dataSource={credentials}
         scroll={{ x: 1300 }}
