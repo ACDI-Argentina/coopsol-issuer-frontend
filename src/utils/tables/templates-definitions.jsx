@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PROVIDERS_URL } from '../constants';
+import { PROVIDERS_URL, TEMPLATES_URL } from '../constants';
 
 export const templatesColumns = () => [
   {
@@ -10,10 +10,9 @@ export const templatesColumns = () => [
     fixed: 'left',
     width: 200
   },
-
   {
     title: 'Categoría',
-    dataIndex: 'providerCategory',
+    dataIndex: 'category',
     key: 'categoryName',
     width: 115,
     render: providerCategory => <span>{providerCategory.name}</span>
@@ -31,6 +30,6 @@ export const templatesColumns = () => [
     key: 'actions',
     fixed: 'right',
     width: 120,
-    render: ({ id }) => <Link to={`${PROVIDERS_URL}/${id}`}>Editar</Link>
+    render: ({ id }) => <Link to={`${TEMPLATES_URL}/${id}`}>Editar</Link>
   }
 ];

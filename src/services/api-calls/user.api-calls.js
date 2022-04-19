@@ -14,9 +14,6 @@ const getCredentialStates = makeGetRequest => () => makeGetRequest('credentials/
 const getRevocationReasons = makeGetRequest => () =>
   makeGetRequest('credentials/revocation-reasons');
 
-const forceSyncBondarea = makePostRequest => () =>
-  makePostRequest('/bondarea/force-sync-generate', {});
-
 const syncDidi = makeGetRequest => () => makeGetRequest('/syncdidi/emmitcredentials', {});
 
 const getActivityLog = makeGetRequest => data => makeGetRequest('action/find', data);
@@ -26,7 +23,7 @@ const getLogTypes = makeGetRequest => () => makeGetRequest('action/types');
 const getLogLevels = makeGetRequest => () => makeGetRequest('action/levels');
 
 const user = client => {
-  const { makePostRequest, makeGetRequest, makePatchRequest } = helpers(client);
+  const { makeGetRequest, makePatchRequest } = helpers(client);
   return {
     getAny: getAny(makeGetRequest),
     getCredentials: getCredentials(makeGetRequest),
@@ -34,7 +31,6 @@ const user = client => {
     getCredentialTypes: getCredentialTypes(makeGetRequest),
     getCredentialStates: getCredentialStates(makeGetRequest),
     getRevocationReasons: getRevocationReasons(makeGetRequest),
-    forceSyncBondarea: forceSyncBondarea(makePostRequest),
     getActivityLog: getActivityLog(makeGetRequest),
     getLogTypes: getLogTypes(makeGetRequest),
     getLogLevels: getLogLevels(makeGetRequest),

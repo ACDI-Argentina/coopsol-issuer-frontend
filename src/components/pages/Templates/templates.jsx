@@ -17,15 +17,12 @@ const onError = (error, status) => {
 };
 
 const Templates = () => {
-  const { getProviders, getProviderCategories } = apiCalls();
+  const { getTemplates } = apiCalls();
   const filtersCall = useApi();
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState({});
   const { setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    filtersCall(getProviderCategories, null, setCategories, onError, setUser);
-  }, []);
 
   const formatCategories = () => {
     if (categories) {
@@ -51,7 +48,7 @@ const Templates = () => {
       <div className="templatesContent">
         <CredentialTable
           columns={templatesColumns}
-          dataSource={getProviders}
+          dataSource={getTemplates}
           filters={filters}
           defaultFilters={{ page: 0 }}
           noExpand

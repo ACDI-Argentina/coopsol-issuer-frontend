@@ -33,13 +33,34 @@ const identitiesRequests = [
     phone: "",
     email: "",
     requestState: "IN_PROGRESS"
+  },  
+];
+
+const templates = [
+  {
+    id: 1,
+    name: "Identitaria",
+    category: "Identitaria",
+    active: true
+  },
+  {
+    id: 2,
+    name: "Resiliencia Climática",
+    category: "Resiliencia Climática",
+    active: true
+  },
+  {
+    id: 3,
+    name: "Financiera",
+    category: "Financiera",
+    active: true
   },
   
-];
+]
 
 const identitiesMock = () => ({
   getAny: (data) => {
-    console.log(`Get any`, data)
+    
     const { url, params } = data;
     if (url === "/identityValidationRequests") {
       console.log(`get identity validation requests`)
@@ -51,6 +72,15 @@ const identitiesMock = () => ({
       };
     }
 
+  },
+
+  getTemplates: (data)  => {
+    
+    return {
+      content: templates,
+      totalElements: templates.length,
+      size: templates.length
+    };
   }
 });
 
