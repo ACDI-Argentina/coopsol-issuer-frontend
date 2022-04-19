@@ -28,9 +28,9 @@ const getCredentialStatus = () => ({
 });
 
 const getCredentialTypes = () => [
-  'CredentialIdentity',
-  'CredentialFinantial',
-  'CredentialClimaticResilience',
+  'Identitaria',
+  'Resiliencia Climática',
+  'Financiera',
 ];
 
 const getActivityLog = () => ({
@@ -139,6 +139,17 @@ const credentials = [
     name: 'Ruben Ramos',
     dniBeneficiary: "19.545.024", 
     credentialStatus: getCredentialStatus()["CREDENTIAL_PENDING_DIDI"]
+  },
+  {
+    credentialType: 'Identitaria',
+    key: 7,
+    idDidiCredential: "did:ethr:0xb86cdbffabec4ef993ce4c22827609964d2da490",
+    dateOfIssue: '24-04-2022',
+    lastUpdate: new Date('2022-04-18T15:00:00'),
+    dateOfExpiry: '24-04-2022',
+    name: 'Iryna Camino',
+    dniBeneficiary: "22.853.665", 
+    credentialState: getCredentialStates()["CREDENTIAL_ACTIVE"],
   }
   
 ];
@@ -155,6 +166,12 @@ const getCredentials = (filter) => {
   }).filter(c => {
     if(filter.credentialStatus){
       return c.credentialStatus === filter.credentialStatus;
+    } else {
+      return true;
+    }
+  }).filter(c => {
+    if(filter.credentialType){
+      return c.credentialType === filter.credentialType;
     } else {
       return true;
     }
