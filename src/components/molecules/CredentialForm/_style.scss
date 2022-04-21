@@ -1,0 +1,42 @@
+@import '../../../css/general_styling';
+
+.SurveyImport {
+  .import-status {
+    padding: 1em;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 2em 0;
+    justify-content: space-between;
+  }
+  .check {
+    background-color: $background-approved;
+    label {
+      img {
+        margin-right: 1.5em;
+      }
+      @include primary-text-bold($body, #203342);
+    }
+  }
+  .pending {
+    background-color: #fffaf0;
+    label {
+      img {
+        margin-right: 1.5em;
+      }
+      @include primary-text-bold($body, #f1af34);
+    }
+  }
+  .buttonSection {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    button {
+      margin: 1em;
+    }
+  }
+  .left-side-success-upload {
+    width: 48%;
+  }
+}

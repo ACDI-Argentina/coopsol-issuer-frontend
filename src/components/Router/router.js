@@ -18,11 +18,14 @@ import {
   CREATE_PROVIDER_URL,
   REPORTS_URL,
   TEMPLATES_URL,
-  CREATE_TEMPLATE_URL
+  CREATE_TEMPLATE_URL,
+  ADD_CREDENTIALS_BULK
 } from '../../utils/constants';
+
 import history from './history';
 import Activities from '../pages/Activities/activities';
 import AddCredentials from '../pages/AddCredentials/add-credentials';
+import AddCredentialsBulk from '../pages/AddCredentialsBulk/add-credentials-bulk';
 import SimpleHeader from '../molecules/SimpleHeader/simple-header';
 import CredentialCreated from '../pages/CredentialCreated/credential-created';
 import Providers from '../pages/Providers/providers';
@@ -45,6 +48,13 @@ const routesConfig = [
   {
     path: ADD_CREDENTIALS,
     component: AddCredentials,
+    requireAuthentication: true,
+    exact: true,
+    replaceHeader: SimpleHeader
+  },
+  {
+    path: ADD_CREDENTIALS_BULK,
+    component: AddCredentialsBulk,
     requireAuthentication: true,
     exact: true,
     replaceHeader: SimpleHeader

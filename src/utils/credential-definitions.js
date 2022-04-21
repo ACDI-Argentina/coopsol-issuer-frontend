@@ -97,8 +97,169 @@ export const CREDENTIALS_SOURCES = [
   }
 ];
 
+
+/* Obtener desde el API e inyectarlos en el ctx */
+export const CREDENTIALS_TYPES = [
+  {
+    name: 'identitaria',
+    label: 'Identitaria',
+  },
+  {
+    name: 'financiera',
+    label: 'Financiera',
+  },
+  {
+    name: 'socioeconomica',
+    label: 'Socioeconómica',
+  },
+  {
+    name: 'productiva',
+    label: 'Productiva',
+  },
+  
+];
+
+
 export const CREDENTIAL_CATEGORIES = {
   identity: 'Identidad',
   identityHolder: 'Identidad - Titular',
   identityFamily: 'Identidad - Familiar'
 };
+
+
+export const CREDENTIAL_FIELDS = {
+  "identitaria": [
+    {
+      name: "Nombre",
+      label: "Nombre",
+      description: "Nombre completo",
+      type: "String",
+    },
+    {
+      name: "DNI",
+      label: "DNI",
+      description: "",
+      type: "String",
+    },
+    {
+      name: "fechanacimiento",
+      label: "Fecha de nacimiento",
+      description: "",
+      type: "Date",
+    },
+    {
+      name: "ubicacion",
+      label: "Ubicación",
+      description: "",
+      type: "String", /* Geo zona  - vamos a necesitar geo reverse quizas*/
+    },
+
+
+  ],
+  "financiera": [
+    {
+      name: "Nombre",
+      label: "Nombre",
+      description: "Nombre completo",
+      type: "String",
+    },
+    {
+      name: "scoring",
+      label: "Scoring",
+      description: "",
+      type: "Number",
+    },
+    {
+      name: "historialCrediticio",
+      label: "Historial crediticio con COOPSOL",
+      description: "",
+      type: "Boolean",
+    },
+    {
+      name: "colmenasActivas",
+      label: "Registro de colmenas activas y crecimiento productivo",
+      description: "",
+      type: "Boolean",
+    },
+    {
+      name: "socioApona",
+      label: "Socio de APONA",
+      description: "",
+      type: "Boolean",
+    },
+    {
+      name: "pagos",
+      label: "Historial de pagos a término",
+      description: "",
+      type: "Boolean",
+    },
+    
+  ],
+  "socioeconomica": [
+    {
+      name: "Nombre",
+      label: "Nombre",
+      description: "Nombre completo",
+      type: "String",
+    },
+    {
+      name: "grupoFamiliar",
+      label: "Integrantes grupo familiar",
+      description: "",
+      type: "Number",
+    },
+    {
+      name: "ingresosPrincipal",
+      label: "Fuente de ingresos principal",
+      description: "",
+      type: "String",
+    },
+    {
+      name: "ingresosSecundarios",
+      label: "Fuente de ingresos por fuera de su actividad:",
+      description: "",
+      type: "String",
+    },
+    {
+      name: "ingresosMensual",
+      label: "Ingreso mensual estimado de su grupo familiar:",
+      description: "",
+      type: "String",
+    },
+    
+  ],
+  "productiva": [
+    {
+      name: "Nombre",
+      label: "Nombre",
+      description: "Nombre completo",
+      type: "String",
+    },
+    {
+      name: "cantidadColmenas",
+      label: "Cantidad de colmenas",
+      description: "",
+      type: "Number",
+    },
+    {
+      name: "esProductorOrganico",
+      label: "Es productor orgánico",
+      description: "",
+      type: "Boolean",
+    },
+    {
+      name: "otrasactividades",
+      label: "Otras actividades",
+      description: "",
+      type: "Checkbox",
+      options: [
+        { name: "agropecuario", label: "Produccion Agropecuaria" },
+        { name: "agricola", label: "Produccion Agricola" },
+        { name: "ganadera", label: "Produccion Ganadera" },
+        { name: "caprina", label: "Produccion Caprina" },
+        { name: "maderero", label: "Produccion Maderera" },
+        { name: "forestal", label: "Produccion Forestal" },
+      ]
+    },
+  ],
+}
