@@ -30,7 +30,7 @@
     "styled-components": "^5.3.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env.mocked  react-scripts start",
     "start:mocked": "env-cmd -f .env.mocked react-scripts start",
     "build": "env-cmd -f .env.mocked  react-scripts build",
     "lint": "./node_modules/.bin/eslint \"./**/*.js\" \"./**/*.jsx\"",
