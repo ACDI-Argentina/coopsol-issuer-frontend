@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import axios from "axios";
-const COOPSOL_BACKEND_URL = "http://localhost:3001";
+const COOPSOL_BACKEND_URL = process.env.COOPSOL_BACKEND_URL;
 
 
 const identitiesRequests = [

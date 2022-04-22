@@ -9,6 +9,8 @@ import './App.scss';
 import { ConfigProvider } from 'antd';
 import moment from 'moment';
 import 'moment/locale/es';
+import dotenv from "dotenv";
+dotenv.config();
 
 /* import { reactPlugin } from "./components/Router/AppInsights.js"; */
 
