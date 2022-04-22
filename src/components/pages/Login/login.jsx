@@ -42,7 +42,7 @@ const Login = ({ history }) => {
       </div>
       <div className="LoginFormContainer">
         <h1>
-          Bienvenida/o a <strong>Semillas!</strong>
+          Bienvenida/o a <strong>Coopsol!</strong>
         </h1>
         <p>Para ingresar completá los siguientes campos</p>
         <AntForm
