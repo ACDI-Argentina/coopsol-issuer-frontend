@@ -32,9 +32,9 @@ const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
-  const [credentialStates, setCredentialStates] = useState({}); 
-  const [credentialStatus, setCredentialStatus] = useState({}); 
-  
+  const [credentialStates, setCredentialStates] = useState({});
+  const [credentialStatus, setCredentialStatus] = useState({});
+
   const { appState, setAppState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
 
@@ -50,7 +50,7 @@ const TabTable = () => {
     credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
     credentialCall(getCredentialStatus, null, setCredentialStatus, onError, setUser);
     credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onError = (error, status) => {
@@ -64,29 +64,6 @@ const TabTable = () => {
     <div className="TabTableContent">
       <Tabs defaultActiveKey={appState.defaultActiveTabKey}>
         <TabPane
-          tab={<TabTooltip title={'Credenciales en uso'} tooltip={'Credenciales vigentes'} />}
-          key={'1'}
-        >
-          <CredentialTable
-            columns={getCredentialsColumns}
-            dataSource={getCredentials}
-            filters={activeCredentialsFilter}
-            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_ACTIVE] + "" }}
-          />
-        </TabPane>
-
-        <TabPane
-          tab={<TabTooltip title={'Credenciales revocadas'} tooltip={'Credenciales caducadas'} />}
-          key="2"
-        >
-          <CredentialTable
-            columns={getRevokedCredentialsColumns}
-            dataSource={getCredentials}
-            filters={activeCredentialsFilter}
-            defaultFilters={{ credentialState: credentialStates[CREDENTIAL_REVOKED] + ""}}
-          />
-        </TabPane>
-        <TabPane
           tab={
             <TabTooltip
               title={'Credenciales pendientes'}
@@ -99,9 +76,33 @@ const TabTable = () => {
             columns={getDidColumns}
             dataSource={getCredentials}
             filters={pendingDidFilter}
-            defaultFilters={{ credentialStatus: credentialStatus[CREDENTIAL_PENDING_DIDI]  + "" }}
+            defaultFilters={{ status: "PENDING" }}
           />
         </TabPane>
+        <TabPane
+          tab={<TabTooltip title={'Credenciales en uso'} tooltip={'Credenciales vigentes'} />}
+          key={'1'}
+        >
+          <CredentialTable
+            columns={getCredentialsColumns}
+            dataSource={getCredentials}
+            filters={activeCredentialsFilter}
+            defaultFilters={{ status: "ACTIVE" }}
+          />
+        </TabPane>
+
+        <TabPane
+          tab={<TabTooltip title={'Credenciales revocadas'} tooltip={'Credenciales caducadas'} />}
+          key="2"
+        >
+          <CredentialTable
+            columns={getRevokedCredentialsColumns}
+            dataSource={getCredentials}
+            filters={activeCredentialsFilter}
+            defaultFilters={{ status: "REVOKED" }}
+          />
+        </TabPane>
+
       </Tabs>
     </div>
   );

@@ -13,7 +13,7 @@ const CredentialActions = ({ history }) => {
 
   return (
     <>
-      <SyncModal syncCall={syncDidi} name="DIDI" />
+      {/* <SyncModal syncCall={syncDidi} name="DIDI" /> */}
       {/* <SyncModal syncCall={forceSyncBondarea} name="Bondarea" /> */}
       <ButtonPrimary onClick={addCredential} text="+ Crear nueva credencial" theme="primary" />
     </>

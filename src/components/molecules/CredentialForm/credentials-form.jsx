@@ -43,7 +43,7 @@ const getDefaultValues = fields => {
 
 
 const CredentialForm = ({ template, subject }) => {
-  const { savePrecredential } = api();
+  const { saveCredential } = api();
   const history = useHistory();
   const [fields, setFields] = useState([]);
   const { setAppState } = useContext(AppContext);
@@ -82,7 +82,7 @@ const CredentialForm = ({ template, subject }) => {
         onSubmit={(values, { setSubmitting }) => {
           console.log(`handle submit!`, values);
 
-          savePrecredential({
+          saveCredential({
             ...values,
             subject: subject?._id,
             template: template?._id

@@ -86,10 +86,7 @@ const AddCredentials = ({ history }) => {
         <div className='container'>
           <LabelContainer>Buscar el sujeto de la credencial</LabelContainer>
           <SubjectAutoComplete
-            onSubjectSelect={subject => {
-              console.log(subject);
-              setSubject(subject)
-            }}
+            onSubjectSelect={setSubject}
           />
         </div>
 

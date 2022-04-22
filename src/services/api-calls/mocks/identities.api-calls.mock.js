@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 import axios from "axios";
+const COOPSOL_BACKEND_URL = "http://localhost:3001";
+
 
 const identitiesRequests = [
   {
@@ -33,7 +35,7 @@ const identitiesRequests = [
     phone: "",
     email: "",
     requestState: "IN_PROGRESS"
-  },  
+  },
 ];
 
 const templates = [
@@ -55,12 +57,12 @@ const templates = [
     category: "Financiera",
     active: true
   },
-  
+
 ]
 
 const identitiesMock = () => ({
   getAny: (data) => {
-    
+
     const { url, params } = data;
     if (url === "/identityValidationRequests") {
       console.log(`get identity validation requests`)
@@ -74,8 +76,8 @@ const identitiesMock = () => ({
 
   },
 
-  getTemplates: (data)  => {
-    
+  getTemplates: (data) => {
+
     return {
       content: templates,
       totalElements: templates.length,
@@ -84,17 +86,49 @@ const identitiesMock = () => ({
   },
 
   searchSubject: async searchText => {
-    const response = await axios.get(`http://localhost:3001/subjects/search?term=${searchText}`); 
+    const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/search?term=${searchText}`);
     return response?.data?.data;
   },
 
 
-  savePrecredential: async data => {
-    //Submit data
-    console.log(data);
-    return true;
-    //const response = await axios.post(`http://localhost:3001/precredentials`, data);  //no va a tener el did? o si
-    //return response?.data?.data;
+  saveCredential: async (data) => {
+    const { subject, template, ...templateData } = data;
+    try {
+      const response = await axios.post(`${COOPSOL_BACKEND_URL}/credentials`, {
+        subject,
+        template,
+        data: templateData
+      });
+
+      console.log(response.data)
+
+      return response?.data?.data;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getCredentials: async data => {
+    try {
+      const response = await axios.get(`${COOPSOL_BACKEND_URL}/credentials`);
+      const credentials = response?.data?.data.map(credential => {
+        return ({
+          ...credential,
+          credentialType: credential?.template?.name,
+          name: `${credential?.subject?.lastname},${" "}${credential?.subject?.firstname}`,
+          dniBeneficiary: credential?.subject?.dni,
+          idDidiCredential: credential.did
+        })
+
+      });
+      return {
+        content: credentials,
+        totalElements: credentials.length,
+        size: 10 //page size
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 });
 

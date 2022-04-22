@@ -258,16 +258,16 @@ export const CREDENTIALS_TYPES = [
     fields: CREDENTIAL_FIELDS["identitaria"]
   },
   {
-    _id: "626024f11bf4955af2b180e4",
-    name: 'financiera',
-    label: 'Financiera',
-    fields: CREDENTIAL_FIELDS["financiera"]
-  },
-  {
     _id: "6260265d73fa72d8355664b3",
     name: 'socioeconomica',
     label: 'Socioeconómica',
     fields: CREDENTIAL_FIELDS["socioeconomica"]
+  },
+  {
+    _id: "626024f11bf4955af2b180e4",
+    name: 'financiera',
+    label: 'Financiera',
+    fields: CREDENTIAL_FIELDS["financiera"]
   },
   {
     _id: "6260258f82bebe55499b24f4",
