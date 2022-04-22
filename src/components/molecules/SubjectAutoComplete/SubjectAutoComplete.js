@@ -37,7 +37,7 @@ const SubjectAutoComplete = ({ onSubjectSelect }) => {
   return (
     <AutoComplete
       value={value}
-      style={{ width: 225 }}
+      style={{ width: 264 }}
       onSelect={onSelect}
       onSearch={onSearch}
       onChange={onChange}

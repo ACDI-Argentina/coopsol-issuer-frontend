@@ -236,6 +236,12 @@ export const CREDENTIAL_FIELDS = {
       type: "String",
     },
     {
+      name: "inicioActividades",
+      label: "Inicio de actividades",
+      description: "",
+      type: "Date",
+    },
+    {
       name: "cantidadColmenas",
       label: "Cantidad de colmenas",
       description: "",
