@@ -77,7 +77,13 @@ const identitiesMock = () => ({
 
   },
 
-  getTemplates: (data) => {
+  getTemplates: async () => {
+    const response = await axios.get(`${COOPSOL_BACKEND_URL}/templates`);
+    
+    const templates = response?.data?.data?.map(template => ({
+      ...template
+    })) ;
+    
 
     return {
       content: templates,
@@ -100,9 +106,6 @@ const identitiesMock = () => ({
         template,
         data: templateData
       });
-
-      console.log(response.data)
-
       return response?.data?.data;
     } catch (err) {
       console.log(err);

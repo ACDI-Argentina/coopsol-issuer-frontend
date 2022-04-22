@@ -2,13 +2,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
-import CredentialDetail from '../CredentialDetail/credential-detail';
+import TemplateDetail from '../TemplateDetail/template-detail';
 import { Table } from 'antd';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
 
-const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
+const TemplateTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
@@ -97,21 +97,21 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
         onSearch={onSearch}
       />
       <Table
-        rowKey={'key'}
+        rowKey={'_id'}
         columns={tableColumns}
         dataSource={credentials}
         scroll={{ x: 1300 }}
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
-      /*    expandable={
+        expandable={
            !noExpand && {
-             expandedRowRender: record => <CredentialDetail fields={record} />
+             expandedRowRender: record => <TemplateDetail template={record} />
            }
-         } */
+         } 
       />
     </div>
   );
 };
 
-export default CredentialTable;
+export default TemplateTable;

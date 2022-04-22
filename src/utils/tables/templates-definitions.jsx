@@ -1,21 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PROVIDERS_URL, TEMPLATES_URL } from '../constants';
+import { TEMPLATES_URL } from '../constants';
+
 
 export const templatesColumns = () => [
   {
     title: 'Modelo de credencial',
     dataIndex: 'name',
     key: 'name',
-    fixed: 'left',
     width: 200
   },
   {
-    title: 'Categoría',
-    dataIndex: 'category',
-    key: 'categoryName',
-    width: 115,
-    render: providerCategory => <span>{providerCategory.name}</span>
+    title: 'Ult. Actualización',
+    dataIndex: 'updatedAt',
+    key: 'updatedAt',
+    width: 90,
+    render: dateStr => <span>{dateStr}</span>
   },
   {
     title: 'Activo',
@@ -29,7 +29,7 @@ export const templatesColumns = () => [
     dataIndex: '',
     key: 'actions',
     fixed: 'right',
-    width: 120,
-    render: ({ id }) => <Link to={`${TEMPLATES_URL}/${id}`}>Editar</Link>
+    width: 50,
+    render: ({ _id }) => <Link to={`${TEMPLATES_URL}/${_id}`}>Editar</Link>
   }
 ];
