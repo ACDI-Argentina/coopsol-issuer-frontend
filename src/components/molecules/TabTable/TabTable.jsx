@@ -22,16 +22,14 @@ import {
 
 const { TabPane } = Tabs;
 
-const { getCredentials, getCredentialTypes, getCredentialStates, getCredentialStatus, getRevocationReasons } = api();
+const { getCredentials, getCredentialTypes, getRevocationReasons } = api();
 
 const TabTable = () => {
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
-  const [credentialStates, setCredentialStates] = useState({});
-  const [credentialStatus, setCredentialStatus] = useState({});
 
-  const { appState, setAppState } = useContext(AppContext);
+    const { appState, setAppState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
 
   const onSuccessGetReasons = reasons => {
@@ -43,8 +41,6 @@ const TabTable = () => {
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
-    credentialCall(getCredentialStates, null, setCredentialStates, onError, setUser);
-    credentialCall(getCredentialStatus, null, setCredentialStatus, onError, setUser);
     credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

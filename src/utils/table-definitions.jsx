@@ -26,10 +26,10 @@ export const getCredentialsColumns = fetchCredentials => [
 },
   {
     title: 'Ult. actualización',
-    dataIndex: 'lastUpdate',
-    key: 'lastUpdate',
+    dataIndex: 'updatedAt',
+    key: 'updatedAt',
     width: 180,
-    render: value => <div>{parseDate(value)}</div>
+    render: value => <div>{value}</div>
   },
   {
     title: 'Acciones',
