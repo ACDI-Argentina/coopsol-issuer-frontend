@@ -82,19 +82,14 @@ const CredentialForm = ({ template, subject }) => {
         onSubmit={(values, { setSubmitting }) => {
           console.log(`handle submit!`, values);
 
-          saveCredential({
+          await saveCredential({
             ...values,
             subject: subject?._id,
             template: template?._id
-          }); 
-          
+          });          
 
-          setTimeout(() => {
-            /* alert(JSON.stringify(values, null, 2)); */
-            setSubmitting(false);
-
-          }, 700);
-
+          setSubmitting(false);
+          goToCredentials();
         }}
       >
         {({

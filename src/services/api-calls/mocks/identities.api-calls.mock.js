@@ -114,6 +114,7 @@ const identitiesMock = () => ({
       const credentials = response?.data?.data.map(credential => {
         return ({
           ...credential,
+          key: credential._id,
           credentialType: credential?.template?.name,
           name: `${credential?.subject?.lastname},${" "}${credential?.subject?.firstname}`,
           dniBeneficiary: credential?.subject?.dni,
