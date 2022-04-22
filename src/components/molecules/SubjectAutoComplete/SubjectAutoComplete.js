@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AutoComplete } from 'antd';
-import subjects from './subjects';
+import api from "../../../services/api-calls/all";
 
 const { Option } = AutoComplete;
 
@@ -8,20 +8,21 @@ const SubjectAutoComplete = ({ onSubjectSelect }) => {
   const [value, setValue] = useState('');
   const [options, setOptions] = useState([]);
 
-  const onSearch = (searchText) => {
-    const lSearchText = searchText.toLowerCase();
-    setOptions(
-      !searchText ? [] : subjects.filter(subject => {
-        const matchName = subject.firstname.toLowerCase().includes(lSearchText);
-        const matchSurname = subject.lastname.toLowerCase().includes(lSearchText);
-        const matchDni = subject.dni.toLowerCase().includes(lSearchText);
-        return matchName || matchSurname || matchDni;
+  const onSearch = async (searchText) => {
+    const { searchSubject } = api();
 
-      }),
-    );
+    const lSearchText = searchText.toLowerCase();
+    if(!lSearchText) return setOptions([]);
+
+    //usar un timer para el throtle
+    const results = await searchSubject(searchText);
+    if(results){
+      setOptions(results);
+    }
   };
   const onSelect = (subjectId) => {
-    const subject = subjects.filter(s => s._id === subjectId)[0];
+    const subject = options.filter(s => s._id === subjectId)[0];
+    if(!subject) return;
     const data = subject;
     
     typeof onSubjectSelect === "function" && onSubjectSelect(data);
@@ -44,9 +45,11 @@ const SubjectAutoComplete = ({ onSubjectSelect }) => {
       placeholder="DNI o nombre"
     >
       {options.map(subject => (
-        <Option key={subject.firstname} value={subject._id} text={`${subject.lastname}, ${subject.firstname}`}>
+        <Option key={subject._id} value={subject._id}>
           <div>{`${subject.lastname}, ${subject.firstname}`}</div>
-          <div>{subject.dni}</div>
+          <div>DNI: {subject.dni}</div>
+          {subject.cuit && <div>CUIT: {subject.cuit}</div>}
+          
         </Option>
       ))}
     </AutoComplete>

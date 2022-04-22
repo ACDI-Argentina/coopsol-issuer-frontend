@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Input, DatePicker, Checkbox } from 'antd';
 
 
-const DynamicInput = ({ field, ...props }) => {
+const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
 
   let input = null; /* De alguna forma vamos a necesitar un ref y los valores ingresados*/
+
   switch (field.type) {
     case "String": {
       input = (
@@ -12,15 +13,8 @@ const DynamicInput = ({ field, ...props }) => {
           name={field.name}
           type="text"
           placeholder={field.description}
-          {...props}
-        />
-      );
-      break;
-    }
-    case "Date": {
-      input = (
-        <DatePicker
-          name={field.name}
+          value={value}
+          onChange={onChange}
           {...props}
         />
       );
@@ -32,6 +26,20 @@ const DynamicInput = ({ field, ...props }) => {
           name={field.name}
           type="number"
           placeholder={field.description}
+          onChange={onChange}
+          value={value}
+          {...props}
+        />
+      );
+      break;
+    }
+    case "Date": {
+      input = (
+        <DatePicker
+          name={field.name}
+          format="DD/MM/YYYY"
+          
+          onChange={(date, dateString) => setFieldValue(field.name, dateString)}
           {...props}
         />
       );

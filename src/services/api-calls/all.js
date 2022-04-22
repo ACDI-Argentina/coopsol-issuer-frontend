@@ -1,3 +1,4 @@
+import axios from "axios";
 import client from './http-client';
 import multiClient from './http-client-multipart';
 import user from './user.api-calls';
@@ -19,7 +20,8 @@ let all = () =>
   ? { 
     ...authMock(defaultClient), 
     ...userMock(defaultClient),
-    ...identitiesMock(defaultClient)
+    ...identitiesMock(defaultClient),
+    
   }
   : {
       ...auth(defaultClient),
@@ -27,7 +29,8 @@ let all = () =>
       ...file(multipartClient),
       ...downloads(blobClient),
       ...providers(defaultClient),
-      ...identities(defaultClient)
+      ...identities(defaultClient),
+      searchSubject: () => {}
     };
 
 export default all;

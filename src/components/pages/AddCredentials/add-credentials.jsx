@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import './_style.scss';
 import { Select } from 'antd';
 import TitlePage from '../../atoms/TitlePage/title-page';
-import FileUploader from '../../molecules/FileUploader/file-uploader';
-import { CREATED_CREDENTIALS } from '../../../utils/constants';
 import { CREDENTIALS_TYPES } from '../../../utils/credential-definitions';
 import CredentialForm from '../../molecules/CredentialForm/credentials-form';
 import SubjectAutoComplete from '../../molecules/SubjectAutoComplete/SubjectAutoComplete';
@@ -53,10 +51,11 @@ const LabelContainer =  styled.div`
 
 
 const AddCredentials = ({ history }) => {
-  const [source, setSource] = useState(CREDENTIALS_TYPES[0]);
+  const [credentialType, setCredentialType] = useState(CREDENTIALS_TYPES[0]);
+  const [subject, setSubject] = useState();
 
   const handleSourceChange = (v, option) => {
-    setSource(CREDENTIALS_TYPES[option.key]);
+    setCredentialType(CREDENTIALS_TYPES[option.key]);
   };
 
   return (
@@ -73,7 +72,7 @@ const AddCredentials = ({ history }) => {
 
           <Select
             className="credentialTypesSelect"
-            value={source.name}
+            value={credentialType.name}
             onChange={handleSourceChange}
           >
             {CREDENTIALS_TYPES.map((item, index) => (
@@ -89,6 +88,7 @@ const AddCredentials = ({ history }) => {
           <SubjectAutoComplete
             onSubjectSelect={subject => {
               console.log(subject);
+              setSubject(subject)
             }}
           />
         </div>
@@ -98,8 +98,9 @@ const AddCredentials = ({ history }) => {
 
       <FormContainer>
           <CredentialForm
-            type={source}
-          /* on submit.. */
+            /* type={credentialType} */ //credentials va a tener fields
+            template={credentialType}
+            subject={subject}
           />
       </FormContainer>
     </Wrapper>

@@ -98,28 +98,6 @@ export const CREDENTIALS_SOURCES = [
 ];
 
 
-/* Obtener desde el API e inyectarlos en el ctx */
-export const CREDENTIALS_TYPES = [
-  {
-    name: 'identitaria',
-    label: 'Identitaria',
-  },
-  {
-    name: 'financiera',
-    label: 'Financiera',
-  },
-  {
-    name: 'socioeconomica',
-    label: 'Socioeconómica',
-  },
-  {
-    name: 'productiva',
-    label: 'Productiva',
-  },
-  
-];
-
-
 export const CREDENTIAL_CATEGORIES = {
   identity: 'Identidad',
   identityHolder: 'Identidad - Titular',
@@ -130,13 +108,13 @@ export const CREDENTIAL_CATEGORIES = {
 export const CREDENTIAL_FIELDS = {
   "identitaria": [
     {
-      name: "Nombre",
+      name: "nombre",
       label: "Nombre",
       description: "Nombre completo",
       type: "String",
     },
     {
-      name: "DNI",
+      name: "dni",
       label: "DNI",
       description: "",
       type: "String",
@@ -158,7 +136,7 @@ export const CREDENTIAL_FIELDS = {
   ],
   "financiera": [
     {
-      name: "Nombre",
+      name: "nombre",
       label: "Nombre",
       description: "Nombre completo",
       type: "String",
@@ -197,7 +175,7 @@ export const CREDENTIAL_FIELDS = {
   ],
   "socioeconomica": [
     {
-      name: "Nombre",
+      name: "nombre",
       label: "Nombre",
       description: "Nombre completo",
       type: "String",
@@ -230,7 +208,7 @@ export const CREDENTIAL_FIELDS = {
   ],
   "productiva": [
     {
-      name: "Nombre",
+      name: "nombre",
       label: "Nombre",
       description: "Nombre completo",
       type: "String",
@@ -267,5 +245,35 @@ export const CREDENTIAL_FIELDS = {
         { name: "forestal", label: "Produccion Forestal" },
       ]
     },
-  ],
+  ], 
 }
+
+
+/* Obtener desde el API e inyectarlos en el ctx */
+export const CREDENTIALS_TYPES = [
+  {
+    _id: "626022deedea63168433b3d0",
+    name: 'identitaria',
+    label: 'Identitaria',
+    fields: CREDENTIAL_FIELDS["identitaria"]
+  },
+  {
+    _id: "626024f11bf4955af2b180e4",
+    name: 'financiera',
+    label: 'Financiera',
+    fields: CREDENTIAL_FIELDS["financiera"]
+  },
+  {
+    _id: "6260265d73fa72d8355664b3",
+    name: 'socioeconomica',
+    label: 'Socioeconómica',
+    fields: CREDENTIAL_FIELDS["socioeconomica"]
+  },
+  {
+    _id: "6260258f82bebe55499b24f4",
+    name: 'productiva',
+    label: 'Productiva',
+    fields: CREDENTIAL_FIELDS["productiva"]
+  },
+  
+];

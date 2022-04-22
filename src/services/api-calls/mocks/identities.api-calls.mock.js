@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-
+import axios from "axios";
 
 const identitiesRequests = [
   {
@@ -81,6 +81,20 @@ const identitiesMock = () => ({
       totalElements: templates.length,
       size: templates.length
     };
+  },
+
+  searchSubject: async searchText => {
+    const response = await axios.get(`http://localhost:3001/subjects/search?term=${searchText}`); 
+    return response?.data?.data;
+  },
+
+
+  savePrecredential: async data => {
+    //Submit data
+    console.log(data);
+    return true;
+    //const response = await axios.post(`http://localhost:3001/precredentials`, data);  //no va a tener el did? o si
+    //return response?.data?.data;
   }
 });
 

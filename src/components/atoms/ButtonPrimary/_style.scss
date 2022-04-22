@@ -59,6 +59,22 @@
   // }
 }
 
+.disabled {
+  background-color: $light-grey;
+  border: 1px solid $light-grey;
+  cursor: default;
+  p {
+    @include primary-title($body, $secondary-color);
+    color: $disabled-grey ;
+  }
+
+  // &:hover {
+  //   background: #01469C;
+  //   //box-shadow: $shadow-blue;
+  // }
+}
+
+
 .error {
   background-color: $white;
   border: 1px solid $error;
