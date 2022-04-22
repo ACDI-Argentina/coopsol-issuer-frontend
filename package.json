@@ -1,5 +1,5 @@
 {
-  "name": "semillas-middleware-frontend",
+  "name": "coopsol-issuer-frontend",
   "version": "1.0.21",
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
@@ -8,7 +8,7 @@
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
     "antd": "4.1.0",
-    "axios": "0.19.0",
+    "axios": "^0.19.2",
     "dotenv": "^16.0.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -53,6 +53,9 @@
     "eslint-plugin-unicorn": "14.0.1",
     "prettier": "1.19.1",
     "DIDI-SSI-Semillas-web-functional-test": "git+https://github.com/ong-bitcoin-argentina/DIDI-SSI-Semillas-web-functional-test.git"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "browserslist": {
     "production": [
