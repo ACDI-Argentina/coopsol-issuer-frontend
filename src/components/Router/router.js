@@ -15,7 +15,6 @@ import {
   CREATED_CREDENTIALS,
   PROVIDERS_URL,
   IDENTITIES_URL,
-  CREATE_PROVIDER_URL,
   REPORTS_URL,
   TEMPLATES_URL,
   CREATE_TEMPLATE_URL,
@@ -30,7 +29,6 @@ import SimpleHeader from '../molecules/SimpleHeader/simple-header';
 import CredentialCreated from '../pages/CredentialCreated/credential-created';
 import Providers from '../pages/Providers/providers';
 import Identities from '../pages/Identities/identities';
-import CreateProvider from '../pages/CreateProvider/create-provider';
 import Reports from '../pages/Reports/reports';
 import Templates from '../pages/Templates/templates';
 import CreateTemplate from '../pages/CreateTemplate/create-template';
@@ -71,26 +69,14 @@ const routesConfig = [
   { path: TEMPLATES_URL, component: Templates, requireAuthentication: true, exact: true },
   { path: REPORTS_URL, component: Reports, requireAuthentication: true, exact: true },
   {
-    path: CREATE_PROVIDER_URL,
-    component: CreateProvider,
-    requireAuthentication: true,
-    exact: true
-  },
-  {
-    path: `${PROVIDERS_URL}/:id`,
-    component: CreateProvider,
-    requireAuthentication: true,
-    exact: true
-  },
-  {
     path: CREATE_TEMPLATE_URL,
     component: CreateTemplate,
     requireAuthentication: true,
     exact: true
   },
   {
-    path: `${CREATE_TEMPLATE_URL}/:id`,
-    component: CreateProvider,
+    path: `${TEMPLATES_URL}/:id`,
+    component: CreateTemplate,
     requireAuthentication: true,
     exact: true
   },

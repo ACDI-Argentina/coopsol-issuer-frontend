@@ -4,9 +4,8 @@ import './_style.scss';
 import { templatesColumns } from '../../../utils/tables/templates-definitions';
 import apiCalls from '../../../services/api-calls/all';
 import TitlePage from '../../atoms/TitlePage/title-page';
-import CredentialTable from '../../molecules/CredentialTable/credential-table';
+import TemplateTable from '../../molecules/TemplateTable/template-table';
 import { defaultProviderFilters } from '../../../utils/tables/table-filters-definitions';
-import ProviderActions from '../../molecules/ProviderActions/provider-actions';
 import TemplateActions from '../../molecules/TemplateActions/template-actions';
 import { showErrorMessage } from '../../../utils/alertMessages';
 import { useApi } from '../../../services/useApi';
@@ -46,12 +45,11 @@ const Templates = () => {
       content={<TemplateActions />} 
       />
       <div className="templatesContent">
-        <CredentialTable
+        <TemplateTable
           columns={templatesColumns}
           dataSource={getTemplates}
           filters={filters}
           defaultFilters={{ page: 0 }}
-          noExpand
         />
       </div>
     </div>
