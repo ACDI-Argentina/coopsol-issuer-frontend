@@ -3,8 +3,6 @@
   "version": "1.0.21",
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@microsoft/applicationinsights-react-js": "3.1.0",
-    "@microsoft/applicationinsights-web": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
     "antd": "4.1.0",

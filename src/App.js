@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
+
 import { Router } from './components/Router/router';
 import 'antd/dist/antd.css';
 import { UserProvider } from './services/providers/user-context';
@@ -11,13 +11,7 @@ import moment from 'moment';
 import 'moment/locale/es';
 import dotenv from "dotenv";
 dotenv.config();
-
-/* import { reactPlugin } from "./components/Router/AppInsights.js"; */
-
 moment.locale('es');
-
-{/* <AppInsightsContext.Provider value={reactPlugin}>
-  </AppInsightsContext.Provider> */}
 
 const App = () => (
       <UserProvider>
