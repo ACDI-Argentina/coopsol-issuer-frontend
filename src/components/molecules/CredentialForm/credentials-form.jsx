@@ -79,7 +79,7 @@ const CredentialForm = ({ template, subject }) => {
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           console.log(`handle submit!`, values);
 
           await saveCredential({

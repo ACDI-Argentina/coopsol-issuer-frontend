@@ -14,16 +14,12 @@ import {
   getRevokedCredentialsColumns,
   getDidColumns
 } from '../../../utils/table-definitions';
-import {
-  CREDENTIAL_PENDING_DIDI,
-  CREDENTIAL_ACTIVE,
-  CREDENTIAL_REVOKED,
-} from '../../../utils/constants';
+
 import {
   defaultFilters,
   didCredentialsFilter
 } from '../../../utils/tables/table-filters-definitions';
-import { showErrorMessage } from '../../../utils/alertMessages';
+
 const { TabPane } = Tabs;
 
 const { getCredentials, getCredentialTypes, getCredentialStates, getCredentialStatus, getRevocationReasons } = api();
@@ -54,7 +50,7 @@ const TabTable = () => {
   }, []);
 
   const onError = (error, status) => {
-    showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
+    console.log('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
   };
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
