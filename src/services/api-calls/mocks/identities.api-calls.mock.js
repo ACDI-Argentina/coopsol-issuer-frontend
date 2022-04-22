@@ -1,8 +1,4 @@
 /* eslint-disable max-len */
-import axios from "axios";
-const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
-
-console.log(`Backend:`,COOPSOL_BACKEND_URL)
 
 const identitiesRequests = [
   {
@@ -39,31 +35,9 @@ const identitiesRequests = [
   },
 ];
 
-const templates = [
-  {
-    id: 1,
-    name: "Identitaria",
-    category: "Identitaria",
-    active: true
-  },
-  {
-    id: 2,
-    name: "Resiliencia Climática",
-    category: "Resiliencia Climática",
-    active: true
-  },
-  {
-    id: 3,
-    name: "Financiera",
-    category: "Financiera",
-    active: true
-  },
-
-]
 
 const identitiesMock = () => ({
   getAny: (data) => {
-
     const { url, params } = data;
     if (url === "/identityValidationRequests") {
       console.log(`get identity validation requests`)
@@ -74,67 +48,9 @@ const identitiesMock = () => ({
         size: identities.length
       };
     }
-
   },
 
-  getTemplates: async () => {
-    const response = await axios.get(`${COOPSOL_BACKEND_URL}/templates`);
-    
-    const templates = response?.data?.data?.map(template => ({
-      ...template
-    })) ;
-    
-
-    return {
-      content: templates,
-      totalElements: templates.length,
-      size: templates.length
-    };
-  },
-
-  searchSubject: async searchText => {
-    const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/search?term=${searchText}`);
-    return response?.data?.data;
-  },
-
-
-  saveCredential: async (data) => {
-    const { subject, template, ...templateData } = data;
-    try {
-      const response = await axios.post(`${COOPSOL_BACKEND_URL}/credentials`, {
-        subject,
-        template,
-        data: templateData
-      });
-      return response?.data?.data;
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  getCredentials: async data => {
-    try {
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/credentials`);
-      const credentials = response?.data?.data.map(credential => {
-        return ({
-          ...credential,
-          key: credential._id,
-          credentialType: credential?.template?.name,
-          name: `${credential?.subject?.lastname},${" "}${credential?.subject?.firstname}`,
-          dniBeneficiary: credential?.subject?.dni,
-          idDidiCredential: credential.did
-        })
-
-      });
-      return {
-        content: credentials,
-        totalElements: credentials.length,
-        size: 10 //page size
-      };
-    } catch (err) {
-      console.log(err);
-    }
-  }
+ 
 });
 
 export default identitiesMock;

@@ -10,6 +10,7 @@ import userMock from './mocks/user.api-calls.mock';
 import file from './file.api-calls';
 import downloads from './downloads.api-calls';
 import identitiesMock from './mocks/identities.api-calls.mock';
+import CoopsolBackend from './CooplsolBackend';
 
 const defaultClient = client({});
 const multipartClient = multiClient({});
@@ -21,6 +22,7 @@ let all = () =>
     ...authMock(defaultClient), 
     ...userMock(defaultClient),
     ...identitiesMock(defaultClient),
+    ...CoopsolBackend()
     
   }
   : {
@@ -30,6 +32,7 @@ let all = () =>
       ...downloads(blobClient),
       ...providers(defaultClient),
       ...identities(defaultClient),
+      ...CoopsolBackend(),
       searchSubject: () => {}
     };
 
