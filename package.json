@@ -32,7 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:mocked": "env-cmd -f .env.mocked react-scripts start",
-    "build": "react-scripts build",
+    "build": "env-cmd -f .env.mocked  react-scripts build",
     "lint": "./node_modules/.bin/eslint \"./**/*.js\" \"./**/*.jsx\"",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
