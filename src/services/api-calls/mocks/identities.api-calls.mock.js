@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import axios from "axios";
-const COOPSOL_BACKEND_URL = process.env.COOPSOL_BACKEND_URL;
+const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
 
 
 const identitiesRequests = [
