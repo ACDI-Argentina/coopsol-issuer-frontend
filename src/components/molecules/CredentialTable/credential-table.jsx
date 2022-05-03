@@ -74,7 +74,16 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   const onSuccess = data => {
     const { content, totalElements, size } = data;
 
-    setCredentials(content);
+    /* Apply filters! */
+    const filteredCredentials = content.filter(cred => {
+      if (defaultFilters?.status) {
+        return cred.status === defaultFilters?.status;
+      }
+      return true;
+    });
+
+    setCredentials(filteredCredentials); 
+
     setPagination({
       ...pagination,
       total: totalElements,

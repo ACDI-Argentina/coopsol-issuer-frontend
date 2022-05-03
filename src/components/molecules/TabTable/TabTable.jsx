@@ -51,6 +51,7 @@ const TabTable = () => {
 
   const activeCredentialsFilter = defaultFilters(credentialTypes);
   const pendingDidFilter = didCredentialsFilter(credentialTypes);
+  const revokedCredentialsFilter = defaultFilters(credentialTypes); //TODO: Implement
 
   return (
     <div className="TabTableContent">
@@ -79,18 +80,18 @@ const TabTable = () => {
             columns={getCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
-            defaultFilters={{ status: "ACTIVE" }}
+            defaultFilters={{ status: "ACTIVE" }} 
           />
         </TabPane>
 
         <TabPane
-          tab={<TabTooltip title={'Credenciales revocadas'} tooltip={'Credenciales caducadas'} />}
+          tab={<TabTooltip title={'Credenciales revocadas'} tooltip={'Credenciales revocadas'} />}
           key="2"
         >
           <CredentialTable
             columns={getRevokedCredentialsColumns}
             dataSource={getCredentials}
-            filters={activeCredentialsFilter}
+            filters={revokedCredentialsFilter}
             defaultFilters={{ status: "REVOKED" }}
           />
         </TabPane>

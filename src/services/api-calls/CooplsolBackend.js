@@ -52,7 +52,8 @@ const CoopsolBackend = () => ({
         })
       });
 
-      console.log(credentials)
+      /* console.log(credentials) */
+
       return {
         content: credentials,
         totalElements: credentials.length,
