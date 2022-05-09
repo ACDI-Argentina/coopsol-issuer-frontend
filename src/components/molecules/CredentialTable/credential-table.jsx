@@ -7,12 +7,17 @@ import { Table } from 'antd';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
+import { useCredentials } from '../../../context/CredentialsContext';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
   const [loading, setLoading] = useState(false);
+
+  
+  const { setSelection } = useCredentials();
+
   const [credentials, setCredentials] = useState([]);
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
@@ -97,6 +102,14 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     setLoading(false);
   };
 
+
+  const onSelectionChange = (selectedRowKeys, selectedRows) => {
+    setSelection(selectedRows)
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  };
+
+
+
   return (
     <div>
       <TableFilters
@@ -113,6 +126,10 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
         loading={loading}
         onChange={handleTableChange}
         pagination={pagination}
+        rowSelection={{
+          type: "checkbox",
+          onChange: onSelectionChange
+        }}
       /*    expandable={
            !noExpand && {
              expandedRowRender: record => <CredentialDetail fields={record} />
