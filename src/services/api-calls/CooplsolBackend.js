@@ -62,6 +62,23 @@ const CoopsolBackend = () => ({
     } catch (err) {
       console.log(err);
     }
+  },
+
+  getProducers: async data => {
+    try {
+      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects?sort=lastname`);
+      const producers = response?.data?.data;
+
+      console.log(producers) 
+
+      return {
+        content: producers,
+        totalElements: producers.length,
+        size: 10 //page size
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 })
 

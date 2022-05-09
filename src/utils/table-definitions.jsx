@@ -3,7 +3,7 @@ import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-
 import { parseDate } from './dateHelpers';
 
 const translateStatus = (str) => {
-  switch(str) {
+  switch (str) {
     case "PENDING": return "PENDIENTE";
     case "ACTIVE": return "VIGENTE";
     case "REVOKED": return "REVOCADA";
@@ -20,10 +20,26 @@ export const getCredentialsColumns = fetchCredentials => [
     key: 'credentialType',
     width: 180
   },
-  { title: 'DNI', dataIndex: 'dniBeneficiary', key: 'dniBeneficiary', width: 130 },
-  { title: 'Estado', dataIndex: 'status', key: 'status', width: 130,
+  {
+    title: 'DNI',
+    dataIndex: 'dniBeneficiary',
+    key: 'dniBeneficiary',
+    width: 130,
+    
+    render: value => {
+      if (value.length === 8) {
+        return `${value.substring(0, 2)}.${value.substring(2, 5)}.${value.substring(5, 8)}`
+      } else if (value.length === 7) {
+        return `${value.substring(0, 1)}.${value.substring(1, 4)}.${value.substring(4, 7)}`
+      } else {
+        return value;
+      }
+    }
+  },
+  {
+    title: 'Estado', dataIndex: 'status', key: 'status', width: 130,
     render: value => <div>{translateStatus(value)}</div>
-},
+  },
   {
     title: 'Ult. actualización',
     dataIndex: 'updatedAt',

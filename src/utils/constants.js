@@ -8,6 +8,7 @@ export const USER = 'user';
 export const ACCESS_TOKEN = 'accessToken';
 export const MENU = 'menu';
 export const CREDENTIALS_URL = '/credentials';
+export const PRODUCERS_URL = '/producers';
 export const ACTIVITIES_URL = '/activities';
 export const PROFILE_URL = '/profile';
 export const IDENTITIES_URL = '/identities';

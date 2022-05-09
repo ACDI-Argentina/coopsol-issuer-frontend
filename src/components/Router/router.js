@@ -18,7 +18,8 @@ import {
   REPORTS_URL,
   TEMPLATES_URL,
   CREATE_TEMPLATE_URL,
-  ADD_CREDENTIALS_BULK
+  ADD_CREDENTIALS_BULK,
+  PRODUCERS_URL
 } from '../../utils/constants';
 
 import history from './history';
@@ -32,6 +33,7 @@ import Identities from '../pages/Identities/identities';
 import Reports from '../pages/Reports/reports';
 import Templates from '../pages/Templates/templates';
 import CreateTemplate from '../pages/CreateTemplate/create-template';
+import Producers from '../pages/Producers/producers';
 
 const routesConfig = [
   {
@@ -64,6 +66,8 @@ const routesConfig = [
     exact: true,
     replaceHeader: SimpleHeader
   },
+  { path: PRODUCERS_URL, component: Producers, requireAuthentication: true, exact: true },
+
   { path: IDENTITIES_URL, component: Identities, requireAuthentication: true, exact: true },
   { path: PROVIDERS_URL, component: Providers, requireAuthentication: true, exact: true },
   { path: TEMPLATES_URL, component: Templates, requireAuthentication: true, exact: true },

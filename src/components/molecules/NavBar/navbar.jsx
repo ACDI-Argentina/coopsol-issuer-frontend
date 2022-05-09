@@ -8,6 +8,7 @@ import {
   ACTIVITIES_URL,
   TEMPLATES_URL,
   IDENTITIES_URL,
+  PRODUCERS_URL,
 } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
@@ -51,7 +52,8 @@ const NavBar = () => {
     <div className="Sidebar">
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
         {renderNavItem(CREDENTIALS_URL, 'Credenciales', <CredIcon className="credentials" />)}
-        {renderNavItem(IDENTITIES_URL, 'Solicitudes', <RequestIcon className="request" />)}
+        {renderNavItem(PRODUCERS_URL, 'Productores', <ListIcon className="producers" />)}
+        {/* {renderNavItem(IDENTITIES_URL, 'Solicitudes', <RequestIcon className="request" />)} */}
         {renderNavItem(TEMPLATES_URL, 'Tipos de credenciales', <ListIcon className="list" />)}
         {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
         <Menu.Item className="logoutBottom" onClick={() => signOut()}>
