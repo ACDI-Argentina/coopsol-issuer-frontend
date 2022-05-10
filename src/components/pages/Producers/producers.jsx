@@ -48,7 +48,7 @@ const Producers = ({ history }) => {
   return (
     <div className="Producers">
       <TitlePage
-        content={<ProducerActions history={history} />}
+        content={<ProducerActions setEditingProducer={setEditingProducer} history={history} />}
         history={history}
         text="Registro de productores"
       />
@@ -62,7 +62,7 @@ const Producers = ({ history }) => {
       </TableContainer>
       {editingProducer && (
         <Modal 
-          title="Editar productor"
+          title={editingProducer?._id ?"Editar productor":"Nuevo productor"}
           visible={editingProducer != undefined}
           onCancel={() => {
             console.log(`clear`)
