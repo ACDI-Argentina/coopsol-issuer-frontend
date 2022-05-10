@@ -12,6 +12,25 @@ const TableContainer = styled.div`
   padding: 1rem;
 `
 
+
+const formatDNI = value => {
+  if(value.length === 8){
+    return `${value.substring(0,2)}.${value.substring(2,5)}.${value.substring(5,8)}`
+  } else if(value.length === 7){
+    return `${value.substring(0,1)}.${value.substring(1,4)}.${value.substring(4,7)}`
+  } else {
+    return value;
+  }
+}
+
+const formatCUIT = value => {
+  if(value?.length === 11){
+    return `${value.substring(0,2)}-${value.substring(2, 10)}-${value.substring(10, 11)}`
+  } else {
+    return value;
+  }
+};
+
 const Producers = ({ history }) => {
   const { getProducers } = api();
   const [dataSource, setDataSource] = useState([]);
@@ -47,33 +66,32 @@ const Producers = ({ history }) => {
       dataIndex: 'dni',
       key: 'dni',
       width: 200,
-      render: value => {
-        if(value.length === 8){
-          return `${value.substring(0,2)}.${value.substring(2,5)}.${value.substring(5,8)}`
-        } else if(value.length === 7){
-          return `${value.substring(0,1)}.${value.substring(1,4)}.${value.substring(4,7)}`
-        }else {
-          return value;
-        }
-      }
+      render: formatDNI
     },
     {
       title: 'CUIT',
       dataIndex: 'cuit',
       key: 'cuit',
       width: 240,
-      render: value => {
-        if(value?.length === 11){
-          
-          return `${value.substring(0,2)}-${value.substring(2, 10)}-${value.substring(10, 11)}`
-        } else {
-          return value;
-        }
-      }
+      render: formatCUIT
     },
     {
       title: 'DID',
+      width: 240,
     },
+    {
+      title: 'Acciones',
+      key: 'operation',
+      fixed: 'right',
+      width: 100,
+      render: row => (
+        <div>
+          
+        </div>
+      )
+    },
+
+
   ];
 
 
@@ -86,6 +104,7 @@ const Producers = ({ history }) => {
       />
       <TableContainer>
         <Table
+          rowKey={'_id'}
           dataSource={dataSource}
           columns={columns}
         />

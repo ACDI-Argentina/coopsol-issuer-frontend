@@ -79,7 +79,20 @@ const CoopsolBackend = () => ({
     } catch (err) {
       console.log(err);
     }
+  },
+
+  deleteCredential: async id => {
+    try {
+      const response = await axios.delete(`${COOPSOL_BACKEND_URL}/credentials/${id}`);
+      const deleted = response?.data?.data;
+      return deleted;
+      
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+
 })
 
 
