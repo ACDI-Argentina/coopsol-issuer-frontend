@@ -9,10 +9,13 @@ export function useCredentials() {
 
 const CredentialsProvider = ({ children }) => {
 
-  const [credentials, setCredentials] = useState([]);
   const [selection,setSelection] = useState([]);
 
   const {deleteCredential} = api();
+
+  const emitCredential = credential => {
+    console.log(`emit single Credential `, credential)
+  }
 
   const emitCredentials = event => {
     console.log(`emitCredentials `, selection)
@@ -22,7 +25,6 @@ const CredentialsProvider = ({ children }) => {
     console.log(`deleteCredentials `, selection)
     for(const credential of selection){
       const deleted = await deleteCredential(credential._id);
-      setCredentials(credentials => credentials.filter(c => c._id !== deleted?._id ))
       setSelection(credentials => credentials.filter(c => c._id !== deleted?._id ))
     }
 
@@ -32,10 +34,9 @@ const CredentialsProvider = ({ children }) => {
   const value = {
     selection,
     setSelection,
+    emitCredential,
     emitCredentials,
     deleteCredentials,
-    credentials,
-    setCredentials
   }
 
   return (

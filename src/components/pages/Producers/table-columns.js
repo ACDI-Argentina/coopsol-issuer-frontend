@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { EditTwoTone } from '@ant-design/icons';
 
 
-const formatDNI = value => {
+export const formatDNI = value => {
   if (value.length === 8) {
     return `${value.substring(0, 2)}.${value.substring(2, 5)}.${value.substring(5, 8)}`
   } else if (value.length === 7) {
@@ -12,7 +12,7 @@ const formatDNI = value => {
   }
 }
 
-const formatCUIT = value => {
+export const formatCUIT = value => {
   if (value?.length === 11) {
     return `${value.substring(0, 2)}-${value.substring(2, 10)}-${value.substring(10, 11)}`
   } else {

@@ -3,14 +3,14 @@ import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import { useRedirect } from '../../Router/redirect';
 import { CREATE_PROVIDER_URL } from '../../../utils/constants';
 
-const ProviderActions = () => {
+const ProviderActions = ({setEditingProducer}) => {
   const { redirect, setUrlToRedirect } = useRedirect();
 
   return (
     <>
       {redirect()}
       <ButtonPrimary
-        onClick={() => {}/* implement */}
+        onClick={() => setEditingProducer({})}
         text="+ Nuevo Productor"
         theme="primary"
       />

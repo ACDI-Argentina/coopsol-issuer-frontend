@@ -39,6 +39,7 @@ const CoopsolBackend = () => ({
   },
 
   getCredentials: async data => {
+    console.log(`[CoopsolBackend]Get credentials`)
     try {
       const response = await axios.get(`${COOPSOL_BACKEND_URL}/credentials`);
       const credentials = response?.data?.data.map(credential => {

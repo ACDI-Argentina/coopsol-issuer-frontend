@@ -12,19 +12,21 @@ import { UserContext } from '../../../services/providers/user-context';
 import {
   getCredentialsColumns,
   getRevokedCredentialsColumns,
-  getDidColumns
+  getPendingCredentialColumns
 } from '../../../utils/table-definitions';
 
 import {
   defaultFilters,
   didCredentialsFilter
 } from '../../../utils/tables/table-filters-definitions';
+import { useCredentials } from '../../../context/CredentialsContext';
 
 const { TabPane } = Tabs;
 
 const { getCredentials, getCredentialTypes, getRevocationReasons } = api();
 
 const TabTable = () => {
+  const { emitCredential } = useCredentials();
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
@@ -66,7 +68,7 @@ const TabTable = () => {
           key="3"
         >
           <CredentialTable
-            columns={getDidColumns}
+            columns={() => getPendingCredentialColumns(() => console.log(`Fetch`), (item) => emitCredential(item))} 
             dataSource={getCredentials}
             filters={pendingDidFilter}
             defaultFilters={{ status: "PENDING" }}

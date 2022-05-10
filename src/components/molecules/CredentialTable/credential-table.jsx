@@ -10,17 +10,14 @@ import { showErrorMessage } from '../../../utils/alertMessages';
 import { useCredentials } from '../../../context/CredentialsContext';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
-  const [pagination, setPagination] = useState({
-    page: 0
-  });
+  const [pagination, setPagination] = useState({page: 0});
   const [loading, setLoading] = useState(false);
-
-  
-  const { credentials, setCredentials, setSelection } = useCredentials() || {};
-
+  const { setSelection } = useCredentials() || {};
+  const [credentials, setCredentials] = useState();
 
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
+  const [tableColumns, setTableColumns] = useState();
   const { setUser } = useContext(UserContext);
 
   const getCredentialData = useApi();
@@ -31,7 +28,10 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   };
 
 
+  
   const fetchCredentials = (page = 0) => {
+    console.log(`fetchCredentials ${new Date().toISOString()}`)
+    console.log(dataSource)
     setLoading(true);
     getCredentialData(
       dataSource,
@@ -42,7 +42,11 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     );
   };
 
-  const tableColumns = columns(fetchCredentials);
+  useEffect(() => {
+    const tableColumns = columns(fetchCredentials);
+    setTableColumns(tableColumns);
+  }, [])
+  
 
   const onSearch = () => {
     setPagination({ ...pagination, current: 1 });
@@ -55,7 +59,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     if (shouldPerformRequest(activeFilters)) {
       fetchCredentials(paged);
     }
-  }, [paged, defaultFilters]);
+  }, [paged, activeFilters]);
 
   useEffect(() => {
     let newFilters = defaultFilters ? defaultFilters : {};
@@ -78,7 +82,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
 
   const onSuccess = data => {
     const { content, totalElements, size } = data;
-
+    
     /* Apply filters! */
     const filteredCredentials = content.filter(cred => {
       if (defaultFilters?.status) {
@@ -86,8 +90,10 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
       }
       return true;
     });
-
-    setCredentials(filteredCredentials); 
+    
+    console.log(`Set credentials`, filteredCredentials)
+    //setCredentials(filteredCredentials);  //Si hacemos esto rompemos la tabla, necesitamos un estado para cada
+    setCredentials(filteredCredentials);
 
     setPagination({
       ...pagination,
