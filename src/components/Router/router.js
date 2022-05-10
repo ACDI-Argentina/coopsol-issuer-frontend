@@ -34,6 +34,7 @@ import Reports from '../pages/Reports/reports';
 import Templates from '../pages/Templates/templates';
 import CreateTemplate from '../pages/CreateTemplate/create-template';
 import Producers from '../pages/Producers/producers';
+import Producer from '../pages/Producer/Producer';
 
 const routesConfig = [
   {
@@ -67,6 +68,12 @@ const routesConfig = [
     replaceHeader: SimpleHeader
   },
   { path: PRODUCERS_URL, component: Producers, requireAuthentication: true, exact: true },
+  {
+    path: `${PRODUCERS_URL}/:id`,
+    component: Producer,
+    requireAuthentication: true,
+    exact: true
+  },
 
   { path: IDENTITIES_URL, component: Identities, requireAuthentication: true, exact: true },
   { path: PROVIDERS_URL, component: Providers, requireAuthentication: true, exact: true },

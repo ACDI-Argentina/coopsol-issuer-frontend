@@ -1,15 +1,15 @@
 import axios from "axios";
 const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
-console.log(`Coopsol backend:`,COOPSOL_BACKEND_URL)
+console.log(`Coopsol backend:`, COOPSOL_BACKEND_URL)
 
 const CoopsolBackend = () => ({
   getTemplates: async () => {
     const response = await axios.get(`${COOPSOL_BACKEND_URL}/templates`);
-    
+
     const templates = response?.data?.data?.map(template => ({
       ...template
-    })) ;
-    
+    }));
+
 
     return {
       content: templates,
@@ -69,7 +69,7 @@ const CoopsolBackend = () => ({
       const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects?sort=lastname`);
       const producers = response?.data?.data;
 
-      console.log(producers) 
+      console.log(producers)
 
       return {
         content: producers,
@@ -81,12 +81,42 @@ const CoopsolBackend = () => ({
     }
   },
 
+  createProducer: async data => {
+    const response = await axios.post(`${COOPSOL_BACKEND_URL}/subjects`, data);
+    const producer = response?.data?.data;
+    console.log(producer)
+    return producer;
+  },
+
+  updateProducer: async (id, data) => {
+    try {
+      const response = await axios.patch(`${COOPSOL_BACKEND_URL}/subjects/${id}`, data);
+      console.log(`Sent`)
+      const producer = response?.data?.data;
+      console.log(producer)
+      return producer;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getProducer: async id => {
+    try {
+      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/${id}`);
+      const producer = response?.data?.data;
+      console.log(producer)
+      return producer;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
   deleteCredential: async id => {
     try {
       const response = await axios.delete(`${COOPSOL_BACKEND_URL}/credentials/${id}`);
       const deleted = response?.data?.data;
       return deleted;
-      
+
     } catch (err) {
       console.log(err);
     }

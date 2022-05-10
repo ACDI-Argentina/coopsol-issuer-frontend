@@ -95,7 +95,6 @@ const AddCredentials = ({ history }) => {
 
       <FormContainer>
           <CredentialForm
-            /* type={credentialType} */ //credentials va a tener fields
             template={credentialType}
             subject={subject}
           />

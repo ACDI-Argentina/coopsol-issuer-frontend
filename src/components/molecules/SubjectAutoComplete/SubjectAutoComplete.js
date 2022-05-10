@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { AutoComplete } from 'antd';
+import { SafetyCertificateFilled } from '@ant-design/icons'
 import api from "../../../services/api-calls/all";
+import styled from 'styled-components';
 
 const { Option } = AutoComplete;
+
+const DidIndicator = styled.div`
+  position: absolute;
+  top:5px;
+  right:5px;
+`
 
 const SubjectAutoComplete = ({ onSubjectSelect }) => {
   const [value, setValue] = useState('');
@@ -12,24 +20,24 @@ const SubjectAutoComplete = ({ onSubjectSelect }) => {
     const { searchSubject } = api();
 
     const lSearchText = searchText.toLowerCase();
-    if(!lSearchText) return setOptions([]);
+    if (!lSearchText) return setOptions([]);
 
     //usar un timer para el throtle
     const results = await searchSubject(searchText);
-    if(results){
+    if (results) {
       setOptions(results);
     }
   };
   const onSelect = (subjectId) => {
     const subject = options.filter(s => s._id === subjectId)[0];
-    if(!subject) return;
+    if (!subject) return;
     const data = subject;
-    
+
     typeof onSubjectSelect === "function" && onSubjectSelect(data);
     setValue(`${subject.lastname}, ${subject.firstname}`);
   };
   const onChange = (data) => {
-    if(data === ""){
+    if (data === "") {
       typeof onSubjectSelect === "function" && onSubjectSelect(undefined);
     }
     setValue(data);
@@ -49,7 +57,12 @@ const SubjectAutoComplete = ({ onSubjectSelect }) => {
           <div>{`${subject.lastname}, ${subject.firstname}`}</div>
           <div>DNI: {subject.dni}</div>
           {subject.cuit && <div>CUIT: {subject.cuit}</div>}
-          
+          {subject.did && (
+            <DidIndicator title={subject.did}>
+              <SafetyCertificateFilled />
+            </DidIndicator>
+          )}
+
         </Option>
       ))}
     </AutoComplete>

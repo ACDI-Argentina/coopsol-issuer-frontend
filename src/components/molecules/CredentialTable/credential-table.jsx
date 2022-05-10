@@ -16,7 +16,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   const [loading, setLoading] = useState(false);
 
   
-  const { credentials, setCredentials, setSelection } = useCredentials();
+  const { credentials, setCredentials, setSelection } = useCredentials() || {};
 
 
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
