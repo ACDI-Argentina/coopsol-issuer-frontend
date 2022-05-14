@@ -112,12 +112,12 @@ const CredentialForm = ({ template, subject }) => {
 
           const data = {
             "cert": certFields,
-            "participant": participantFields,
+            "participant": [participantFields],
             "others": othersFields,
           }
 
 
-          const result = await DidiBackend().credentials.create({
+          const result = await DidiBackend().credentials.create({ 
             data: JSON.stringify(data),
             split: false,
             microCredentials:[],
