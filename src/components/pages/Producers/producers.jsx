@@ -64,6 +64,7 @@ const Producers = ({ history }) => {
         <Modal 
           title={editingProducer?._id ?"Editar productor":"Nuevo productor"}
           visible={editingProducer != undefined}
+          footer={null}
           onCancel={() => {
             console.log(`clear`)
             setEditingProducer();

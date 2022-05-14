@@ -4,9 +4,9 @@
     text-align: center;
   }
 
-  .ant-modal-footer {
+  /* .ant-modal-footer {
     display: none;
-  }
+  } */
 
   .title h1 {
     @include primary-title($title-secondary, $secondary-color);

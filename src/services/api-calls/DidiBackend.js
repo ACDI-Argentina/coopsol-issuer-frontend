@@ -13,23 +13,20 @@ const config = {
 
 const DidiBackend = () => ({
   templates: {
-
-    async find(){
+    async find() {
       const response = await axios.get(`${ISSUER_BACKEND_URL}/template/all`, config);
       const apiResponse = response.data;
       const templates = apiResponse?.data;
-      
+
       return templates
-                .filter(t => t.name.includes("Coopsol"))
-                .map(t => ({...t, name: t.name.split("-")[1].trim()}))
-                .sort((a,b) => new Date(a.createdOn) > new Date(b.createdOn)? 1: -1 );
+        .filter(t => t.name.includes("Coopsol"))
+        .map(t => ({ ...t, name: t.name.split("-")[1].trim() }))
+        .sort((a, b) => new Date(a.createdOn) > new Date(b.createdOn) ? 1 : -1);
 
     },
-    async create(data){ //data: name & registerId
+    async create(data) {
       const response = await axios.post(`${ISSUER_BACKEND_URL}/template`, data, config);
-      const apiResponse = response.data;
-      return apiResponse?.data;
-
+      return response.data;
     },
 
     async get(id) {
@@ -42,16 +39,17 @@ const DidiBackend = () => ({
       const apiResponse = await axios.put(`${ISSUER_BACKEND_URL}/template/${id}`, data, config);
       return apiResponse.data;
     },
+
+    async delete(id) {
+      const apiResponse = await axios.delete(`${ISSUER_BACKEND_URL}/template/${id}`, config);
+      return apiResponse.data;
+    }
   },
 
-  credentials:{
+  credentials: {
     async create(data) {
       const response = await axios.post(`${ISSUER_BACKEND_URL}/cert`, data, config);
-      const apiResponse = response.data;
-      
-      console.log(apiResponse);
-
-      return apiResponse?.data;
+      return response?.data;
     },
   }
 

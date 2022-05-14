@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import { DeleteOutlined, EditTwoTone } from '@ant-design/icons';
-import { Button } from 'antd';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import DeleteTemplateButton from '../../components/molecules/Templates/buttons/DeleteTemplateButton';
+import TemplateDeletionModal from '../../components/molecules/Templates/modals/TemplateDeletionModal';
 import { TEMPLATES_URL } from '../constants';
 
 
@@ -24,20 +25,17 @@ export const templatesColumns = () => [
     key: 'actions',
     fixed: 'right',
     width: 50,
-    render: ({ _id }) => {
+    render: (template) => {
+
       return (
         <>
-          <Link title="Editar" to={`${TEMPLATES_URL}/${_id}`}>
+          <Link title="Editar" to={`${TEMPLATES_URL}/${template._id}`}>
             <EditTwoTone />
           </Link>
-          <Button
-            title="Eliminar"
-            type='link'
-            style={{ border: "0px" }}
-            onClick={() => console.log(`Confirm deletion of template ${_id}`)}
-          >
-            <DeleteOutlined />
-          </Button>
+          <DeleteTemplateButton template={template}/>
+          
+
+        
         </>
 
       )

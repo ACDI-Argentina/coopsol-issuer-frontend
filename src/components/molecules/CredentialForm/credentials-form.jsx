@@ -10,6 +10,7 @@ import DynamicInput from '../DynamicInput/DynamicInput';
 
 import api from "../../../services/api-calls/all"
 import DidiBackend from '../../../services/api-calls/DidiBackend';
+import { message } from 'antd';
 
 const Container = styled.div`
   flex: 1;
@@ -72,7 +73,9 @@ const CredentialForm = ({ template, subject }) => {
 
   const { setAppState } = useContext(AppContext);
 
-
+  useEffect(() =>{
+    
+  },[])
 
   useEffect(() => {
     if (template?.data) {
@@ -122,7 +125,7 @@ const CredentialForm = ({ template, subject }) => {
         validate={(values) => {
           const errors = {};
           fields.filter(f => f.required).map(f => f.name).forEach(fieldName => {
-            if(!values[fieldName] || (typeof values[fieldName] === "string" && values[fieldName]?.trim() === "")){
+            if (!values[fieldName] || (typeof values[fieldName] === "string" && values[fieldName]?.trim() === "")) {
               errors[fieldName] = "Requerido";
             }
           });
@@ -132,21 +135,29 @@ const CredentialForm = ({ template, subject }) => {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log(`handle submit!`, values);
+          try {
+            const data = getDataFromFields(credentialName, fields, values);
+            setSubmitting(true);
+            const result = await DidiBackend().credentials.create({
+              data: JSON.stringify(data),
+              split: false,
+              microCredentials: [],
+              templateId: template._id
+            })
 
-          //Moverlo a una function getDataFromFields
-          const data = getDataFromFields(credentialName, fields, values);
-
-          //console.log(data);
-          return;
-          const result = await DidiBackend().credentials.create({
-            data: JSON.stringify(data),
-            split: false,
-            microCredentials: [],
-            templateId: template._id
-          })
-
-          console.log(result)
+            if (result.status === "success") {
+              message.success(`Credencial creada exitosamente`);
+              setSubmitting(false);
+              return goToCredentials();
+            } else {
+              message.error(`Ha ocurrido un error al crear la credencial, intente nuevamente`);
+            }
+            setSubmitting(false);
+            
+          } catch (err) {
+            setSubmitting(false);
+            console.log(err);
+          }
 
           //tener en cuenta que si el subject no tiene did podriamos crear una precredencial para emitir despues una vez que tengamos el did
           /* 
