@@ -14,14 +14,22 @@ const Templates = () => {
   
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState({});
+  const [loading, setLoading] = useState(false);
   const [templates, setTemplates] = useState([]);
 
   
   useEffect(() => {
     (async function(){
-      const templates = await DidiBackend().templates.find();
-      setTemplates(templates)
-      console.log(templates)
+      try{
+        setLoading(true);
+        const templates = await DidiBackend().templates.find();
+        setTemplates(templates)
+        setLoading(false);
+
+      } catch(err){
+        setLoading(false);
+        console.log(err);
+      }
 
     })()
   },[])
@@ -49,6 +57,7 @@ const Templates = () => {
       />
       <div className="templatesContent">
         <TemplateTable
+          loading={loading}
           columns={templatesColumns}
           templates={templates}
           filters={filters}

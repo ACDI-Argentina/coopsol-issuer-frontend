@@ -4,11 +4,11 @@ import './_style.scss';
 
 import { Table } from 'antd';
 
-const TemplateTable = ({ templates, columns, defaultFilters }) => {
+const TemplateTable = ({ loading, templates, columns, defaultFilters }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
-  const [loading, setLoading] = useState(false);
+  
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
   

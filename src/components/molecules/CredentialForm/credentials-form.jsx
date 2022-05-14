@@ -12,6 +12,17 @@ import api from "../../../services/api-calls/all"
 import DidiBackend from '../../../services/api-calls/DidiBackend';
 import { message } from 'antd';
 
+/* const Values = styled.div`
+  border: 2px solid red;
+  position: absolute;
+  z-index: 2;
+  left: 50px;
+  background-color:white;
+  max-width: 400px;
+  padding: 20px;
+
+` */
+
 const Container = styled.div`
   flex: 1;
   max-width: 550px; /* Add media query */
@@ -73,9 +84,9 @@ const CredentialForm = ({ template, subject }) => {
 
   const { setAppState } = useContext(AppContext);
 
-  useEffect(() =>{
-    
-  },[])
+  useEffect(() => {
+
+  }, [])
 
   useEffect(() => {
     if (template?.data) {
@@ -153,7 +164,7 @@ const CredentialForm = ({ template, subject }) => {
               message.error(`Ha ocurrido un error al crear la credencial, intente nuevamente`);
             }
             setSubmitting(false);
-            
+
           } catch (err) {
             setSubmitting(false);
             console.log(err);
@@ -185,7 +196,6 @@ const CredentialForm = ({ template, subject }) => {
             <Title>
               {credentialName}
             </Title>
-
 
             {fields?.map((field, idx) => (
               <InputContainer key={idx}>

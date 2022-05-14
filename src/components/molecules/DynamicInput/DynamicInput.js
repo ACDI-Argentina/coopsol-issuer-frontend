@@ -58,7 +58,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
           format="DD/MM/YYYY"
           status={error ? "error" : ""}
           onChange={(date, dateString) => {
-            typeof setFieldValue === "function" && setFieldValue(field.name, dateString);
+            typeof setFieldValue === "function" && setFieldValue(field.name, date.toISOString());
             typeof onChange === "function" && onChange({ target: { value: dateString } });
           }}
           {...props}

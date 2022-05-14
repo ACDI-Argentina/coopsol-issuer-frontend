@@ -62,6 +62,8 @@ const AddCredentials = ({ }) => {
       const templates = await DidiBackend().templates.find();
       console.log(templates)
       setTemplates(templates)
+      const template = await DidiBackend().templates.get(templates[0]._id);
+      setTemplate(template);
     })();
   }, [])
 

@@ -70,6 +70,7 @@ const AddFieldModal = ({ closeModal, onOk, ...props }) => {
   return (
     <Modal
       title="Agregar campo"
+      footer={null}
       destroyOnClose={true}
       {...props}
     >

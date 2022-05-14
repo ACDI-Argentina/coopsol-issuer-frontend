@@ -302,7 +302,7 @@ const TemplateForm = ({ template, onSuccess }) => {
                   console.log(response.data);
                   setSubmitting(false);
 
-                  await message.success("Template actualizado exitosamente");
+                  message.success("Template actualizado exitosamente");
                   typeof onSuccess === "function" && onSuccess();
                 }
   
