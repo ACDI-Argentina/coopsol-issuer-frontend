@@ -41,10 +41,25 @@ const Title = styled.div`
 `
 
 const getDefaultValues = fields => {
-  return fields?.map(field => ({name: field.name, value: field?.defaultValue || '' })).reduce(
+  return fields?.map(field => ({ name: field.name, value: field?.defaultValue || '' })).reduce(
     (prev, current) => prev ? { ...prev, [current.name]: current.value } : { [current.name]: current.value },
     {}
   );
+}
+
+
+const getDataFromFields = (credentialName, fields, values) => {
+  let certFields = fields.filter(f => f.section === "cert").map(f => ({ name: f.name, value: values[f.name] }));
+  const participantFields = fields.filter(f => f.section === "participant").map(f => ({ name: f.name, value: values[f.name] }));
+  const othersFields = fields.filter(f => f.section === "others").map(f => ({ name: f.name, value: values[f.name] }));
+
+  certFields = [{ name: "CREDENCIAL", value: credentialName }, ...certFields];
+
+  return {
+    "cert": certFields,
+    "participant": [participantFields],
+    "others": othersFields,
+  }
 }
 
 
@@ -53,6 +68,7 @@ const CredentialForm = ({ template, subject }) => {
   const history = useHistory();
   const [fields, setFields] = useState([]);
   const [credentialName, setCredentialName] = useState("");
+  const [thereAreErrors, setThereAreErrors] = useState(false);
 
   const { setAppState } = useContext(AppContext);
 
@@ -61,6 +77,7 @@ const CredentialForm = ({ template, subject }) => {
   useEffect(() => {
     if (template?.data) {
 
+      //getFieldsFromTemplate
       const credentialName = template?.data?.cert?.filter(field => field.name === "CREDENCIAL")[0].defaultValue;
       const certFields = template?.data?.cert?.filter(field => field.name !== "CREDENCIAL").map(field => ({ ...field, section: "cert" }));
       const participantFields = template?.data?.participant.map(field => ({ ...field, section: "participant" }))
@@ -71,14 +88,14 @@ const CredentialForm = ({ template, subject }) => {
 
       setFields([
         ...certFields,
-        ...participantFields, //a los valores para estos campos los vamos a sacar del subject, y van a ser de solo lectura
+        ...participantFields, //a los valores para estos campos los vamos a sacar del subject, y deberian ser de solo lectura
         ...othersFields,
       ]);
 
     }
   }, [template])
-  
-  
+
+
   const goToCredentials = defaultActiveTabKey => {
     setAppState({ defaultActiveTabKey });
     history.push('/credentials');
@@ -92,7 +109,7 @@ const CredentialForm = ({ template, subject }) => {
     DNI: `${subject?.dni || ''}`,
   }
 
-  
+
   return (
 
     <Container>
@@ -100,33 +117,38 @@ const CredentialForm = ({ template, subject }) => {
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validateOnChange={thereAreErrors}
+        validateOnBlur={thereAreErrors}
+        validate={(values) => {
+          const errors = {};
+          fields.filter(f => f.required).map(f => f.name).forEach(fieldName => {
+            if(!values[fieldName] || (typeof values[fieldName] === "string" && values[fieldName]?.trim() === "")){
+              errors[fieldName] = "Requerido";
+            }
+          });
+
+          setThereAreErrors(Object.keys(errors).length > 0);
+
+          return errors;
+        }}
         onSubmit={async (values, { setSubmitting }) => {
           console.log(`handle submit!`, values);
-    
-          let certFields = fields.filter(f => f.section === "cert").map(f => ({ name: f.name, value: values[f.name] }));
-          const participantFields = fields.filter(f => f.section === "participant").map(f => ({ name: f.name, value: values[f.name] }));
-          const othersFields = fields.filter(f => f.section === "others").map(f => ({ name: f.name, value: values[f.name] }));
 
-          certFields = [{ name: "CREDENCIAL", value: credentialName }, ...certFields];
+          //Moverlo a una function getDataFromFields
+          const data = getDataFromFields(credentialName, fields, values);
 
-
-          const data = {
-            "cert": certFields,
-            "participant": [participantFields],
-            "others": othersFields,
-          }
-
-
-          const result = await DidiBackend().credentials.create({ 
+          //console.log(data);
+          return;
+          const result = await DidiBackend().credentials.create({
             data: JSON.stringify(data),
             split: false,
-            microCredentials:[],
+            microCredentials: [],
             templateId: template._id
           })
 
           console.log(result)
 
-           //tener en cuenta que si no tenemos subject podriamos crear una precredencial para emitir despues una vez que tengamos el did
+          //tener en cuenta que si el subject no tiene did podriamos crear una precredencial para emitir despues una vez que tengamos el did
           /* 
                     await saveCredential({
                       ...values,
@@ -164,6 +186,7 @@ const CredentialForm = ({ template, subject }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   setFieldValue={setFieldValue}
+                  error={errors[field.name]}
                 />
               </InputContainer>
             ))}
@@ -171,10 +194,10 @@ const CredentialForm = ({ template, subject }) => {
             <FormButtons>
 
               <ButtonPrimary
-                disabled={isSubmitting}
+                disabled={isSubmitting || Object.keys(errors).length > 0}
                 type="submit"
                 text="Guardar"
-                theme={`ThemePrimary ${isSubmitting ? "disabled" : ""}`}
+                theme={`ThemePrimary ${isSubmitting || Object.keys(errors).length > 0 ? "disabled" : ""}`}
               />
             </FormButtons>
 

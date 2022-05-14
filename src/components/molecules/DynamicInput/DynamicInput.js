@@ -1,10 +1,11 @@
+import { Typography } from 'antd';
 import React, { useState, useContext, useEffect } from 'react';
 import { Input, DatePicker, Checkbox } from 'antd';
+const { Text } = Typography;
 
+const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }) => {
 
-const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
-
-  let input = null; /* De alguna forma vamos a necesitar un ref y los valores ingresados*/
+  let input = null;
 
   switch (field.type) {
     case "Text":
@@ -16,6 +17,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
           placeholder={field.description}
           value={value}
           onChange={onChange}
+          status={error ? "error" : ""}
           {...props}
         />
       );
@@ -29,6 +31,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
           placeholder={field.description}
           value={value}
           onChange={onChange}
+          status={error ? "error" : ""}
           {...props}
         />
       );
@@ -42,6 +45,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
           placeholder={field.description}
           value={value}
           onChange={onChange}
+          status={error ? "error" : ""}
           {...props}
         />
       );
@@ -52,6 +56,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
         <DatePicker
           name={field.name}
           format="DD/MM/YYYY"
+          status={error ? "error" : ""}
           onChange={(date, dateString) => {
             typeof setFieldValue === "function" && setFieldValue(field.name, dateString);
             typeof onChange === "function" && onChange({ target: { value: dateString } });
@@ -85,9 +90,14 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
       );
       break;
     }
-   
+
   }
 
-  return input;
+  return (
+    <>
+      {input}
+      {error && ( <Text type="danger">{error}</Text>)}
+    </>
+  );
 }
 export default DynamicInput;
