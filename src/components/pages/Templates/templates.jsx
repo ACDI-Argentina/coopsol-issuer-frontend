@@ -2,26 +2,29 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './_style.scss';
 import { templatesColumns } from '../../../utils/tables/templates-definitions';
-import apiCalls from '../../../services/api-calls/all';
+
 import TitlePage from '../../atoms/TitlePage/title-page';
 import TemplateTable from '../../molecules/TemplateTable/template-table';
 import { defaultProviderFilters } from '../../../utils/tables/table-filters-definitions';
 import TemplateActions from '../../molecules/TemplateActions/template-actions';
-import { showErrorMessage } from '../../../utils/alertMessages';
-import { useApi } from '../../../services/useApi';
-import { UserContext } from '../../../services/providers/user-context';
 
-const onError = (error, status) => {
-  showErrorMessage('No se pudieron obtener los tipos de filtro, intente nuevamente.', error);
-};
+import DidiBackend from '../../../services/api-calls/DidiBackend';
 
 const Templates = () => {
-  const { getTemplates } = apiCalls();
-  const filtersCall = useApi();
+  
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState({});
-  const { setUser } = useContext(UserContext);
+  const [templates, setTemplates] = useState([]);
 
+  
+  useEffect(() => {
+    (async function(){
+      const templates = await DidiBackend().templates.find();
+      setTemplates(templates)
+      console.log(templates)
+
+    })()
+  },[])
 
   const formatCategories = () => {
     if (categories) {
@@ -47,7 +50,7 @@ const Templates = () => {
       <div className="templatesContent">
         <TemplateTable
           columns={templatesColumns}
-          dataSource={getTemplates}
+          templates={templates}
           filters={filters}
           defaultFilters={{ page: 0 }}
         />

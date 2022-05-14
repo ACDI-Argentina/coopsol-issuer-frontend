@@ -251,29 +251,25 @@ export const CREDENTIAL_FIELDS = {
 
 /* Obtener desde el API e inyectarlos en el ctx */
 export const CREDENTIALS_TYPES = [
-  {
+/*   {
     _id: "626022deedea63168433b3d0",
     name: 'identitaria',
-    label: 'Identitaria',
     fields: CREDENTIAL_FIELDS["identitaria"]
   },
   {
     _id: "6260265d73fa72d8355664b3",
     name: 'socioeconomica',
-    label: 'Socioeconómica',
     fields: CREDENTIAL_FIELDS["socioeconomica"]
   },
   {
     _id: "626024f11bf4955af2b180e4",
     name: 'financiera',
-    label: 'Financiera',
     fields: CREDENTIAL_FIELDS["financiera"]
   },
   {
     _id: "6260258f82bebe55499b24f4",
     name: 'productiva',
-    label: 'Productiva',
     fields: CREDENTIAL_FIELDS["productiva"]
   },
-  
+   */
 ];

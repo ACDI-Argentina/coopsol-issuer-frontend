@@ -25,7 +25,8 @@ const CredentialsProvider = ({ children }) => {
     console.log(`deleteCredentials `, selection)
     for(const credential of selection){
       const deleted = await deleteCredential(credential._id);
-      setSelection(credentials => credentials.filter(c => c._id !== deleted?._id ))
+      setSelection(selection => selection.filter(c => c._id !== deleted?._id ))
+      /* Actualizar tabla */
     }
 
   }

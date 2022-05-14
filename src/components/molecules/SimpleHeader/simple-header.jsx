@@ -11,8 +11,10 @@ const SimpleHeader = () => {
 
   return (
     <div className="SimpleHeader">
-      <img src="/img/back.svg" alt=""/>
-      <Button onClick={onBack}>Volver</Button>
+      <Button onClick={onBack}>
+        <img src="/img/back.svg" alt="" style={{margin: "0px 10px"}}/>
+        Volver
+      </Button>
     </div>
   );
 };

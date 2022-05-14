@@ -7,9 +7,23 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
   let input = null; /* De alguna forma vamos a necesitar un ref y los valores ingresados*/
 
   switch (field.type) {
+    case "Text":
     case "String": {
       input = (
         <Input
+          name={field.name}
+          type="text"
+          placeholder={field.description}
+          value={value}
+          onChange={onChange}
+          {...props}
+        />
+      );
+      break;
+    }
+    case "Paragraph": {
+      input = (
+        <Input.TextArea
           name={field.name}
           type="text"
           placeholder={field.description}
@@ -26,8 +40,8 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
           name={field.name}
           type="number"
           placeholder={field.description}
-          onChange={onChange}
           value={value}
+          onChange={onChange}
           {...props}
         />
       );
@@ -38,8 +52,10 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
         <DatePicker
           name={field.name}
           format="DD/MM/YYYY"
-          
-          onChange={(date, dateString) => setFieldValue(field.name, dateString)}
+          onChange={(date, dateString) => {
+            typeof setFieldValue === "function" && setFieldValue(field.name, dateString);
+            typeof onChange === "function" && onChange({ target: { value: dateString } });
+          }}
           {...props}
         />
       );
@@ -69,17 +85,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, ...props }) => {
       );
       break;
     }
-    case "Paragraph": {
-      input = (
-        <Input.TextArea
-          name={field.name}
-          type=""
-          placeholder={field.description}
-          {...props}
-        />
-      );
-      break;
-    }
+   
   }
 
   return input;

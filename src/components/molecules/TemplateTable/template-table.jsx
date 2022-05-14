@@ -1,25 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './_style.scss';
-import TableFilters from '../TableFilters/table-filters';
-import TemplateDetail from '../TemplateDetail/template-detail';
-import { Table } from 'antd';
-import { useApi } from '../../../services/useApi';
-import { UserContext } from '../../../services/providers/user-context';
-import { showErrorMessage } from '../../../utils/alertMessages';
 
-const TemplateTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
+import { Table } from 'antd';
+
+const TemplateTable = ({ templates, columns, defaultFilters }) => {
   const [pagination, setPagination] = useState({
     page: 0
   });
   const [loading, setLoading] = useState(false);
-  const [credentials, setCredentials] = useState([]);
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
-  const { setUser } = useContext(UserContext);
-
-  const getCredentialData = useApi();
-
+  
   const handleTableChange = pagination => {
     setPagination(pagination);
     setPaged(pagination.current - 1);
@@ -27,24 +19,10 @@ const TemplateTable = ({ dataSource, columns, defaultFilters, filters, noExpand 
 
 
   const fetchCredentials = (page = 0) => {
-    setLoading(true);
-    getCredentialData(
-      dataSource,
-      { ...activeFilters, page },
-      onSuccess,
-      onError,
-      setUser
-    );
+
   };
 
   const tableColumns = columns(fetchCredentials);
-
-  const onSearch = () => {
-    setPagination({ ...pagination, current: 1 });
-    setPaged(0);
-    fetchCredentials();
-  };
-
 
   useEffect(() => {
     if (shouldPerformRequest(activeFilters)) {
@@ -67,50 +45,20 @@ const TemplateTable = ({ dataSource, columns, defaultFilters, filters, noExpand 
     return keys.length > 0;
   };
 
-  const onApplyFilter = filter => {
-    defaultFilters ? setActiveFilters({ ...filter, ...defaultFilters }) : setActiveFilters(filter);
-  };
-
-  const onSuccess = data => {
-    const { content, totalElements, size } = data;
-
-    setCredentials(content);
-    setPagination({
-      ...pagination,
-      total: totalElements,
-      pageSize: size
-    });
-    setLoading(false);
-  };
-
-  const onError = (error, status) => {
-    showErrorMessage('No se pudieron obtener las credenciales, intente nuevamente.', status);
-    setLoading(false);
-  };
 
   return (
-    <div>
-      <TableFilters
-        onApplyFilter={onApplyFilter}
-        filters={filters}
-        defaultFilters={activeFilters}
-        onSearch={onSearch}
-      />
-      <Table
-        rowKey={'_id'}
-        columns={tableColumns}
-        dataSource={credentials}
-        scroll={{ x: 1300 }}
-        loading={loading}
-        onChange={handleTableChange}
-        pagination={pagination}
-        expandable={
-           !noExpand && {
-             expandedRowRender: record => <TemplateDetail template={record} />
-           }
-         } 
-      />
-    </div>
+
+    <Table
+      rowKey={'_id'}
+      columns={tableColumns}
+      dataSource={templates}
+      scroll={{ x: 1300 }}
+      loading={loading}
+      onChange={handleTableChange}
+      pagination={pagination}
+
+    />
+
   );
 };
 

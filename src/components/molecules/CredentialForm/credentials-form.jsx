@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import DynamicInput from '../DynamicInput/DynamicInput';
 
 import api from "../../../services/api-calls/all"
+import DidiBackend from '../../../services/api-calls/DidiBackend';
 
 const Container = styled.div`
   flex: 1;
@@ -33,10 +34,15 @@ const FormButtons = styled.div`
   padding: 30px 10px 0px;
 `
 
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 1.03rem;
+`
 
 const getDefaultValues = fields => {
-  return fields.map(field => field.name).reduce(
-    (prev, current) => prev? {...prev, [current]: ''} : {[current]: ''},
+  return fields?.map(field => ({name: field.name, value: field?.defaultValue || '' })).reduce(
+    (prev, current) => prev ? { ...prev, [current.name]: current.value } : { [current.name]: current.value },
     {}
   );
 }
@@ -46,32 +52,47 @@ const CredentialForm = ({ template, subject }) => {
   const { saveCredential } = api();
   const history = useHistory();
   const [fields, setFields] = useState([]);
+  const [credentialName, setCredentialName] = useState("");
+
   const { setAppState } = useContext(AppContext);
 
 
-  /* TODO: Buscar los campos del template desde el back, pero para renderizar por ahora nos sirve */
-  useEffect(() => {
-    setFields(template.fields);
-  }, [template])
 
+  useEffect(() => {
+    if (template?.data) {
+
+      const credentialName = template?.data?.cert?.filter(field => field.name === "CREDENCIAL")[0].defaultValue;
+      const certFields = template?.data?.cert?.filter(field => field.name !== "CREDENCIAL").map(field => ({ ...field, section: "cert" }));
+      const participantFields = template?.data?.participant.map(field => ({ ...field, section: "participant" }))
+      const othersFields = template?.data?.others.map(field => ({ ...field, section: "others" }))
+
+      setCredentialName(credentialName);
+
+
+      setFields([
+        ...certFields,
+        ...participantFields, //a los valores para estos campos los vamos a sacar del subject, y van a ser de solo lectura
+        ...othersFields,
+      ]);
+
+    }
+  }, [template])
+  
   
   const goToCredentials = defaultActiveTabKey => {
     setAppState({ defaultActiveTabKey });
     history.push('/credentials');
   };
 
-  const goBack = () => {
-    history.goBack();
-  };
-
   const initialValues = {
-    ...getDefaultValues(template.fields),
-    nombre: `${subject?.firstname || ''} ${subject?.lastname || ''}`,
-    dni: `${subject?.dni || ''}`,
-    /* fechanacimiento: "",  moment(new Date(1990, 3, 17), "DD/MM/YYYY"), no contamos con este dato*/
+    ...getDefaultValues(fields),
+    DID: subject?.did,
+    NOMBRE: subject?.firstname,
+    APELLIDO: subject?.lastname,
+    DNI: `${subject?.dni || ''}`,
   }
 
-
+  
   return (
 
     <Container>
@@ -81,15 +102,40 @@ const CredentialForm = ({ template, subject }) => {
         enableReinitialize={true}
         onSubmit={async (values, { setSubmitting }) => {
           console.log(`handle submit!`, values);
+    
+          let certFields = fields.filter(f => f.section === "cert").map(f => ({ name: f.name, value: values[f.name] }));
+          const participantFields = fields.filter(f => f.section === "participant").map(f => ({ name: f.name, value: values[f.name] }));
+          const othersFields = fields.filter(f => f.section === "others").map(f => ({ name: f.name, value: values[f.name] }));
 
-          await saveCredential({
-            ...values,
-            subject: subject?._id,
-            template: template?._id
-          });          
+          certFields = [{ name: "CREDENCIAL", value: credentialName }, ...certFields];
 
-          setSubmitting(false);
-          goToCredentials();
+
+          const data = {
+            "cert": certFields,
+            "participant": participantFields,
+            "others": othersFields,
+          }
+
+
+          const result = await DidiBackend().credentials.create({
+            data: JSON.stringify(data),
+            split: false,
+            microCredentials:[],
+            templateId: template._id
+          })
+
+          console.log(result)
+
+           //tener en cuenta que si no tenemos subject podriamos crear una precredencial para emitir despues una vez que tengamos el did
+          /* 
+                    await saveCredential({
+                      ...values,
+                      subject: subject?._id,
+                      template: template?._id
+                    });
+          
+                    setSubmitting(false);
+                    goToCredentials(); */
         }}
       >
         {({
@@ -103,9 +149,14 @@ const CredentialForm = ({ template, subject }) => {
           setFieldValue
         }) => (
           <form onSubmit={handleSubmit}>
+            <Title>
+              {credentialName}
+            </Title>
+
+
             {fields?.map((field, idx) => (
               <InputContainer key={idx}>
-                {field.type !== "Boolean" && field.label}
+                {field.type !== "Boolean" && field.name} {field.required && `*`}
 
                 <DynamicInput
                   field={field}
@@ -120,7 +171,7 @@ const CredentialForm = ({ template, subject }) => {
             <FormButtons>
 
               <ButtonPrimary
-                disabled={isSubmitting} 
+                disabled={isSubmitting}
                 type="submit"
                 text="Guardar"
                 theme={`ThemePrimary ${isSubmitting ? "disabled" : ""}`}

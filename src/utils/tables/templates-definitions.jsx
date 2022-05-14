@@ -1,3 +1,5 @@
+import { DeleteOutlined, EditTwoTone } from '@ant-design/icons';
+import { Button } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TEMPLATES_URL } from '../constants';
@@ -11,18 +13,10 @@ export const templatesColumns = () => [
     width: 200
   },
   {
-    title: 'Ult. Actualización',
-    dataIndex: 'updatedAt',
-    key: 'updatedAt',
-    width: 90,
-    render: dateStr => <span>{dateStr}</span>
-  },
-  {
-    title: 'Activo',
-    dataIndex: 'active',
-    key: 'active',
-    width: 90,
-    render: value => <span>{value ? 'Si' : 'No'}</span>
+    title: 'Blockchain',
+    dataIndex: 'blockchain',
+    key: 'blockchain',
+    width: 200
   },
   {
     title: 'Acciones',
@@ -30,6 +24,23 @@ export const templatesColumns = () => [
     key: 'actions',
     fixed: 'right',
     width: 50,
-    render: ({ _id }) => <Link to={`${TEMPLATES_URL}/${_id}`}>Editar</Link>
+    render: ({ _id }) => {
+      return (
+        <>
+          <Link title="Editar" to={`${TEMPLATES_URL}/${_id}`}>
+            <EditTwoTone />
+          </Link>
+          <Button
+            title="Eliminar"
+            type='link'
+            style={{ border: "0px" }}
+            onClick={() => console.log(`Confirm deletion of template ${_id}`)}
+          >
+            <DeleteOutlined />
+          </Button>
+        </>
+
+      )
+    }
   }
 ];
