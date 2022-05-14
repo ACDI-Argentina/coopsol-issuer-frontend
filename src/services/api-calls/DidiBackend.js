@@ -51,6 +51,14 @@ const DidiBackend = () => ({
       const response = await axios.post(`${ISSUER_BACKEND_URL}/cert`, data, config);
       return response?.data;
     },
+    async find() {
+      const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/all`, config);
+      const apiResponse = response.data;
+      const credentials = apiResponse?.data;
+
+      return credentials;
+
+    },
   }
 
 

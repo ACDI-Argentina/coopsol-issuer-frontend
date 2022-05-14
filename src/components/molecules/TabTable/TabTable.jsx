@@ -20,10 +20,21 @@ import {
   didCredentialsFilter
 } from '../../../utils/tables/table-filters-definitions';
 import { useCredentials } from '../../../context/CredentialsContext';
+import DidiBackend from '../../../services/api-calls/DidiBackend';
 
 const { TabPane } = Tabs;
 
-const { getCredentials, getCredentialTypes, getRevocationReasons } = api();
+const { getCredentialTypes, getRevocationReasons } = api();
+
+const getCredentials = async () => {
+  const credentials = await DidiBackend().credentials.find()
+  console.log(`Get credentials:`,credentials)
+  return {
+    content: credentials,
+    totalElements: credentials.length,
+    size: credentials.length
+  };
+}
 
 const TabTable = () => {
   const { emitCredential } = useCredentials();
