@@ -3,7 +3,7 @@ import axios from "axios";
 const ISSUER_BACKEND_URL = process.env.REACT_ISSUER_BACKEND_URL || "https://api.issuer.qa.didi.org.ar"; //template/${id}
 console.log(`ISSUER backend:`, ISSUER_BACKEND_URL)
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU4MWRjMDQ1MTAwMWIzM2Y2YjY5OWQiLCJleHAiOjE2NjU0MTY0OTUsImlhdCI6MTY1MjQ1NjQ5NX0.lmVjGtOqPe1PrJJoQeqYuKz-cYgrbwRL9j-PcXdbGHY";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU4MWRjMDQ1MTAwMWIzM2Y2YjY5OWQiLCJleHAiOjE2NjU2OTQ4NDQsImlhdCI6MTY1MjczNDg0NH0.DQcEW9RW6EeSOCQvudav8d2i0bNmAAAut496bR48POw";
 
 const config = {
   headers: {
@@ -51,14 +51,50 @@ const DidiBackend = () => ({
       const response = await axios.post(`${ISSUER_BACKEND_URL}/cert`, data, config);
       return response?.data;
     },
-    async find() {
+    async find(filter) {
+      const query = new URLSearchParams(filter).toString();
+
+      const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/find?${query}`, config);
+      const apiResponse = response.data;
+      const credentials = apiResponse?.data;
+
+      return credentials;
+    },
+
+    async all() {
       const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/all`, config);
       const apiResponse = response.data;
       const credentials = apiResponse?.data;
 
       return credentials;
-
     },
+
+    async emit(id) {
+      console.log(`Emit credential: ${id}`)
+      const response = await axios.post(`${ISSUER_BACKEND_URL}/cert/${id}/emmit`, {}, config);
+      console.log(response)
+      const apiResponse = response.data;
+      const credentials = apiResponse?.data;
+
+      return credentials;
+    },
+
+
+    async revoke(id, reason = "") { //delete or revoke
+      const response = await axios.delete(`${ISSUER_BACKEND_URL}/cert/${id}`, {
+        ...config,
+        data: {
+          reason
+        }
+      });
+      const apiResponse = response.data;
+      const credentials = apiResponse?.data;
+
+      return credentials;
+    },
+
+
+
   }
 
 

@@ -5,12 +5,12 @@ import TableFilters from '../TableFilters/table-filters';
 import CredentialDetail from '../CredentialDetail/credential-detail';
 import { Table } from 'antd';
 import { useApi } from '../../../services/useApi';
-import { UserContext } from '../../../services/providers/user-context';
+
 import { showErrorMessage } from '../../../utils/alertMessages';
 import { useCredentials } from '../../../context/CredentialsContext';
 
 const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
-  const [pagination, setPagination] = useState({page: 0});
+  const [pagination, setPagination] = useState({ page: 0 });
   const [loading, setLoading] = useState(false);
   const { setSelection } = useCredentials() || {};
   const [credentials, setCredentials] = useState();
@@ -18,8 +18,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
   const [tableColumns, setTableColumns] = useState();
-  const { setUser } = useContext(UserContext);
-
+  
   const getCredentialData = useApi();
 
   const handleTableChange = pagination => {
@@ -28,25 +27,33 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
   };
 
 
-  
-  const fetchCredentials = (page = 0) => {
-    console.log(`fetchCredentials ${new Date().toISOString()}`)
-    console.log(dataSource)
-    setLoading(true);
-    getCredentialData(
-      dataSource,
-      { ...activeFilters, page },
-      onSuccess,
-      onError,
-      setUser
-    );
+
+  const fetchCredentials = async (page = 0) => {    
+    try {
+      const apiFilter = {};
+      
+      if (activeFilters?.status === "PENDING") {
+        apiFilter.emmited = false;
+      } else if (activeFilters?.status === "ACTIVE") {
+        apiFilter.emmited = true;
+      } else if (activeFilters?.status === "REVOKED") {
+        apiFilter.revoked = true;
+      }
+      
+      setLoading(true);
+      const result = await dataSource(apiFilter);
+      onSuccess(result)
+    } catch (err) {
+      console.log(err);
+      onError(err);
+    }
   };
 
   useEffect(() => {
     const tableColumns = columns(fetchCredentials);
     setTableColumns(tableColumns);
   }, [])
-  
+
 
   const onSearch = () => {
     setPagination({ ...pagination, current: 1 });
@@ -82,18 +89,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
 
   const onSuccess = data => {
     const { content, totalElements, size } = data;
-    
-    /* Apply filters! */
-    const filteredCredentials = content.filter(cred => {
-      if (defaultFilters?.status) {
-        return cred.status === defaultFilters?.status;
-      }
-      return true;
-    });
-    
-    console.log(`Set credentials`, filteredCredentials)
-    //setCredentials(filteredCredentials);  //Si hacemos esto rompemos la tabla, necesitamos un estado para cada
-    setCredentials(filteredCredentials);
+    setCredentials(content);
 
     setPagination({
       ...pagination,
@@ -114,7 +110,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   };
 
-
+  console.log(credentials)
 
   return (
     <div>
@@ -125,7 +121,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
         onSearch={onSearch}
       />
       <Table
-        rowKey={'key'}
+        rowKey={'_id'}
         columns={tableColumns}
         dataSource={credentials}
         scroll={{ x: 1300 }}

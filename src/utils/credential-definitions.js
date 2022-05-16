@@ -104,7 +104,7 @@ export const CREDENTIAL_CATEGORIES = {
   identityFamily: 'Identidad - Familiar'
 };
 
-
+/* 
 export const CREDENTIAL_FIELDS = {
   "identitaria": [
     {
@@ -129,10 +129,8 @@ export const CREDENTIAL_FIELDS = {
       name: "ubicacion",
       label: "Ubicación",
       description: "",
-      type: "String", /* Geo zona  - vamos a necesitar geo reverse quizas*/
+      type: "String", // Geo zona  - vamos a necesitar geo reverse quizas
     },
-
-
   ],
   "financiera": [
     {
@@ -248,28 +246,4 @@ export const CREDENTIAL_FIELDS = {
   ], 
 }
 
-
-/* Obtener desde el API e inyectarlos en el ctx */
-export const CREDENTIALS_TYPES = [
-/*   {
-    _id: "626022deedea63168433b3d0",
-    name: 'identitaria',
-    fields: CREDENTIAL_FIELDS["identitaria"]
-  },
-  {
-    _id: "6260265d73fa72d8355664b3",
-    name: 'socioeconomica',
-    fields: CREDENTIAL_FIELDS["socioeconomica"]
-  },
-  {
-    _id: "626024f11bf4955af2b180e4",
-    name: 'financiera',
-    fields: CREDENTIAL_FIELDS["financiera"]
-  },
-  {
-    _id: "6260258f82bebe55499b24f4",
-    name: 'productiva',
-    fields: CREDENTIAL_FIELDS["productiva"]
-  },
-   */
-];
+ */

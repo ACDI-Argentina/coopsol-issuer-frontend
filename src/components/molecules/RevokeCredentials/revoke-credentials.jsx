@@ -13,38 +13,40 @@ import animationData from '../../../assets/3046-me-at-office.json';
 import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
-import { CREDIT_HOLDER_RELATIONSHIP } from '../../../utils/constants';
 import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
+import { parseDate } from '../../../utils/dateHelpers';
+import DidiBackend from '../../../services/api-calls/DidiBackend';
 
-const { revokeCredentials } = api();
 
 const RevokeCredentials = ({
   credential,
   onRevoked,
   reasonId,
-  revokeOnlyThisCredential = false
 }) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
-  const credentialCall = useApi();
   const { appState } = useContext(AppContext);
-  const { setUser } = useContext(UserContext);
+  
 
-  const handleOk = e => {
+  const handleOk = async e => {
     setLoading(true);
-    const params = {
-      id: credential.id,
-      reason: selectedReason,
-      revokeOnlyThisCredential
-    };
-    credentialCall(revokeCredentials, params, onSuccess, onError, setUser);
+
+    try{
+      await DidiBackend().credentials.revoke(credential._id, selectedReason.value);
+      setLoading(false);
+      onSuccess();
+    } catch(err){
+      setLoading(false);
+      console.log(err);
+      return onError(err);
+    }
   };
 
   const onSuccess = () => {
     setLoading(false);
     setVisible(false);
-    onRevoked();
+    typeof onRevoked === "function" && onRevoked();
   };
 
   const onError = (error, status) => {
@@ -56,16 +58,19 @@ const RevokeCredentials = ({
     setVisible(false);
   };
 
-  const onItemClick = id => {
-    setSelectedReason(id);
+  const onItemClick = reason => {
+    setSelectedReason(reason);
     setVisible(true);
   };
+
+  //console.log(`RevokationReasons:`,appState.revocationReasons)
+
 
   const menu = (
     <Menu>
       {appState.revocationReasons.length ? (
-        appState.revocationReasons.map(({ id, label }) => (
-          <Menu.Item key={id} onClick={() => onItemClick(id)}>
+        appState.revocationReasons.map(({ id, label, value }) => (
+          <Menu.Item key={id} onClick={() => onItemClick({id, label, value})}>
             {' '}
             {label}{' '}
           </Menu.Item>
@@ -82,16 +87,6 @@ const RevokeCredentials = ({
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice'
     }
-  };
-
-  const showWarning = () => {
-    return (
-      credential.relationWithCreditHolder === CREDIT_HOLDER_RELATIONSHIP && (
-        <p className="warning">
-          Al revocar ésta credencial titular también se revocarán todas las credenciales asociadas
-        </p>
-      )
-    );
   };
 
   return (
@@ -114,6 +109,7 @@ const RevokeCredentials = ({
         className="RevokeCredentials modal-buttons"
         visible={visible}
         onCancel={handleCancel}
+        footer={null}
       >
         <Lottie options={defaultOptions} height={250} width={250} />
         <div className="title">
@@ -123,16 +119,15 @@ const RevokeCredentials = ({
           <p>¿Confirma revocar la siguiente credencial? :</p>
           <ul>
             <li>
-              Titular: <span className="bold-text">{credential.name}</span>
+              Titular: <span className="bold-text">{credential.firstName} {credential.lastName}</span>
             </li>
             <li>
-              DNI: <span className="bold-text"> {credential.dniBeneficiary}</span>{' '}
+              Tipo: <span className="bold-text"> {credential.name}</span>
             </li>
             <li>
-              Tipo: <span className="bold-text"> {credential.credentialType}</span>
+              Creación: <span className="bold-text"> {parseDate(credential.createdOn)}</span>{' '}
             </li>
           </ul>
-          {showWarning()}
         </div>
         <div className="footer">
           <div className="buttons">

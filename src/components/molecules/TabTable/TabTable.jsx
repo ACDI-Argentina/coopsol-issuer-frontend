@@ -10,7 +10,7 @@ import { AppContext } from '../../../services/providers/app-context';
 import { UserContext } from '../../../services/providers/user-context';
 
 import {
-  getCredentialsColumns,
+  getActiveCredentialsColumns,
   getRevokedCredentialsColumns,
   getPendingCredentialColumns
 } from '../../../utils/table-definitions';
@@ -26,9 +26,9 @@ const { TabPane } = Tabs;
 
 const { getCredentialTypes, getRevocationReasons } = api();
 
-const getCredentials = async () => {
-  const credentials = await DidiBackend().credentials.find()
-  console.log(`Get credentials:`,credentials)
+const getCredentials = async (filter) => {
+  const credentials = await DidiBackend().credentials.find(filter)
+  
   return {
     content: credentials,
     totalElements: credentials.length,
@@ -42,19 +42,13 @@ const TabTable = () => {
 
   const [credentialTypes, setCredentialTypes] = useState([]);
 
-    const { appState, setAppState } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
   const { setUser } = useContext(UserContext);
 
-  const onSuccessGetReasons = reasons => {
-    let revocationReasons = Object.keys(reasons).map(id => {
-      return { id, label: reasons[id] };
-    });
-    setAppState({ revocationReasons });
-  };
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
-    credentialCall(getRevocationReasons, null, onSuccessGetReasons, onError, setUser);
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,7 +84,7 @@ const TabTable = () => {
           key={'1'}
         >
           <CredentialTable
-            columns={getCredentialsColumns}
+            columns={getActiveCredentialsColumns}
             dataSource={getCredentials}
             filters={activeCredentialsFilter}
             defaultFilters={{ status: "ACTIVE" }} 

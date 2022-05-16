@@ -1,11 +1,19 @@
 import React, { createContext, useReducer } from 'react';
 
+/* Como sabe esto en que estado esta?? */
+
 const initialState = {
     defaultActiveTabKey: null,
-    revocationReasons: []
+    revocationReasons: [ /* Agregar metodo para cargar desde el bakcend */
+        { id: 1, value: "UNLINKING",label: "Desvinculación" },
+        { id: 2, value: "EXPIRATION",label: "Expiración" },
+        { id: 3, value: "DATA_MODIFICATION",label: "Modificación de datos" },
+        { id: 4, value: "REPLACEMENT",label: "Reemplazo" },
+        { id: 5, value: "OTHER",label: "Otro" },
+    ]
 };
 
-const reducer = (appState, newAppState) => {
+const reducer = (appState, newAppState) => { 
     if (!newAppState) {
         return initialState;
     }
@@ -18,9 +26,9 @@ const AppProvider = ({ children }) => {
     const [appState, setAppState] = useReducer(reducer, initialState);
 
     return (
-        <AppContext.Provider 
-            value={{ 
-                appState, 
+        <AppContext.Provider
+            value={{
+                appState,
                 setAppState,
             }}
         >

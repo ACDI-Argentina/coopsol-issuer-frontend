@@ -3,9 +3,9 @@ import { EditTwoTone } from '@ant-design/icons';
 
 
 export const formatDNI = value => {
-  if (value.length === 8) {
+  if (value?.length === 8) {
     return `${value.substring(0, 2)}.${value.substring(2, 5)}.${value.substring(5, 8)}`
-  } else if (value.length === 7) {
+  } else if (value?.length === 7) {
     return `${value.substring(0, 1)}.${value.substring(1, 4)}.${value.substring(4, 7)}`
   } else {
     return value;
