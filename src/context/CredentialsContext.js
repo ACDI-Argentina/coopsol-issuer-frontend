@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import api from '../services/api-calls/all';
 import DidiBackend from '../services/api-calls/DidiBackend';
 export const CredentialsContext = React.createContext();
 
@@ -18,13 +17,12 @@ const CredentialsProvider = ({ children }) => {
   const [pendingCredentials, setPendingCredentials] = useState([]);
   const [activeCredentials, setActiveCredentials] = useState([]);
   const [revokedCredentials, setRevokedCredentials] = useState([]);
-
   const [loadingCredentials, setLoadingCredentials] = useState(false);
 
 
   const loadCredentials = async (filter) => {    
     try {
-      console.log(`Fetch credntials ctx`, filter)
+      console.log(`Load credentials ctx`, filter)
       const apiFilter = {};
       
       if (filter?.status === "PENDING") {
@@ -53,10 +51,16 @@ const CredentialsProvider = ({ children }) => {
       
     }
   };
-
-
   const [selection, setSelection] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]); 
+  const clearSelection = () => {
+    setSelection([]);
+    setSelectedRowKeys([]);
+  }
+  
+
   const [loading, setLoading] = useState({});
+  const [deleting, setDeleting] = useState(false);
 
   const setProcessing = (id) => {
     setLoading(prev => ({ ...prev, [id]: true }));
@@ -69,8 +73,7 @@ const CredentialsProvider = ({ children }) => {
     });
   }
 
-  const { deleteCredential } = api();
-
+  
   const emitCredential = async (credential, onSuccess, onError) => {
     try {
       setProcessing(credential._id);
@@ -98,25 +101,35 @@ const CredentialsProvider = ({ children }) => {
     for (const credential of selection) {
       try {
         setProcessing(credential._id);
-        const deleted = await DidiBackend().credentials.emit(credential._id);
-        setSelection(selection => selection.filter(c => c._id !== deleted?._id))
+        const emmited = await DidiBackend().credentials.emit(credential._id);
+        setSelection(selection => selection.filter(c => c._id !== credential?._id));
+        setSelectedRowKeys(selected => selected.filter(c => c !== credential?._id))
+
         removeProcessing(credential._id);
       } catch (err) {
         console.log(err);
         removeProcessing(credential._id);
       }
-      /* Actualizar tabla */
+      
     }
 
   }
 
   const deleteCredentials = async event => {
-    console.log(`deleteCredentials `, selection)
+    setDeleting(true);
     for (const credential of selection) {
-      const deleted = await deleteCredential(credential._id);
-      setSelection(selection => selection.filter(c => c._id !== deleted?._id))
-      /* Actualizar tabla */
+      try{
+        message.success(`Se ha eliminado exitosamente la credencial ${credential.name} - ${credential?.firstName||''} ${credential?.lastName||''} `)
+        setSelection(selection => selection.filter(c => c._id !== credential?._id));
+        setSelectedRowKeys(selected => selected.filter(c => c !== credential?._id))
+
+      } catch(err){
+        message.error(`Ha ocurrido un error al intentar eliminar la credencial ${credential.name} - ${credential?.firstName||''} ${credential?.lastName||''} `)
+        console.log(err);
+      }
+
     }
+    setDeleting(false);
 
   }
 
@@ -135,11 +148,15 @@ const CredentialsProvider = ({ children }) => {
     loadingCredentials,
     loadCredentials,
     selection,
+    selectedRowKeys,
+    setSelectedRowKeys,
     setSelection,
+    clearSelection,
     emitCredential,
     emitCredentials,
     deleteCredentials,
-    loading
+    loading,
+    deleting,
   }
 
   return (

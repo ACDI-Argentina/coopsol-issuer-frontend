@@ -3,13 +3,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
 import { Table } from 'antd';
-import { showErrorMessage } from '../../../utils/alertMessages';
 import { useCredentials } from '../../../context/CredentialsContext';
 
 const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({ page: 0 });
-  const { setSelection } = useCredentials() || {};
-  
+  const { setSelection, selectedRowKeys, setSelectedRowKeys } = useCredentials() || {};
+    
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
   
@@ -31,11 +30,7 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
   useEffect(() => {
     (async function(){
       if (shouldPerformRequest(activeFilters)) {
-        console.log(`Fetch credentials`)
-        await loadCredentials({paged, ...activeFilters}); //renombrar a load
-        
-        
-        
+        await loadCredentials({paged, ...activeFilters}); 
       }
     })()
   }, [paged, activeFilters]);
@@ -59,32 +54,20 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
     defaultFilters ? setActiveFilters({ ...filter, ...defaultFilters }) : setActiveFilters(filter);
   };
 
-/*   const onSuccess = data => {
-    const { content, totalElements, size } = data;
-    setCredentials(content);
-
-    setPagination({
-      ...pagination,
-      total: totalElements,
-      pageSize: size
-    });
-    setLoading(false);
-  };
-
-  const onError = (error, status) => {
-    showErrorMessage('No se pudieron obtener las credenciales, intente nuevamente.', status);
-    setLoading(false);
-  };
- */
 
   const onSelectionChange = (selectedRowKeys, selectedRows) => {
     setSelection(selectedRows)
+    setSelectedRowKeys(selectedRowKeys);
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   };
 
   
   return (
     <div>
+      <button onClick={() => {
+        setSelectedRowKeys([])
+      }}>Clear selection</button>
+
       <TableFilters
         onApplyFilter={onApplyFilter}
         filters={filters}
@@ -101,6 +84,7 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
         pagination={pagination}
         rowSelection={{
           type: "checkbox",
+          selectedRowKeys,
           onChange: onSelectionChange
         }}
       /*    expandable={

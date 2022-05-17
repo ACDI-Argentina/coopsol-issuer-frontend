@@ -15,7 +15,7 @@ const ActionsContainer = styled.div`
 
 const CredentialActions = ({ history }) => {
 
-  const { selection, emitCredentials, deleteCredentials } = useCredentials();
+  const { selection, emitCredentials, deleteCredentials, deleting } = useCredentials();
 
   const addCredential = () => {
     history.push(ADD_CREDENTIALS);
@@ -26,8 +26,17 @@ const CredentialActions = ({ history }) => {
 
       {selection?.length > 0 && (
         <>
-          <ButtonPrimary onClick={deleteCredentials} text={`- Eliminar seleccionados (${selection.length})`} theme="error" />
-          <ButtonPrimary onClick={emitCredentials} text={`+ Emitir seleccionados (${selection.length})`} theme="primary" />
+          <ButtonPrimary
+            onClick={deleteCredentials}
+            text={deleting? `Eliminando seleccionados...`: `- Eliminar seleccionados (${selection.length})`}
+            theme="error"
+            disabled={deleting}
+          />
+          <ButtonPrimary
+            onClick={emitCredentials}
+            text={`+ Emitir seleccionados (${selection.length})`}
+            theme="primary"
+          />
         </>
       )}
       <ButtonPrimary onClick={addCredential} text="+ Crear nueva credencial" theme="primary" />

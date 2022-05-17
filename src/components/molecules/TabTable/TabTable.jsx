@@ -37,7 +37,7 @@ const getCredentials = async (filter) => {
 }
  */
 const TabTable = () => {
-  const { credentials } = useCredentials();
+  const { credentials, clearSelection } = useCredentials();
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
@@ -62,7 +62,10 @@ const TabTable = () => {
 
   return (
     <div className="TabTableContent">
-      <Tabs defaultActiveKey={appState.defaultActiveTabKey}>
+      <Tabs 
+        defaultActiveKey={appState.defaultActiveTabKey}
+        onChange={activeKey => clearSelection()}
+        >
         <TabPane
           tab={
             <TabTooltip
