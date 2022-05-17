@@ -180,7 +180,7 @@ export const getRevokedCredentialsColumns = () => {
 
 
 
-export const getActivitiesColumns = [
+export const activitiesColumns = [
   {
     title: 'Fecha de ejecución',
     dataIndex: 'executionDateTime',

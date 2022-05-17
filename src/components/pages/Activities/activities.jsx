@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import './_style.scss';
 import TitlePage from '../../atoms/TitlePage/title-page';
 import api from '../../../services/api-calls/all';
-import CredentialTable from '../../molecules/CredentialTable/credential-table';
-import { getActivitiesColumns } from '../../../utils/table-definitions';
+import { activitiesColumns } from '../../../utils/table-definitions';
 import { defaultActivityFilters } from '../../../utils/tables/table-filters-definitions';
 import { useApi } from '../../../services/useApi';
 import { UserContext } from '../../../services/providers/user-context';
 import { showErrorMessage } from '../../../utils/alertMessages';
 import { useEffect } from 'react';
+import ActivitiesTable from '../../molecules/ActivitiesTable/activities-table';
+import ActivitiesProvider from "../../../context/ActivitiesContext";
 
 const { getActivityLog, getLogTypes, getLogLevels } = api();
 
@@ -27,30 +28,30 @@ const Activities = () => {
   useEffect(() => {
     filtersCall(getLogTypes, null, setLogTypes, onError, setUser);
     filtersCall(getLogLevels, null, setLogLevels, onError, setUser);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filters = defaultActivityFilters(logTypes, logLevels);
 
   return (
-    <div className="Activities">
-      <TitlePage
-        text="Listado de actividades"
-        description="Acá podés ver un listado con las actividades de los usuarios."
-      />
-      <div className="ActivitiesContent">
-        <h4>
-          <img alt="Listado de actividades" src="img/table-list.svg" /> Listado de actividades
-        </h4>
-        <CredentialTable
-          columns={() => getActivitiesColumns}
-          dataSource={getActivityLog}
-          filters={filters}
-          defaultFilters={{ page: 0 }}
-          noExpand
+    <ActivitiesProvider>
+      <div className="Activities">
+        <TitlePage
+          text="Listado de actividades"
+          description="Acá podés ver un listado con las actividades de los usuarios."
         />
+        <div className="ActivitiesContent">
+          <h4>
+            <img alt="Listado de actividades" src="img/table-list.svg" /> Listado de actividades
+          </h4>
+          <ActivitiesTable
+            columns={activitiesColumns}
+            defaultFilters={{ page: 0 }}
+            noExpand
+          />
+        </div>
       </div>
-    </div>
+    </ActivitiesProvider>
   );
 };
 
