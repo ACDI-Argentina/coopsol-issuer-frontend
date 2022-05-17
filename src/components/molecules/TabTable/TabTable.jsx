@@ -25,7 +25,7 @@ import DidiBackend from '../../../services/api-calls/DidiBackend';
 const { TabPane } = Tabs;
 
 const { getCredentialTypes, getRevocationReasons } = api();
-
+/* 
 const getCredentials = async (filter) => {
   const credentials = await DidiBackend().credentials.find(filter)
   
@@ -35,9 +35,9 @@ const getCredentials = async (filter) => {
     size: credentials.length
   };
 }
-
+ */
 const TabTable = () => {
-  const { emitCredential } = useCredentials();
+  const { credentials } = useCredentials();
   const credentialCall = useApi();
 
   const [credentialTypes, setCredentialTypes] = useState([]);
@@ -73,8 +73,8 @@ const TabTable = () => {
           key="3"
         >
           <CredentialTable
-            columns={() => getPendingCredentialColumns(() => console.log(`Fetch`), (item) => emitCredential(item))} 
-            dataSource={getCredentials}
+            credentials={credentials.PENDING}
+            columns={getPendingCredentialColumns()} 
             filters={pendingDidFilter}
             defaultFilters={{ status: "PENDING" }}
           />
@@ -84,8 +84,8 @@ const TabTable = () => {
           key={'1'}
         >
           <CredentialTable
-            columns={getActiveCredentialsColumns}
-            dataSource={getCredentials}
+            credentials={credentials.ACTIVE}
+            columns={getActiveCredentialsColumns()}
             filters={activeCredentialsFilter}
             defaultFilters={{ status: "ACTIVE" }} 
           />
@@ -96,8 +96,8 @@ const TabTable = () => {
           key="2"
         >
           <CredentialTable
-            columns={getRevokedCredentialsColumns}
-            dataSource={getCredentials}
+            credentials={credentials.REVOKED}
+            columns={getRevokedCredentialsColumns()}
             filters={revokedCredentialsFilter}
             defaultFilters={{ status: "REVOKED" }}
           />

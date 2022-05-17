@@ -2,70 +2,42 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
-import CredentialDetail from '../CredentialDetail/credential-detail';
 import { Table } from 'antd';
-import { useApi } from '../../../services/useApi';
-
 import { showErrorMessage } from '../../../utils/alertMessages';
 import { useCredentials } from '../../../context/CredentialsContext';
 
-const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpand }) => {
+const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
   const [pagination, setPagination] = useState({ page: 0 });
-  const [loading, setLoading] = useState(false);
   const { setSelection } = useCredentials() || {};
-  const [credentials, setCredentials] = useState();
-
+  
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
-  const [tableColumns, setTableColumns] = useState();
   
-  const getCredentialData = useApi();
 
+  const { loadCredentials, loadingCredentials } = useCredentials();
+  
   const handleTableChange = pagination => {
     setPagination(pagination);
     setPaged(pagination.current - 1);
   };
 
-
-
-  const fetchCredentials = async (page = 0) => {    
-    try {
-      const apiFilter = {};
-      
-      if (activeFilters?.status === "PENDING") {
-        apiFilter.emmited = false;
-      } else if (activeFilters?.status === "ACTIVE") {
-        apiFilter.emmited = true;
-      } else if (activeFilters?.status === "REVOKED") {
-        apiFilter.revoked = true;
-      }
-      
-      setLoading(true);
-      const result = await dataSource(apiFilter);
-      onSuccess(result)
-    } catch (err) {
-      console.log(err);
-      onError(err);
-    }
-  };
-
-  useEffect(() => {
-    const tableColumns = columns(fetchCredentials);
-    setTableColumns(tableColumns);
-  }, [])
-
-
   const onSearch = () => {
     setPagination({ ...pagination, current: 1 });
     setPaged(0);
-    fetchCredentials();
+    loadCredentials({paged, ...activeFilters});
   };
 
 
   useEffect(() => {
-    if (shouldPerformRequest(activeFilters)) {
-      fetchCredentials(paged);
-    }
+    (async function(){
+      if (shouldPerformRequest(activeFilters)) {
+        console.log(`Fetch credentials`)
+        await loadCredentials({paged, ...activeFilters}); //renombrar a load
+        
+        
+        
+      }
+    })()
   }, [paged, activeFilters]);
 
   useEffect(() => {
@@ -87,7 +59,7 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     defaultFilters ? setActiveFilters({ ...filter, ...defaultFilters }) : setActiveFilters(filter);
   };
 
-  const onSuccess = data => {
+/*   const onSuccess = data => {
     const { content, totalElements, size } = data;
     setCredentials(content);
 
@@ -103,15 +75,14 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
     showErrorMessage('No se pudieron obtener las credenciales, intente nuevamente.', status);
     setLoading(false);
   };
-
+ */
 
   const onSelectionChange = (selectedRowKeys, selectedRows) => {
     setSelection(selectedRows)
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   };
 
-  console.log(credentials)
-
+  
   return (
     <div>
       <TableFilters
@@ -122,10 +93,10 @@ const CredentialTable = ({ dataSource, columns, defaultFilters, filters, noExpan
       />
       <Table
         rowKey={'_id'}
-        columns={tableColumns}
+        columns={columns}
         dataSource={credentials}
         scroll={{ x: 1300 }}
-        loading={loading}
+        loading={loadingCredentials}
         onChange={handleTableChange}
         pagination={pagination}
         rowSelection={{

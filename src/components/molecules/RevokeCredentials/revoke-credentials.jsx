@@ -1,33 +1,31 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from 'react';
 import './_style.scss';
-import { Menu, Dropdown, Modal } from 'antd';
+import { Menu, Dropdown, Modal, message } from 'antd';
 import { useState } from 'react';
-import { useApi } from '../../../services/useApi';
-import api from '../../../services/api-calls/all';
 import { DownOutlined } from '@ant-design/icons';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import Loader from '../../atoms/Loader/loader';
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/3046-me-at-office.json';
 import { AppContext } from '../../../services/providers/app-context';
-import { UserContext } from '../../../services/providers/user-context';
-import { showErrorMessage } from '../../../utils/alertMessages';
 import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
 import { parseDate } from '../../../utils/dateHelpers';
 import DidiBackend from '../../../services/api-calls/DidiBackend';
+import { useCredentials } from '../../../context/CredentialsContext';
 
 
 const RevokeCredentials = ({
+  status,
   credential,
-  onRevoked,
   reasonId,
 }) => {
   const [visible, setVisible] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [loading, setLoading] = useState(false);
   const { appState } = useContext(AppContext);
-  
+  const { loadCredentials } = useCredentials();
+   
 
   const handleOk = async e => {
     setLoading(true);
@@ -44,13 +42,14 @@ const RevokeCredentials = ({
   };
 
   const onSuccess = () => {
-    setLoading(false);
     setVisible(false);
-    typeof onRevoked === "function" && onRevoked();
+    message.success("La credencial se ha revocado exitosamente");
+    loadCredentials({ status });
+    loadCredentials({status: "REVOKED"})
   };
 
   const onError = (error, status) => {
-    showErrorMessage('No se pudieron revocar las credenciales, intente nuevamente.', status);
+    message.error('No se pudieron revocar las credenciales, intente nuevamente.', status);
   };
 
   const handleCancel = e => {

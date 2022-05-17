@@ -7,8 +7,6 @@ import { formatDNI } from "../components/pages/Producers/table-columns";
 import EmitCredentialButton from '../components/molecules/Credentials/Actions/EmitCredentialButton';
 
 
-
-
 const ActionsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -42,7 +40,7 @@ const translateRevocationReason = reason => {
   }
 }
 
-export const getPendingCredentialColumns = (fetchCredentials) => { //Leer las acciones desde el ctx
+export const getPendingCredentialColumns = () => { 
   return [{
     title: 'Nombre y Apellido',
 
@@ -55,15 +53,6 @@ export const getPendingCredentialColumns = (fetchCredentials) => { //Leer las ac
     dataIndex: 'name',
     width: 180
   },
-  /* {
-    Si no guardamos el subject no podemos acceder a esto, salvo que sea a traves de los datos de la credencial cert.data.subject.dni
-    title: 'DNI',
-    dataIndex: 'dniBeneficiary',
-    key: 'dniBeneficiary',
-    width: 130,
-    render: formatDNI
-  }, */
-
   {
     title: 'Fecha Creación',
     dataIndex: 'createdOn',
@@ -82,7 +71,7 @@ export const getPendingCredentialColumns = (fetchCredentials) => { //Leer las ac
       return (
         <ActionsContainer>
           <EmitCredentialButton credential={item} />
-          <RevokeCredentials credential={item} onRevoked={fetchCredentials} />
+          <RevokeCredentials credential={item} status="PENDING"/>
         </ActionsContainer>
       )
     }
@@ -95,9 +84,8 @@ export const getPendingCredentialColumns = (fetchCredentials) => { //Leer las ac
 
 };
 
-export const getActiveCredentialsColumns = (actions) => { /* ACtive credentials? */
-  const { fetchCredentials, emitCredential } = actions || {};
-
+export const getActiveCredentialsColumns = (actions) => { 
+  
   return [
     { title: 'DID', dataIndex: 'did', fixed: 'left', width: 360 },
     {
@@ -116,13 +104,13 @@ export const getActiveCredentialsColumns = (actions) => { /* ACtive credentials?
     {
       title: 'Fecha Creación',
       dataIndex: 'createdOn',
-      width: 180,
+      width: 140,
       render: item => <div>{parseDate(item)}</div>
     },
     {
       title: 'Fecha Emisión',
       dataIndex: 'emmitedOn',
-      width: 180,
+      width: 140,
       render: item => <div>{parseDate(item)}</div>
     },
 
@@ -134,7 +122,7 @@ export const getActiveCredentialsColumns = (actions) => { /* ACtive credentials?
       width: 130,
       render: item => {
         return (
-          <RevokeCredentials credential={item} onRevoked={fetchCredentials} />
+          <RevokeCredentials credential={item} status="ACTIVE" />
         )
       }
     }
@@ -158,19 +146,19 @@ export const getRevokedCredentialsColumns = () => {
     {
       title: 'Tipo de credencial',
       dataIndex: 'name',
-      width: 180
+      width: 150
     },
 
     {
       title: 'Fecha Creación',
       dataIndex: 'createdOn',
-      width: 180,
+      width: 140,
       render: item => <div>{parseDate(item)}</div>
     },
     {
       title: 'Fecha Revocación',
       key: 'revocation',
-      width: 180,
+      width: 140,
       render: item => {
         return <div>{parseDate(item?.revocation.date)}</div>
       }
