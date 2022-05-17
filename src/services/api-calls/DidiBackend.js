@@ -73,10 +73,12 @@ const DidiBackend = () => ({
       console.log(`Emit credential: ${id}`)
       const response = await axios.post(`${ISSUER_BACKEND_URL}/cert/${id}/emmit`, {}, config);
       console.log(response)
-      const apiResponse = response.data;
-      const credentials = apiResponse?.data;
-
-      return credentials;
+      const apiResponse = response.data; ///
+      if(apiResponse.status === "error"){
+        throw new Error(apiResponse?.data?.message);
+      }
+      const credential = apiResponse?.data;
+      return credential;
     },
 
 
@@ -88,6 +90,9 @@ const DidiBackend = () => ({
         }
       });
       const apiResponse = response.data;
+      if(apiResponse.status === "error"){
+        throw new Error(apiResponse?.data?.message);
+      }
       const credentials = apiResponse?.data;
 
       return credentials;

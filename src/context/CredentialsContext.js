@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import DidiBackend from '../services/api-calls/DidiBackend';
 export const CredentialsContext = React.createContext();
@@ -86,7 +86,10 @@ const CredentialsProvider = ({ children }) => {
 
     } catch (err) {
       console.log(err)
-      message.error(`Ha ocurrido un error al intentar emitir la credencial ${err.message}`)
+      notification.error({
+        message:`Ha ocurrido un error al intentar emitir la credencial`,
+        description: err.message
+      })
       removeProcessing(credential._id);
       typeof onError === "function" && onError(credential)
     }
