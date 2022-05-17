@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Typography, Button, Input, message, Modal} from 'antd';
 import styled from 'styled-components';
 import DidiBackend from '../../../../services/api-calls/DidiBackend';
+import { useTemplates } from '../../../../context/TemplatesContext';
 const { Text } = Typography;
 
 
@@ -17,6 +18,8 @@ const InputContainer = styled.div`
 
 const NewTemplateModal = ({showModal , closeModal }) => {
   const [templateName, setTemplateName] = useState("");
+  const { loadTemplates } = useTemplates();
+
 
   useEffect(() => {
     if(!showModal){
@@ -43,6 +46,7 @@ const NewTemplateModal = ({showModal , closeModal }) => {
         if (result.status === "success") {
           message.success("Template creado exitosamente");
           closeModal();
+          loadTemplates();
         } else {
           message.error("Ha ocurrido un error al intentar crear el template")
           closeModal();

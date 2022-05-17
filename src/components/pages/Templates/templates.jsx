@@ -5,66 +5,43 @@ import { templatesColumns } from '../../../utils/tables/templates-definitions';
 
 import TitlePage from '../../atoms/TitlePage/title-page';
 import TemplateTable from '../../molecules/TemplateTable/template-table';
-import { defaultProviderFilters } from '../../../utils/tables/table-filters-definitions';
 import TemplateActions from '../../molecules/TemplateActions/template-actions';
 
-import DidiBackend from '../../../services/api-calls/DidiBackend';
 
-const Templates = () => {
-  
-  const [categories, setCategories] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [templates, setTemplates] = useState([]);
+import TemplatesProvider, { useTemplates } from '../../../context/TemplatesContext';
 
-  
-  useEffect(() => {
-    (async function(){
-      try{
-        setLoading(true);
-        const templates = await DidiBackend().templates.find();
-        setTemplates(templates)
-        setLoading(false);
-
-      } catch(err){
-        setLoading(false);
-        console.log(err);
-      }
-
-    })()
-  },[])
-
-  const formatCategories = () => {
-    if (categories) {
-      const formattedCategories = [];
-      categories.forEach(element => {
-        formattedCategories.push({ id: element.id, description: element.name });
-      });
-      setFilters(defaultProviderFilters(formattedCategories));
-    }
-  };
+const TemplatesConsumer = () => {
+  const { loadTemplates, templates, loading } = useTemplates();
 
   useEffect(() => {
-    formatCategories();
-  }, [categories]);
+    loadTemplates();
+  }, [])
 
   return (
     <div className="providerMain">
-      <TitlePage 
-      text="Tipos de credenciales" 
-      description="Creación de modelos de credenciales que luego se utilizarán al crear y emitir una credencial."
-      content={<TemplateActions />} 
+      <TitlePage
+        text="Tipos de credenciales"
+        description="Creación de modelos de credenciales que luego se utilizarán al crear y emitir una credencial."
+        content={<TemplateActions />}
       />
       <div className="templatesContent">
         <TemplateTable
           loading={loading}
           columns={templatesColumns}
           templates={templates}
-          filters={filters}
           defaultFilters={{ page: 0 }}
         />
       </div>
     </div>
+  )
+}
+
+const Templates = () => {
+
+  return (
+    <TemplatesProvider>
+      <TemplatesConsumer/>
+    </TemplatesProvider>
   );
 };
 

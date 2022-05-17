@@ -5,8 +5,8 @@ import TemplateDeletionModal from '../modals/TemplateDeletionModal';
 
 const DeleteTemplateButton = ({ template }) => {
 
-  const [showModal, setShowModal] = useState(); //not here 
-  const closeModal = () => setShowModal(false); //not here 
+  const [showModal, setShowModal] = useState(); 
+  const closeModal = () => setShowModal(false); 
 
   return (
     <>

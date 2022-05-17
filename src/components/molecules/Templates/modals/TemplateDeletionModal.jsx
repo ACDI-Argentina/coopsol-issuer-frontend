@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Typography, Button, Input, message, Modal } from 'antd';
 import styled from 'styled-components';
 import DidiBackend from '../../../../services/api-calls/DidiBackend';
+import { useTemplates } from '../../../../context/TemplatesContext';
 const { Text } = Typography;
 
 const TemplateDeletionModal = ({ id, name, showModal, closeModal }) => {
+  const { loadTemplates } = useTemplates();
+
   return (
     <Modal
       title={"Borrar Modelo"}
@@ -21,6 +24,7 @@ const TemplateDeletionModal = ({ id, name, showModal, closeModal }) => {
         if (result.status === "success") {
           message.success("Template eliminado exitosamente");
           closeModal();
+          loadTemplates();
         } else {
           message.error("Ha ocurrido un error al intentar eliminar el template")
           closeModal();
