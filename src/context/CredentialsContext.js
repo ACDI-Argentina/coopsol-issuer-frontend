@@ -79,10 +79,9 @@ const CredentialsProvider = ({ children }) => {
       setProcessing(credential._id);
       const result = await DidiBackend().credentials.emit(credential._id);
       console.log(result)
-
       removeProcessing(credential._id);
       message.success(`Se ha emitido exitosamente la credencial ${credential.did}`)
-      //Remover la credencial del listado de pendientes
+      loadCredentials("PENDING");
       typeof onSuccess === "function" && onSuccess(credential)
 
     } catch (err) {
@@ -103,7 +102,10 @@ const CredentialsProvider = ({ children }) => {
         setProcessing(credential._id);
         const emmited = await DidiBackend().credentials.emit(credential._id);
         setSelection(selection => selection.filter(c => c._id !== credential?._id));
-        setSelectedRowKeys(selected => selected.filter(c => c !== credential?._id))
+        setSelectedRowKeys(selected => selected.filter(c => c !== credential?._id));
+        //Actualizar tabla de pendings
+        
+
 
         removeProcessing(credential._id);
       } catch (err) {
