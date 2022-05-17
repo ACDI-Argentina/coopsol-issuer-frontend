@@ -52,7 +52,7 @@ const NavBar = () => {
     <div className="Sidebar">
       <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
         {renderNavItem(CREDENTIALS_URL, 'Credenciales', <CredIcon className="credentials" />)}
-        {renderNavItem(PRODUCERS_URL, 'Productores', <ListIcon className="producers" />)}
+        {renderNavItem(PRODUCERS_URL, 'Productores', <ListIcon className="list" />)}
         {renderNavItem(TEMPLATES_URL, 'Tipos de credenciales', <ListIcon className="list" />)}
         {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
         <Menu.Item key="logout" className="logoutBottom" onClick={() => signOut()}>
