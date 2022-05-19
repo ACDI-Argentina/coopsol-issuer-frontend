@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
-import axios from 'axios';
 import { DeleteOutlined, SaveOutlined } from '@ant-design/icons';
-import { Button, Checkbox, message } from 'antd';
-
-
+import { Button, Checkbox, Select, message } from 'antd';
 import DynamicInput from '../../molecules/DynamicInput/DynamicInput';
 import AddFieldModal from './AddFieldModal';
 import {
@@ -20,8 +16,13 @@ import {
   Label,
   AddFieldContainer,
 } from "./styled";
+
 import DidiBackend from '../../../services/api-calls/DidiBackend';
 import { useHistory } from 'react-router-dom';
+import ButtonAntd from '../../atoms/ButtonAntd/ButtonAntd';
+
+const { Option } = Select;
+
 
 const normalizeField = field => {
   return {
@@ -93,7 +94,7 @@ const updateFieldState = (prev, fieldName, prop, value) => {
 };
 
 
-const TemplateForm = ({ template, onSuccess }) => { 
+const TemplateForm = ({ template, onSuccess }) => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [addToSection, setAddToSection] = useState();
@@ -115,14 +116,14 @@ const TemplateForm = ({ template, onSuccess }) => {
 
   useEffect(() => {
     console.log(`Template`, template);
-    if(template?.data){
+    if (template?.data) {
       setCredentialFields(template.data.cert);
       setParticipantFields(template.data.participant);
       setOtherFields(template.data.others);
     } else {
       //Set loading...
     }
-  },[template])
+  }, [template])
 
 
 
@@ -162,6 +163,8 @@ const TemplateForm = ({ template, onSuccess }) => {
     others: otherFields?.map(normalizeField),
   };
 
+  const [credentialCategory, setCredentialCategory] = useState(template.category);
+
   return (
     <TemplateFormWrapper>
       <TemplateFormContainer>
@@ -169,13 +172,32 @@ const TemplateForm = ({ template, onSuccess }) => {
 
         Category */}
 
-{/*         <div style={{ border: "2px solid #4F86F7", wordBreak: "break-all", position: "absolute", zIndex: 2, backgroundColor: 'white', right: 0, padding: "20px" }}>
+        {/*         <div style={{ border: "2px solid #4F86F7", wordBreak: "break-all", position: "absolute", zIndex: 2, backgroundColor: 'white', right: 0, padding: "20px" }}>
           <pre>
             {JSON.stringify(credentialData, null, 3)}
           </pre>
         </div>
 
  */}
+        {/* Read from ctx */}
+        <Section>
+          <Title>
+            Categoria de la credencial
+          </Title>
+          <Select
+            defaultValue={credentialCategory}
+            style={{ width: "100%" }}
+            onChange={setCredentialCategory}
+          >
+            <Option value="EDUCACIÓN">EDUCACIÓN</Option>
+            <Option value="FINANZAS">FINANZAS</Option>
+            <Option value="VIVIENDA">VIVIENDA</Option>
+            <Option value="IDENTIDAD">IDENTIDAD</Option>
+            <Option value="BENEFICIOS">BENEFICIOS</Option>
+            <Option value="LABORAL">LABORAL</Option>
+          </Select>
+        </Section>
+
         <Section>
           <Title>
             Datos de la credencial
@@ -277,37 +299,37 @@ const TemplateForm = ({ template, onSuccess }) => {
         )}
 
         <ButtonsContainer>
-          <Button 
+          <Button
             type="text"
             onClick={() => history.goBack()}
-            >Volver</Button>
-          <Button
+          >Volver</Button>
+
+          <ButtonAntd
             type="primary"
-            style={{color:"#3d3737"}}
             size="large"
             icon={<SaveOutlined />}
-            loading={submitting} 
+            loading={submitting}
             onClick={async () => {
-              try{
+              try {
                 setSubmitting(true);
                 const response = await DidiBackend().templates.update(template._id, {
                   data: JSON.stringify(credentialData),
-                  category: template.category || "EDUCACION",
+                  category: credentialCategory || template.category,
                   preview: template.previewData,
                   registerId: template.registerId,
                   type: template.previewType,
                 });
 
-                if(response?.status === "success"){
+                if (response?.status === "success") {
                   console.log(response.data);
                   setSubmitting(false);
 
                   message.success("Template actualizado exitosamente");
                   typeof onSuccess === "function" && onSuccess();
                 }
-  
 
-              } catch(err){
+
+              } catch (err) {
                 console.log(err);
                 setSubmitting(false);
               }
@@ -315,7 +337,7 @@ const TemplateForm = ({ template, onSuccess }) => {
 
             }}
 
-          > Guardar </Button>
+          > Guardar </ButtonAntd>
         </ButtonsContainer>
 
       </TemplateFormContainer>
