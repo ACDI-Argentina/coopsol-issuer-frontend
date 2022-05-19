@@ -100,6 +100,9 @@ const TabTable = () => {
             filters={revokedCredentialsFilter}
             defaultFilters={{ status: "REVOKED" }}
             rowsSelectionEnabled={false}
+            expandable={{
+              expandedRowRender: credential => <CredentialDetail credential={credential} />
+            }}
           />
         </TabPane>
 

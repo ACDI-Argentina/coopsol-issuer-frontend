@@ -139,6 +139,7 @@ export const getActiveCredentialsColumns = (actions) => {
 
 export const getRevokedCredentialsColumns = () => {
   return [
+    Table.EXPAND_COLUMN,
     { title: 'DID', dataIndex: 'did', fixed: 'left', width: 360 },
     {
       title: 'Nombre y Apellido',
@@ -152,7 +153,6 @@ export const getRevokedCredentialsColumns = () => {
       dataIndex: 'name',
       width: 150
     },
-
     {
       title: 'Fecha Creación',
       dataIndex: 'createdOn',
