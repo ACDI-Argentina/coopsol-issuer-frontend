@@ -26,7 +26,11 @@ const DidiBackend = () => ({
     },
     async create(data) {
       const response = await axios.post(`${ISSUER_BACKEND_URL}/template`, data, config);
-      return response.data;
+      const apiResponse = response.data;
+      if(apiResponse.status === "error"){
+        throw new Error(apiResponse?.data?.message);
+      }
+      return apiResponse;
     },
 
     async get(id) {
@@ -36,7 +40,12 @@ const DidiBackend = () => ({
     },
 
     async update(id, data) {
-      const apiResponse = await axios.put(`${ISSUER_BACKEND_URL}/template/${id}`, data, config);
+      const response = await axios.put(`${ISSUER_BACKEND_URL}/template/${id}`, data, config);
+      const apiResponse = response.data;
+      console.log(apiResponse)
+      if(apiResponse.status === "error"){
+        throw new Error(apiResponse?.data?.message);
+      }
       return apiResponse.data;
     },
 

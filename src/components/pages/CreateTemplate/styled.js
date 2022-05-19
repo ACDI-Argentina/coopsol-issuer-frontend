@@ -64,3 +64,11 @@ export const AddFieldContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `
+
+/*<div style={{ border: "2px solid #4F86F7", wordBreak: "break-all", position: "absolute", zIndex: 2, backgroundColor: 'white', right: 0, padding: "20px" }}>
+  <pre>
+    {JSON.stringify(credentialData, null, 3)}
+  </pre>
+</div>
+
+*/

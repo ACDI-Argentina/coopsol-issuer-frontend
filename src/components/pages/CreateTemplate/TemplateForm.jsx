@@ -165,20 +165,31 @@ const TemplateForm = ({ template, onSuccess }) => {
 
   const [credentialCategory, setCredentialCategory] = useState(template.category);
 
+  const [previewType, setPreviewType] = useState(template.previewType);
+  const [previewFields, setPreviewFields] = useState(template.previewData);
+
+  console.log(`previewType ${previewType} ${typeof previewType}` )
+
+  //como mostramos los campos de la crendecial
+
+  console.log(
+    []
+    .concat(credentialData.cert)
+    .concat(credentialData.participant)
+    .concat(credentialData.others)
+  )
+  const fields = []
+    .concat(credentialData.cert)
+    .concat(credentialData.participant)
+    .concat(credentialData.others)
+    .filter(f => f.name !== "CREDENCIAL")
+    .filter(f => f.required)
+    .map(f => f.name);
+
   return (
     <TemplateFormWrapper>
       <TemplateFormContainer>
-        {/*       Edit Template {id}
 
-        Category */}
-
-        {/*         <div style={{ border: "2px solid #4F86F7", wordBreak: "break-all", position: "absolute", zIndex: 2, backgroundColor: 'white', right: 0, padding: "20px" }}>
-          <pre>
-            {JSON.stringify(credentialData, null, 3)}
-          </pre>
-        </div>
-
- */}
         {/* Read from ctx */}
         <Section>
           <Title>
@@ -298,6 +309,36 @@ const TemplateForm = ({ template, onSuccess }) => {
           />
         )}
 
+        <Section>
+          <Title>
+            Campos a Previsualizar
+          </Title>
+
+          <div>
+            <Select
+              defaultValue={previewType}
+              onChange={setPreviewType}>
+              <Option value="1">2</Option>
+              <Option value="2">4</Option>
+              <Option value="3">6</Option>
+            </Select>
+          </div>
+          <div>
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: '100%', maxWidth: "554px" }}
+              placeholder="Seleccionar campos"
+              defaultValue={previewFields}
+              onChange={setPreviewFields}
+            >
+              {fields.map((field, idx) => <Option key={idx} value={field} >{field}</Option>)}
+            </Select>
+          </div>
+
+        </Section>
+
+
         <ButtonsContainer>
           <Button
             type="text"
@@ -314,24 +355,22 @@ const TemplateForm = ({ template, onSuccess }) => {
                 setSubmitting(true);
                 const response = await DidiBackend().templates.update(template._id, {
                   data: JSON.stringify(credentialData),
-                  category: credentialCategory || template.category,
-                  preview: template.previewData,
+                  category: credentialCategory,
+                  preview: previewFields,
                   registerId: template.registerId,
-                  type: template.previewType,
+                  type: previewType,
                 });
 
-                if (response?.status === "success") {
-                  console.log(response.data);
-                  setSubmitting(false);
+                console.log(response.data);
+                setSubmitting(false);
 
-                  message.success("Template actualizado exitosamente");
-                  typeof onSuccess === "function" && onSuccess();
-                }
-
+                message.success("Template actualizado exitosamente");
+                typeof onSuccess === "function" && onSuccess();
 
               } catch (err) {
-                console.log(err);
                 setSubmitting(false);
+                message.error(`Ha ocurrido un error al actualizar el template: ${err.message}`); //name
+                console.log(err);
               }
 
 
