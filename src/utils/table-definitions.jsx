@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from 'antd';
 import styled from 'styled-components';
 import { Button } from "antd"
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
@@ -31,7 +32,7 @@ const translateStatus = (str) => {
 }
 
 const translateRevocationReason = reason => {
-  switch(reason){
+  switch (reason) {
     case "UNLINKING": return "Desvinculación";
     case "EXPIRATION": return "Expiración";
     case "DATA_MODIFICATION": return "Modificación de datos";
@@ -40,42 +41,43 @@ const translateRevocationReason = reason => {
   }
 }
 
-export const getPendingCredentialColumns = () => { 
-  return [{
-    title: 'Nombre y Apellido',
+export const getPendingCredentialColumns = () => {
+  return [
+    Table.SELECTION_COLUMN,
+    Table.EXPAND_COLUMN,
+    {
+      title: 'Nombre y Apellido',
+      fixed: 'left',
+      width: 180,
+      render: item => `${item?.firstName} ${item.lastName}`
+    },
+    {
+      title: 'Tipo de credencial',
+      dataIndex: 'name',
+      width: 180
+    },
+    {
+      title: 'Fecha Creación',
+      dataIndex: 'createdOn',
+      width: 180,
+      render: item => <div>{parseDate(item)}</div>
+    },
+    {
+      title: 'Acciones',
+      dataIndex: '',
+      key: 'action',
+      fixed: 'right',
+      width: 150,
+      render: item => {
 
-    fixed: 'left',
-    width: 180,
-    render: item => `${item?.firstName} ${item.lastName}`
-  },
-  {
-    title: 'Tipo de credencial',
-    dataIndex: 'name',
-    width: 180
-  },
-  {
-    title: 'Fecha Creación',
-    dataIndex: 'createdOn',
-    width: 180,
-    render: item => <div>{parseDate(item)}</div>
-  },
-
-  {
-    title: 'Acciones',
-    dataIndex: '',
-    key: 'action',
-    fixed: 'right',
-    width: 150,
-    render: item => {
-
-      return (
-        <ActionsContainer>
-          <EmitCredentialButton credential={item} />
-          <RevokeCredentials credential={item} status="PENDING"/>
-        </ActionsContainer>
-      )
+        return (
+          <ActionsContainer>
+            <EmitCredentialButton credential={item} />
+            <RevokeCredentials credential={item} status="PENDING" />
+          </ActionsContainer>
+        )
+      }
     }
-  }
 
 
 
@@ -84,9 +86,10 @@ export const getPendingCredentialColumns = () => {
 
 };
 
-export const getActiveCredentialsColumns = (actions) => { 
-  
+export const getActiveCredentialsColumns = (actions) => {
+
   return [
+    
     { title: 'DID', dataIndex: 'did', fixed: 'left', width: 360 },
     {
       title: 'Nombre y Apellido',

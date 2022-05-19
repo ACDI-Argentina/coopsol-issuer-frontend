@@ -5,7 +5,7 @@ import TableFilters from '../TableFilters/table-filters';
 import { Table } from 'antd';
 import { useCredentials } from '../../../context/CredentialsContext';
 
-const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSelectionEnabled = true }) => {
+const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSelectionEnabled = true, ...props }) => {
   const [pagination, setPagination] = useState({ page: 0 });
   const { setSelection, selectedRowKeys, setSelectedRowKeys } = useCredentials() || {};
 
@@ -84,11 +84,7 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSe
         onChange={handleTableChange}
         pagination={pagination}
         rowSelection={rowSelection}
-      /*    expandable={
-           !noExpand && {
-             expandedRowRender: record => <CredentialDetail fields={record} />
-           }
-         } */
+        {...props}
       />
     </div>
   );

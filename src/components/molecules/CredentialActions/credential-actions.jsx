@@ -22,14 +22,10 @@ const CredentialActions = ({ history }) => {
   };
 
   const credentialsType = selection[0]?.status;
-  console.log(credentialsType) //PENDING, ACTIVE, REVOKED
-
+  
 
   return (
     <ActionsContainer>
-
-
-      {/*  Hay que ver a que tab, o en que estado estan las seleccionadas*/}
       {selection?.length > 0 && (
         <>
           {credentialsType === "PENDING" && (

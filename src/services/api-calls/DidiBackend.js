@@ -60,6 +60,14 @@ const DidiBackend = () => ({
       const response = await axios.post(`${ISSUER_BACKEND_URL}/cert`, data, config);
       return response?.data;
     },
+    async get(id){
+      const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/${id}`, config);
+      const apiResponse = response.data;
+      if(apiResponse.status === "error"){
+        throw new Error(apiResponse?.data?.message);
+      }
+      return apiResponse?.data;
+    },
     async find(filter) {
       const query = new URLSearchParams(filter).toString();
 

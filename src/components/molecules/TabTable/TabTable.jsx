@@ -20,22 +20,12 @@ import {
   didCredentialsFilter
 } from '../../../utils/tables/table-filters-definitions';
 import { useCredentials } from '../../../context/CredentialsContext';
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+
+import CredentialDetail from "../../molecules/CredentialDetail/credential-detail";
 
 const { TabPane } = Tabs;
+const { getCredentialTypes} = api();
 
-const { getCredentialTypes, getRevocationReasons } = api();
-/* 
-const getCredentials = async (filter) => {
-  const credentials = await DidiBackend().credentials.find(filter)
-  
-  return {
-    content: credentials,
-    totalElements: credentials.length,
-    size: credentials.length
-  };
-}
- */
 const TabTable = () => {
   const { credentials, clearSelection } = useCredentials();
   const credentialCall = useApi();
@@ -48,7 +38,7 @@ const TabTable = () => {
 
   useEffect(() => {
     credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -62,10 +52,10 @@ const TabTable = () => {
 
   return (
     <div className="TabTableContent">
-      <Tabs 
+      <Tabs
         defaultActiveKey={appState.defaultActiveTabKey}
         onChange={activeKey => clearSelection()}
-        >
+      >
         <TabPane
           tab={
             <TabTooltip
@@ -77,9 +67,13 @@ const TabTable = () => {
         >
           <CredentialTable
             credentials={credentials.PENDING}
-            columns={getPendingCredentialColumns()} 
+            columns={getPendingCredentialColumns()}
             filters={pendingDidFilter}
             defaultFilters={{ status: "PENDING" }}
+            expandable={{
+              expandedRowRender: credential => <CredentialDetail credential={credential} />
+
+            }}
           />
         </TabPane>
         <TabPane
@@ -90,7 +84,7 @@ const TabTable = () => {
             credentials={credentials.ACTIVE}
             columns={getActiveCredentialsColumns()}
             filters={activeCredentialsFilter}
-            defaultFilters={{ status: "ACTIVE" }} 
+            defaultFilters={{ status: "ACTIVE" }}
           />
         </TabPane>
 

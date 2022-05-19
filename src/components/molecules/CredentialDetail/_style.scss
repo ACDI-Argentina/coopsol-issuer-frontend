@@ -1,5 +1,17 @@
 .CredentialDetail {
-    .ant-descriptions {
+    padding-left: 50px;
+
+    .ant-descriptions-item-content {
+        background-color: white;
+    }
+
+    .ant-descriptions-item-label {
+        /* background-color: #484B57 !important; */ 
+        background-color: #c9c9c9 !important; 
+        /* color: white; */
+      }
+
+    /*     .ant-descriptions {
         &-row {
             vertical-align: top;
         }
@@ -16,5 +28,5 @@
                 width: 100%;
             }
         }
-    }
+    } */
 }

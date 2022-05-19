@@ -7,7 +7,6 @@ import { AppContext } from '../../../services/providers/app-context';
 import { useHistory } from 'react-router-dom';
 import DynamicInput from '../DynamicInput/DynamicInput';
 
-import api from "../../../services/api-calls/all"
 import DidiBackend from '../../../services/api-calls/DidiBackend';
 import { message } from 'antd';
 import ButtonAntd from '../../atoms/ButtonAntd/ButtonAntd';
@@ -76,7 +75,7 @@ const getDataFromFields = (credentialName, fields, values) => {
 
 
 const CredentialForm = ({ template, subject }) => {
-  const { saveCredential } = api();
+  
   const history = useHistory();
   const [fields, setFields] = useState([]);
   const [credentialName, setCredentialName] = useState("");
