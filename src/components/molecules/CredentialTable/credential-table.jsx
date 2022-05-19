@@ -64,10 +64,6 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
   
   return (
     <div>
-      <button onClick={() => {
-        setSelectedRowKeys([])
-      }}>Clear selection</button>
-
       <TableFilters
         onApplyFilter={onApplyFilter}
         filters={filters}
