@@ -14,6 +14,7 @@ export function useCredentials() {
 
 const CredentialsProvider = ({ children }) => {
   
+  
   const [pendingCredentials, setPendingCredentials] = useState([]);
   const [activeCredentials, setActiveCredentials] = useState([]);
   const [revokedCredentials, setRevokedCredentials] = useState([]);
@@ -35,12 +36,16 @@ const CredentialsProvider = ({ children }) => {
       
       setLoadingCredentials(true);
       const result = await DidiBackend().credentials.find(apiFilter);
+      
       if (filter?.status === "PENDING") {
-        setPendingCredentials(result);
+        const pendingCredentials = result.map(credential => ({...credential, status: "PENDING"}));
+        setPendingCredentials(pendingCredentials);
       } else if (filter?.status === "ACTIVE") {
-        setActiveCredentials(result)
+        const activeCredentials = result.map(credential => ({...credential, status: "ACTIVE"}));
+        setActiveCredentials(activeCredentials);
       } else if (filter?.status === "REVOKED") {
-        setRevokedCredentials(result);
+        const revokedCredentials = result.map(credential => ({...credential, status: "REVOKED"}));
+        setRevokedCredentials(revokedCredentials);
       }
       setLoadingCredentials(false);
       return result;
@@ -74,11 +79,10 @@ const CredentialsProvider = ({ children }) => {
   }
 
   
-  const emitCredential = async (credential, onSuccess, onError) => {
+  const emitSingleCredential = async (credential, onSuccess, onError) => {
     try {
       setProcessing(credential._id);
       const result = await DidiBackend().credentials.emit(credential._id);
-      console.log(result)
       removeProcessing(credential._id);
       message.success(`Se ha emitido exitosamente la credencial \n${credential.did}`)
       loadCredentials({status: "PENDING"})
@@ -122,7 +126,8 @@ const CredentialsProvider = ({ children }) => {
     setDeleting(true);
     for (const credential of selection) {
       try{
-        message.success(`Se ha eliminado exitosamente la credencial ${credential.name} - ${credential?.firstName||''} ${credential?.lastName||''} `)
+        const revoked = await DidiBackend().credentials.revoke(credential._id);  //reason?
+        message.success(`Se ha revocado exitosamente la credencial ${credential.name} - ${credential?.firstName||''} ${credential?.lastName||''} `)
         setSelection(selection => selection.filter(c => c._id !== credential?._id));
         setSelectedRowKeys(selected => selected.filter(c => c !== credential?._id))
 
@@ -133,6 +138,9 @@ const CredentialsProvider = ({ children }) => {
 
     }
     setDeleting(false);
+    loadCredentials({status: "ACTIVE"});
+    loadCredentials({status: "REVOKED"});
+
 
   }
 
@@ -155,7 +163,7 @@ const CredentialsProvider = ({ children }) => {
     setSelectedRowKeys,
     setSelection,
     clearSelection,
-    emitCredential,
+    emitSingleCredential,
     emitCredentials,
     deleteCredentials,
     loading,

@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { useCredentials } from "../../../../context/CredentialsContext";
 
 const EmitCredentialButton = ({ credential }) => {
-  const { emitCredential, loading } = useCredentials(); 
+  const { emitSingleCredential, loading } = useCredentials(); 
   const credentialLoading = loading[credential._id];
 
   return (
@@ -11,7 +11,7 @@ const EmitCredentialButton = ({ credential }) => {
       type="link"
       onClick={() => {
         console.log(`Emitting!, `, credential)
-        typeof emitCredential === "function" && emitCredential(credential)
+        typeof emitSingleCredential === "function" && emitSingleCredential(credential)
       }}>
 
       {credentialLoading? `Emitiendo`:`Emitir`}

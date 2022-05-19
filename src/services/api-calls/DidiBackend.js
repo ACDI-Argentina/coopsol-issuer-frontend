@@ -91,7 +91,7 @@ const DidiBackend = () => ({
     },
 
 
-    async revoke(id, reason = "") { //delete or revoke
+    async revoke(id, reason = "OTHER") { //delete or revoke
       const response = await axios.delete(`${ISSUER_BACKEND_URL}/cert/${id}`, {
         ...config,
         data: {
