@@ -19,8 +19,16 @@ const Wrapper = styled.div`
 
   display: flex;
   min-height: 100vh;
-  flex-wrap: wrap;
+  justify-content: center;
 `;
+  
+  
+  const Content = styled.div`
+  display: flex;
+  max-width: 1500px;
+  width: 100%;
+  flex-wrap: wrap;
+`
 
 const Left = styled.div`
   flex: 1;
@@ -70,50 +78,52 @@ const AddCredentials = ({ }) => {
 
   return (
     <Wrapper>
-      <Left>
-        <TitlePage
-          text="Generación de Credenciales"
-          description="Completá los siguientes pasos para poder generar una credencial."
-        />
-
-        <div className='container'>
-          <LabelContainer>Seleccione el tipo de credencial que desea emitir</LabelContainer>
-
-          <Select
-            className="credentialTypesSelect"
-            value={template?.name}
-            onChange={async (_id) => {            
-              const template = await DidiBackend().templates.get(_id);
-              setTemplate(template);
-              console.log(template)
-            }}
-          >
-            {templates?.map((template) => (
-              <Option key={template._id} value={template._id} >
-                {template.name}
-              </Option>
-            ))}
-          </Select>
-        </div>
-
-        <div className='container'>
-          <LabelContainer>Buscar el sujeto de la credencial</LabelContainer>
-          <SubjectAutoComplete
-            onSubjectSelect={setSubject}
+      <Content>
+        <Left>
+          <TitlePage
+            text="Generación de Credenciales"
+            description="Completá los siguientes pasos para poder generar una credencial."
           />
-        </div>
-      </Left>
+
+          <div className='container'>
+            <LabelContainer>Seleccione el tipo de credencial que desea emitir</LabelContainer>
+
+            <Select
+              className="credentialTypesSelect"
+              value={template?.name}
+              onChange={async (_id) => {
+                const template = await DidiBackend().templates.get(_id);
+                setTemplate(template);
+                console.log(template)
+              }}
+            >
+              {templates?.map((template) => (
+                <Option key={template._id} value={template._id} >
+                  {template.name}
+                </Option>
+              ))}
+            </Select>
+          </div>
+
+          <div className='container'>
+            <LabelContainer>Buscar el sujeto de la credencial</LabelContainer>
+            <SubjectAutoComplete
+              onSubjectSelect={setSubject}
+            />
+          </div>
+        </Left>
 
 
-      {template && (
-        <FormContainer>
-          <CredentialForm
-            template={template}
-            subject={subject}
-          />
-        </FormContainer> 
+        {template && (
+          <FormContainer>
+            <CredentialForm
+              template={template}
+              subject={subject}
+            />
+          </FormContainer>
 
-      )}
+        )}
+      </Content>
     </Wrapper>
   );
 };
