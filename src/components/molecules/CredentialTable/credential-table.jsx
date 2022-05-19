@@ -5,16 +5,16 @@ import TableFilters from '../TableFilters/table-filters';
 import { Table } from 'antd';
 import { useCredentials } from '../../../context/CredentialsContext';
 
-const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
+const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSelectionEnabled = true }) => {
   const [pagination, setPagination] = useState({ page: 0 });
   const { setSelection, selectedRowKeys, setSelectedRowKeys } = useCredentials() || {};
-    
+
   const [activeFilters, setActiveFilters] = useState(defaultFilters ? defaultFilters : {});
   const [paged, setPaged] = useState(0);
-  
+
 
   const { loadCredentials, loadingCredentials } = useCredentials();
-  
+
   const handleTableChange = pagination => {
     setPagination(pagination);
     setPaged(pagination.current - 1);
@@ -23,14 +23,14 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
   const onSearch = () => {
     setPagination({ ...pagination, current: 1 });
     setPaged(0);
-    loadCredentials({paged, ...activeFilters});
+    loadCredentials({ paged, ...activeFilters });
   };
 
 
   useEffect(() => {
-    (async function(){
+    (async function () {
       if (shouldPerformRequest(activeFilters)) {
-        await loadCredentials({paged, ...activeFilters}); 
+        await loadCredentials({ paged, ...activeFilters });
       }
     })()
   }, [paged, activeFilters]);
@@ -61,7 +61,12 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   };
 
-  
+  const rowSelection = rowsSelectionEnabled ? {
+    type: "checkbox",
+    selectedRowKeys,
+    onChange: onSelectionChange
+  } : undefined
+
   return (
     <div>
       <TableFilters
@@ -78,11 +83,7 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters }) => {
         loading={loadingCredentials}
         onChange={handleTableChange}
         pagination={pagination}
-        rowSelection={{
-          type: "checkbox",
-          selectedRowKeys,
-          onChange: onSelectionChange
-        }}
+        rowSelection={rowSelection}
       /*    expandable={
            !noExpand && {
              expandedRowRender: record => <CredentialDetail fields={record} />

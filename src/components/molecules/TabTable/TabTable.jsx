@@ -103,6 +103,7 @@ const TabTable = () => {
             columns={getRevokedCredentialsColumns()}
             filters={revokedCredentialsFilter}
             defaultFilters={{ status: "REVOKED" }}
+            rowsSelectionEnabled={false}
           />
         </TabPane>
 
