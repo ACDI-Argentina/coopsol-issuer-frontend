@@ -89,8 +89,9 @@ export const getPendingCredentialColumns = () => {
 export const getActiveCredentialsColumns = (actions) => {
 
   return [
-    
-    { title: 'DID', dataIndex: 'did', fixed: 'left', width: 360 },
+    Table.SELECTION_COLUMN,
+    Table.EXPAND_COLUMN,
+    /* { title: 'DID', dataIndex: 'did', fixed: 'left', width: 360 }, */
     {
       title: 'Nombre y Apellido',
 

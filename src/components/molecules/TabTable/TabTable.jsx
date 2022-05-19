@@ -72,7 +72,6 @@ const TabTable = () => {
             defaultFilters={{ status: "PENDING" }}
             expandable={{
               expandedRowRender: credential => <CredentialDetail credential={credential} />
-
             }}
           />
         </TabPane>
@@ -85,6 +84,9 @@ const TabTable = () => {
             columns={getActiveCredentialsColumns()}
             filters={activeCredentialsFilter}
             defaultFilters={{ status: "ACTIVE" }}
+            expandable={{
+              expandedRowRender: credential => <CredentialDetail credential={credential} />
+            }}
           />
         </TabPane>
 
