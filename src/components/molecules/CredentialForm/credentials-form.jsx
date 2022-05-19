@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 import './_style.scss';
-import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 
 import { AppContext } from '../../../services/providers/app-context';
 import { useHistory } from 'react-router-dom';
@@ -11,6 +10,7 @@ import DynamicInput from '../DynamicInput/DynamicInput';
 import api from "../../../services/api-calls/all"
 import DidiBackend from '../../../services/api-calls/DidiBackend';
 import { message } from 'antd';
+import ButtonAntd from '../../atoms/ButtonAntd/ButtonAntd';
 
 /* const Values = styled.div`
   border: 2px solid red;
@@ -190,7 +190,8 @@ const CredentialForm = ({ template, subject }) => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          setFieldValue
+          setFieldValue,
+          submitForm
         }) => (
           <form onSubmit={handleSubmit}>
             <Title>
@@ -213,13 +214,16 @@ const CredentialForm = ({ template, subject }) => {
             ))}
 
             <FormButtons>
-
-              <ButtonPrimary
+              <ButtonAntd
                 disabled={isSubmitting || Object.keys(errors).length > 0}
                 type="submit"
-                text="Guardar"
-                theme={`ThemePrimary ${isSubmitting || Object.keys(errors).length > 0 ? "disabled" : ""}`}
-              />
+                loading={isSubmitting}
+                onClick={submitForm}
+              >
+                Guardar
+              </ButtonAntd>
+
+
             </FormButtons>
 
           </form>
