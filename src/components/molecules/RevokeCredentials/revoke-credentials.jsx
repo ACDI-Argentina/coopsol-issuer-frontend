@@ -13,6 +13,7 @@ import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
 import { parseDate } from '../../../utils/dateHelpers';
 import DidiBackend from '../../../services/api-calls/DidiBackend';
 import { useCredentials } from '../../../context/CredentialsContext';
+import { logAction } from '../../../services/api-calls/logs';
 
 
 const RevokeCredentials = ({
@@ -31,9 +32,9 @@ const RevokeCredentials = ({
     setLoading(true);
 
     try{
-      await DidiBackend().credentials.revoke(credential._id, selectedReason.value);
+      const revoked = await DidiBackend().credentials.revoke(credential._id, selectedReason.value);
       setLoading(false);
-      onSuccess();
+      onSuccess({credential: revoked, reason: selectedReason.value});
     } catch(err){
       setLoading(false);
       console.log(err);
@@ -41,9 +42,10 @@ const RevokeCredentials = ({
     }
   };
 
-  const onSuccess = () => {
+  const onSuccess = (revoked) => {
     setVisible(false);
     message.success("La credencial se ha revocado exitosamente");
+    logAction("CREDENTIAL_REVOCATION",revoked);
     loadCredentials({ status });
     loadCredentials({status: "REVOKED"})
   };

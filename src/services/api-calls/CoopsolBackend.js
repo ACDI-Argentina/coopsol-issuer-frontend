@@ -3,27 +3,75 @@ const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
 console.log(`Coopsol backend:`, COOPSOL_BACKEND_URL)
 
 const CoopsolBackend = () => ({
-  getTemplates: async () => {
-    const response = await axios.get(`${COOPSOL_BACKEND_URL}/templates`);
-
-    const templates = response?.data?.data?.map(template => ({
-      ...template
-    }));
-
-
-    return {
-      content: templates,
-      totalElements: templates.length,
-      size: templates.length
-    };
-  },
-
   searchSubject: async searchText => {
     const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/search?term=${searchText}`);
     return response?.data?.data;
   },
 
+  createProducer: async data => {
+    const response = await axios.post(`${COOPSOL_BACKEND_URL}/subjects`, data);
+    const producer = response?.data?.data;
+    console.log(producer)
+    return producer;
+  },
 
+  updateProducer: async (id, data) => {
+    try {
+      const response = await axios.patch(`${COOPSOL_BACKEND_URL}/subjects/${id}`, data);
+      const producer = response?.data?.data;
+      return producer;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getProducers: async data => {
+    try {
+      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects?sort=lastname`);
+      const producers = response?.data?.data;
+      return {
+        content: producers,
+        totalElements: producers.length,
+        size: 10 //page size
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+
+  getProducer: async id => {
+    try {
+      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/${id}`);
+      const producer = response?.data?.data;
+      return producer;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+
+  activities: {
+    find: async filter => {
+      const query = new URLSearchParams(filter).toString();
+      const response = await axios.get(`${COOPSOL_BACKEND_URL}/activities?${query}`);
+      const activities = response?.data?.data;
+      console.log(activities)
+      return activities;
+    },
+    create: async data => {
+      const response = await axios.post(`${COOPSOL_BACKEND_URL}/activities`, data);
+      const activity = response?.data?.data;
+      console.log(activity)
+      return activity;
+    },
+  }
+  
+
+
+
+/* A los siguientes metodos podriamos usarlos en caso de querer guardar pre credenciales
+Podemos usarlo para precredenciales
   saveCredential: async (data) => {
     const { subject, template, ...templateData } = data;
     try {
@@ -53,8 +101,6 @@ const CoopsolBackend = () => ({
         })
       });
 
-      /* console.log(credentials) */
-
       return {
         content: credentials,
         totalElements: credentials.length,
@@ -65,52 +111,6 @@ const CoopsolBackend = () => ({
     }
   },
 
-  getProducers: async data => {
-    try {
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects?sort=lastname`);
-      const producers = response?.data?.data;
-
-      console.log(producers)
-
-      return {
-        content: producers,
-        totalElements: producers.length,
-        size: 10 //page size
-      };
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  createProducer: async data => {
-    const response = await axios.post(`${COOPSOL_BACKEND_URL}/subjects`, data);
-    const producer = response?.data?.data;
-    console.log(producer)
-    return producer;
-  },
-
-  updateProducer: async (id, data) => {
-    try {
-      const response = await axios.patch(`${COOPSOL_BACKEND_URL}/subjects/${id}`, data);
-      console.log(`Sent`)
-      const producer = response?.data?.data;
-      console.log(producer)
-      return producer;
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  getProducer: async id => {
-    try {
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/${id}`);
-      const producer = response?.data?.data;
-      console.log(producer)
-      return producer;
-    } catch (err) {
-      console.log(err);
-    }
-  },
 
   deleteCredential: async id => {
     try {
@@ -122,7 +122,7 @@ const CoopsolBackend = () => ({
       console.log(err);
     }
   }
-
+ */
   
 })
 

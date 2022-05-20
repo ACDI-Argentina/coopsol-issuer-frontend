@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import DidiBackend from '../services/api-calls/DidiBackend';
+import CoopsolBackend from '../services/api-calls/CoopsolBackend';
 export const ActivitiesContext = React.createContext();
 
 const sleep = (ms = 3000) => {
@@ -15,25 +15,11 @@ export function useActivities() {
 const ActivitiesProvider = ({ children }) => {
   const [loading, setLoading]= useState(false);
   const [activities, setActivities] = useState([]);
-
-  const getActivityLog = () => ({
+  
+  const getActivityLog = () => ({ 
     content: [
-      {
-        _id:1,
-        executionDateTime: '07/07/2020 10:16:04',
-        user: 'admin',
-        level: 'ERROR',
-        actionType: 'DIDI',
-        message: 'Error de conexión con Didi'
-      },
-      {
-        _id:2,
-        executionDateTime: '07/07/2020 10:16:04',
-        user: 'admin',
-        level: 'INFO',
-        actionType: 'DIDI',
-        message: 'Sincronización DIDI OK'
-      }
+     
+   
     ],
     totalElements: 2,
     totalPages: 1,
@@ -45,15 +31,15 @@ const ActivitiesProvider = ({ children }) => {
   const loadActivities = async () => {
     try {
       setLoading(true);
-      
-      setActivities(getActivityLog().content)
+      const activities = await CoopsolBackend().activities.find();
+      setActivities(activities)
       setLoading(false);
-
     } catch (err) {
       setLoading(false);
       console.log(err);
     }
   }
+
 
   const value = {
     activities,

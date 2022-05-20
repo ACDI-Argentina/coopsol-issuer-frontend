@@ -87,10 +87,8 @@ const DidiBackend = () => ({
     },
 
     async emit(id) {
-      console.log(`Emit credential: ${id}`)
       const response = await axios.post(`${ISSUER_BACKEND_URL}/cert/${id}/emmit`, {}, config);
-      console.log(response)
-      const apiResponse = response.data; ///
+      const apiResponse = response.data; 
       if(apiResponse.status === "error"){
         throw new Error(apiResponse?.data?.message);
       }

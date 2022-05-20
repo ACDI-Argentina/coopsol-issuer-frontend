@@ -10,6 +10,8 @@ import DynamicInput from '../DynamicInput/DynamicInput';
 import DidiBackend from '../../../services/api-calls/DidiBackend';
 import { message } from 'antd';
 import ButtonAntd from '../../atoms/ButtonAntd/ButtonAntd';
+import { logAction } from '../../../services/api-calls/logs';
+
 
 /* const Values = styled.div`
   border: 2px solid red;
@@ -154,10 +156,10 @@ const CredentialForm = ({ template, subject }) => {
               microCredentials: [],
               templateId: template._id
             })
-
             if (result.status === "success") {
               message.success(`Credencial creada exitosamente`);
               setSubmitting(false);
+              logAction("CREDENTIAL_CREATION", { credential: result.data[0] });
               return goToCredentials();
             } else {
               message.error(`Ha ocurrido un error al crear la credencial, intente nuevamente`);

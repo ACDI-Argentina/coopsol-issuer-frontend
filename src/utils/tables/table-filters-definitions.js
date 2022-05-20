@@ -12,10 +12,6 @@ export const defaultFilters = credentialTypes => ({
     type: 'input',
     name: 'Apellido'
   },
-  dniBeneficiary: {
-    type: 'input',
-    name: 'DNI'
-  },
   lastUpdate: {
     type: 'date',
     name: 'Ult. actualización'
@@ -23,22 +19,18 @@ export const defaultFilters = credentialTypes => ({
 });
 
 export const didCredentialsFilter = credentialTypes => ({
-  credentialType: {
+  credentialType: { 
     type: 'dropdown',
     name: 'Tipo',
     data: credentialTypes
   },
-  name: {
+  firstname: {
     type: 'input',
     name: 'Nombre'
   },
   surname: {
     type: 'input',
     name: 'Apellido'
-  },
-  dniBeneficiary: {
-    type: 'input',
-    name: 'DNI'
   },
   lastUpdate: {
     type: 'date',

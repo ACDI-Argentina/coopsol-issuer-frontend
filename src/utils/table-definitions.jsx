@@ -1,10 +1,8 @@
 import React from 'react';
 import { Table } from 'antd';
 import styled from 'styled-components';
-import { Button } from "antd"
 import RevokeCredentials from '../components/molecules/RevokeCredentials/revoke-credentials';
 import { parseDate } from './dateHelpers';
-import { formatDNI } from "../components/pages/Producers/table-columns";
 import EmitCredentialButton from '../components/molecules/Credentials/Actions/EmitCredentialButton';
 
 
@@ -31,7 +29,7 @@ const translateStatus = (str) => {
   }
 }
 
-const translateRevocationReason = reason => {
+export const translateRevocationReason = reason => {
   switch (reason) {
     case "UNLINKING": return "Desvinculación";
     case "EXPIRATION": return "Expiración";
@@ -189,14 +187,16 @@ export const activitiesColumns = [
     title: 'Fecha de ejecución',
     dataIndex: 'executionDateTime',
     key: 'executionDateTime',
+    width: 200,
     render: value => <div>{parseDate(value)}</div>
   },
-  {
-    title: 'Acción',
-    dataIndex: 'actionType',
-    key: 'actionType'
+  { 
+    title: 'Nivel', 
+    dataIndex: 'level', 
+    key: 'level',
+    width: 100,
+  
   },
-  { title: 'Nivel', dataIndex: 'level', key: 'level' },
   { title: 'Mensaje', dataIndex: 'message', key: 'message' },
   { title: 'Usuario', dataIndex: 'user', key: 'user' }
 ];
