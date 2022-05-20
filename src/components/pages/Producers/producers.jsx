@@ -11,6 +11,7 @@ import ProducerForm from '../../molecules/ProducerForm/ProducerForm';
 import generateProducersColumns from "./table-columns";
 import TableFilters from '../../molecules/TableFilters/table-filters';
 import { producerFilters } from '../../../utils/tables/table-filters-definitions';
+import { applyFilters } from '../../../utils/filter';
 
 const TableContainer = styled.div`
   margin: 1rem;
@@ -49,25 +50,6 @@ const Producers = ({ history }) => {
 
   const [activeFilters, setActiveFilters] = useState({});
 
-  useEffect(() => {
-    console.log(`Apply filter`, activeFilters, allProducers)
-    setProducers(allProducers?.filter(producer => {
-      for (let [key,filter] of Object.entries(activeFilters)){
-        console.log(`${key}`, `${filter}`, producer[key])
-        const producerValue = producer?.[`${key}`];
-
-        if(typeof producerValue === "string"){
-          return producerValue.toUpperCase().includes(filter.toUpperCase());
-        }
-      }
-      
-      return true;
-    }))
-
-
-  }, [allProducers, activeFilters])
-
-
   return (
     <div className="Producers">
       <TitlePage
@@ -85,7 +67,7 @@ const Producers = ({ history }) => {
         <Table
           loading={loading}
           rowKey={'_id'}
-          dataSource={producers}
+          dataSource={applyFilters(allProducers, activeFilters)}
           columns={columns}
         />
       </TableContainer>

@@ -4,11 +4,11 @@ export const defaultFilters = credentialTypes => ({
     name: 'Tipo',
     data: credentialTypes
   },
-  firstname: {
+  firstName: {
     type: 'input',
     name: 'Nombre'
   },
-  lastname: {
+  lastName: {
     type: 'input',
     name: 'Apellido'
   },
@@ -24,11 +24,11 @@ export const getPendingCredentialsFilter = credentialTypes => ({
     name: 'Tipo',
     data: credentialTypes
   },
-  firstname: {
+  firstName: {
     type: 'input',
     name: 'Nombre'
   },
-  lastname: {
+  lastName: {
     type: 'input',
     name: 'Apellido'
   },
@@ -48,11 +48,11 @@ export const getActiveCredentialsFilter = credentialTypes => ({
     name: 'Tipo',
     data: credentialTypes
   },
-  firstname: {
+  firstName: {
     type: 'input',
     name: 'Nombre'
   },
-  lastname: {
+  lastName: {
     type: 'input',
     name: 'Apellido'
   },

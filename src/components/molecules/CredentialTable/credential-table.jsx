@@ -4,8 +4,10 @@ import './_style.scss';
 import TableFilters from '../TableFilters/table-filters';
 import { Table } from 'antd';
 import { useCredentials } from '../../../context/CredentialsContext';
+import { applyFilters } from '../../../utils/filter';
 
 const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSelectionEnabled = true, ...props }) => {
+  const [filtered, setFiltered] = useState(credentials);
   const [pagination, setPagination] = useState({ page: 0 });
   const { setSelection, selectedRowKeys, setSelectedRowKeys } = useCredentials() || {};
 
@@ -67,6 +69,17 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSe
     onChange: onSelectionChange
   } : undefined
 
+  useEffect(() => {
+    try {
+      const { paged, status, ...currentFilters } = activeFilters;
+      const filtered = applyFilters(credentials, currentFilters)
+      setFiltered(filtered);
+    } catch (err) {
+      console.log(err)
+    }
+
+  },[credentials, activeFilters])
+
   return (
     <div>
       <TableFilters
@@ -78,7 +91,7 @@ const CredentialTable = ({ credentials, columns, defaultFilters, filters, rowsSe
       <Table
         rowKey={'_id'}
         columns={columns}
-        dataSource={credentials}
+        dataSource={filtered}
         scroll={{ x: 1300 }}
         loading={loadingCredentials}
         onChange={handleTableChange}
