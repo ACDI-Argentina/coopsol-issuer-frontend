@@ -1,13 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import './_style.scss';
 import { Tabs } from 'antd';
-import { useState } from 'react';
-import { useApi } from '../../../services/useApi';
-import api from '../../../services/api-calls/all';
 import CredentialTable from '../CredentialTable/credential-table';
 import TabTooltip from '../../atoms/TabTooltip/tab-tooltip';
 import { AppContext } from '../../../services/providers/app-context';
-import { UserContext } from '../../../services/providers/user-context';
+
 
 import {
   getActiveCredentialsColumns,
@@ -23,29 +20,22 @@ import {
 import { useCredentials } from '../../../context/CredentialsContext';
 
 import CredentialDetail from "../../molecules/CredentialDetail/credential-detail";
+import useTemplates from '../../../hooks/useTemplates';
 
 const { TabPane } = Tabs;
-const { getCredentialTypes} = api();
 
 const TabTable = () => {
   const { credentials, clearSelection } = useCredentials();
-  const credentialCall = useApi();
-
-  const [credentialTypes, setCredentialTypes] = useState([]);
-
   const { appState } = useContext(AppContext);
-  const { setUser } = useContext(UserContext);
-
-
-  useEffect(() => {
-    credentialCall(getCredentialTypes, null, setCredentialTypes, onError, setUser);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onError = (error, status) => {
-    console.log('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
+  
+  const onError = (error) => {
+    console.log('No se pudieron obtener los tipos de filtro, intente nuevamente.', error);
   };
+
+
+  //Cargar credential types
+  const { templates } = useTemplates(onError);
+  const credentialTypes = templates.map(template => template.name)
 
   const pendingDidFilter = getPendingCredentialsFilter(credentialTypes);
   const activeCredentialsFilter = getActiveCredentialsFilter(credentialTypes);

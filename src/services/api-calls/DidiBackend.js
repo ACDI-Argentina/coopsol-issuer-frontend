@@ -20,7 +20,7 @@ const DidiBackend = () => ({
 
       return templates
         .filter(t => t.name.includes("Coopsol"))
-        .map(t => ({ ...t, name: t.name.split("-")[1].trim() }))
+        /* .map(t => ({ ...t, name: t.name.split("-")[1].trim() })) */
         .sort((a, b) => new Date(a.createdOn) > new Date(b.createdOn) ? 1 : -1);
 
     },

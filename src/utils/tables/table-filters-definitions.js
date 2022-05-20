@@ -1,5 +1,5 @@
-export const defaultFilters = credentialTypes => ({
-  credentialType: {
+const defaultCredentialsFilter = credentialTypes => ({
+  name: { //Credential type
     type: 'dropdown',
     name: 'Tipo',
     data: credentialTypes
@@ -11,27 +11,11 @@ export const defaultFilters = credentialTypes => ({
   lastName: {
     type: 'input',
     name: 'Apellido'
-  },
-  lastUpdate: {
-    type: 'date',
-    name: 'Ult. actualización'
   }
 });
 
 export const getPendingCredentialsFilter = credentialTypes => ({
-  credentialType: { 
-    type: 'dropdown',
-    name: 'Tipo',
-    data: credentialTypes
-  },
-  firstName: {
-    type: 'input',
-    name: 'Nombre'
-  },
-  lastName: {
-    type: 'input',
-    name: 'Apellido'
-  },
+  ...defaultCredentialsFilter(credentialTypes),
   createdFrom: {
     type: 'date',
     name: 'Desde'
@@ -43,19 +27,7 @@ export const getPendingCredentialsFilter = credentialTypes => ({
 });
 
 export const getActiveCredentialsFilter = credentialTypes => ({
-  credentialType: { 
-    type: 'dropdown',
-    name: 'Tipo',
-    data: credentialTypes
-  },
-  firstName: {
-    type: 'input',
-    name: 'Nombre'
-  },
-  lastName: {
-    type: 'input',
-    name: 'Apellido'
-  },
+  ...defaultCredentialsFilter(credentialTypes),
   createdFrom: {
     type: 'date',
     name: 'Desde'
@@ -67,19 +39,7 @@ export const getActiveCredentialsFilter = credentialTypes => ({
 });
 
 export const getRevokedCredentialsFilter = credentialTypes => ({
-  credentialType: { 
-    type: 'dropdown',
-    name: 'Tipo',
-    data: credentialTypes
-  },
-  firstname: {
-    type: 'input',
-    name: 'Nombre'
-  },
-  lastname: {
-    type: 'input',
-    name: 'Apellido'
-  },
+  ...defaultCredentialsFilter(credentialTypes),
   createdFrom: {
     type: 'date',
     name: 'Desde'
