@@ -93,3 +93,24 @@ export const defaultProviderFilters = categories => ({
     data: [{id: 0, description: 'No'}, {id: 1, description:'Si'}]
   }
 });
+
+
+export const producerFilters = {
+  lastname: {
+    type: 'input',
+    name: 'Apellido'
+  },
+  firstname: {
+    type: 'input',
+    name: 'Nombre'
+  },
+  dni: {
+    type: 'input',
+    name: 'DNI'
+  },
+  DID: {
+    type: 'input',
+    name: 'DID'
+  },
+
+};
