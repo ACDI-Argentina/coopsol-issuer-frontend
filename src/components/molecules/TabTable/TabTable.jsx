@@ -16,8 +16,9 @@ import {
 } from '../../../utils/table-definitions';
 
 import {
-  defaultFilters,
-  didCredentialsFilter
+  getPendingCredentialsFilter,
+  getActiveCredentialsFilter,
+  getRevokedCredentialsFilter,
 } from '../../../utils/tables/table-filters-definitions';
 import { useCredentials } from '../../../context/CredentialsContext';
 
@@ -46,15 +47,21 @@ const TabTable = () => {
     console.log('No se pudieron obtener los tipos de filtro, intente nuevamente.', status);
   };
 
-  const activeCredentialsFilter = defaultFilters(credentialTypes);
-  const pendingDidFilter = didCredentialsFilter(credentialTypes);
-  const revokedCredentialsFilter = defaultFilters(credentialTypes); //TODO: Implement
+  const pendingDidFilter = getPendingCredentialsFilter(credentialTypes);
+  const activeCredentialsFilter = getActiveCredentialsFilter(credentialTypes);
+  const revokedCredentialsFilter = getRevokedCredentialsFilter(credentialTypes);
+
+  //Estos filtros van a depender del status de la credencial que se este visualizando
+
+
 
   return (
     <div className="TabTableContent">
       <Tabs
         defaultActiveKey={appState.defaultActiveTabKey}
-        onChange={activeKey => clearSelection()}
+        onChange={activeKey => {
+          clearSelection()
+        }}
       >
         <TabPane
           tab={
