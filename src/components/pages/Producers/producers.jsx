@@ -5,13 +5,13 @@ import TitlePage from '../../atoms/TitlePage/title-page';
 import ProducerActions from '../../molecules/ProducerActions/producer-actions';
 import { Table } from 'antd';
 import styled from 'styled-components';
-import api from "../../../services/api-calls/all";
 import { Modal } from 'antd';
 import ProducerForm from '../../molecules/ProducerForm/ProducerForm';
 import generateProducersColumns from "./table-columns";
 import TableFilters from '../../molecules/TableFilters/table-filters';
 import { producerFilters } from '../../../utils/tables/table-filters-definitions';
 import { applyFilters } from '../../../utils/filter';
+import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 
 const TableContainer = styled.div`
   margin: 1rem;
@@ -19,7 +19,6 @@ const TableContainer = styled.div`
 `
 
 const Producers = ({ history }) => {
-  const { getProducers } = api();
   const [allProducers, setAllProducers] = useState([]);
   const [producers, setProducers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,7 +29,7 @@ const Producers = ({ history }) => {
     async function loadProducers() {
       try {
         setLoading(true);
-        const allProducers = await getProducers();
+        const allProducers = await CoopsolBackend().producers().findAll();
         setAllProducers(allProducers.content);
         setLoading(false);
       } catch (err) {

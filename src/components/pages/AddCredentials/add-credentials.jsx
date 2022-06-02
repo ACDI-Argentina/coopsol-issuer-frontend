@@ -64,14 +64,21 @@ const AddCredentials = ({ }) => {
   const [subject, setSubject] = useState();
   const [templates, setTemplates] = useState();
 
-  /* Template context, con los datos cargados */
-  useEffect(() => {
-    (async function () {
+  async function loadTemplates(){
+    try{
       const templates = await new DidiBackend().templates().find();
       setTemplates(templates)
       const template = await new DidiBackend().templates().get(templates[0]._id);
       setTemplate(template);
-    })();
+
+    } catch(err){
+      console.log(err);
+    }
+  }
+
+  
+  useEffect(() => {
+    loadTemplates();
   }, [])
 
 

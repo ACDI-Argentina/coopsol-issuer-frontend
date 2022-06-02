@@ -1,13 +1,10 @@
-import axios from "axios";
-const ISSUER_BACKEND_URL = process.env.REACT_ISSUER_BACKEND_URL || "https://api.issuer.qa.didi.org.ar"; //template/${id}
-
-const credentialsApi = config => ({
+const credentialsApi = axiosInstance => ({
   async create(data) {
-    const response = await axios.post(`${ISSUER_BACKEND_URL}/cert`, data, config);
+    const response = await axiosInstance.post(`/cert`, data);
     return response?.data;
   },
   async get(id) {
-    const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/${id}`, config);
+    const response = await axiosInstance.get(`/cert/${id}`);
     const apiResponse = response.data;
     if (apiResponse.status === "error") {
       throw new Error(apiResponse?.data?.message);
@@ -17,7 +14,7 @@ const credentialsApi = config => ({
   async find(filter) {
     const query = new URLSearchParams(filter).toString();
 
-    const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/find?${query}`, config);
+    const response = await axiosInstance.get(`/cert/find?${query}`);
     const apiResponse = response.data;
     const credentials = apiResponse?.data;
 
@@ -25,7 +22,7 @@ const credentialsApi = config => ({
   },
 
   async all() {
-    const response = await axios.get(`${ISSUER_BACKEND_URL}/cert/all`, config);
+    const response = await axiosInstance.get(`/cert/all`);
     const apiResponse = response.data;
     const credentials = apiResponse?.data;
 
@@ -33,7 +30,7 @@ const credentialsApi = config => ({
   },
 
   async emit(id) {
-    const response = await axios.post(`${ISSUER_BACKEND_URL}/cert/${id}/emmit`, {}, config);
+    const response = await axiosInstance.post(`/cert/${id}/emmit`, {});
     const apiResponse = response.data;
     if (apiResponse.status === "error") {
       throw new Error(apiResponse?.data?.message);
@@ -44,8 +41,7 @@ const credentialsApi = config => ({
 
 
   async revoke(id, reason = "OTHER") { //delete or revoke
-    const response = await axios.delete(`${ISSUER_BACKEND_URL}/cert/${id}`, {
-      ...config,
+    const response = await axiosInstance.delete(`/cert/${id}`, {
       data: {
         reason
       }

@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import styled from 'styled-components';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 import api from '../../../services/api-calls/all';
+import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 
 
 const FormWrapper = styled.div`
@@ -29,9 +30,7 @@ const InputContainer = styled.div`
 
 const ProducerForm = ({ producer, onSuccess }) => {
 
-  const { createProducer, updateProducer } = api();
-
-
+  
   const initialValues = {
     lastname: producer?.lastname,
     firstname: producer?.firstname,
@@ -51,10 +50,11 @@ const ProducerForm = ({ producer, onSuccess }) => {
             let result;
             if(producer?._id){
               console.log(`Update producer`)
-              result = await updateProducer(producer?._id, values);
+              result = await CoopsolBackend().producers.update(producer?._id, values);
+
             } else {
               console.log(`create producer`)
-              result = await createProducer(values);
+              result = await CoopsolBackend().producers().create(values);
             }
             typeof onSuccess === "function" && onSuccess(result);
             console.log(result);

@@ -1,13 +1,16 @@
 
-import axios from "axios";
-const ISSUER_BACKEND_URL = process.env.REACT_ISSUER_BACKEND_URL || "https://api.issuer.qa.didi.org.ar"; //template/${id}
-
-const templatesApi = config => ({
+const templatesApi = axiosInstance => ({
 
   async find() {
-    const response = await axios.get(`${ISSUER_BACKEND_URL}/template/all`, config);
+    const response = await axiosInstance.get(`/template/all`);
     const apiResponse = response.data;
     const templates = apiResponse?.data;
+
+    if(apiResponse.status === "error"){
+      console.log(apiResponse.data);
+      const { code, message } = apiResponse.data;
+      throw new Error(`${code} - ${message}`)
+    }
 
     return templates
       .filter(t => t.name.includes("Coopsol"))
@@ -16,7 +19,7 @@ const templatesApi = config => ({
 
   },
   async create(data) {
-    const response = await axios.post(`${ISSUER_BACKEND_URL}/template`, data, config);
+    const response = await axiosInstance.post(`/template`, data);
     const apiResponse = response.data;
     if (apiResponse.status === "error") {
       throw new Error(apiResponse?.data?.message);
@@ -25,13 +28,13 @@ const templatesApi = config => ({
   },
 
   async get(id) {
-    const response = await axios.get(`${ISSUER_BACKEND_URL}/template/${id}`, config);
+    const response = await axiosInstance.get(`/template/${id}`);
     const apiResponse = response.data;
     return apiResponse?.data;
   },
 
   async update(id, data) {
-    const response = await axios.put(`${ISSUER_BACKEND_URL}/template/${id}`, data, config);
+    const response = await axiosInstance.put(`/template/${id}`, data);
     const apiResponse = response.data;
     console.log(apiResponse)
     if (apiResponse.status === "error") {
@@ -41,7 +44,7 @@ const templatesApi = config => ({
   },
 
   async delete(id) {
-    const apiResponse = await axios.delete(`${ISSUER_BACKEND_URL}/template/${id}`, config);
+    const apiResponse = await axiosInstance.delete(`/template/${id}`);
     return apiResponse.data;
   }
 });

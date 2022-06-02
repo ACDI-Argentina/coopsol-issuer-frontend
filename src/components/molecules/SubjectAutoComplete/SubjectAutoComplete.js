@@ -3,6 +3,7 @@ import { AutoComplete } from 'antd';
 import { SafetyCertificateFilled } from '@ant-design/icons'
 import api from "../../../services/api-calls/all";
 import styled from 'styled-components';
+import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 
 const { Option } = AutoComplete;
 
@@ -17,13 +18,12 @@ const SubjectAutoComplete = ({ onSubjectSelect }) => {
   const [options, setOptions] = useState([]);
 
   const onSearch = async (searchText) => {
-    const { searchSubject } = api();
-
+    
     const lSearchText = searchText.toLowerCase();
     if (!lSearchText) return setOptions([]);
 
     //usar un timer para el throtle
-    const results = await searchSubject(searchText);
+    const results = await CoopsolBackend().producers().search(searchText);
     if (results) {
       setOptions(results);
     }

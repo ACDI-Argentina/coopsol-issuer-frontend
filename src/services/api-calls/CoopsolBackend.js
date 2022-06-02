@@ -1,22 +1,40 @@
 import axios from "axios";
+import { USER } from "utils/constants";
 import DidiBackend from "../didi/DidiBackend";
+import { HEADERS } from "./base";
 const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
 console.log(`Coopsol backend:`, COOPSOL_BACKEND_URL)
+
+const axiosInstance = axios.create({
+  baseURL: COOPSOL_BACKEND_URL,
+  timeout: 18000000,
+  responseType: 'json',
+  headers: { [HEADERS.ACCEPT]: HEADERS.JSON }
+});
+
+axiosInstance.interceptors.request.use(config => {
+  const user = JSON.parse(localStorage.getItem(USER));
+  if (user && user.accessToken) {
+    config.headers.Authorization = `Bearer ${user.accessToken}`;
+  }
+  return config;
+});
+
 
 const CoopsolBackend = () => ({
 
   login: async (credentials) => {
-    const response = await axios.post(`${COOPSOL_BACKEND_URL}/auth/login`, credentials);
+    const response = await axiosInstance.post(`/auth/login`, credentials);
     //TODO: check response status
-    const {user, token, tokenDidi} = response.data;
+    const { user, token, tokenDidi } = response.data;
 
-    DidiBackend.setToken(tokenDidi);
-
+    localStorage.setItem("didiToken", tokenDidi);
+    
     return {
       data: {
         username: user.email,
         password: "",
-        accessToken: token, //Store for future requests
+        accessToken: token,
         tokenType: "Bearer",
       }
     };
@@ -24,134 +42,137 @@ const CoopsolBackend = () => ({
 
   logout: async (credentials) => {
     //check function
-    const response = await axios.post(`${COOPSOL_BACKEND_URL}/auth/logout`, credentials);
+    const response = await axiosInstance.post(`/auth/logout`, credentials);
     localStorage.removeItem('didiToken');
-    DidiBackend.setToken(undefined);
 
   },
 
 
-  searchSubject: async searchText => {
-    const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/search?term=${searchText}`);
-    return response?.data?.data;
-  },
+  producers: () => ({
+    search: async searchText => {
+      const response = await axiosInstance.get(`/subjects/search?term=${searchText}`);
+      return response?.data?.data;
+    },
 
-  createProducer: async data => {
-    const response = await axios.post(`${COOPSOL_BACKEND_URL}/subjects`, data);
-    const producer = response?.data?.data;
-    console.log(producer)
-    return producer;
-  },
-
-  updateProducer: async (id, data) => {
-    try {
-      const response = await axios.patch(`${COOPSOL_BACKEND_URL}/subjects/${id}`, data);
+    create: async data => {
+      const response = await axiosInstance.post(`/subjects`, data);
       const producer = response?.data?.data;
+      console.log(producer)
       return producer;
-    } catch (err) {
-      console.log(err);
-    }
-  },
+    },
 
-  getProducers: async data => {
-    try {
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects?sort=lastname`);
-      const producers = response?.data?.data;
-      return {
-        content: producers,
-        totalElements: producers.length,
-        size: 10 //page size
-      };
-    } catch (err) {
-      console.log(err);
-    }
-  },
+    update: async (id, data) => {
+      try {
+        const response = await axiosInstance.patch(`/subjects/${id}`, data);
+        const producer = response?.data?.data;
+        return producer;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    findAll: async data => {
+      try {
+        const response = await axiosInstance.get(`/subjects?sort=lastname`);
+        const producers = response?.data?.data;
+        return {
+          content: producers,
+          totalElements: producers.length,
+          size: 10 //page size
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
 
-  getProducer: async id => {
-    try {
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/${id}`);
-      const producer = response?.data?.data;
-      return producer;
-    } catch (err) {
-      console.log(err);
-    }
-  },
+    get: async id => {
+      try {
+        const response = await axiosInstance.get(`/subjects/${id}`);
+        const producer = response?.data?.data;
+        return producer;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+  }),
+
 
 
   activities: {
     find: async filter => {
       const query = new URLSearchParams(filter).toString();
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/activities?${query}`);
+      const response = await axiosInstance.get(`/activities?${query}`);
       const activities = response?.data?.data;
       console.log(activities)
       return activities;
     },
     create: async data => {
-      const response = await axios.post(`${COOPSOL_BACKEND_URL}/activities`, data);
+      const response = await axiosInstance.post(`/activities`, data);
       const activity = response?.data?.data;
       console.log(activity)
       return activity;
     },
   }
+
+
+
+
+  /* A los siguientes metodos podriamos usarlos en caso de querer guardar pre credenciales
+  Podemos usarlo para precredenciales
+    saveCredential: async (data) => {
+      const { subject, template, ...templateData } = data;
+      try {
+        const response = await axiosInstance.post(`${COOPSOL_BACKEND_URL}/credentials`, {
+          subject,
+          template,
+          data: templateData
+        });
+        return response?.data?.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   
-
-
-
-/* A los siguientes metodos podriamos usarlos en caso de querer guardar pre credenciales
-Podemos usarlo para precredenciales
-  saveCredential: async (data) => {
-    const { subject, template, ...templateData } = data;
-    try {
-      const response = await axios.post(`${COOPSOL_BACKEND_URL}/credentials`, {
-        subject,
-        template,
-        data: templateData
-      });
-      return response?.data?.data;
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  getCredentials: async data => {
-    console.log(`[CoopsolBackend]Get credentials`)
-    try {
-      const response = await axios.get(`${COOPSOL_BACKEND_URL}/credentials`);
-      const credentials = response?.data?.data.map(credential => {
-        return ({
-          ...credential,
-          key: credential._id,
-          credentialType: credential?.template?.name,
-          name: `${credential?.subject?.lastname},${" "}${credential?.subject?.firstname}`,
-          dniBeneficiary: credential?.subject?.dni,
-          idDidiCredential: credential.did
-        })
-      });
-
-      return {
-        content: credentials,
-        totalElements: credentials.length,
-        size: 10 //page size
-      };
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-
-  deleteCredential: async id => {
-    try {
-      const response = await axios.delete(`${COOPSOL_BACKEND_URL}/credentials/${id}`);
-      const deleted = response?.data?.data;
-      return deleted;
-
-    } catch (err) {
-      console.log(err);
-    }
-  }
- */
+    getCredentials: async data => {
+      console.log(`[CoopsolBackend]Get credentials`)
+      try {
+        const response = await axiosInstance.get(`${COOPSOL_BACKEND_URL}/credentials`);
+        const credentials = response?.data?.data.map(credential => {
+          return ({
+            ...credential,
+            key: credential._id,
+            credentialType: credential?.template?.name,
+            name: `${credential?.subject?.lastname},${" "}${credential?.subject?.firstname}`,
+            dniBeneficiary: credential?.subject?.dni,
+            idDidiCredential: credential.did
+          })
+        });
   
+        return {
+          content: credentials,
+          totalElements: credentials.length,
+          size: 10 //page size
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  
+  
+    deleteCredential: async id => {
+      try {
+        const response = await axiosInstance.delete(`${COOPSOL_BACKEND_URL}/credentials/${id}`);
+        const deleted = response?.data?.data;
+        return deleted;
+  
+      } catch (err) {
+        console.log(err);
+      }
+    }
+   */
+
 })
 
 

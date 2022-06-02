@@ -45,8 +45,6 @@ export const logAction = async (type, metadata, message) => {
     await CoopsolBackend().activities.create({
       message: defaultMessage || message,
       metadata,
-      user: "DEMO", //TODO: read in backend from jwt
-
     });
   } catch (err) {
     console.log(err); //Ignore errors 
