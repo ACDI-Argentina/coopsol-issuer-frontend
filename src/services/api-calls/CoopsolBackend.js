@@ -25,6 +25,7 @@ const CoopsolBackend = () => ({
 
   login: async (credentials) => {
     const response = await axiosInstance.post(`/auth/login`, credentials);
+    
     //TODO: check response status
     const { user, token, tokenDidi } = response.data;
 
@@ -32,6 +33,7 @@ const CoopsolBackend = () => ({
     
     return {
       data: {
+        ...user,
         username: user.email,
         password: "",
         accessToken: token,
@@ -46,6 +48,46 @@ const CoopsolBackend = () => ({
     localStorage.removeItem('didiToken');
 
   },
+
+  users: () => ({
+    create: async data => {
+      const response = await axiosInstance.post(`/users`, data);
+      const user = response?.data?.data;
+      console.log(user)
+      return user;
+    },
+
+    update: async (id, data) => {
+      try {
+        const response = await axiosInstance.patch(`/users/${id}`, data);
+        const user = response?.data?.data;
+        return user;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    delete: async (id) => {
+      const apiResponse = await axiosInstance.delete(`/users/${id}`);
+
+      return apiResponse.data;
+    },
+
+
+    findAll: async data => {
+      try {
+        const response = await axiosInstance.get(`/users?sort=lastname`);
+        const users = response?.data?.data;
+        return {
+          content: users,
+          totalElements: users.length,
+          size: 10 //page size
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  }),
 
 
   producers: () => ({

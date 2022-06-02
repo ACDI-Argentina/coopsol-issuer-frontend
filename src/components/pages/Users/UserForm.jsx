@@ -1,10 +1,10 @@
 
-import { Input } from 'antd';
+import { Input, Select } from 'antd';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
-import api from '../../../services/api-calls/all';
 import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+const { Option } = Select;
 
 
 const FormWrapper = styled.div`
@@ -28,15 +28,10 @@ const InputContainer = styled.div`
   margin: 0.7rem 0px;
 `
 
-const ProducerForm = ({ producer, onSuccess }) => {
+const UserForm = ({ user, onSuccess }) => {
 
-  
   const initialValues = {
-    lastname: producer?.lastname,
-    firstname: producer?.firstname,
-    dni: producer?.dni, 
-    cuit: producer?.cuit,
-    did: producer?.did
+    email: user?.email,
   }
 
   return (
@@ -48,17 +43,17 @@ const ProducerForm = ({ producer, onSuccess }) => {
           onSubmit={async (values, { setSubmitting }) => {
             console.log(`handle submit!`, values);
             let result;
-            if(producer?._id){
-              console.log(`Update producer`)
-              result = await CoopsolBackend().producers().update(producer?._id, values);
+            if (user?._id) {
+              console.log(`Update user`)
+              result = await CoopsolBackend().users().update(user?._id, values);
 
             } else {
-              console.log(`create producer`)
-              result = await CoopsolBackend().producers().create(values);
+              console.log(`create user`)
+              result = await CoopsolBackend().users().create(values);
             }
             typeof onSuccess === "function" && onSuccess(result);
             console.log(result);
-            
+
           }}
         >
           {({
@@ -66,55 +61,49 @@ const ProducerForm = ({ producer, onSuccess }) => {
             errors,
             touched,
             handleChange,
+            setFieldValue,
             handleBlur,
             handleSubmit,
             isSubmitting,
           }) => (
             <form onSubmit={handleSubmit}>
-              <InputContainer>
-                Apellido
-                <Input
-                  type="text"
-                  name="lastname"
-                  value={values["lastname"]}
-                  onChange={handleChange} />
-              </InputContainer>
+
               <InputContainer>
                 Nombre
                 <Input
                   type="text"
-                  name="firstname"
-                  value={values["firstname"]}
+                  name="email"
+                  value={values["email"]}
                   onChange={handleChange} />
               </InputContainer>
-              <InputContainer>
-                DNI
+
+              <InputContainer> {/* Solo en el alta */}
+                Contraseña
                 <Input
                   type="text"
-                  name="dni"
-                  value={values["dni"]}
+                  name="password"
+                  value={values["password"]}
                   onChange={handleChange} />
               </InputContainer>
+
               <InputContainer>
-                CUIT
-                <Input
-                  type="text"
-                  name="cuit"
-                  value={values["cuit"]}
-                  onChange={handleChange} />
-              </InputContainer>
-              <InputContainer>
-                DID
-                <Input
-                  type="text"
-                  name="did"
-                  value={values["did"]}
-                  onChange={handleChange} />
+                Roles
+                <Select
+                  style={{ width: "100%" }}
+                  mode="multiple"
+                  allowClear
+                  value={values.roles}
+                  onChange={roles => setFieldValue("roles", roles)}
+
+                >
+                  <Option key="BASIC" value="BASIC">BASIC</Option>
+                  <Option key="ADMIN" value="ADMIN">ADMIN</Option>
+                </Select>
               </InputContainer>
 
               <ButtonContainer>
                 <ButtonPrimary
-                  disabled={isSubmitting} 
+                  disabled={isSubmitting}
                   type="submit"
                   text="Guardar"
                   theme={`ThemePrimary ${isSubmitting ? "disabled" : ""}`}
@@ -129,4 +118,4 @@ const ProducerForm = ({ producer, onSuccess }) => {
     </FormWrapper>
   )
 }
-export default ProducerForm;
+export default UserForm;

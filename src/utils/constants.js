@@ -29,3 +29,5 @@ export const TEMPLATES_URL = '/templates';
 export const CREATE_PROVIDER_URL = '/create-provider';
 export const CREATE_TEMPLATE_URL = '/create-template';
 export const DUPLICATED_CREDENTIAL = 'DUPLICATED_CREDENTIAL';
+
+export const USERS_URL = '/users';

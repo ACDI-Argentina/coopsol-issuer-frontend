@@ -19,7 +19,8 @@ import {
   TEMPLATES_URL,
   CREATE_TEMPLATE_URL,
   ADD_CREDENTIALS_BULK,
-  PRODUCERS_URL
+  PRODUCERS_URL,
+  USERS_URL,
 } from '../../utils/constants';
 
 import history from './history';
@@ -35,6 +36,7 @@ import Templates from '../pages/Templates/templates';
 import CreateTemplate from '../pages/CreateTemplate/create-template';
 import Producers from '../pages/Producers/producers';
 import Producer from '../pages/Producer/Producer';
+import Users from '../pages/Users/users';
 
 const routesConfig = [
   {
@@ -68,6 +70,7 @@ const routesConfig = [
     replaceHeader: SimpleHeader
   },
   { path: PRODUCERS_URL, component: Producers, requireAuthentication: true, exact: true },
+  { path: USERS_URL, component: Users, requireAuthentication: true, exact: true },
   {
     path: `${PRODUCERS_URL}/:id`,
     component: Producer,

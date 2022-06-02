@@ -8,6 +8,7 @@ import {
   ACTIVITIES_URL,
   TEMPLATES_URL,
   PRODUCERS_URL,
+  USERS_URL
 } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
@@ -19,7 +20,7 @@ import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 const { logoutRequest } = apiCalls();
 
 const NavBar = () => {
-  const { setUser } = useContext(UserContext);
+  const { setUser, user, isAdmin } = useContext(UserContext);
 
   const signOut = async () => {
     try {
@@ -59,17 +60,25 @@ const NavBar = () => {
       icon: <ListIcon className="list" />,
       onClick: () => history.push(ACTIVITIES_URL)
     },
-    {
-      key: "logout",
-      className: "logoutButton",
-      label: 'Cerrar sesión',
-      icon: <img src="img/salir.svg" alt="" />,
-      style: { position: "absolute", bottom: 10 },
-      onClick: signOut
-    },
-
-
   ]
+
+  if(isAdmin){
+    items.push({
+      key: USERS_URL,
+      label: 'Usuarios',
+      icon: <ListIcon className="list" />,
+      onClick: () => history.push(USERS_URL)
+    })
+  }
+
+  items.push({
+    key: "logout",
+    className: "logoutButton",
+    label: 'Cerrar sesión',
+    icon: <img src="img/salir.svg" alt="" />,
+    style: { position: "absolute", bottom: 10 },
+    onClick: signOut,
+  });
 
   return (
     <div className="Sidebar">

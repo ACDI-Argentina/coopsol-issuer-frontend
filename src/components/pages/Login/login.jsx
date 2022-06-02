@@ -10,7 +10,6 @@ import '../../../css/app.scss';
 import Loader from '../../atoms/Loader/loader';
 import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 
-const {loginRequest} = apiCalls();
 
 const Login = ({ history }) => {
   const { user, setUser } = useContext(UserContext);
@@ -27,10 +26,8 @@ const Login = ({ history }) => {
     setLoading(true);
     setErrorMessage(null);
     try {
-      //const response = await loginRequest(values);
-      //console.log(response);
       const response = await CoopsolBackend().login(values); 
-      setUser(response.data); //que espera del usuario? usar typescript!
+      setUser(response.data);
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       setErrorMessage(errorMessage);
