@@ -5,7 +5,7 @@ import TitlePage from '../../atoms/TitlePage/title-page';
 import CredentialForm from '../../molecules/CredentialForm/credentials-form';
 import SubjectAutoComplete from '../../molecules/SubjectAutoComplete/SubjectAutoComplete';
 import styled from 'styled-components';
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+import DidiBackend from '../../../services/didi/DidiBackend';
 
 
 const { Option } = Select;
@@ -67,9 +67,9 @@ const AddCredentials = ({ }) => {
   /* Template context, con los datos cargados */
   useEffect(() => {
     (async function () {
-      const templates = await DidiBackend().templates.find();
+      const templates = await new DidiBackend().templates().find();
       setTemplates(templates)
-      const template = await DidiBackend().templates.get(templates[0]._id);
+      const template = await new DidiBackend().templates().get(templates[0]._id);
       setTemplate(template);
     })();
   }, [])
@@ -91,7 +91,7 @@ const AddCredentials = ({ }) => {
               className="credentialTypesSelect"
               value={template?.name}
               onChange={async (_id) => {
-                const template = await DidiBackend().templates.get(_id);
+                const template = await new DidiBackend().templates().get(_id);
                 setTemplate(template);
                 console.log(template)
               }}

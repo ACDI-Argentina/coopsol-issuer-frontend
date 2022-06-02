@@ -1,15 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../../services/providers/user-context';
 import { loginInputs } from '../../../utils/form_inputs/inputs-login';
-import apiCalls from '../../../services/api-calls/all';
+import apiCalls from "services/api-calls/all";
 import AntForm from '../../molecules/ant-form';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { CREDENTIALS_URL } from '../../../utils/constants';
 import './_style.scss';
 import '../../../css/app.scss';
 import Loader from '../../atoms/Loader/loader';
+import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 
-const { loginRequest } = apiCalls();
+const {loginRequest} = apiCalls();
 
 const Login = ({ history }) => {
   const { user, setUser } = useContext(UserContext);
@@ -26,8 +27,10 @@ const Login = ({ history }) => {
     setLoading(true);
     setErrorMessage(null);
     try {
-      const response = await loginRequest(values);
-      setUser(response.data);
+      //const response = await loginRequest(values);
+      //console.log(response);
+      const response = await CoopsolBackend().login(values); 
+      setUser(response.data); //que espera del usuario? usar typescript!
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       setErrorMessage(errorMessage);

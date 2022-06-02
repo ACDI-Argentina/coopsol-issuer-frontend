@@ -17,7 +17,7 @@ import {
   AddFieldContainer,
 } from "./styled";
 
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+import DidiBackend from '../../../services/didi/DidiBackend';
 import { useHistory } from 'react-router-dom';
 import ButtonAntd from '../../atoms/ButtonAntd/ButtonAntd';
 
@@ -353,7 +353,7 @@ const TemplateForm = ({ template, onSuccess }) => {
             onClick={async () => {
               try {
                 setSubmitting(true);
-                const response = await DidiBackend().templates.update(template._id, {
+                const response = await new DidiBackend().templates().update(template._id, {
                   data: JSON.stringify(credentialData),
                   category: credentialCategory,
                   preview: previewFields,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+import DidiBackend from '../../../services/didi/DidiBackend';
 import TemplateForm from "./TemplateForm";
 
 const CreateTemplate = ({ }) => {
@@ -11,7 +11,7 @@ const CreateTemplate = ({ }) => {
 
   useEffect(() => {
     async function loadTemplate(){
-      const template = await DidiBackend().templates.get(id)
+      const template = await new DidiBackend().templates().get(id)
       setTemplate(template)
     }
     if(id){

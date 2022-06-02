@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import './_style.scss';
 import { Descriptions, Spin } from 'antd';
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+import DidiBackend from 'services/didi/DidiBackend';
 
 const SpinnerContainer = styled.div`
   display: flex;
@@ -19,8 +19,7 @@ const CredentialDetail = ({ credential }) => {
   async function loadCredential() { 
     try {
       setLoading(true);
-      console.log(`LOAD credential: ${credential._id}`)
-      const credentialDetails = await DidiBackend().credentials.get(credential._id);
+      const credentialDetails = await new DidiBackend().credentials().get(credential._id);
 
       const { cert, participant, others } = credentialDetails?.data;
       const fields = [].concat(cert, participant[0], others).sort((a, b) => { //Mandamos al did al final para que se vea mejor. TODO: Definir un orden de acuerdo a los tipos

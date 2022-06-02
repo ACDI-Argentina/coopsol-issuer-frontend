@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button, Input, message, Modal} from 'antd';
 import styled from 'styled-components';
-import DidiBackend from '../../../../services/api-calls/DidiBackend';
+import DidiBackend from '../../../../services/didi/DidiBackend';
 import { useTemplates } from '../../../../context/TemplatesContext';
 const { Text } = Typography;
 
@@ -38,7 +38,7 @@ const NewTemplateModal = ({showModal , closeModal }) => {
       }}
       onOk={async () => {
 
-        const result = await DidiBackend().templates.create({
+        const result = await new DidiBackend().templates().create({
           name: `Coopsol - ${templateName}`,
           registerId: "61ae3327ab3a470038a029dc"
         })

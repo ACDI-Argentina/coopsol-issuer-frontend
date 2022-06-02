@@ -1,6 +1,6 @@
 import { message, notification } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import DidiBackend from '../services/api-calls/DidiBackend';
+import DidiBackend from '../services/didi/DidiBackend';
 import { logAction } from '../services/api-calls/logs';
 
 export const CredentialsContext = React.createContext();
@@ -30,7 +30,7 @@ const CredentialsProvider = ({ children }) => {
       }
       
       setLoadingCredentials(true);
-      const result = await DidiBackend().credentials.find(apiFilter);
+      const result = await new DidiBackend().credentials().find(apiFilter);
       
       if (filter?.status === "PENDING") {
         const pendingCredentials = result.map(credential => ({...credential, status: "PENDING"}));
@@ -77,7 +77,7 @@ const CredentialsProvider = ({ children }) => {
   const emitSingleCredential = async (credential, onSuccess, onError) => {
     try {
       setProcessing(credential._id);
-      const emmited = await DidiBackend().credentials.emit(credential._id);
+      const emmited = await new DidiBackend().credentials().emit(credential._id);
       logAction("CREDENTIAL_ISSUANCE",emmited);
       removeProcessing(credential._id);
       message.success(`Se ha emitido exitosamente la credencial \n${credential.did}`)
@@ -104,7 +104,7 @@ const CredentialsProvider = ({ children }) => {
     for (const credential of selection) {
       try {
         setProcessing(credential._id);
-        const emmited = await DidiBackend().credentials.emit(credential._id);
+        const emmited = await new DidiBackend().credentials().emit(credential._id);
         logAction("CREDENTIAL_ISSUANCE",emmited);
         setSelection(selection => selection.filter(c => c._id !== credential?._id));
         setSelectedRowKeys(selected => selected.filter(c => c !== credential?._id));
@@ -123,7 +123,7 @@ const CredentialsProvider = ({ children }) => {
     setDeleting(true);
     for (const credential of selection) {
       try{
-        const revoked = await DidiBackend().credentials.revoke(credential._id);  //reason?
+        const revoked = await new DidiBackend().credentials().revoke(credential._id);  //reason?
         logAction("Revocación de credencial",revoked);
         logAction("CREDENTIAL_REVOCATION",{credential: revoked});        
         message.success(`Se ha revocado exitosamente la credencial ${credential.name} - ${credential?.firstName||''} ${credential?.lastName||''} `)

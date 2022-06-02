@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DidiBackend from "../services/api-calls/DidiBackend";
+import DidiBackend from "../services/didi/DidiBackend";
 
 const useTemplates = (onError) => {
   const [loading, setLoading] = useState(false);
@@ -8,7 +8,7 @@ const useTemplates = (onError) => {
   async function loadTemplates (){
     try{
       setLoading(true);
-      const templates = await DidiBackend().templates.find();
+      const templates = await new DidiBackend().templates().find();
       setTemplates(templates);
       setLoading(false);
     }catch(err){

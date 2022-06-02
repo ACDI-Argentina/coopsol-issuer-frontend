@@ -1,8 +1,36 @@
 import axios from "axios";
+import DidiBackend from "../didi/DidiBackend";
 const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
 console.log(`Coopsol backend:`, COOPSOL_BACKEND_URL)
 
 const CoopsolBackend = () => ({
+
+  login: async (credentials) => {
+    const response = await axios.post(`${COOPSOL_BACKEND_URL}/auth/login`, credentials);
+    //TODO: check response status
+    const {user, token, tokenDidi} = response.data;
+
+    DidiBackend.setToken(tokenDidi);
+
+    return {
+      data: {
+        username: user.email,
+        password: "",
+        accessToken: token, //Store for future requests
+        tokenType: "Bearer",
+      }
+    };
+  },
+
+  logout: async (credentials) => {
+    //check function
+    const response = await axios.post(`${COOPSOL_BACKEND_URL}/auth/logout`, credentials);
+    localStorage.removeItem('didiToken');
+    DidiBackend.setToken(undefined);
+
+  },
+
+
   searchSubject: async searchText => {
     const response = await axios.get(`${COOPSOL_BACKEND_URL}/subjects/search?term=${searchText}`);
     return response?.data?.data;

@@ -7,7 +7,7 @@ import { AppContext } from '../../../services/providers/app-context';
 import { useHistory } from 'react-router-dom';
 import DynamicInput from '../DynamicInput/DynamicInput';
 
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+import DidiBackend from '../../../services/didi/DidiBackend';
 import { message } from 'antd';
 import ButtonAntd from '../../atoms/ButtonAntd/ButtonAntd';
 import { logAction } from '../../../services/api-calls/logs';
@@ -150,7 +150,7 @@ const CredentialForm = ({ template, subject }) => {
           try {
             const data = getDataFromFields(credentialName, fields, values);
             setSubmitting(true);
-            const result = await DidiBackend().credentials.create({
+            const result = await new DidiBackend().credentials().create({
               data: JSON.stringify(data),
               split: false,
               microCredentials: [],

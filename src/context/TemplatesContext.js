@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import DidiBackend from '../services/api-calls/DidiBackend';
+import DidiBackend from '../services/didi/DidiBackend';
 export const TemplatesContext = React.createContext();
 
 const sleep = (ms = 3000) => {
@@ -19,7 +19,7 @@ const TemplatesProvider = ({ children }) => {
   const loadTemplates = async () => {
     try {
       setLoading(true);
-      const templates = await DidiBackend().templates.find();
+      const templates = await new DidiBackend().templates().find();
       setTemplates(templates)
       setLoading(false);
 

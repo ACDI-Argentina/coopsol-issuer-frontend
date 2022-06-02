@@ -7,16 +7,15 @@ import {
   CREDENTIALS_URL,
   ACTIVITIES_URL,
   TEMPLATES_URL,
-  IDENTITIES_URL,
   PRODUCERS_URL,
 } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
 import history from '../../Router/history';
 import { ReactComponent as CredIcon } from '../../../img/cred.svg';
-import { ReactComponent as RequestIcon } from '../../../img/request.svg';
 import { ReactComponent as ListIcon } from '../../../img/list.svg';
 import { showErrorMessage } from '../../../utils/alertMessages';
+import CoopsolBackend from 'services/api-calls/CoopsolBackend';
 const { logoutRequest } = apiCalls();
 
 const NavBar = () => {
@@ -24,7 +23,8 @@ const NavBar = () => {
 
   const signOut = async () => {
     try {
-      await logoutRequest();
+      await logoutRequest(); //Usar CoopsolBackend.logout //Es un get nada mas, ver como esta implementado
+      //CoopsolBackend().logout();
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       showErrorMessage(errorMessage, processError(error));
@@ -33,33 +33,51 @@ const NavBar = () => {
     history.push(LOGIN_URL);
   };
 
-  const renderNavItem = (path, name, img) => {
-    return (
-      <Menu.Item key={path}>
-        {img}
-        <button
-          onClick={() => {
-            history.push(path);
-          }}
-        >
-          {name}
-        </button>
-      </Menu.Item>
-    );
-  };
+
+  const items = [
+    {
+      key: CREDENTIALS_URL,
+      label: 'Credenciales',
+      icon: <CredIcon className="credentials" />,
+      onClick: () => history.push(CREDENTIALS_URL)
+    },
+    {
+      key: PRODUCERS_URL,
+      label: 'Productores',
+      icon: <ListIcon className="list" />,
+      onClick: () => history.push(PRODUCERS_URL)
+    },
+    {
+      key: TEMPLATES_URL,
+      label: 'Tipos de credenciales',
+      icon: <ListIcon className="list" />,
+      onClick: () => history.push(TEMPLATES_URL)
+    },
+    {
+      key: ACTIVITIES_URL,
+      label: 'Actividades',
+      icon: <ListIcon className="list" />,
+      onClick: () => history.push(ACTIVITIES_URL)
+    },
+    {
+      key: "logout",
+      className: "logoutButton",
+      label: 'Cerrar sesión',
+      icon: <img src="img/salir.svg" alt="" />,
+      style: { position: "absolute", bottom: 10 },
+      onClick: signOut
+    },
+
+
+  ]
 
   return (
     <div className="Sidebar">
-      <Menu selectedKeys={[history.location.pathname]} mode="vertical" className={'ulMain'}>
-        {renderNavItem(CREDENTIALS_URL, 'Credenciales', <CredIcon className="credentials" />)}
-        {renderNavItem(PRODUCERS_URL, 'Productores', <ListIcon className="list" />)}
-        {renderNavItem(TEMPLATES_URL, 'Tipos de credenciales', <ListIcon className="list" />)}
-        {renderNavItem(ACTIVITIES_URL, 'Actividades', <ListIcon className="list" />)}
-        <Menu.Item key="logout" className="logoutBottom" onClick={() => signOut()}>
-          <img src="img/salir.svg" alt="" />
-          <button>Cerrar sesión</button>
-        </Menu.Item>
-      </Menu>
+      <Menu
+        items={items}
+        mode="vertical"
+        className={'ulMain'}
+      />
     </div>
   );
 };

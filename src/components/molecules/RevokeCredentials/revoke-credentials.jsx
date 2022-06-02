@@ -11,7 +11,7 @@ import animationData from '../../../assets/3046-me-at-office.json';
 import { AppContext } from '../../../services/providers/app-context';
 import { DUPLICATED_CREDENTIAL } from '../../../utils/constants';
 import { parseDate } from '../../../utils/dateHelpers';
-import DidiBackend from '../../../services/api-calls/DidiBackend';
+import DidiBackend from '../../../services/didi/DidiBackend';
 import { useCredentials } from '../../../context/CredentialsContext';
 import { logAction } from '../../../services/api-calls/logs';
 
@@ -32,7 +32,7 @@ const RevokeCredentials = ({
     setLoading(true);
 
     try{
-      const revoked = await DidiBackend().credentials.revoke(credential._id, selectedReason.value);
+      const revoked = await new DidiBackend().credentials().revoke(credential._id, selectedReason.value);
       setLoading(false);
       onSuccess({credential: revoked, reason: selectedReason.value});
     } catch(err){
