@@ -70,7 +70,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
       input = (
         <Checkbox
           name={field.name}
-          onChange={e => console.log(e)}
+          onChange={e => console.log(e)} /* TODO: Ver como llevar los values */
           {...props}
         >{field.name}</Checkbox>
       );
@@ -83,8 +83,8 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
             <Checkbox
               key={opt.name}
               name={`${field.name}-${opt.name}`}
-              onChange={e => console.log(e)}
-            >{opt.label}</Checkbox>
+              onChange={e => console.log(e)} /* TODO: Ver como llevar los values */
+            >{opt?.label || opt}</Checkbox>
           ))}
         </>
       );

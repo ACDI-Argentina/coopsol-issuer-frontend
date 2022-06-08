@@ -33,6 +33,10 @@ const Container = styled.div`
   background-color: rgba(255,255,255,0.75);
   align-self: center;
   border-radius: 12px;
+
+  .ant-checkbox-wrapper{
+    margin-left: 8px;
+  }
 `
 
 const InputContainer = styled.div`

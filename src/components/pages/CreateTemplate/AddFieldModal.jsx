@@ -157,7 +157,7 @@ const AddFieldModal = ({ closeModal, onOk, ...props }) => {
               name: fieldName,
               type: fieldType,
               required: fieldRequired,
-              options: options
+              options: options.map(option => option.name)
             })}
           />
         </ButtonsContainer>
