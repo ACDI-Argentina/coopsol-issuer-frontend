@@ -1,7 +1,9 @@
 import axios from "axios";
 import { USER } from "utils/constants";
-import DidiBackend from "../didi/DidiBackend";
 import { HEADERS } from "./base";
+import EventEmitter from "events";
+
+
 const COOPSOL_BACKEND_URL = process.env.REACT_APP_COOPSOL_BACKEND_URL;
 console.log(`Coopsol backend:`, COOPSOL_BACKEND_URL)
 
@@ -21,16 +23,30 @@ axiosInstance.interceptors.request.use(config => {
 });
 
 
+
+
+export const events = new EventEmitter();
+
+
+axiosInstance.interceptors.response.use(response => response, error => {
+  if (error?.response?.status == 401) {
+    events.emit("Unauthorized", error?.response?.data);
+  }
+  return Promise.reject(error);
+});
+
+
+
 const CoopsolBackend = () => ({
 
   login: async (credentials) => {
     const response = await axiosInstance.post(`/auth/login`, credentials);
-    
+
     //TODO: check response status
     const { user, token, tokenDidi } = response.data;
 
     localStorage.setItem("didiToken", tokenDidi);
-    
+
     return {
       data: {
         ...user,
@@ -114,17 +130,13 @@ const CoopsolBackend = () => ({
     },
 
     findAll: async data => {
-      try {
-        const response = await axiosInstance.get(`/subjects?sort=lastname`);
-        const producers = response?.data?.data;
-        return {
-          content: producers,
-          totalElements: producers.length,
-          size: 10 //page size
-        };
-      } catch (err) {
-        console.log(err);
-      }
+      const response = await axiosInstance.get(`/subjects?sort=lastname`);
+      const producers = response?.data?.data;
+      return {
+        content: producers,
+        totalElements: producers.length,
+        size: 10 //page size
+      };
     },
 
 
@@ -216,7 +228,6 @@ const CoopsolBackend = () => ({
    */
 
 })
-
 
 
 export default CoopsolBackend;

@@ -30,7 +30,7 @@ const Producers = ({ history }) => {
       try {
         setLoading(true);
         const allProducers = await CoopsolBackend().producers().findAll();
-        setAllProducers(allProducers.content);
+        setAllProducers(allProducers?.content);
         setLoading(false);
       } catch (err) {
         console.log(err);

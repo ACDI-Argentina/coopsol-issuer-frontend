@@ -37,6 +37,7 @@ import CreateTemplate from '../pages/CreateTemplate/create-template';
 import Producers from '../pages/Producers/producers';
 import Producer from '../pages/Producer/Producer';
 import Users from '../pages/Users/users';
+import RedirectWhenSessionExpired from './RedirectWhenSessionExpired';
 
 const routesConfig = [
   {
@@ -105,6 +106,7 @@ export const Router = () => {
         <div>
           <AppRouter history={history}>
             <Switch>{routes}</Switch>
+            <RedirectWhenSessionExpired history={history} />
           </AppRouter>
         </div>
       </div>
