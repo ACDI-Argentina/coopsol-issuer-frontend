@@ -72,7 +72,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
           name={field.name}
           onChange={e => console.log(e)}
           {...props}
-        >{field.label}</Checkbox>
+        >{field.name}</Checkbox>
       );
       break;
     }
