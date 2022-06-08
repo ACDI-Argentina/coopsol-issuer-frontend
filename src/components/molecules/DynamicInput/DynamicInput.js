@@ -70,7 +70,10 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
       input = (
         <Checkbox
           name={field.name}
-          onChange={e => console.log(e)} /* TODO: Ver como llevar los values */
+          checked={value}
+          onChange={ev => {
+            typeof setFieldValue === "function" && setFieldValue(field.name, ev.target.checked);
+          }}
           {...props}
         >{field.name}</Checkbox>
       );
@@ -78,15 +81,11 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
     }
     case "Checkbox": {
       input = (
-        <>
-          {field.options.map(opt => (
-            <Checkbox
-              key={opt.name}
-              name={`${field.name}-${opt.name}`}
-              onChange={e => console.log(e)} /* TODO: Ver como llevar los values */
-            >{opt?.label || opt}</Checkbox>
-          ))}
-        </>
+        <Checkbox.Group
+          value={value}
+          onChange={selection => typeof setFieldValue === "function" && setFieldValue(field.name, selection)}
+          options={field.options}
+        />
       );
       break;
     }
@@ -96,7 +95,7 @@ const DynamicInput = ({ field, onChange, setFieldValue, value, error, ...props }
   return (
     <>
       {input}
-      {error && ( <Text type="danger">{error}</Text>)}
+      {error && (<Text type="danger">{error}</Text>)}
     </>
   );
 }

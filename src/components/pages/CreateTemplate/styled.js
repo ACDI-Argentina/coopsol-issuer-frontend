@@ -26,6 +26,12 @@ export const TemplateFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0px;
+  }
 `
 
 export const TemplateFormContainer = styled.div`

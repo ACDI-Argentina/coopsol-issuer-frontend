@@ -37,6 +37,11 @@ const Container = styled.div`
   .ant-checkbox-wrapper{
     margin-left: 8px;
   }
+  
+  .ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 const InputContainer = styled.div`
@@ -65,10 +70,30 @@ const getDefaultValues = fields => {
 }
 
 
-const getDataFromFields = (credentialName, fields, values) => {
-  let certFields = fields.filter(f => f.section === "cert").map(f => ({ name: f.name, value: values[f.name] }));
-  const participantFields = fields.filter(f => f.section === "participant").map(f => ({ name: f.name, value: values[f.name] }));
-  const othersFields = fields.filter(f => f.section === "others").map(f => ({ name: f.name, value: values[f.name] }));
+const getDataFromFields = (credentialName, fields, values) => { //Como obtenemos los valores de los booleans?
+
+  const formatField = field => {
+    let value = values[field.name];
+
+    if (field.type === "Boolean") {
+      value = value ? value.toString() : "false"
+    }
+
+    if (field.type === "Checkbox") {
+      console.log(value.toString()); //Revisar si esto debe pasarse asi
+      value = value ? value.toString() : ""
+    }
+
+    return {
+      name: field.name,
+      value: value
+    }
+  }
+
+
+  let certFields = fields.filter(f => f.section === "cert").map(formatField);
+  const participantFields = fields.filter(f => f.section === "participant").map(formatField);
+  const othersFields = fields.filter(f => f.section === "others").map(formatField);
 
   certFields = [{ name: "CREDENCIAL", value: credentialName }, ...certFields];
 
@@ -81,7 +106,7 @@ const getDataFromFields = (credentialName, fields, values) => {
 
 
 const CredentialForm = ({ template, subject }) => {
-  
+
   const history = useHistory();
   const [fields, setFields] = useState([]);
   const [credentialName, setCredentialName] = useState("");
@@ -128,64 +153,71 @@ const CredentialForm = ({ template, subject }) => {
     DNI: `${subject?.dni || ''}`,
   }
 
+  const validate = (values) => {
+    const errors = {};
+    fields.filter(f => f.required).map(f => f.name).forEach(fieldName => {
+      if (!values[fieldName] || (typeof values[fieldName] === "string" && values[fieldName]?.trim() === "")) {
+        errors[fieldName] = "Requerido";
+      }
+    });
+
+    setThereAreErrors(Object.keys(errors).length > 0);
+
+    return errors;
+  };
+
+  const onSubmit = async (values, { setSubmitting }) => {
+    try {
+      const data = getDataFromFields(credentialName, fields, values);
+      setSubmitting(true);
+
+
+      console.log(data)
+
+      const result = await new DidiBackend().credentials().create({
+        data: JSON.stringify(data),
+        split: false,
+        microCredentials: [],
+        templateId: template._id
+      })
+      if (result.status === "success") {
+        message.success(`Credencial creada exitosamente`);
+        setSubmitting(false);
+        logAction("CREDENTIAL_CREATION", { credential: result.data[0] });
+        return goToCredentials();
+      } else {
+        message.error(`Ha ocurrido un error al crear la credencial, intente nuevamente`);
+      }
+      setSubmitting(false);
+
+    } catch (err) {
+      setSubmitting(false);
+      console.log(err);
+    }
+  }
+
+  //tener en cuenta que si el subject no tiene did podriamos crear una precredencial para emitir despues una vez que tengamos el did
+  /* 
+      await saveCredential({
+        ...values,
+        subject: subject?._id,
+        template: template?._id
+      });
+
+      setSubmitting(false);
+      goToCredentials(); */
+
 
   return (
 
     <Container>
-
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
         validateOnChange={thereAreErrors}
         validateOnBlur={thereAreErrors}
-        validate={(values) => {
-          const errors = {};
-          fields.filter(f => f.required).map(f => f.name).forEach(fieldName => {
-            if (!values[fieldName] || (typeof values[fieldName] === "string" && values[fieldName]?.trim() === "")) {
-              errors[fieldName] = "Requerido";
-            }
-          });
-
-          setThereAreErrors(Object.keys(errors).length > 0);
-
-          return errors;
-        }}
-        onSubmit={async (values, { setSubmitting }) => {
-          try {
-            const data = getDataFromFields(credentialName, fields, values);
-            setSubmitting(true);
-            const result = await new DidiBackend().credentials().create({
-              data: JSON.stringify(data),
-              split: false,
-              microCredentials: [],
-              templateId: template._id
-            })
-            if (result.status === "success") {
-              message.success(`Credencial creada exitosamente`);
-              setSubmitting(false);
-              logAction("CREDENTIAL_CREATION", { credential: result.data[0] });
-              return goToCredentials();
-            } else {
-              message.error(`Ha ocurrido un error al crear la credencial, intente nuevamente`);
-            }
-            setSubmitting(false);
-
-          } catch (err) {
-            setSubmitting(false);
-            console.log(err);
-          }
-
-          //tener en cuenta que si el subject no tiene did podriamos crear una precredencial para emitir despues una vez que tengamos el did
-          /* 
-                    await saveCredential({
-                      ...values,
-                      subject: subject?._id,
-                      template: template?._id
-                    });
-          
-                    setSubmitting(false);
-                    goToCredentials(); */
-        }}
+        validate={validate}
+        onSubmit={onSubmit}
       >
         {({
           values,
@@ -198,40 +230,62 @@ const CredentialForm = ({ template, subject }) => {
           setFieldValue,
           submitForm
         }) => (
-          <form onSubmit={handleSubmit}>
-            <Title>
-              {credentialName}
-            </Title>
 
-            {fields?.map((field, idx) => (
-              <InputContainer key={idx}>
-                {field.type !== "Boolean" && field.name} {field.required && `*`}
+          <>
+          {/*          
 
-                <DynamicInput
-                  field={field}
-                  value={values[field.name]}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  setFieldValue={setFieldValue}
-                  error={errors[field.name]}
-                />
-              </InputContainer>
-            ))}
+        Form values inspector
 
-            <FormButtons>
-              <ButtonAntd
-                disabled={isSubmitting || Object.keys(errors).length > 0}
-                type="submit"
-                loading={isSubmitting}
-                onClick={submitForm}
-              >
-                Guardar
-              </ButtonAntd>
+          <div style={{
+              border: "2px solid red",
+              position: "absolute",
+              backgroundColor: "rgba(255,255,255,0.9)",
+              left: 0,
+              top: 0,
+              maxWidth: "800px",
+              padding: "50px"
+            }}>
+              <pre>
+                {JSON.stringify(values, null, 3)}
+              </pre>
+            </div>
+ */}
+
+            <form onSubmit={handleSubmit}>
+              <Title>
+                {credentialName}
+              </Title>
+
+              {fields?.map((field, idx) => (
+                <InputContainer key={idx}>
+                  {field.type !== "Boolean" && field.name} {field.required && `*`}
+
+                  <DynamicInput
+                    field={field}
+                    value={values[field.name]}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    setFieldValue={setFieldValue}
+                    error={errors[field.name]}
+                  />
+                </InputContainer>
+              ))}
+
+              <FormButtons>
+                <ButtonAntd
+                  disabled={isSubmitting || Object.keys(errors).length > 0}
+                  type="submit"
+                  loading={isSubmitting}
+                  onClick={submitForm}
+                >
+                  Guardar
+                </ButtonAntd>
 
 
-            </FormButtons>
+              </FormButtons>
 
-          </form>
+            </form>
+          </>
         )}
 
 
