@@ -1,10 +1,12 @@
 
-import { Input } from 'antd';
+import { Input, Typography } from 'antd';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
-import api from '../../../services/api-calls/all';
 import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { validateDid } from 'utils/validate';
+
+const { Text } = Typography;
 
 
 const FormWrapper = styled.div`
@@ -45,6 +47,21 @@ const ProducerForm = ({ producer, onSuccess }) => {
         <Formik
           initialValues={initialValues}
           enableReinitialize={true}
+          validate={(values) => {
+            const errors = {};
+            console.log(`Validate did` ) //https://www.w3.org/TR/did-core/
+            if(values.did){
+
+              if(!validateDid(values.did)){
+                errors.did = {display:"Did inválido"}
+              }
+            
+              
+            }
+            
+            return errors;
+          }}
+
           onSubmit={async (values, { setSubmitting }) => {
             console.log(`handle submit!`, values);
             let result;
@@ -109,15 +126,18 @@ const ProducerForm = ({ producer, onSuccess }) => {
                   type="text"
                   name="did"
                   value={values["did"]}
-                  onChange={handleChange} />
+                  status={errors["did"] ? "error" : ""}
+                  onChange={handleChange} 
+                  />
+                {errors["did"] && ( <Text type="danger">{errors["did"].display}</Text>)}
               </InputContainer>
 
               <ButtonContainer>
                 <ButtonPrimary
-                  disabled={isSubmitting} 
+                  disabled={isSubmitting || Object.keys(errors).length > 0} 
                   type="submit"
                   text="Guardar"
-                  theme={`ThemePrimary ${isSubmitting ? "disabled" : ""}`}
+                  theme={`ThemePrimary ${(isSubmitting || Object.keys(errors).length > 0) ? "disabled" : ""}`}
                 />
               </ButtonContainer>
             </form>
