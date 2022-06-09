@@ -1,5 +1,5 @@
 import { translateRevocationReason } from "../../utils/table-definitions";
-import CoopsolBackend from './CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 
 
 const getCredentialType = credential => {

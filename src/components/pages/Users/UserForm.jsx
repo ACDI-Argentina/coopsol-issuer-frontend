@@ -3,7 +3,7 @@ import { Input, Select } from 'antd';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 const { Option } = Select;
 
 

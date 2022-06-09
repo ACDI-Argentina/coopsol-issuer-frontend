@@ -16,7 +16,7 @@ import history from '../../Router/history';
 import { ReactComponent as CredIcon } from '../../../img/cred.svg';
 import { ReactComponent as ListIcon } from '../../../img/list.svg';
 import { showErrorMessage } from '../../../utils/alertMessages';
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+
 const { logoutRequest } = apiCalls();
 
 const NavBar = () => {

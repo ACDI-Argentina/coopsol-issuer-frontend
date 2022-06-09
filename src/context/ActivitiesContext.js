@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import CoopsolBackend from '../services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 export const ActivitiesContext = React.createContext();
 
 const sleep = (ms = 3000) => {

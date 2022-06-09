@@ -5,7 +5,7 @@ import { Button, Table } from 'antd';
 import styled from 'styled-components';
 import { Modal } from 'antd';
 import { applyFilters } from '../../../utils/filter';
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 import UserActions from './UserActions';
 import UserForm from './UserForm';
 import { parseDate } from 'utils/dateHelpers';

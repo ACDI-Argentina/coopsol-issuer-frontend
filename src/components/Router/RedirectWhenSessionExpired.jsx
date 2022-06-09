@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { events } from "services/api-calls/CoopsolBackend"
+import { events } from "services/coopsol/CoopsolBackend"
 import { UserContext } from 'services/providers/user-context';
 import { LOGIN_URL } from 'utils/constants';
 import { message } from 'antd';

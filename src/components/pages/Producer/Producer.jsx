@@ -1,9 +1,6 @@
-
-/* Ver que renderizamos */
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CoopsolBackend from "services/api-calls/CoopsolBackend";
+import CoopsolBackend from "services/coopsol/CoopsolBackend";
 import ProducerForm from "../../molecules/ProducerForm/ProducerForm";
 
 

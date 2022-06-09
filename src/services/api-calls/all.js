@@ -1,4 +1,3 @@
-import axios from "axios";
 import client from './http-client';
 import multiClient from './http-client-multipart';
 import user from './user.api-calls';
@@ -10,7 +9,7 @@ import userMock from './mocks/user.api-calls.mock';
 import file from './file.api-calls';
 import downloads from './downloads.api-calls';
 import identitiesMock from './mocks/identities.api-calls.mock';
-import CoopsolBackend from './CoopsolBackend';
+
 
 const defaultClient = client({});
 const multipartClient = multiClient({});
@@ -22,8 +21,6 @@ let all = () =>
     ...authMock(defaultClient), 
     ...userMock(defaultClient),
     ...identitiesMock(defaultClient),
-    ...CoopsolBackend()
-    
   }
   : {
       ...auth(defaultClient),
@@ -32,7 +29,6 @@ let all = () =>
       ...downloads(blobClient),
       ...providers(defaultClient),
       ...identities(defaultClient),
-      ...CoopsolBackend(),
       searchSubject: () => {}
     };
 

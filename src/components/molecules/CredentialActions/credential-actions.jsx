@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useCredentials } from '../../../context/CredentialsContext';
-import api from '../../../services/api-calls/all';
 import { ADD_CREDENTIALS } from '../../../utils/constants';
 import ButtonPrimary from '../../atoms/ButtonPrimary/button-primary';
 

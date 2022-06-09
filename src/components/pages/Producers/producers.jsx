@@ -11,7 +11,7 @@ import generateProducersColumns from "./table-columns";
 import TableFilters from '../../molecules/TableFilters/table-filters';
 import { producerFilters } from '../../../utils/tables/table-filters-definitions';
 import { applyFilters } from '../../../utils/filter';
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 
 const TableContainer = styled.div`
   margin: 1rem;

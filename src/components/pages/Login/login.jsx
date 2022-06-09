@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../../services/providers/user-context';
 import { loginInputs } from '../../../utils/form_inputs/inputs-login';
-import apiCalls from "services/api-calls/all";
+
 import AntForm from '../../molecules/ant-form';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { CREDENTIALS_URL } from '../../../utils/constants';
 import './_style.scss';
 import '../../../css/app.scss';
 import Loader from '../../atoms/Loader/loader';
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 
 
 const Login = ({ history }) => {

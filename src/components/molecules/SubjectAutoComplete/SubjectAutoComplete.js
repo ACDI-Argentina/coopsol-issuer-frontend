@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { AutoComplete } from 'antd';
 import { SafetyCertificateFilled } from '@ant-design/icons'
-import api from "../../../services/api-calls/all";
 import styled from 'styled-components';
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 
 const { Option } = AutoComplete;
 

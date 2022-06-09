@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button, Input, message, Modal } from 'antd';
 
-import CoopsolBackend from 'services/api-calls/CoopsolBackend';
+import { CoopsolBackend } from 'services/di';
 
 const UserDeletionModal = ({ id, email, showModal, closeModal, onSuccess }) => {
   //const { loadUsers } = useUsers();

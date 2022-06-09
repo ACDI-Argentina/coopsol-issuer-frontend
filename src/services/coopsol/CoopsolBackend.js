@@ -1,6 +1,6 @@
 import axios from "axios";
 import { USER } from "utils/constants";
-import { HEADERS } from "./base";
+import { HEADERS } from "../api-calls/base";
 import EventEmitter from "events";
 
 
