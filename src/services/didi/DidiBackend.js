@@ -4,7 +4,7 @@ import { HEADERS } from "services/api-calls/base";
 import credentialsApi from "services/didi/credentials";
 import templatesApi from "services/didi/templates";
 
-const ISSUER_BACKEND_URL = process.env.REACT_ISSUER_BACKEND_URL || "https://api.issuer.qa.didi.org.ar";
+const ISSUER_BACKEND_URL = process.env.REACT_APP_ISSUER_BACKEND_URL;
 
 
 const axiosInstance = axios.create({
