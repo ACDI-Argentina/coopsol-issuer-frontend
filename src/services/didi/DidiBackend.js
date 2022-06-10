@@ -42,6 +42,22 @@ class DidiBackend {
     return credentialsApi(axiosInstance);
   }
 
+  register(){
+    return {
+      async find() {
+        const response = await axiosInstance.get(`/register?status=Creado`);
+        const apiResponse = response.data;
+        if(apiResponse.status === "success"){
+          return apiResponse.data;
+        } else {
+          //throw new Error("Fail)
+        }
+
+      }
+  
+    }
+  }
+
 
 };
 

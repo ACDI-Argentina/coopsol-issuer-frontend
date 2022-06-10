@@ -1,10 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Input, message, Modal} from 'antd';
-import styled from 'styled-components';
+import { Typography, Button, Input, message, Modal } from 'antd';
+import styled, { keyframes } from 'styled-components';
 import DidiBackend from '../../../../services/didi/DidiBackend';
 import { useTemplates } from '../../../../context/TemplatesContext';
+import { Select } from 'antd';
+
 const { Text } = Typography;
+const { Option } = Select;
 
 
 const InputContainer = styled.div`
@@ -16,19 +19,27 @@ const InputContainer = styled.div`
   }
 `
 
-const NewTemplateModal = ({showModal , closeModal }) => {
+const NewTemplateModal = ({ showModal, closeModal }) => {
   const [templateName, setTemplateName] = useState("");
-  const { loadTemplates } = useTemplates();
+  const [register, setRegister] = useState();
+  const { registers, loadTemplates, loadRegisters } = useTemplates();
+
+  useEffect(() => {
+    if (!registers || registers.length === 0) {
+      loadRegisters();
+    }
+  }, [])
 
 
   useEffect(() => {
-    if(!showModal){
-     setTemplateName("");
+    if (!showModal) {
+      setTemplateName("");
+      setRegister(undefined);
     }
-  },[showModal])
+  }, [showModal])
 
   return (
-    <Modal 
+    <Modal
       title={"Nuevo template"}
       visible={showModal}
       centered={false}
@@ -40,7 +51,7 @@ const NewTemplateModal = ({showModal , closeModal }) => {
 
         const result = await new DidiBackend().templates().create({
           name: templateName,
-          registerId: "61ae3327ab3a470038a029dc"
+          registerId: register
         })
 
         if (result.status === "success") {
@@ -52,14 +63,10 @@ const NewTemplateModal = ({showModal , closeModal }) => {
           closeModal();
         }
         console.log(result)
-
-        //if success.. close modal
-
-
       }}
       onCancel={closeModal}
       okButtonProps={{
-        disabled: templateName?.length === 0
+        disabled: templateName?.length === 0 || !register
       }}
 
     >
@@ -75,7 +82,19 @@ const NewTemplateModal = ({showModal , closeModal }) => {
 
       <InputContainer>
         <Text>Emisor</Text>
-        <Input type="Text" value="Lacchain" readOnly />
+        {/* <Input type="Text" value="Lacchain" readOnly /> */}
+        <div>
+          <Select 
+            value={register}
+            style={{width: "100%"}}
+            onChange={registerId => setRegister(registerId)}
+            >
+            {registers.map(register => (
+              <Option key={register._id} value={register._id}>{register.name}</Option>
+            ))}
+
+          </Select>
+        </div>
       </InputContainer>
 
     </Modal>

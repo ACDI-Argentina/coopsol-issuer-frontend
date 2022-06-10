@@ -51,9 +51,14 @@ const CredentialDetail = ({ credential }) => {
       {!loading && (
         <Descriptions size="small" bordered>
           {fields?.map((field, idx) => {
+            let value = field.value;
+            if(field.type === "Boolean"){
+              value = field.value? "Sí":"No"
+            }
+            
             return (
               <Descriptions.Item key={idx} label={field.name}>
-                {field.value}
+                {value}
               </Descriptions.Item>
             )
           })}

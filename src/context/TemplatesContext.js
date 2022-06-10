@@ -15,6 +15,20 @@ export function useTemplates() {
 const TemplatesProvider = ({ children }) => {
   const [loading, setLoading]= useState(false);
   const [templates, setTemplates] = useState([]);
+  const [registers, setRegisters] = useState([]);
+
+  const loadRegisters = async () => {
+    try {
+      setLoading(true);
+      const registers = await new DidiBackend().register().find();
+      setRegisters(registers)
+      setLoading(false);
+
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
+  }
 
   const loadTemplates = async () => {
     try {
@@ -32,7 +46,9 @@ const TemplatesProvider = ({ children }) => {
   const value = {
     templates,
     loading,
-    loadTemplates
+    loadTemplates,
+    registers,
+    loadRegisters,
   }
 
   return (
