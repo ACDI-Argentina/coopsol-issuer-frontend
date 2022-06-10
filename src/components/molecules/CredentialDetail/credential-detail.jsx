@@ -49,7 +49,7 @@ const CredentialDetail = ({ credential }) => {
         </SpinnerContainer>
       }
       {!loading && (
-        <Descriptions size="small" bordered>
+        <Descriptions size="small" bordered column={2}>
           {fields?.map((field, idx) => {
             let value = field.value;
             if(field.type === "Boolean"){
