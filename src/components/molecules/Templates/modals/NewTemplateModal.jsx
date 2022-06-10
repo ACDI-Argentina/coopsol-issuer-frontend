@@ -39,7 +39,7 @@ const NewTemplateModal = ({showModal , closeModal }) => {
       onOk={async () => {
 
         const result = await new DidiBackend().templates().create({
-          name: `Coopsol - ${templateName}`,
+          name: templateName,
           registerId: "61ae3327ab3a470038a029dc"
         })
 
