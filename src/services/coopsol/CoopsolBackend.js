@@ -45,6 +45,7 @@ const CoopsolBackend = () => ({
     //TODO: check response status
     const { user, token, tokenDidi } = response.data;
 
+    localStorage.setItem("coopsolToken", token);
     localStorage.setItem("didiToken", tokenDidi);
 
     return {
@@ -60,8 +61,14 @@ const CoopsolBackend = () => ({
 
   logout: async (credentials) => {
     //check function
-    const response = await axiosInstance.post(`/auth/logout`, credentials);
+    try {
+      const response = await axiosInstance.post(`/auth/logout`, credentials);
+    } catch (err) {
+      console.log(err)
+    }
+
     localStorage.removeItem('didiToken');
+    localStorage.removeItem('coopsolToken');
 
   },
 

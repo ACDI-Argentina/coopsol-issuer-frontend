@@ -16,6 +16,7 @@ import history from '../../Router/history';
 import { ReactComponent as CredIcon } from '../../../img/cred.svg';
 import { ReactComponent as ListIcon } from '../../../img/list.svg';
 import { showErrorMessage } from '../../../utils/alertMessages';
+import { CoopsolBackend } from 'services/di';
 
 const { logoutRequest } = apiCalls();
 
@@ -24,8 +25,9 @@ const NavBar = () => {
 
   const signOut = async () => {
     try {
-      await logoutRequest(); //Usar CoopsolBackend.logout //Es un get nada mas, ver como esta implementado
-      //CoopsolBackend().logout();
+      await CoopsolBackend().logout();
+      await logoutRequest();  //Es un get nada mas, ver como esta implementado
+
     } catch (error) {
       const errorMessage = processedErrorMessage(error);
       showErrorMessage(errorMessage, processError(error));
@@ -62,7 +64,7 @@ const NavBar = () => {
     },
   ]
 
-  if(isAdmin){
+  if (isAdmin) {
     items.push({
       key: USERS_URL,
       label: 'Usuarios',

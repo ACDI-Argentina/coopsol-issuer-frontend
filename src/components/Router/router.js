@@ -38,6 +38,8 @@ import Producers from '../pages/Producers/producers';
 import Producer from '../pages/Producer/Producer';
 import Users from '../pages/Users/users';
 import RedirectWhenSessionExpired from './RedirectWhenSessionExpired';
+import useSocketManager from './useSocketManager';
+import { useUser } from 'services/providers/user-context';
 
 const routesConfig = [
   {
@@ -100,6 +102,10 @@ const routesConfig = [
 
 export const Router = () => {
   const routes = routesConfig.map((route, index) => <PrivateRoute key={index} {...route} />);
+
+  const { user } = useUser();
+  useSocketManager(user);
+
   return (
     <div className="AppContainer">
       <div className="MainContent">

@@ -1,10 +1,8 @@
 import React, { createContext, useReducer } from 'react';
 
-/* Como sabe esto en que estado esta?? */
-
 const initialState = {
     defaultActiveTabKey: null,
-    revocationReasons: [ /* Agregar metodo para cargar desde el bakcend */
+    revocationReasons: [ /* Agregar metodo para cargar desde el backend */
         { id: 1, value: "UNLINKING",label: "Desvinculación" },
         { id: 2, value: "EXPIRATION",label: "Expiración" },
         { id: 3, value: "DATA_MODIFICATION",label: "Modificación de datos" },

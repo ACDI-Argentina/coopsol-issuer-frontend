@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState } from 'react';
+import React, { createContext, useReducer, useEffect, useState, useContext } from 'react';
 import { USER } from '../../utils/constants';
 
 const initialState = {};
@@ -15,12 +15,13 @@ const localState = JSON.parse(localStorage.getItem(USER));
 
 const UserContext = createContext({});
 
+export function useUser() {
+  return useContext(UserContext);
+}
+
 const UserProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useReducer(reducer, localState || initialState);
-
-  //Ver como podemos hacer aca para darle los roles
-
 
   useEffect(() => {
     localStorage.setItem(USER, JSON.stringify(user));

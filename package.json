@@ -23,6 +23,7 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "4.0.3",
     "sass": "^1.52.2",
+    "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.5"
   },
   "scripts": {
