@@ -13,8 +13,9 @@
   padding: 0 80px;
   display: flex;
   align-items: center;
-  height: 90vh;
-  justify-content: space-between;
+  height: 100vh;
+  justify-content: space-around;
+  
 
   .ant-form-item {
     .ant-form-item-label {
@@ -61,8 +62,11 @@
     }
   }
   .LoginFormContainer {
-    width: 30%;
-    margin-right: 5em;
+    min-width: 30%;
+    max-width: 435px;
+    padding-right: 5em;
+    box-sizing: border-box;
+    
 
     h1 {
       font-size: 30px;
@@ -103,11 +107,11 @@
 
 @media only screen and (max-width: 1200px) {
   .ContainerAppLogin {
-    flex-direction: row-reverse;
     padding: 5em 0;
     .LoginFormContainer {
       width: 100%;
       padding: 0;
+      margin-right: 1rem;
       .formImg {
         margin-bottom: 2em;
         display: inline;
@@ -126,7 +130,7 @@
     .LoginFormContainer {
       width: 100%;
       border-right: none;
-      padding: 0;
+      padding: 0px 2rem;
       .ant-form-item {
         width: 100%;
       }
