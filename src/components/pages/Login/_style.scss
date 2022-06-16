@@ -64,7 +64,6 @@
   .LoginFormContainer {
     min-width: 30%;
     max-width: 435px;
-    padding-right: 5em;
     box-sizing: border-box;
     
 
@@ -124,12 +123,23 @@
   .ContainerAppLogin {
     flex-direction: column;
     padding: 5em 0;
+
+    background: url("../../../assets/img/login.svg");
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-repeat: repeat;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: bottom 50px left 15%;
+    background-size: 350px auto;
+    
+
     .loginLogo {
       display: none;
     }
     .LoginFormContainer {
       width: 100%;
-      border-right: none;
+      
       padding: 0px 2rem;
       .ant-form-item {
         width: 100%;
