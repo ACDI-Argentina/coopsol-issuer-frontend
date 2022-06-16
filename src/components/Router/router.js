@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Router as AppRouter } from 'react-router-dom';
 import PrivateRoute from './private-route';
 
@@ -40,6 +40,7 @@ import Users from '../pages/Users/users';
 import RedirectWhenSessionExpired from './RedirectWhenSessionExpired';
 import useSocketManager from './useSocketManager';
 import { useUser } from 'services/providers/user-context';
+
 
 const routesConfig = [
   {

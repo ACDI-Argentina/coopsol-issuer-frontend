@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { message } from 'antd';
+import { notification } from 'antd';
 import { io } from "socket.io-client";
 
 
@@ -29,8 +29,15 @@ const useSocketManager = (user) => {
 
     socket.on("producer-did-associated", payload => {
       const { firstname, lastname, did } = payload;
-      message.success(`Se ha asociado el did ${did} al productor ${firstname} ${lastname}`);
+      
+      notification.info({
+        message: 'Nueva asociación de did',
+        description:
+          `Se ha asociado el did ${did} al productor ${firstname} ${lastname}`,
+        duration: 0,
+      })
     })
+
 
 
     return () => {
