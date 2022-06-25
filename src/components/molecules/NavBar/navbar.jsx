@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Menu } from 'antd';
 import './_style.scss';
+
 import { UserContext } from '../../../services/providers/user-context';
 import {
   LOGIN_URL,
@@ -78,7 +79,7 @@ const NavBar = () => {
     className: "logoutButton",
     label: 'Cerrar sesión',
     icon: <img src="img/salir.svg" alt="" />,
-    style: { position: "absolute", bottom: 10 },
+    style: { position: "absolute", bottom: 10, left: 0 },
     onClick: signOut,
   });
 

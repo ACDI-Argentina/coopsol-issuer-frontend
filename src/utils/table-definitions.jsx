@@ -45,7 +45,6 @@ export const getPendingCredentialColumns = () => {
     Table.EXPAND_COLUMN,
     {
       title: 'Nombre y Apellido',
-      fixed: 'left',
       width: 180,
       render: item => `${item?.firstName} ${item.lastName}`
     },

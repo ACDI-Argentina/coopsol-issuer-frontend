@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 
 const initialState = {
     defaultActiveTabKey: null,
@@ -22,12 +22,15 @@ const AppContext = createContext({});
 
 const AppProvider = ({ children }) => {
     const [appState, setAppState] = useReducer(reducer, initialState);
+    const [menuCollapsed, setMenuCollapsed] = useState(false);
 
     return (
         <AppContext.Provider
             value={{
                 appState,
                 setAppState,
+                menuCollapsed,
+                setMenuCollapsed
             }}
         >
             {children}
