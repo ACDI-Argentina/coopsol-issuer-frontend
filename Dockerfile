@@ -1,11 +1,15 @@
-FROM node:12-alpine
+FROM node:14-alpine
+
+WORKDIR /usr/src/app
 
 RUN npm install http-server-spa -g
 
-COPY docker-start.sh /entrypoint.sh
-COPY build /var/www
+COPY package*.json ./
+RUN npm ci --only=prod
+
+COPY . .
 
 EXPOSE 8080
 
-CMD ["ash", "entrypoint.sh"]
+CMD ["ash", "docker-run.sh"]
 
