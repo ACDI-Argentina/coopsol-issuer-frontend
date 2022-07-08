@@ -19,7 +19,6 @@ const TableContainer = styled.div`
 `
 
 const Producers = ({ history }) => {
-  const [allProducers, setAllProducers] = useState([]);
   const [producers, setProducers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editingProducer, setEditingProducer] = useState();
@@ -29,8 +28,8 @@ const Producers = ({ history }) => {
     async function loadProducers() {
       try {
         setLoading(true);
-        const allProducers = await CoopsolBackend().producers().findAll();
-        setAllProducers(allProducers?.content);
+        const producers = await CoopsolBackend().producers().findAll();
+        setProducers(producers?.content);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -66,7 +65,7 @@ const Producers = ({ history }) => {
         <Table
           loading={loading}
           rowKey={'_id'}
-          dataSource={applyFilters(allProducers, activeFilters)}
+          dataSource={applyFilters(producers, activeFilters)}
           columns={columns}
         />
       </TableContainer>
@@ -87,6 +86,13 @@ const Producers = ({ history }) => {
               if (idx > -1) {
                 const producersClone = producers.concat();
                 producersClone.splice(idx, 1, updated);
+                setProducers(producersClone);
+              } else {//push and sort
+                const producersClone = producers.concat(updated).sort((p1,p2) => {
+                  const a = p1.lastname || "";
+                  const b = p2.lastname || "";
+                  return a.localeCompare(b);
+                });
                 setProducers(producersClone);
               }
 
