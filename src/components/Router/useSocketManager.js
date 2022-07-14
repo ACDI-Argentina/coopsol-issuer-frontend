@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { notification } from 'antd';
 import { io } from "socket.io-client";
+import { events } from 'services/coopsol/CoopsolBackend';
 
 
 const useSocketManager = (user) => {
@@ -22,6 +23,10 @@ const useSocketManager = (user) => {
 
     socket.on("connect_error", (err) => {
       console.log(`Error al conectar el socket:`,err)
+      
+      if(err?.message ==="TokenExpiredError"){
+        events.emit("Unauthorized", err);
+      }
     });
 
     socket.on("disconnect", (reason, details) => console.log(reason, details));
