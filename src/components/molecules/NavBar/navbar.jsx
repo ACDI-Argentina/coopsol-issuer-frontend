@@ -9,7 +9,8 @@ import {
   ACTIVITIES_URL,
   TEMPLATES_URL,
   PRODUCERS_URL,
-  USERS_URL
+  USERS_URL,
+  SETTINGS_URL
 } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
@@ -73,6 +74,14 @@ const NavBar = () => {
       onClick: () => history.push(USERS_URL)
     })
   }
+
+  items.push({
+    key: "settings",
+    className: "menu__settings",
+    label: 'Configuración',
+    icon: <img className="" src="img/gear-solid.svg" alt="" />,
+    onClick: () => history.push(SETTINGS_URL)
+  });
 
   items.push({
     key: "logout",

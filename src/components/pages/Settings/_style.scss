@@ -1,0 +1,51 @@
+.Settings{
+  &-content{
+    margin: 25px;
+    margin-left: 65px; /* TODO: add media query */
+
+    .form-group{
+      margin: 10px 0px;
+
+      label{
+        font-family: 'Poppins-medium';
+        color: #203342;
+        font-size: 14px;;
+      }
+
+      input{
+        margin-top: 3px;
+        border-radius: 5px;
+      }
+
+    }
+  }
+
+
+  &-form-wrapper{
+    display: flex;
+  }
+  &-form-container{
+    width: 100%;
+    max-width: 500px;
+    
+  }
+}
+
+.Settings .ant-form-item-explain-error {
+  font-family: "poppins-medium";
+  margin: 5px;
+}
+
+
+/* 
+@media(max-width: 768px) {
+  .Settings {
+    &-form-wrapper {
+      justify-content: center;
+    }
+  }
+} */
+
+.ant-input-affix-wrapper {
+  border-radius: 5px;
+}

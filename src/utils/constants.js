@@ -31,3 +31,5 @@ export const CREATE_TEMPLATE_URL = '/create-template';
 export const DUPLICATED_CREDENTIAL = 'DUPLICATED_CREDENTIAL';
 
 export const USERS_URL = '/users';
+
+export const SETTINGS_URL = '/settings';

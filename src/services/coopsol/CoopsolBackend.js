@@ -72,6 +72,11 @@ const CoopsolBackend = () => ({
 
   },
 
+  changePassword: async (credentials) => {
+      const response = await axiosInstance.post(`/auth/change-password`, credentials);
+      return response.data;
+  },
+
   users: () => ({
     create: async data => {
       const response = await axiosInstance.post(`/users`, data);

@@ -1,6 +1,23 @@
 @import '../../../css/general_styling';
 
 //Acá piso estilos de Antd del menú
+.menu__icon{
+  width: 18px;
+  height: 18px;
+}
+
+.menu__settings{
+  position: absolute;
+
+  // style: { position: "absolute", bottom: 40, left: 0 },/* A esto habria que posicionarlo con flex o grid */ lo posicionamos al final?
+
+  > img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
 
 body .ant-menu-submenu-popup {
   background-color: $dark-grey;
