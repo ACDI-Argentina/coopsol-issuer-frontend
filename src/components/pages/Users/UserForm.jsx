@@ -31,7 +31,7 @@ const InputContainer = styled.div`
 const UserForm = ({ user, onSuccess }) => {
 
   const initialValues = {
-    email: user?.email,
+    name: user?.name,
   }
 
   return (
@@ -72,6 +72,15 @@ const UserForm = ({ user, onSuccess }) => {
                 Nombre
                 <Input
                   type="text"
+                  name="name"
+                  value={values["name"]}
+                  onChange={handleChange} />
+              </InputContainer>
+
+              <InputContainer> {/* Solo en el alta */}
+                Email
+                <Input
+                  type="text"
                   name="email"
                   value={values["email"]}
                   onChange={handleChange} />
@@ -79,7 +88,7 @@ const UserForm = ({ user, onSuccess }) => {
 
               <InputContainer> {/* Solo en el alta */}
                 Contraseña
-                <Input
+                <Input.Password
                   type="text"
                   name="password"
                   value={values["password"]}
