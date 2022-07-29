@@ -53,7 +53,8 @@ const CredentialDetail = ({ credential }) => {
           {fields?.map((field, idx) => {
             let value = field.value;
             if(field.type === "Boolean"){
-              value = field.value? "Sí":"No"
+              const isTrue = field.value === "true";
+              value = isTrue? "Sí":"No"
             }
             
             return (
