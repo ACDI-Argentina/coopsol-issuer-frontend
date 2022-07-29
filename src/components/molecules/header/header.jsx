@@ -36,14 +36,14 @@ const Header = () => {
   
 
   return (
-    <Wrapper className={`wrapper ${menuCollapsed?'':'collapsed'}`}>
+    <Wrapper className={`wrapper ${menuCollapsed?'collapsed':''}`}>
       <CollapseButton
         onClick={() => setMenuCollapsed(prev => !prev)}
       >
-        {menuCollapsed ? <CaretLeftOutlined color='#3d3737' />: <CaretRightOutlined color='#3d3737' />  }
+        {menuCollapsed ? <CaretRightOutlined color='#3d3737' />  : <CaretLeftOutlined color='#3d3737' />}
       </CollapseButton>
 
-      <div className={`header ${menuCollapsed?'':'collapsed'}`}>
+      <div className={`header ${menuCollapsed?'collapsed':''}`}>
         <div className="TopNav">
           <img src="img/sem-logo.png" alt="" />
         </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useEffect, useReducer, useState } from 'react';
 
 const initialState = {
     defaultActiveTabKey: null,
@@ -23,6 +23,18 @@ const AppContext = createContext({});
 const AppProvider = ({ children }) => {
     const [appState, setAppState] = useReducer(reducer, initialState);
     const [menuCollapsed, setMenuCollapsed] = useState(false);
+
+     useEffect(() => {
+        const preferenceMenuCollapsed = localStorage.getItem("preference-menu-collapsed");
+        if(preferenceMenuCollapsed === "true"){
+            setMenuCollapsed(true);
+        }
+    },[])
+
+
+    useEffect(() => {
+        localStorage.setItem("preference-menu-collapsed",menuCollapsed);
+    },[menuCollapsed])
 
     return (
         <AppContext.Provider
