@@ -15,6 +15,13 @@
   align-items: center;
   height: 100vh;
   justify-content: space-around;
+
+  &__version{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #838383;
+  }
   
 
   .ant-form-item {

@@ -10,6 +10,8 @@ import '../../../css/app.scss';
 import Loader from '../../atoms/Loader/loader';
 import { CoopsolBackend } from 'services/di';
 
+import PackageJSON from "../../../../package.json"
+const version = PackageJSON.version;
 
 const Login = ({ history }) => {
   const { user, setUser } = useContext(UserContext);
@@ -54,6 +56,7 @@ const Login = ({ history }) => {
         <Loader loading={loading} />
         {errorMessage && <div className="error">{errorMessage}</div>}
       </div>
+      <div className='ContainerAppLogin__version'>Versión: {version}</div>
     </div>
   );
 };
