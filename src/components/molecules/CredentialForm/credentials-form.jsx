@@ -179,10 +179,6 @@ const CredentialForm = ({ template, subject }) => {
 
       console.log(data)
       setSubmitting(true);
-
-
-      console.log(data)
-
       const result = await new DidiBackend().credentials().create({
         data: JSON.stringify(data),
         split: false,
