@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DeleteTemplateButton from '../../components/molecules/Templates/buttons/DeleteTemplateButton';
 import TemplateDeletionModal from '../../components/molecules/Templates/modals/TemplateDeletionModal';
 import { TEMPLATES_URL } from '../constants';
+import { parseDate } from 'utils/dateHelpers';
 
 
 export const templatesColumns = () => [
@@ -17,7 +18,14 @@ export const templatesColumns = () => [
     title: 'Blockchain',
     dataIndex: 'blockchain',
     key: 'blockchain',
-    width: 200
+    width: 100
+  },
+  {
+    title: 'Fecha de creacion',
+    dataIndex: 'createdOn',
+    key: 'createdOn',
+    width: 80,
+    render: item => <div>{parseDate(item)}</div>
   },
   {
     title: 'Acciones',
