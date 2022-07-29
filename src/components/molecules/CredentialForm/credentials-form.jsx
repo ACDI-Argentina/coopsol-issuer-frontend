@@ -70,18 +70,25 @@ const getDefaultValues = fields => {
 }
 
 
-const getDataFromFields = (credentialName, fields, values) => { //Como obtenemos los valores de los booleans?
+const getDataFromFields = (credentialName, fields, values) => { 
 
   const formatField = field => {
     let value = values[field.name];
 
     if (field.type === "Boolean") {
-      value = value ? value.toString() : "false"
+      value = value ? value.toString() : "false";
     }
 
     if (field.type === "Checkbox") {
       console.log(value.toString()); //Revisar si esto debe pasarse asi
-      value = value ? value.toString() : ""
+      value = value ? value.toString() : "false";
+    }
+
+    if (field.type === "Date") {
+      const rawValue = values[field.name]; 
+      const newTs = new Date(rawValue).setUTCHours(12, 0, 0, 0, 0);
+      const formattedValue = new Date(newTs).toISOString();
+      value = formattedValue;
     }
 
     return {
@@ -169,6 +176,8 @@ const CredentialForm = ({ template, subject }) => {
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       const data = getDataFromFields(credentialName, fields, values);
+
+      console.log(data)
       setSubmitting(true);
 
 
@@ -232,7 +241,7 @@ const CredentialForm = ({ template, subject }) => {
         }) => (
 
           <>
-          {/*          
+            {/*          
 
         Form values inspector
 
