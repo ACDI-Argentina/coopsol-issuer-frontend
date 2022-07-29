@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import TableFilters from '../TableFilters/table-filters';
 import { Table, message } from 'antd';
-import api from '../../../services/api-calls/all';
 import { useApi } from '../../../services/useApi';
-import { UserContext } from '../../../services/providers/user-context';
 import ApiDetail from '../ApiDetail/api-detail';
-const { getAny } = api();
+import CoopsolBackend, { events } from 'services/coopsol/CoopsolBackend';
 
+/* Esta api table ahora solo se utiliza para identitiesValidationRequests */
 const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'content', filteredFields, noExpand }) => {
   const call = useApi();
   const [loading, setLoading] = useState(false);
@@ -14,35 +13,63 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
   const [activeFilters, setActiveFilters] = useState(defaultFilters);
   const [pagination, setPagination] = useState({ page: 0 });
   const [paged, setPaged] = useState(0);
-  const { setUser } = useContext(UserContext);
 
-  const makeGet = ( page = 0) => { //makeGet = fetchCredentials
+  const makeGet = async (page = 0) => { //makeGet = fetchCredentials
     setLoading(true);
-    const url = path;
-    const params = { page, ...activeFilters };
-    call(getAny, { url, params }, handleSuccess, handleError, setUser);
+    try{
+      const result = await CoopsolBackend().identityValidationRequest.find({...defaultFilters});
+      console.log(result); 
+      const totalElements = result.length;
+      setLocalData(result);
+  
+      setPagination({
+        ...pagination,
+        total: totalElements,
+        pageSize: 15  
+      });
+      
+    } catch(err){
+      message.error('Ocurrió un error al obtener las solicitudes.');
+    }
+    setLoading(false);
   };
 
   const localColumns = columns(makeGet);
 
+
+  useEffect(() => {
+    const handler = payload => {
+      if (defaultFilters.requestState === "IN_PROGRESS") {
+
+        setLocalData(local => {
+          const updatedList = local.concat(payload);
+          
+          setPagination({
+            ...pagination,
+            total: updatedList.length,
+            pageSize: 15,
+          });
+
+          return updatedList;
+        }); //TODO: SORT
+      }
+
+    };
+    events.on("identity-validation-request", handler);
+
+    return () => {
+      events.off("identity-validation-request", handler);
+    }
+  }, [localData])
+
   const handleTableChange = pagination => {
     setPagination(pagination);
     setPaged(pagination.current - 1);
- };
+  };
 
   const handleSuccess = res => {
-    const { totalElements, size } = res;
-    console.log(res);
-    setLocalData(res[dataField]);
-    console.log(res[dataField]) //undefined!
 
-
-    setPagination({
-      ...pagination,
-      total: totalElements,
-      pageSize: size
-    });
-    setLoading(false);
+  
   };
 
   const onSearch = () => {
@@ -62,19 +89,19 @@ const ApiTable = ({ data, path, columns, filters, defaultFilters, dataField = 'c
 
   useEffect(() => {
     makeGet(paged);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paged]);
 
   return (
     <>
-      <TableFilters
+      {/*       <TableFilters
         onApplyFilter={onApplyFilter}
         filters={filters}
         defaultFilters={activeFilters}
         onSearch={onSearch}
-      />
+      /> */}
       <Table
-        rowKey={'id'}
+        rowKey={'_id'}
         columns={localColumns}
         dataSource={localData}
         scroll={{ x: 'auto' }}

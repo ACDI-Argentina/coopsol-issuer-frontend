@@ -2,11 +2,10 @@
 import React, { useState } from 'react';
 import { Modal, Button, message } from 'antd';
 import './_style.scss';
-import apiCalls from '../../../services/api-calls/all';
+import { CoopsolBackend } from 'services/di';
 
 const IdentityRejectActions = ({ onAction, identity }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { regretIdentityRequest } = apiCalls();
 
   const revertRequest = () => {
     setModalVisible(true);
@@ -14,7 +13,7 @@ const IdentityRejectActions = ({ onAction, identity }) => {
 
   const handleConfirm = async () => {
     try {
-      await regretIdentityRequest(identity.id);
+      await CoopsolBackend().identityValidationRequest.revert(identity._id);
       message.success('Solicitud revertida correctamente.');
       onAction();
     } catch (e) {
@@ -35,7 +34,7 @@ const IdentityRejectActions = ({ onAction, identity }) => {
         </a>
       </div>
 
-      <Modal width="400px" visible={modalVisible} onCancel={handleCancel}>
+      <Modal width="400px" visible={modalVisible} onCancel={handleCancel} footer={null}>
         <img src="/img/moderator.svg" alt="approve identity" height={220} />
         <div className="title">
           <h1>Revertir Rechazo</h1>

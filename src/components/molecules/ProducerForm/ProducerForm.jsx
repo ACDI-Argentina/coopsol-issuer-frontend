@@ -37,6 +37,8 @@ const ProducerForm = ({ producer, onSuccess }) => {
     lastname: producer?.lastname,
     firstname: producer?.firstname,
     dni: producer?.dni, 
+    email: producer?.email, 
+    phoneNumber: producer?.phoneNumber, 
     cuit: producer?.cuit,
     did: producer?.did
   }
@@ -110,6 +112,22 @@ const ProducerForm = ({ producer, onSuccess }) => {
                   type="text"
                   name="dni"
                   value={values["dni"]}
+                  onChange={handleChange} />
+              </InputContainer>
+              <InputContainer>
+                Email
+                <Input
+                  type="text"
+                  name="email"
+                  value={values["email"]}
+                  onChange={handleChange} />
+              </InputContainer>
+              <InputContainer>
+                Número de teléfono
+                <Input
+                  type="text"
+                  name="phoneNumber"
+                  value={values["phoneNumber"]}
                   onChange={handleChange} />
               </InputContainer>
               <InputContainer>

@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { parseDate } from 'utils/dateHelpers';
 import IdentityActions from '../../components/molecules/IdentityActions/identity-actions';
 import IdentityRejectActions from '../../components/molecules/IdentityRejectActions/identity-reject-actions';
 
@@ -9,7 +11,7 @@ const baseColumns = [
     key: 'name',
     fixed: 'left',
     width: 170,
-    render: item => <span>{`${item.name} ${item.lastName}`}</span>
+    render: item => <span>{`${item.firstname} ${item.lastname}`}</span>
   },
   {
     title: 'DNI Declarado',
@@ -19,8 +21,8 @@ const baseColumns = [
   },
   {
     title: 'Número de Celular',
-    dataIndex: 'phone',
-    key: 'phone',
+    dataIndex: 'phoneNumber',
+    key: 'phoneNumber',
     width: 150
   },
   {
@@ -34,15 +36,17 @@ const baseColumns = [
 const reviewedColumns = [
   {
     title: 'Fecha Solicitud',
-    dataIndex: 'date',
-    key: 'date',
-    width: 120
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    width: 120,
+    render: item => <div>{parseDate(item)}</div>
   },
   {
     title: 'Fecha Revisión',
-    dataIndex: 'reviewDate',
-    key: 'reviewDate',
-    width: 120
+    dataIndex: 'updatedAt',
+    key: 'updatedAt',
+    width: 120,
+    render: item => <div>{parseDate(item)}</div>
   }
 ];
 
@@ -50,9 +54,10 @@ export const pendingColumns = getData => [
   ...baseColumns,
   {
     title: 'Fecha',
-    dataIndex: 'date',
-    key: 'date',
-    width: 120
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    width: 120,
+    render: item => <div>{parseDate(item)}</div>
   },
   {
     title: 'Acciones',
@@ -99,11 +104,11 @@ export const filters = {
     type: 'input',
     name: 'DNI'
   },
-  name: {
+  firstname: {
     type: 'input',
     name: 'Nombre'
   },
-  surname: {
+  lastname: {
     type: 'input',
     name: 'Apellido'
   },
@@ -131,7 +136,7 @@ export const REASONS = [
   },
   {
     value: 'NOT_BENEFICIARY',
-    label: 'No es Beneficiario de Semillas'
+    label: 'No es productor de Coopsol'
   }
 ];
 

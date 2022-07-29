@@ -10,7 +10,8 @@ import {
   TEMPLATES_URL,
   PRODUCERS_URL,
   USERS_URL,
-  SETTINGS_URL
+  SETTINGS_URL,
+  IDENTITIES_URL
 } from '../../../utils/constants';
 import { processedErrorMessage, processError } from '../../../services/api-calls/helpers';
 import apiCalls from '../../../services/api-calls/all';
@@ -47,6 +48,13 @@ const NavBar = () => {
       onClick: () => history.push(CREDENTIALS_URL)
     },
     {
+      key: IDENTITIES_URL,
+      label: 'Validación de identidades',
+      className: "menu__settings",
+      icon: <img className="" src="img/user-tag-solid.svg" alt="" />,
+      onClick: () => history.push(IDENTITIES_URL)
+    },
+    {
       key: PRODUCERS_URL,
       label: 'Productores',
       icon: <ListIcon className="list" />,
@@ -55,7 +63,8 @@ const NavBar = () => {
     {
       key: TEMPLATES_URL,
       label: 'Tipos de credenciales',
-      icon: <ListIcon className="list" />,
+      className: "menu__settings",
+      icon: <img className="" src="img/file-invoice-solid.svg" alt="" />,
       onClick: () => history.push(TEMPLATES_URL)
     },
     {
@@ -70,7 +79,8 @@ const NavBar = () => {
     items.push({
       key: USERS_URL,
       label: 'Usuarios',
-      icon: <ListIcon className="list" />,
+      className: "menu__settings",
+      icon: <img className="" src="img/users-solid.svg" alt="" />,
       onClick: () => history.push(USERS_URL)
     })
   }

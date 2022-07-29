@@ -40,8 +40,49 @@ const useSocketManager = (user) => {
         description:
           `Se ha asociado el did ${did} al productor ${firstname} ${lastname}`,
         duration: 0,
-      })
+      });
+      
     })
+
+
+    socket.on("identity-validation-request", payload => {
+      const { firstname, lastname, did } = payload;
+
+      notification.info({
+        message: 'Nueva solicitud de validación de identidad',
+        description:
+          `El productor ${firstname} ${lastname} ha solicitado un validación de identidad`,
+      /*   duration: 0, */
+      })
+      events.emit("identity-validation-request", payload);
+    })
+
+    socket.on("new-producer", payload => {
+      const { firstname, lastname, did } = payload;
+      
+      notification.info({
+        message: 'Nuevo productor registrado',
+        description:
+          `Se ha agregado el productor ${firstname} ${lastname} al registro.`,
+      /*   duration: 0, */
+      })
+
+      events.emit("new-producer", payload);
+
+      
+    })
+    socket.on("updated-producer", payload => {
+      const { firstname, lastname, did } = payload;
+      
+      notification.info({
+        message: 'Datos del productor actualizados',
+        description:
+          `Se han actualizado los datos del productor ${firstname} ${lastname}.`,
+      /*   duration: 0, */
+      });
+      events.emit("updated-producer", payload);
+    })
+
 
 
 

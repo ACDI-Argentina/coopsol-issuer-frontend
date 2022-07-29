@@ -123,7 +123,7 @@ export const processError = (error, setUser) => {
   if (!status) return;
   switch (status) {
     case STATUS_401:
-      if (setUser) setUser(null);
+     // if (setUser) setUser(null);  //Si esto setea el user como null lo redirige al home
       break;
     default:
       break;

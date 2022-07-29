@@ -3,7 +3,11 @@
 
 .identity-actions {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start !important;
+
+  button {
+    margin-right: 20px;
+  }
 }
 
 .footer {

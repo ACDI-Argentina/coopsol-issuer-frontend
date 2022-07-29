@@ -30,7 +30,7 @@ export const events = new EventEmitter();
 
 axiosInstance.interceptors.response.use(response => response, error => {
   if (error?.response?.status == 401) {
-    events.emit("Unauthorized", error?.response?.data);
+    events.emit("Unauthorized", error?.response?.data); 
   }
   return Promise.reject(error);
 });
@@ -164,8 +164,6 @@ const CoopsolBackend = () => ({
 
   }),
 
-
-
   activities: {
     find: async filter => {
       const query = new URLSearchParams(filter).toString();
@@ -173,17 +171,41 @@ const CoopsolBackend = () => ({
       const activities = response?.data?.data;
       console.log(activities)
       return activities;
-    },
+    },    
     create: async data => {
       const response = await axiosInstance.post(`/activities`, data);
       const activity = response?.data?.data;
       console.log(activity)
       return activity;
     },
+  },
+
+
+  identityValidationRequest: {
+    find: async filter => {
+      const query = new URLSearchParams(filter).toString();
+      const url = `/identityValidationRequests?${query}`;
+      const response = await axiosInstance.get(url);
+      const identityValidationRequests = response?.data;
+      return identityValidationRequests;
+    },
+    accept: async (id,data) => {
+      const response = await axiosInstance.patch(`/identityValidationRequests/${id}/accept`, data);
+      const identityValidationRequest = response?.data;
+      return identityValidationRequest;
+    },
+    reject: async (id,data) => {
+      const response = await axiosInstance.patch(`/identityValidationRequests/${id}/reject`, data);
+      const identityValidationRequest = response?.data;
+      return identityValidationRequest;
+    },
+    revert: async (id,data) => {
+      const response = await axiosInstance.patch(`/identityValidationRequests/${id}/revert`, data);
+      const identityValidationRequest = response?.data;
+      return identityValidationRequest;
+    },
+
   }
-
-
-
 
   /* A los siguientes metodos podriamos usarlos en caso de querer guardar pre credenciales
   Podemos usarlo para precredenciales

@@ -8,6 +8,7 @@ import './_style.scss';
 import TextAreaComments from '../../atoms/TextArea/text-area';
 import { processedErrorMessage } from '../../../services/api-calls/helpers';
 import { REASONS } from '../../../utils/tables/identities-definitions';
+import { CoopsolBackend } from 'services/di';
 const { Option } = Select;
 
 const imageOptions = {
@@ -20,6 +21,7 @@ const imageOptions = {
 };
 
 const IdentityActions = ({ onAction, identity }) => {
+  const [loading, setLoading] = useState(false);
   const [approveModalVisible, setApproveModalVisible] = useState(false);
   const [rejectModalVisible, setRejectModalVisible] = useState(false);
   const [dni, setDni] = useState(identity.dni);
@@ -29,19 +31,12 @@ const IdentityActions = ({ onAction, identity }) => {
   const { rejectIdentityRequest, approveIdentityRequest } = apiCalls();
   let editInput = useRef(null);
 
-  const { id, name, lastName } = identity;
-
-  const rejectRequest = () => {
-    setRejectModalVisible(true);
-  };
-
-  const approveRequest = () => {
-    setApproveModalVisible(true);
-  };
+  const { _id: id, name, lastName } = identity;
 
   const approveConfirm = async () => {
     try {
-      await approveIdentityRequest({ id, dni });
+      setLoading(true);
+      await CoopsolBackend().identityValidationRequest.accept(id, {dni});
       message.success('Solicitud de validación de identidad aprobada.');
       onAction();
     } catch (e) {
@@ -50,11 +45,13 @@ const IdentityActions = ({ onAction, identity }) => {
     }
     setApproveModalVisible(false);
     setInEdition(false);
+    setLoading(false);
   };
 
   const rejectConfirm = async () => {
     try {
-      await rejectIdentityRequest({ id, rejectReason, rejectionObservations });
+      setLoading(true);
+      await CoopsolBackend().identityValidationRequest.reject(id, {rejectReason, rejectionObservations});
       message.success('Solicitud de validación de identidad rechazada.');
       onAction();
     } catch (e) {
@@ -62,6 +59,7 @@ const IdentityActions = ({ onAction, identity }) => {
       message.error(errorMessage);
     }
     setRejectModalVisible(false);
+    setLoading(false);
   };
 
   const rejectCancel = () => {
@@ -89,15 +87,15 @@ const IdentityActions = ({ onAction, identity }) => {
   return (
     <>
       <div className="identity-actions">
-        <Button onClick={rejectRequest} danger>
-          Rechazar
-        </Button>
-        <Button onClick={approveRequest} type="primary">
+        <Button onClick={() => { setApproveModalVisible(true) }} type="primary">
           Validar
+        </Button>
+        <Button onClick={() => setRejectModalVisible(true)} danger>
+          Rechazar
         </Button>
       </div>
 
-      <Modal width="400px" visible={approveModalVisible} onCancel={approveCancel}>
+      <Modal width="400px" visible={approveModalVisible} onCancel={approveCancel} footer={null}>
         <img src="/img/credential-success.svg" alt="approve identity" height={220} />
         <div className="title">
           <h1>Validar Identidad</h1>
@@ -129,17 +127,18 @@ const IdentityActions = ({ onAction, identity }) => {
             <Button onClick={approveCancel} size="large" block style={{ marginRight: 20 }}>
               Cancelar
             </Button>
-            <Button onClick={approveConfirm} type="primary" size="large" block>
+            <Button onClick={approveConfirm} type="primary" size="large" block loading={loading}>
               {inEdition ? 'Editar y Validar' : 'Validar'}
+              {loading && ``} {/* TODO: SHOW SPINNER */}
             </Button>
           </p>
-          <a href="#" onClick={() => setInEdition(true)} disabled={inEdition}>
+          {/* <a href="#" onClick={() => setInEdition(true)} disabled={inEdition}>
             Editar datos de la solicitud
-          </a>
+          </a> */}
         </div>
       </Modal>
 
-      <Modal width="400px" visible={rejectModalVisible} onCancel={rejectCancel}>
+      <Modal width="400px" visible={rejectModalVisible} onCancel={rejectCancel} footer={null}>
         <Lottie options={imageOptions} height={200} width={200} />
         <div className="title">
           <h1>Rechazar Validación de Identidad</h1>
@@ -170,7 +169,7 @@ const IdentityActions = ({ onAction, identity }) => {
         </div>
         <div className="footer">
           <div className="buttons">
-            <Button onClick={rejectCancel} block size="large" style={{ marginRight: 20 }}>
+            <Button onClick={rejectCancel} block size="large" style={{ marginRight: 20 }} loading={loading}>
               Cancelar
             </Button>
             <Button
