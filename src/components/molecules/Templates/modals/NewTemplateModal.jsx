@@ -49,20 +49,26 @@ const NewTemplateModal = ({ showModal, closeModal }) => {
       }}
       onOk={async () => {
 
-        const result = await new DidiBackend().templates().create({
-          name: templateName,
-          registerId: register
-        })
+        try{
+          const result = await new DidiBackend().templates().create({
+            name: templateName,
+            registerId: register
+          })
+  
+          if (result.status === "success") {
+            message.success("Template creado exitosamente");
+            closeModal();
+            loadTemplates();
+          } else {
+            message.error("Ha ocurrido un error al intentar crear el template")
+            closeModal();
+          }
+          console.log(result)
 
-        if (result.status === "success") {
-          message.success("Template creado exitosamente");
-          closeModal();
-          loadTemplates();
-        } else {
-          message.error("Ha ocurrido un error al intentar crear el template")
-          closeModal();
+        } catch(err){
+          console.log(err.message);
+          message.error(err.message);  
         }
-        console.log(result)
       }}
       onCancel={closeModal}
       okButtonProps={{
