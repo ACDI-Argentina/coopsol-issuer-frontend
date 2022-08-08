@@ -85,10 +85,14 @@ const getDataFromFields = (credentialName, fields, values) => {
     }
 
     if (field.type === "Date") {
-      const rawValue = values[field.name]; 
-      const newTs = new Date(rawValue).setUTCHours(12, 0, 0, 0, 0);
-      const formattedValue = new Date(newTs).toISOString();
-      value = formattedValue;
+      try{
+        const rawValue = values[field.name]; 
+        const newTs = new Date(rawValue).setUTCHours(12, 0, 0, 0, 0);
+        const formattedValue = new Date(newTs).toISOString();
+        value = formattedValue;
+      } catch(err){ //Errores relacionados a la creacion de fechas
+        console.log(err);
+      }
     }
 
     return {
